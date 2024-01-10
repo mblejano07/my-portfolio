@@ -28,5 +28,10 @@ module.exports = {
     quotes: ['warn', 'single'],
     semi: ['warn', 'never'],
   },
+  /**
+   * We ignore VuePrime TailwindCSS Presets because we'd rather
+   * not mess around with the generated code
+   * @see https://tailwind.primevue.org/
+   */
   ignorePatterns: ['src/assets/css/presets/**/*.js'],
 }
