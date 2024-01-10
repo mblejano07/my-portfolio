@@ -10,7 +10,8 @@
       </p>
     </template>
   </Card>
-  <Button label="Sample" class="text-white px-4 sm:px-8 py-2 sm:py-3 bg-sky-700 hover:bg-sky-800"></Button>
+  <Button label="Sample" class="flex bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3"></Button>
+  <button class="bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3"></button>
 </template>
 
 <script setup lang="ts">
