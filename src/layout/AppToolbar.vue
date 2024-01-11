@@ -18,10 +18,17 @@
     }"
   >
     <template #start>
-      <Button icon="pi pi-bars" severity="secondary" text rounded aria-label="Menu" class="mr-4" />
-      <Breadcrumb :home="home" :model="items">
-        <template #separator><i class="pi pi-angle-right"></i></template>
-      </Breadcrumb>
+      <WbLogo v-if="globalStore.sidebarMinimized" icon-only class="mr-4"></WbLogo>
+      <Button
+        icon="pi pi-th-large"
+        severity="secondary"
+        text
+        rounded
+        aria-label="Menu"
+        class="mr-4 hover:text-primary-500"
+        @click="globalStore.toggleSidebar()"
+      />
+      <WbBreadcrumbs />
     </template>
 
     <template #end>
@@ -34,17 +41,14 @@
   </Toolbar>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Toolbar from 'primevue/toolbar'
 import Avatar from 'primevue/avatar'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import Breadcrumb from 'primevue/breadcrumb'
-import { ref } from 'vue'
+import WbBreadcrumbs from '@/components/webkit/WbBreadcrumbs.vue'
+import { useGlobalStore } from '@/stores/global.ts'
+import WbLogo from '@/components/webkit/WbLogo.vue'
 
-const home = ref({
-  icon: 'pi pi-home',
-})
-
-const items = ref([{ label: 'Home' }, { label: 'Page 1' }])
+const globalStore = useGlobalStore()
 </script>

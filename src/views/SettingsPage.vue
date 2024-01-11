@@ -1,7 +1,7 @@
 <template>
-  <div class="mx-auto h-[100%] max-w-6xl">
+  <div class="mx-auto h-[100%] w-full">
     <Card>
-      <template #title>Simple Card</template>
+      <template #title>Settings</template>
       <template #content>
         <p class="m-0">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam

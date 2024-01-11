@@ -1,0 +1,22 @@
+<template>
+  <div class="mx-auto h-[100%] w-full">
+    <Card>
+      <template #title>Profile</template>
+      <template #content>
+        <p class="m-0">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam
+          deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate
+          neque quas!
+        </p>
+      </template>
+    </Card>
+    <div class="mt-4 flex justify-end">
+      <Button label="Click Me"></Button>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import Card from 'primevue/card'
+import Button from 'primevue/button'
+</script>

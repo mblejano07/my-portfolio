@@ -4,8 +4,17 @@ const tailwindConfig: Config = {
   mode: 'jit',
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   darkMode: 'class',
+  safelist: [
+    { pattern: /(bg-primary-|bg-surface-)./ },
+    { pattern: /(text-surface-|text-primary-)./ },
+    { pattern: /(w-|h-)./ },
+  ],
   theme: {
     extend: {
+      fontFamily: {
+        menu: ['Comfortaa', 'sans-serif'],
+        content: ['Lato', 'sans-serif'],
+      },
       colors: {
         'primary-50': 'rgb(var(--primary-50))',
         'primary-100': 'rgb(var(--primary-100))',
