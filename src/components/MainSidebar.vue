@@ -7,9 +7,7 @@
     <!-- End Logo -->
     <!-- Start Nav Items -->
     <div class="mt-4 flex flex-col px-4">
-      <small class="font-bold">HOME</small>
-      <h1>Page 1</h1>
-      <h1>Page 2</h1>
+      <small class="font-bold">Dummy Content</small>
     </div>
     <!-- End Nav Items -->
   </div>
