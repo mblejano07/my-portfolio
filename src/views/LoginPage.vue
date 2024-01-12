@@ -11,9 +11,8 @@
         <div class="z-10 w-full max-w-md">
           <div class="mb-6 font-menu font-bold leading-tight sm:text-4xl xl:text-5xl">Webkit (Prime)</div>
           <div class="xl:text-md font-normal text-gray-200 sm:text-sm">
-            What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of
-            type and scrambled it to make a type specimen book it has?
+            Nipper holystone six pounders barkadeer rutters Privateer hail-shot warp black spot fore. Knave six pounders
+            quarterdeck crack Jennys tea cup starboard aye league lass Sink me heave down.
           </div>
         </div>
         <!-- End Webkit Text -->
