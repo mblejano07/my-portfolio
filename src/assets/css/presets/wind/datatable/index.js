@@ -1060,7 +1060,7 @@ export default {
 
       // State
       {
-        'focus:outline-none focus:outline-offset-0 focus:ring focus:ring-primary-400/50 ring-inset dark:focus:ring-primary-300/50':
+        'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-primary-500 ring-inset dark:focus:ring-primary-400':
           props.selectionMode,
       },
       { 'hover:bg-surface-300/20 hover:text-surface-600': props.selectionMode && !context.selected },

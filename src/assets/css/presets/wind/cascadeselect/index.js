@@ -116,7 +116,7 @@ export default {
   list: {
     class: 'py-1 list-none mx-1.5',
   },
-  item: {
+  item: ({ context }) => ({
     class: [
       // Font
       'sm:text-sm',
@@ -129,11 +129,19 @@ export default {
       // Spacing
       'm-0',
 
-      // Visuals
-      'bg-transparent text-surface-700 dark:text-white/80',
+      //  Colors
+      {
+        'text-surface-500 dark:text-white/70': !context.focused && !context.active,
+        'text-surface-500 dark:text-white/70 bg-surface-200 dark:bg-black/70': context.focused && !context.active,
+        'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70': context.focused && context.active,
+        'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70': !context.focused && context.active,
+      },
 
-      // Hover State
-      'hover:text-surface-700 dark:hover:text-white/80 hover:bg-surface-100 dark:hover:bg-surface-800/80',
+      // Hover States
+      {
+        'hover:bg-surface-50 dark:hover:bg-surface-800': !context.active,
+        'hover:bg-surface-100 dark:hover:bg-black/40 text-surface-900 dark:text-surface-0/80': context.active,
+      },
 
       // Transitions
       'transition-shadow',
@@ -144,7 +152,7 @@ export default {
       'overflow-hidden',
       'whitespace-nowrap',
     ],
-  },
+  }),
   content: {
     class: [
       'relative',

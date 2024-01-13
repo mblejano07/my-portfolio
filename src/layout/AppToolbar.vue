@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import Toolbar from 'primevue/toolbar'
+import Avatar from 'primevue/avatar'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import WbBreadcrumbs from '@/components/AppBreadcrumbs.vue'
+import { useGlobalStore } from '@/stores/global.ts'
+import AppLogo from '@/components/AppLogo.vue'
+
+const globalStore = useGlobalStore()
+</script>
+
 <template>
   <Toolbar
     :pt="{
@@ -18,7 +30,7 @@
     }"
   >
     <template #start>
-      <WbLogo v-if="globalStore.sidebarMinimized" icon-only class="mr-4"></WbLogo>
+      <AppLogo v-if="globalStore.sidebarMinimized" icon-only class="mr-4"></AppLogo>
       <Button
         icon="pi pi-th-large"
         severity="secondary"
@@ -40,15 +52,3 @@
     </template>
   </Toolbar>
 </template>
-
-<script setup lang="ts">
-import Toolbar from 'primevue/toolbar'
-import Avatar from 'primevue/avatar'
-import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
-import WbBreadcrumbs from '@/components/webkit/WbBreadcrumbs.vue'
-import { useGlobalStore } from '@/stores/global.ts'
-import WbLogo from '@/components/webkit/WbLogo.vue'
-
-const globalStore = useGlobalStore()
-</script>

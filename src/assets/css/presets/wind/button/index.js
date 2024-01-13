@@ -20,7 +20,7 @@ export default {
       // Shapes
       { 'shadow-sm': !props.raised && !props.link && !props.text, 'shadow-lg': props.raised },
       { 'rounded-md': !props.rounded, 'rounded-full': props.rounded },
-      { 'rounded-none first:rounded-l-md last:rounded-r-md self-center': parent.instance.$name === 'InputGroup' },
+      { 'rounded-none first:rounded-l-md last:rounded-r-md self-center': parent.instance.$name == 'InputGroup' },
 
       // Link Button
       { 'text-primary-600 bg-transparent ring-transparent': props.link },
@@ -253,10 +253,10 @@ export default {
     class: [
       'mx-0',
       {
-        'mr-2': props.iconPos === 'left' && props.label != null,
-        'ml-2 order-1': props.iconPos === 'right' && props.label != null,
-        'mb-2': props.iconPos === 'top' && props.label != null,
-        'mt-2': props.iconPos === 'bottom' && props.label != null,
+        'mr-2': props.iconPos == 'left' && props.label != null,
+        'ml-2 order-1': props.iconPos == 'right' && props.label != null,
+        'mb-2': props.iconPos == 'top' && props.label != null,
+        'mt-2': props.iconPos == 'bottom' && props.label != null,
       },
     ],
   }),
@@ -265,10 +265,10 @@ export default {
       'h-3 w-3',
       'mx-0',
       {
-        'mr-2': props.iconPos === 'left' && props.label != null,
-        'ml-2 order-1': props.iconPos === 'right' && props.label != null,
-        'mb-2': props.iconPos === 'top' && props.label != null,
-        'mt-2': props.iconPos === 'bottom' && props.label != null,
+        'mr-2': props.iconPos == 'left' && props.label != null,
+        'ml-2 order-1': props.iconPos == 'right' && props.label != null,
+        'mb-2': props.iconPos == 'top' && props.label != null,
+        'mt-2': props.iconPos == 'bottom' && props.label != null,
       },
       'animate-spin',
     ],

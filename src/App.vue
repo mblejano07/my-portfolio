@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import AppFooter from '@/layout/AppFooter.vue'
+import AppToolbar from '@/layout/AppToolbar.vue'
+import AppSideBar from '@/layout/AppSidebar.vue'
+import { useGlobalStore } from '@/stores/global.ts'
+import { useRoute } from 'vue-router'
+
+const globalStore = useGlobalStore()
+const route = useRoute()
+</script>
+
 <template>
   <div id="app-container" class="flex min-h-screen bg-surface-200 font-content">
     <!-- Start Sidebar -->
@@ -29,13 +40,3 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import AppFooter from '@/layout/AppFooter.vue'
-import AppToolbar from '@/layout/AppToolbar.vue'
-import AppSideBar from '@/layout/AppSidebar.vue'
-import { useGlobalStore } from '@/stores/global.ts'
-import { useRoute } from 'vue-router'
-
-const globalStore = useGlobalStore()
-const route = useRoute()
-</script>

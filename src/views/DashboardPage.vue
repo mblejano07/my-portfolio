@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import Card from 'primevue/card'
+import Button from 'primevue/button'
+</script>
+
 <template>
   <div class="mx-auto h-[100%]">
     <Card>
@@ -15,8 +20,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import Card from 'primevue/card'
-import Button from 'primevue/button'
-</script>

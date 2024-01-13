@@ -27,6 +27,12 @@ module.exports = {
     'linebreak-style': ['warn', 'unix'],
     quotes: ['warn', 'single'],
     semi: ['warn', 'never'],
+    'vue/component-tags-order': [
+      'warn',
+      {
+        order: ['script', 'template', 'style'],
+      },
+    ],
   },
   /**
    * We ignore VuePrime TailwindCSS Presets because we'd rather

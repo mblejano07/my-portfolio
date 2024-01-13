@@ -1,3 +1,4 @@
+<script setup lang="ts"></script>
 <template>
   <div class="flex w-full flex-col">
     <div class="flex items-center justify-between px-4 py-2 text-surface-500">
@@ -13,4 +14,3 @@
     <div class="h-2 w-full bg-primary-900"></div>
   </div>
 </template>
-<script setup lang="ts"></script>

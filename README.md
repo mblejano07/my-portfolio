@@ -1,18 +1,31 @@
-# Vue 3 + TypeScript + Vite
+## About WebAppKit SPA (Prime)
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+WebAppKit SPA (Prime) is a VueJS 3 SPA starter kit. This kit includes the following features:
 
-## Recommended IDE Setup
+- Implementation of [PrimeVue](https://tailwind.primevue.org/overview) with [TailwindCSS](https://tailwindcss.com)
+- Implementation of [Pinia](https://pinia.vuejs.org) for Central State Management
+- Implementation of [Vuelidate](https://vuelidate-next.netlify.app) for form validation
+- Installation of [FontAwesome](https://fontawesome.com) and [Hero Icons](https://heroicons.com)
+- Router guards for Role-based Access Control
+- Login and Register Screens
+- Home Screen
+- Manage Users Screen (CRUD, Search)
+- Manage App Settings Screen (with change theme implementation)
+- Update Profile information with image upload
+- Forgot and Reset Password Screens
+- Validate Email Screens for Registered Users
+- Validate Account for Users created from the Admin Panel
+- Implementation Forgot and Reset Password with Email Notification
+- International phone number validation support
+- Git hook and NPM automation with Husky
+- Implementation of field input masking
+- Implementation of reusable input components
+- Eslint, Prettier, Vite, and TailwindCss styling configuration
+- Gitlab MR template in `.gitlab/merge_request_templates`
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Set up your local development environment
 
-## Type Support For `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+- Install the LTS version of [NodeJS](https://nodejs.org/en) and [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- Create a **.env.development.local** files from **.env.development** file that came with this project. Make sure that the value for **VITE_API_ROOT_URL** is pointed to your local environment
+- Make sure you have the [WebAppKit API](https://gitlab.dswd-dx.com/jego.ramos/webapp-kit-api) running on the background
+- Run the command `npm install && npm run prepare` to install all the project and dev dependencies and configure Git hooks

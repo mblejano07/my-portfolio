@@ -11,7 +11,7 @@ export default {
   action: {
     class: [
       // Font
-      'text-decoration-none text-xs',
+      'font-semibold text-decoration-none text-xs',
 
       // Flex & Alignment
       'flex items-center gap-x-1.5 ',

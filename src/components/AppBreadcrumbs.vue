@@ -1,8 +1,3 @@
-<template>
-  <Breadcrumb v-if="show" :model="items">
-    <template #separator><i class="pi pi-angle-right"></i></template>
-  </Breadcrumb>
-</template>
 <script setup lang="ts">
 import Breadcrumb from 'primevue/breadcrumb'
 import { ref, watch } from 'vue'
@@ -25,3 +20,8 @@ watch(
   }
 )
 </script>
+<template>
+  <Breadcrumb v-if="show" :model="items">
+    <template #separator><i class="pi pi-angle-right"></i></template>
+  </Breadcrumb>
+</template>

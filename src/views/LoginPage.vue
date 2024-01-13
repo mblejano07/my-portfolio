@@ -1,3 +1,39 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import Button from 'primevue/button'
+import Divider from 'primevue/divider'
+import WbInputText from '@/components/webkit/WbInputText.vue'
+import WbPassword from '@/components/webkit/WbPassword.vue'
+import { useVuelidate } from '@vuelidate/core'
+import { required, helpers } from '@vuelidate/validators'
+
+/** Component States */
+const payload = ref({
+  email: '',
+  password: '',
+})
+const formIsSubmitting = ref(false)
+
+/** Form Validation */
+const formRules = {
+  $lazy: true,
+  email: {
+    required: helpers.withMessage('Enter your email or mobile number', required),
+  },
+  password: {
+    required: helpers.withMessage('Enter your password', required),
+  },
+}
+const validator = useVuelidate(formRules, payload)
+
+/** Form Submission */
+const handleFormSubmit = async () => {
+  formIsSubmitting.value = true
+  const valid = await validator.value.$validate()
+  if (!valid) return (formIsSubmitting.value = false)
+}
+</script>
+
 <template>
   <div class="relative flex min-h-screen">
     <div
@@ -17,17 +53,38 @@
         </div>
         <!-- End Webkit Text -->
         <!-- Start Animated Circles -->
-        <ul class="circles">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+        <!--        <ul class="circles">-->
+        <ul class="absolute left-0 top-0 h-full w-full overflow-hidden">
+          <li
+            class="absolute bottom-[-150px] left-[25%] block h-[80px] w-[80px] animate-float-up bg-surface-0 bg-opacity-20"
+          />
+          <li
+            class="absolute bottom-[-150px] left-[55%] block h-[20px] w-[20px] animate-float-up bg-surface-0 bg-opacity-20 animation-delay-[2s] animation-duration-[17s]"
+          />
+          <li
+            class="absolute bottom-[-150px] left-[70%] block h-[150px] w-[150px] animate-float-up bg-surface-0 bg-opacity-20 animation-delay-[4s] animation-duration-[48s]"
+          />
+          <li
+            class="absolute bottom-[-150px] left-[10%] block h-[35px] w-[35px] animate-float-up bg-surface-0 bg-opacity-20 animation-delay-[8s] animation-duration-[27s]"
+          />
+          <li
+            class="absolute bottom-[-150px] left-[40%] block h-[80px] w-[80px] animate-float-up bg-surface-0 bg-opacity-20 animation-delay-[12s] animation-duration-[30s]"
+          />
+          <li
+            class="absolute bottom-[-150px] left-[80%] block h-[50px] w-[50px] animate-float-up bg-surface-0 bg-opacity-20 animation-delay-[15s] animation-duration-[39s]"
+          />
+          <li
+            class="absolute bottom-[-150px] left-[30%] block h-[120px] w-[120px] animate-float-up bg-surface-0 bg-opacity-20 animation-delay-[17s] animation-duration-[42s]"
+          />
+          <li
+            class="absolute bottom-[-150px] left-[14%] block h-[25px] w-[25px] animate-float-up bg-surface-0 bg-opacity-20 animation-delay-[19s] animation-duration-[45s]"
+          />
+          <li
+            class="absolute bottom-[-270px] left-[10%] block h-[200px] w-[200px] animate-float-up bg-surface-0 bg-opacity-20 animation-delay-[22s] animation-duration-[29s]"
+          />
+          <li
+            class="absolute bottom-[-150px] left-[52%] block h-[40px] w-[40px] animate-float-up bg-surface-0 bg-opacity-20 animation-delay-[25s] animation-duration-[39s]"
+          />
         </ul>
         <!-- End Animated Circles -->
       </div>
@@ -40,17 +97,38 @@
             <p class="mt-2 text-sm text-gray-500">Please sign in to your account</p>
           </div>
           <!-- Start Login Form -->
-          <form class="mt-8 flex flex-col space-y-6">
-            <span class="relative">
-              <i class="pi pi-at absolute left-3 top-6 -mt-2 text-surface-400 dark:text-surface-600" />
-              <InputText v-model="payload.email" placeholder="Email or Mobile Number" class="h-12 w-full pl-10" />
-            </span>
-            <span class="relative">
-              <i class="pi pi-lock absolute left-3 top-6 -mt-2 text-surface-400 dark:text-surface-600" />
-              <InputText type="password" v-model="payload.password" placeholder="Password" class="h-12 w-full pl-10" />
-            </span>
+          <form class="mt-8 flex flex-col space-y-6" @submit.prevent>
+            <WbInputText
+              id="email-input"
+              v-model="payload.email"
+              placeholder="you@example.com"
+              class="w-full"
+              label="Email or mobile number"
+              unstyled="true"
+              :invalid="validator.email.$invalid"
+              :invalid-text="validator.email.$invalid ? validator.email.$errors[0].$message : null"
+            >
+              <template #prepend-icon>
+                <i class="pi pi-at text-surface-500" />
+              </template>
+            </WbInputText>
+            <WbPassword
+              v-model="payload.password"
+              label="Password"
+              placeholder="*****"
+              :feedback="false"
+              toggleMask
+              class="w-full"
+              inputClass="w-full"
+              :invalid="validator.password.$invalid"
+              :invalid-text="validator.password.$invalid ? validator.password.$errors[0].$message : null"
+            >
+              <template #prepend-icon>
+                <i class="pi pi-lock text-surface-500" />
+              </template>
+            </WbPassword>
             <div>
-              <Button label="Sign in" class="w-full"></Button>
+              <Button @click="handleFormSubmit" label="Sign in" class="h-10 w-full font-menu"></Button>
             </div>
             <Divider class="text-xs text-surface-400">or</Divider>
             <p class="flex justify-center text-center">
@@ -67,126 +145,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import InputText from 'primevue/inputtext'
-import Button from 'primevue/button'
-import Divider from 'primevue/divider'
-
-const payload = ref({
-  email: '',
-  password: '',
-})
-</script>
-
-<style scoped>
-.circles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.circles li {
-  position: absolute;
-  display: block;
-  list-style: none;
-  width: 20px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.2);
-  animation: animate 25s linear infinite;
-  bottom: -150px;
-}
-
-.circles li:nth-child(1) {
-  left: 25%;
-  width: 80px;
-  height: 80px;
-  animation-delay: 0s;
-}
-
-.circles li:nth-child(2) {
-  left: 10%;
-  width: 20px;
-  height: 20px;
-  animation-delay: 2s;
-  animation-duration: 12s;
-}
-
-.circles li:nth-child(3) {
-  left: 70%;
-  width: 20px;
-  height: 20px;
-  animation-delay: 4s;
-}
-
-.circles li:nth-child(4) {
-  left: 40%;
-  width: 60px;
-  height: 60px;
-  animation-delay: 0s;
-  animation-duration: 18s;
-}
-
-.circles li:nth-child(5) {
-  left: 65%;
-  width: 20px;
-  height: 20px;
-  animation-delay: 0s;
-}
-
-.circles li:nth-child(6) {
-  left: 75%;
-  width: 110px;
-  height: 110px;
-  animation-delay: 3s;
-}
-
-.circles li:nth-child(7) {
-  left: 35%;
-  width: 150px;
-  height: 150px;
-  animation-delay: 7s;
-}
-
-.circles li:nth-child(8) {
-  left: 50%;
-  width: 25px;
-  height: 25px;
-  animation-delay: 15s;
-  animation-duration: 45s;
-}
-
-.circles li:nth-child(9) {
-  left: 20%;
-  width: 15px;
-  height: 15px;
-  animation-delay: 2s;
-  animation-duration: 35s;
-}
-
-.circles li:nth-child(10) {
-  left: 85%;
-  width: 150px;
-  height: 150px;
-  animation-delay: 0s;
-  animation-duration: 11s;
-}
-
-@keyframes animate {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-    border-radius: 0;
-  }
-
-  100% {
-    transform: translateY(-1000px) rotate(720deg);
-    opacity: 0;
-    border-radius: 50%;
-  }
-}
-</style>
