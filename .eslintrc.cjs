@@ -37,7 +37,7 @@ module.exports = {
   /**
    * We ignore VuePrime TailwindCSS Presets because we'd rather
    * not mess around with the generated code
-   * @see https://tailwind.primevue.org/
+   * @see https://tailwind.primevue.org/builder/
    */
   ignorePatterns: ['src/assets/css/presets/**/*.js'],
 }

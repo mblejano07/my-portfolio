@@ -112,7 +112,7 @@ const routes = [
   {
     path: '/:catchAll(.*)',
     name: 'not-found',
-    component: () => import('@/views/misc/404View.vue'),
+    component: () => import('@/views/misc/404Page.vue'),
     meta: <RouteMeta>{
       label: 'Page not found',
       isSidebarMenu: false,
