@@ -13,11 +13,7 @@ const tailwindConfig = {
   mode: 'jit',
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   darkMode: 'class',
-  safelist: [
-    { pattern: /(bg-primary-|bg-surface-)./ },
-    { pattern: /(text-surface-|text-primary-)./ },
-    { pattern: /(w-|h-)./ },
-  ],
+  safelist: [{ pattern: /(bg-primary-|bg-surface-)./ }, { pattern: /(text-surface-|text-primary-)./ }, { pattern: /(w-|h-)./ }],
   theme: {
     extend: {
       fontFamily: {

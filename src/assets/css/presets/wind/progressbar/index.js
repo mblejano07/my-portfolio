@@ -41,8 +41,7 @@ export default {
       // Before & After (indeterminate)
       {
         'before:absolute before:top-0 before:left-0 before:bottom-0 before:bg-inherit ': props.mode == 'indeterminate',
-        'after:absolute after:top-0 after:left-0 after:bottom-0 after:bg-inherit after:delay-1000':
-          props.mode == 'indeterminate',
+        'after:absolute after:top-0 after:left-0 after:bottom-0 after:bg-inherit after:delay-1000': props.mode == 'indeterminate',
       },
     ],
   }),

@@ -32,8 +32,7 @@ export default {
       // Position
       {
         'before:absolute before:left-0 before:top-1/2': props.layout == 'horizontal',
-        'before:absolute before:left-1/2 before:top-0 before:transform before:-translate-x-1/2':
-          props.layout == 'vertical',
+        'before:absolute before:left-1/2 before:top-0 before:transform before:-translate-x-1/2': props.layout == 'vertical',
       },
 
       // Size

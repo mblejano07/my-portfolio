@@ -64,16 +64,23 @@ const routes = [
     redirect: { name: 'login' },
     meta: <RouteMeta>{
       group: RouteGroup.AUTH,
-      label: 'Login',
     },
     children: [
       {
         path: 'login',
         name: 'login',
-        component: () => import('@/views/LoginPage.vue'),
+        component: () => import('@/views/AuthPage.vue'),
         meta: <RouteMeta>{
-          label: 'User Management',
-          isSidebarMenu: true,
+          label: 'Login',
+          hideNavigation: true,
+        },
+      },
+      {
+        path: 'sign-up',
+        name: 'sign-up',
+        component: () => import('@/views/AuthPage.vue'),
+        meta: <RouteMeta>{
+          label: 'Sign Up',
           hideNavigation: true,
         },
       },

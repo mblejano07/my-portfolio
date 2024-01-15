@@ -34,11 +34,15 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  wrapperClass: {
+    type: String,
+    default: '',
+  },
 })
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
+  <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
     <!-- @vue-expect-error inputId will be passed dynamically -->
     <label :for="attrs.id" class="text-xs text-surface-500">{{ props.label }}</label>
 

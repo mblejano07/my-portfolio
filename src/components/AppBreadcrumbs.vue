@@ -1,27 +1,28 @@
 <script setup lang="ts">
 import Breadcrumb from 'primevue/breadcrumb'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-const route = useRoute()
-
-const show = ref(true)
 const items = ref<Array<{ label?: string }>>()
+
+/** Populate Breadcrumbs based on route metadata */
+const route = useRoute()
+const populateCrumbs = () => {
+  items.value = [{ label: route.meta.group }, { label: route.meta.label }]
+}
+onMounted(() => {
+  populateCrumbs()
+})
 
 watch(
   () => route.name,
   () => {
-    if (!route.meta.isSidebarMenu) {
-      show.value = false
-      return
-    }
-
-    items.value = [{ label: route.meta.group }, { label: route.meta.label }]
+    populateCrumbs()
   }
 )
 </script>
 <template>
-  <Breadcrumb v-if="show" :model="items">
+  <Breadcrumb :model="items">
     <template #separator><i class="pi pi-angle-right"></i></template>
   </Breadcrumb>
 </template>

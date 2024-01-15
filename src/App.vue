@@ -25,7 +25,7 @@ const route = useRoute()
       <div :class="`${route.meta.hideNavigation ? '' : 'mx-4 mt-4 '} flex-1`">
         <RouterView v-slot="{ Component }">
           <transition
-            enter-active-class="transition duration-300"
+            enter-active-class="transition duration-500"
             enter-from-class="translate-x-[20%] opacity-0"
             leave-to-class="opacity-0"
           >
