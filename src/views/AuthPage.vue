@@ -42,7 +42,7 @@ watch(
         <AnimatedFloaters />
       </div>
       <div
-        :class="`w-full bg-surface-0 p-8 transition-all duration-500 sm:w-auto sm:rounded-lg md:flex md:h-full md:items-center md:justify-center md:rounded-none md:p-10 lg:p-14 ${
+        :class="`h-full w-full bg-surface-0 p-8 transition-all duration-500 sm:w-auto sm:rounded-lg md:flex md:h-full md:items-center md:justify-center md:rounded-none md:p-10 lg:p-14 ${
           showLogin ? 'md:w-2/5' : 'md:w-2/4'
         }`"
       >
@@ -57,7 +57,7 @@ watch(
             <LoginForm class="w-full space-y-8" />
           </template>
           <template v-else>
-            <RegisterForm class="w-full space-y-8" />
+            <RegisterForm class="max-h-[85vh] w-full space-y-8 overflow-y-scroll" />
           </template>
         </transition>
         <!-- End Login Form -->

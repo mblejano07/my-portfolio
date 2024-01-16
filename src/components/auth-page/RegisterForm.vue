@@ -135,7 +135,7 @@ const handleFormSubmit = async () => {
       <div class="flex gap-4">
         <WbPassword
           v-model="payload.password"
-          label="Confirm Password"
+          label="Password"
           :feedback="false"
           toggleMask
           :invalid="validator.password.$invalid"
@@ -159,6 +159,7 @@ const handleFormSubmit = async () => {
         </WbPassword>
       </div>
       <!-- End Password and Password Confirmation -->
+      <Divider />
       <!-- Start First name and Middle name -->
       <div class="flex gap-4">
         <WbInputText
@@ -221,8 +222,51 @@ const handleFormSubmit = async () => {
         </WbCalendar>
       </div>
       <!-- End Sex and Birthday -->
+      <Divider />
+      <!-- Start Region and Province -->
+      <div class="flex gap-4">
+        <WbInputText v-model="payload.region_id" label="Region">
+          <template #prepend-icon>
+            <i class="pi pi-map text-surface-500" />
+          </template>
+        </WbInputText>
+        <WbInputText v-model="payload.province_id" label="Province">
+          <template #prepend-icon>
+            <i class="pi pi-map text-surface-500" />
+          </template>
+        </WbInputText>
+      </div>
+      <!-- End Region and Province -->
+      <!-- Start City and Barangay -->
+      <div class="flex gap-4">
+        <WbInputText v-model="payload.city_id" label="City or Municipality">
+          <template #prepend-icon>
+            <i class="pi pi-map text-surface-500" />
+          </template>
+        </WbInputText>
+        <WbInputText v-model="payload.barangay_id" label="Barangay">
+          <template #prepend-icon>
+            <i class="pi pi-map text-surface-500" />
+          </template>
+        </WbInputText>
+      </div>
+      <!-- End City and Barangay -->
+      <!-- Start Home Address and Zip Code -->
+      <div class="flex gap-4">
+        <WbInputText v-model="payload.home_address" label="Home Address">
+          <template #prepend-icon>
+            <i class="pi pi-map text-surface-500" />
+          </template>
+        </WbInputText>
+        <WbInputText v-model="payload.postal_code" label="Zip Code">
+          <template #prepend-icon>
+            <i class="pi pi-map text-surface-500" />
+          </template>
+        </WbInputText>
+      </div>
+      <!-- End Home Address and Zip Code -->
       <div>
-        <Button @click="handleFormSubmit" label="Sign in" size="large" class="w-full font-menu"></Button>
+        <Button @click="handleFormSubmit" label="Sign in" size="large" class="mt-4 w-full font-menu"></Button>
       </div>
       <Divider class="text-xs text-surface-400">or</Divider>
       <p class="flex justify-center text-center">
