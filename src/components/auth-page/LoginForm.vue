@@ -51,7 +51,6 @@ const handleFormSubmit = async () => {
       <WbInputText
         v-model="payload.email"
         label="Email or mobile number"
-        placeholder="Enter your email or mobile number"
         :invalid="validator.email.$invalid"
         :invalid-text="validator.email.$invalid ? validator.email.$errors[0].$message : null"
       >

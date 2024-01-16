@@ -266,7 +266,7 @@ const handleFormSubmit = async () => {
       </div>
       <!-- End Home Address and Zip Code -->
       <div>
-        <Button @click="handleFormSubmit" label="Sign in" size="large" class="mt-4 w-full font-menu"></Button>
+        <Button @click="handleFormSubmit" label="Register" size="large" class="mt-4 w-full font-menu"></Button>
       </div>
       <Divider class="text-xs text-surface-400">or</Divider>
       <p class="flex justify-center text-center">
