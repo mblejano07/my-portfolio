@@ -2,32 +2,39 @@
 import WbInputText from '@/components/webkit/WbInputText.vue'
 import Button from 'primevue/button'
 import WbPassword from '@/components/webkit/WbPassword.vue'
+import WbCalendar from '@/components/webkit/WbCalendar.vue'
+import WbDropdown from '@/components/webkit/WbDropdown.vue'
 import Divider from 'primevue/divider'
 import { reactive, ref, computed } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, maxLength, email, minLength, sameAs } from '@vuelidate/validators'
 import { digitCountRule, passwordRule, mobilePhoneRule } from '@/utils/custom-validations.ts'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /** Component States */
 const payload = reactive({
-  email: '',
-  mobile_number: '',
-  first_name: '',
-  last_name: '',
-  middle_name: '',
-  ext_name: '',
-  birthday: '',
-  sex: '',
-  password: '',
-  password_confirmation: '',
-  home_address: '',
-  barangay_id: '',
-  city_id: '',
-  province_id: '',
-  region_id: '',
-  postal_code: '',
+  email: null,
+  mobile_number: null,
+  first_name: null,
+  last_name: null,
+  middle_name: null,
+  ext_name: null,
+  birthday: null,
+  sex: null,
+  password: null,
+  password_confirmation: null,
+  home_address: null,
+  barangay_id: null,
+  city_id: null,
+  province_id: null,
+  region_id: null,
+  postal_code: null,
 })
 const formIsSubmitting = ref(false)
+const genderOptions = ref([
+  { value: 'male', label: 'Male' },
+  { value: 'female', label: 'Female' },
+])
 
 /** Form Validation */
 const globalStringMaxLength = import.meta.env.VITE_GLOBAL_STRING_MAX_LENGTH
@@ -63,10 +70,6 @@ const formRules = {
   ext_name: {
     maxLength: globalStringMaxLengthRule,
   },
-  birthday: {
-    // date_format: helpers.withMessage('Valid format is yyyy-mm-dd (1997-12-31)', useDateFormatRule),
-    // max_date: helpers.withMessage('Must not be greater than today', useMaxDateTodayRule),
-  },
   password: {
     required: helpers.withMessage('Please enter your password', required),
     minLength: helpers.withMessage('Must be at least 8 characters long', minLength(8)),
@@ -88,6 +91,7 @@ const validator = useVuelidate(formRules, payload)
 
 /** Form Submission */
 const handleFormSubmit = async () => {
+  console.log(payload)
   formIsSubmitting.value = true
   const valid = await validator.value.$validate()
   if (!valid) return (formIsSubmitting.value = false)
@@ -106,7 +110,6 @@ const handleFormSubmit = async () => {
         <WbInputText
           v-model="payload.email"
           placeholder="you@example.com"
-          class="w-full"
           label="Email or mobile number"
           :invalid="validator.email.$invalid"
           :invalid-text="validator.email.$invalid ? validator.email.$errors[0].$message : null"
@@ -119,9 +122,8 @@ const handleFormSubmit = async () => {
           v-model="payload.mobile_number"
           label="Mobile Number"
           placeholder="+63 XXXXXXXXXX"
-          class="w-full"
-          :invalid="validator.password.$invalid"
-          :invalid-text="validator.password.$invalid ? validator.password.$errors[0].$message : null"
+          :invalid="validator.mobile_number.$invalid"
+          :invalid-text="validator.mobile_number.$invalid ? validator.mobile_number.$errors[0].$message : null"
         >
           <template #prepend-icon>
             <i class="pi pi-phone text-surface-500" />
@@ -136,8 +138,6 @@ const handleFormSubmit = async () => {
           label="Confirm Password"
           :feedback="false"
           toggleMask
-          class="w-full"
-          inputClass="w-full"
           :invalid="validator.password.$invalid"
           :invalid-text="validator.password.$invalid ? validator.password.$errors[0].$message : null"
         >
@@ -150,8 +150,6 @@ const handleFormSubmit = async () => {
           label="Confirm Password"
           :feedback="false"
           toggleMask
-          class="w-full"
-          inputClass="w-full"
           :invalid="validator.password_confirmation.$invalid"
           :invalid-text="validator.password_confirmation.$invalid ? validator.password_confirmation.$errors[0].$message : null"
         >
@@ -160,12 +158,11 @@ const handleFormSubmit = async () => {
           </template>
         </WbPassword>
       </div>
-      <!-- Start Password and Password Confirmation -->
+      <!-- End Password and Password Confirmation -->
       <!-- Start First name and Middle name -->
       <div class="flex gap-4">
         <WbInputText
           v-model="payload.first_name"
-          class="w-full"
           label="First name"
           :invalid="validator.first_name.$invalid"
           :invalid-text="validator.first_name.$invalid ? validator.first_name.$errors[0].$message : null"
@@ -177,7 +174,6 @@ const handleFormSubmit = async () => {
         <WbInputText
           v-model="payload.middle_name"
           label="Middle name"
-          class="w-full"
           :invalid="validator.middle_name.$invalid"
           :invalid-text="validator.middle_name.$invalid ? validator.middle_name.$errors[0].$message : null"
         >
@@ -191,7 +187,6 @@ const handleFormSubmit = async () => {
       <div class="flex gap-4">
         <WbInputText
           v-model="payload.last_name"
-          class="w-full"
           label="Last name"
           :invalid="validator.last_name.$invalid"
           :invalid-text="validator.last_name.$invalid ? validator.last_name.$errors[0].$message : null"
@@ -203,7 +198,6 @@ const handleFormSubmit = async () => {
         <WbInputText
           v-model="payload.ext_name"
           label="Ext. name"
-          class="w-full"
           :invalid="validator.ext_name.$invalid"
           :invalid-text="validator.ext_name.$invalid ? validator.ext_name.$errors[0].$message : null"
         >
@@ -213,6 +207,20 @@ const handleFormSubmit = async () => {
         </WbInputText>
       </div>
       <!-- End Last name and Extension name -->
+      <!-- Start Sex and Birthday -->
+      <div class="flex gap-4">
+        <WbDropdown v-model="payload.sex" :options="genderOptions" optionLabel="label" optionValue="value" label="Sex">
+          <template #prepend-icon>
+            <FontAwesomeIcon icon="fa-solid fa-mars-and-venus" class="text-surface-500" />
+          </template>
+        </WbDropdown>
+        <WbCalendar v-model="payload.birthday" dateFormat="MM dd, yy" :maxDate="new Date()" label="Birthday">
+          <template #prepend-icon>
+            <i class="pi pi-gift text-surface-500" />
+          </template>
+        </WbCalendar>
+      </div>
+      <!-- End Sex and Birthday -->
       <div>
         <Button @click="handleFormSubmit" label="Sign in" size="large" class="w-full font-menu"></Button>
       </div>
@@ -227,5 +235,3 @@ const handleFormSubmit = async () => {
     </form>
   </section>
 </template>
-
-<style scoped></style>

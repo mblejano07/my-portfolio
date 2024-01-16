@@ -56,8 +56,8 @@ const props = defineProps({
       <Password
         v-bind="attrs"
         :aria-describedby="`${attrs.id}-help`"
-        :class="`h-12 ${attrs.class}`"
-        :input-class="`h-12 ${slots['prepend-icon'] ? 'pl-10' : ''} ${props.invalid ? '!ring-error-500' : ''} ${
+        :class="`h-12 w-full ${attrs.class}`"
+        :input-class="`h-12 w-full ${slots['prepend-icon'] ? 'pl-10' : ''} ${props.invalid ? '!ring-error-500' : ''} ${
           attrs.inputClass
         }`"
       />
@@ -75,5 +75,3 @@ const props = defineProps({
     <!-- End validation messages -->
   </div>
 </template>
-
-<style scoped></style>

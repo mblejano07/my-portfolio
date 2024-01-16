@@ -7,7 +7,7 @@ import { reactive, ref } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import { useRouter } from 'vue-router'
-import { useSleep } from '@/utils/helpers.ts'
+import { sleep } from '@/utils/helpers.ts'
 
 /** Component States */
 const payload = reactive({
@@ -30,7 +30,6 @@ const validator = useVuelidate(formRules, payload)
 
 /** Form Submission */
 const router = useRouter()
-const sleep = useSleep()
 const handleFormSubmit = async () => {
   formIsSubmitting.value = true
   const valid = await validator.value.$validate()
@@ -51,7 +50,6 @@ const handleFormSubmit = async () => {
     <form class="mt-8 flex flex-col space-y-6" @submit.prevent>
       <WbInputText
         v-model="payload.email"
-        class="w-full"
         label="Email or mobile number"
         placeholder="Enter your email or mobile number"
         :invalid="validator.email.$invalid"
@@ -66,8 +64,6 @@ const handleFormSubmit = async () => {
         label="Password"
         :feedback="false"
         toggleMask
-        class="w-full"
-        inputClass="w-full"
         :invalid="validator.password.$invalid"
         :invalid-text="validator.password.$invalid ? validator.password.$errors[0].$message : null"
       >
