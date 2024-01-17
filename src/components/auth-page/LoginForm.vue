@@ -45,7 +45,7 @@ const handleFormSubmit = async () => {
   <section>
     <div class="text-center">
       <h2 class="mt-6 font-menu text-3xl font-bold">Account Login</h2>
-      <p class="mt-2 text-sm text-gray-500">Sign in to your existing account</p>
+      <p class="mb-4 mt-2 text-sm text-gray-500">Sign in to your existing account</p>
     </div>
     <form class="mt-8 flex flex-col space-y-6" @submit.prevent>
       <WbInputText

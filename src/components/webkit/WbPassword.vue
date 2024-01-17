@@ -60,7 +60,12 @@ const props = defineProps({
         :input-class="`h-12 w-full ${slots['prepend-icon'] ? 'pl-10' : ''} ${props.invalid ? '!ring-error-500' : ''} ${
           attrs.inputClass
         }`"
-      />
+        panel-class="text-xs font-bold md:mt-4"
+      >
+        <template #footer>
+          <slot name="footer-panel"></slot>
+        </template>
+      </Password>
     </div>
     <!-- End Password Field -->
     <!-- Start validation messages -->

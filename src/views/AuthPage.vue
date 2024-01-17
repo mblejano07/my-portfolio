@@ -3,7 +3,7 @@ import AnimatedFloaters from '@/components/misc/AnimatedFloaters.vue'
 import LoginForm from '@/components/auth-page/LoginForm.vue'
 import { useRoute } from 'vue-router'
 import { onMounted, ref, watch } from 'vue'
-import RegisterForm from '@/components/auth-page/RegisterForm.vue'
+import RegisterForm from '@/components/auth-page/register-form/RegisterForm.vue'
 
 /** We either show the Login Form or the Create Account Form based on the route */
 const route = useRoute()
@@ -57,7 +57,7 @@ watch(
             <LoginForm class="w-full space-y-8" />
           </template>
           <template v-else>
-            <RegisterForm class="max-h-[85vh] w-full space-y-8 overflow-y-scroll" />
+            <RegisterForm class="w-full space-y-8" />
           </template>
         </transition>
         <!-- End Login Form -->

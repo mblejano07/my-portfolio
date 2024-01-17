@@ -1,0 +1,139 @@
+<script setup lang="ts">
+import WbInputText from '@/components/webkit/WbInputText.vue'
+import { reactive, ref } from 'vue'
+import useVuelidate from '@vuelidate/core'
+import { helpers, required, maxLength } from '@vuelidate/validators'
+import Button from 'primevue/button'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import WbCalendar from '@/components/webkit/WbCalendar.vue'
+import WbDropdown from '@/components/webkit/WbDropdown.vue'
+
+/** Component States */
+const payload = reactive({
+  first_name: null,
+  last_name: null,
+  middle_name: null,
+  ext_name: null,
+  sex: null,
+  birthday: null,
+})
+const genderOptions = ref([
+  { value: 'male', label: 'Male' },
+  { value: 'female', label: 'Female' },
+])
+
+/** Events */
+const emits = defineEmits(['nextButtonClicked', 'previousButtonClicked'])
+
+/** Form Validation */
+const globalStringMaxLength = import.meta.env.VITE_GLOBAL_STRING_MAX_LENGTH
+const globalStringMaxLengthRule = helpers.withMessage(
+  `Must not exceed ${globalStringMaxLength} characters`,
+  maxLength(globalStringMaxLength)
+)
+const formRules = {
+  $lazy: true,
+  first_name: {
+    required: helpers.withMessage('Please enter your first name', required),
+    maxLength: globalStringMaxLengthRule,
+  },
+  last_name: {
+    required: helpers.withMessage('Please enter your last name', required),
+    maxLength: globalStringMaxLengthRule,
+  },
+  middle_name: {
+    maxLength: globalStringMaxLengthRule,
+  },
+  ext_name: {
+    maxLength: globalStringMaxLengthRule,
+  },
+}
+
+/** Handle Next Section */
+const validator = useVuelidate(formRules, payload)
+const handleNextSection = async () => {
+  const valid = await validator.value.$validate()
+  if (!valid) return false
+  emits('nextButtonClicked')
+}
+</script>
+<template>
+  <div class="flex flex-col gap-4">
+    <!-- Start First name and Middle name -->
+    <div class="flex gap-4">
+      <WbInputText
+        v-model="payload.first_name"
+        label="First name"
+        :invalid="validator.first_name.$invalid"
+        :invalid-text="validator.first_name.$invalid ? validator.first_name.$errors[0].$message : null"
+      >
+        <template #prepend-icon>
+          <i class="pi pi-id-card text-surface-500" />
+        </template>
+      </WbInputText>
+      <WbInputText
+        v-model="payload.middle_name"
+        label="Middle name"
+        :invalid="validator.middle_name.$invalid"
+        :invalid-text="validator.middle_name.$invalid ? validator.middle_name.$errors[0].$message : null"
+      >
+        <template #prepend-icon>
+          <i class="pi pi-id-card text-surface-500" />
+        </template>
+      </WbInputText>
+    </div>
+    <!-- End First name and Middle name -->
+    <!-- Start Last name and Extension name -->
+    <div class="flex gap-4">
+      <WbInputText
+        v-model="payload.last_name"
+        label="Last name"
+        :invalid="validator.last_name.$invalid"
+        :invalid-text="validator.last_name.$invalid ? validator.last_name.$errors[0].$message : null"
+      >
+        <template #prepend-icon>
+          <i class="pi pi-id-card text-surface-500" />
+        </template>
+      </WbInputText>
+      <WbInputText
+        v-model="payload.ext_name"
+        label="Ext. name"
+        :invalid="validator.ext_name.$invalid"
+        :invalid-text="validator.ext_name.$invalid ? validator.ext_name.$errors[0].$message : null"
+      >
+        <template #prepend-icon>
+          <i class="pi pi-id-card text-surface-500" />
+        </template>
+      </WbInputText>
+    </div>
+    <!-- End Last name and Extension name -->
+    <!-- Start Sex and Birthday -->
+    <div class="flex gap-4">
+      <WbDropdown v-model="payload.sex" :options="genderOptions" optionLabel="label" optionValue="value" label="Sex">
+        <template #prepend-icon>
+          <FontAwesomeIcon icon="fa-solid fa-mars-and-venus" class="text-surface-500" />
+        </template>
+      </WbDropdown>
+      <WbCalendar v-model="payload.birthday" dateFormat="MM dd, yy" :maxDate="new Date()" label="Birthday">
+        <template #prepend-icon>
+          <i class="pi pi-gift text-surface-500" />
+        </template>
+      </WbCalendar>
+    </div>
+    <!-- End Sex and Birthday -->
+    <!-- Start Action Buttons -->
+    <div class="mt-4 flex justify-between">
+      <Button @click="emits('previousButtonClicked')" label="Back" size="large" severity="secondary" class="px-10">
+        <template #icon>
+          <i class="pi pi-arrow-left mr-2"></i>
+        </template>
+      </Button>
+      <Button @click="handleNextSection" label="Next" size="large" class="px-10">
+        <template #icon>
+          <i class="pi pi-arrow-right mr-2"></i>
+        </template>
+      </Button>
+    </div>
+    <!-- End Action Buttons -->
+  </div>
+</template>

@@ -43,7 +43,7 @@ export default {
       'after:left-0',
       'after:transform',
       'after:-mt-3',
-      { 'after:hidden': props.model.length == context.index + 1 },
+      { 'after:hidden': props.model.length === context.index + 1 },
     ],
   }),
   step: ({ context, props, state }) => ({
@@ -93,7 +93,7 @@ export default {
     class: [
       'relative',
       // Font
-      'text-sm leading-none',
+      'text-xs leading-none',
       { 'font-medium': context.active },
 
       // Display

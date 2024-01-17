@@ -8,8 +8,10 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { helpers } from '@vuelidate/validators'
+import { email, helpers } from '@vuelidate/validators'
 import { parsePhoneNumber } from 'libphonenumber-js/max'
+import { usePublicStore } from '@/stores/public.ts'
+import useVuelidate from '@vuelidate/core'
 
 /**
  * @description Must have one lowercase & uppercase letter, one number
@@ -53,11 +55,28 @@ export const mobilePhoneRule =
       return phone.isValid()
     }
 
+const publicStore = usePublicStore()
 /**
- * @description the file must be of a certain mime type
+ * @description Async check if the email or mobile number is already taken
  */
-export const mimeTypeRule =
-  (mimeTypes: Array<string>): any =>
-    (value: File) => {
-      return mimeTypes.includes(value.type)
+export const uniqueUserIdentifierRule =
+  (key: 'mobile_number' | 'email', excludedId: string | null = null): any =>
+    async (value: string) => {
+    /** @note We still need to check as the library can still take in non-string types at run time */
+      if (value === null || value === '' || value === undefined) return true
+
+      if (key === 'email') {
+      // Check if the email format is valid before making an API call
+        const validator = useVuelidate({ email: { email } }, { email: value })
+        const isValidFormat = await validator.value.$validate()
+        if (!isValidFormat) return true
+      } else {
+      // Check if the mobile number format is valid before making an API call
+        const validator = useVuelidate({ mobile_number: { mobile_number: mobilePhoneRule() } }, { mobile_number: value })
+        const isValidFormat = await validator.value.$validate()
+        if (!isValidFormat) return true
+      }
+
+      const res = await publicStore.checkAvailability(key, value, excludedId)
+      return res.data?.is_available
     }

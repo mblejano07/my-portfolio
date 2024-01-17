@@ -1,9 +1,9 @@
 <script setup lang="ts">
 /**
  * @see https://tailwind.primevue.org/guides/building-ui-library/
- * @see https://primevue.org/steps/#pt
+ * @see https://primevue.org/inputmask/#api
  */
-import InputText from 'primevue/inputtext'
+import InputMask from 'primevue/inputmask'
 import { useAttrs, useSlots } from 'vue'
 
 const attrs = useAttrs()
@@ -53,7 +53,7 @@ const props = defineProps({
         <slot name="prepend-icon"></slot>
       </div>
       <!-- End Prepend Icon -->
-      <InputText
+      <InputMask
         v-bind="attrs"
         :aria-describedby="`${attrs.id}-help`"
         :class="`h-12 w-full ${slots['prepend-icon'] ? 'pl-10' : ''} ${props.invalid ? '!ring-error-500' : ''}`"
