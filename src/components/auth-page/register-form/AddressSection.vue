@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import WbInputText from '@/components/webkit/WbInputText.vue'
-import { reactive } from 'vue'
+import WbAutoComplete from '@/components/webkit/WbAutoComplete.vue'
+import { reactive, ref, watch } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, maxLength } from '@vuelidate/validators'
 import { digitCountRule } from '@/utils/custom-validations.ts'
@@ -35,17 +36,37 @@ const formRules = {
   },
 }
 const validator = useVuelidate(formRules, payload)
-console.log(validator.$validator.validate())
+console.log('validator', validator)
+
+const selectedRegion = ref()
+const regionsList = ref([
+  { value: 1, label: 'Manila' },
+  { value: 2, label: 'Cebu' },
+  { value: 3, label: 'Davao' },
+])
+
+watch(
+  () => selectedRegion.value,
+  () => console.log('selectedregion', selectedRegion.value)
+)
 </script>
 <template>
   <div class="flex flex-col gap-4">
     <!-- Start Region and Province -->
     <div class="flex gap-4">
-      <WbInputText v-model="payload.region_id" label="Region">
+      <WbAutoComplete
+        v-model="selectedRegion"
+        :suggestions="regionsList"
+        label="Region"
+        optionLabel="label"
+        forceSelection
+        @true-value="(value) => (payload.region_id = value)"
+        loading
+      >
         <template #prepend-icon>
           <i class="pi pi-map text-surface-500" />
         </template>
-      </WbInputText>
+      </WbAutoComplete>
       <WbInputText v-model="payload.province_id" label="Province">
         <template #prepend-icon>
           <i class="pi pi-map text-surface-500" />

@@ -27,7 +27,7 @@ const payload = reactive({
   region_id: null,
   postal_code: null,
 })
-const activeStep = ref(0)
+const activeStep = ref(2)
 const registrationSteps = ref([
   {
     label: 'Credentials',

@@ -2,7 +2,13 @@ import { useFetch } from '@vueuse/core'
 import { useGlobalStore } from '@/stores/global.ts'
 import { useAuthStore } from '@/stores/auth.ts'
 
-export const useApiCall = (uri: string, authToken: string | null = null) => {
+/**
+ * @description Make an HTTP request to an endpoint
+ *
+ * @param uri
+ * @param authToken
+ */
+export const apiCall = (uri: string, authToken: string | null = null) => {
   const baseUrl = import.meta.env.VITE_API_ROOT_URL
 
   // Remove the first char of the uri if it starts with a '/'

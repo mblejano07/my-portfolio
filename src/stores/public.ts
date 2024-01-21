@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useApiCall } from '@/utils/network'
+import { apiCall } from '@/utils/network'
 import { parsePhoneNumber } from 'libphonenumber-js'
 
 export const usePublicStore = defineStore('public', () => {
@@ -11,7 +11,7 @@ export const usePublicStore = defineStore('public', () => {
     let url = `/availability/${key}?value=${value}`
     if (excludeId) url += `&excluded_id=${excludeId}`
 
-    const { data } = await useApiCall(url).get().json()
+    const { data } = await apiCall(url).get().json()
     return data.value
   }
 
