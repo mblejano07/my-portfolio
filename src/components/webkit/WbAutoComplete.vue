@@ -78,11 +78,13 @@ const handleItemClear = (): void => {
 <template>
   <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
     <!-- @vue-expect-error inputId will be passed dynamically -->
-    <label :for="attrs.id" class="text-xs text-surface-500">{{ props.label }}</label>
+    <label :for="attrs.id" :class="`text-xs ${attrs.disabled ? 'text-surface-300' : 'text-surface-500'}`">
+      {{ props.label }}
+    </label>
     <!-- Start AutoComplete-->
-    <div class="relative">
+    <div :class="`relative ${attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">
       <!-- Start Prepend Icon -->
-      <div class="absolute left-3 top-2/4 z-10 -mt-2.5">
+      <div :class="`absolute left-3 top-2/4 z-10 -mt-2.5 ${attrs.disabled ? 'text-surface-200' : 'text-surface-500'}`">
         <slot name="prepend-icon"></slot>
       </div>
       <!-- End Prepend Icon -->

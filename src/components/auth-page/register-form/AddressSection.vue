@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import WbInputText from '@/components/webkit/WbInputText.vue'
 import WbAutoComplete from '@/components/webkit/WbAutoComplete.vue'
-import { onBeforeMount, reactive, ref, toRef, watch } from 'vue'
+import { onBeforeMount, reactive, ref, toRef, toRefs, watch } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, maxLength } from '@vuelidate/validators'
 import { digitCountRule } from '@/utils/custom-validations.ts'
 import Button from 'primevue/button'
 import { usePublicStore } from '@/stores/public.ts'
-import { useFilterByParentId } from '@/composables/address.options.ts'
+import { useClearSelectedAddressIfNotInParentList, useFilterByParentId } from '@/composables/address.options.ts'
 import { WbAutoCompleteOption } from '@/types/ui.types.ts'
 import { storeToRefs } from 'pinia'
 
@@ -15,7 +15,7 @@ import { storeToRefs } from 'pinia'
 const emits = defineEmits(['saveButtonClicked', 'previousButtonClicked'])
 
 /** Component States */
-type Payload = {
+export type AddressFormPayload = {
   home_address: string | null
   barangay_id: string | number | null
   city_id: string | number | null
@@ -23,7 +23,7 @@ type Payload = {
   province_id: string | number | null
   postal_code: string | null
 }
-const payload = reactive<Payload>({
+const payload = reactive<AddressFormPayload>({
   home_address: null,
   barangay_id: null,
   city_id: null,
@@ -44,10 +44,10 @@ onBeforeMount(async () => {
 })
 
 /** Address WbAutoComplete Object References */
-const selectedRegion = ref<WbAutoCompleteOption>()
-const selectedProvince = ref<WbAutoCompleteOption>()
-const selectedCity = ref<WbAutoCompleteOption>()
-const selectedBarangay = ref<WbAutoCompleteOption>()
+const selectedRegion = ref<WbAutoCompleteOption | null>(null)
+const selectedProvince = ref<WbAutoCompleteOption | null>(null)
+const selectedCity = ref<WbAutoCompleteOption | null>(null)
+const selectedBarangay = ref<WbAutoCompleteOption | null>(null)
 
 /** Address WbAutoComplete True Value */
 const handleTrueValue = (addressType: 'region' | 'province' | 'city' | 'barangay', value: number | string | null) => {
@@ -75,6 +75,17 @@ const filteredProvinceOptionsByRegion = useFilterByParentId(toRef(payload, 'regi
 const filteredCityOptionsByProvince = useFilterByParentId(toRef(payload, 'province_id'), cityOptions)
 const filteredBarangayOptionsByCity = useFilterByParentId(toRef(payload, 'city_id'), barangayOptions)
 
+/** We set the `selected<Address>` and `payload.<address>_id` to null if the parent is changed */
+useClearSelectedAddressIfNotInParentList(
+  toRefs(payload),
+  selectedProvince,
+  selectedCity,
+  selectedBarangay,
+  filteredProvinceOptionsByRegion,
+  filteredCityOptionsByProvince,
+  filteredBarangayOptionsByCity
+)
+
 /** Form Validation */
 const globalStringMaxLength = import.meta.env.VITE_GLOBAL_STRING_MAX_LENGTH
 const globalStringMaxLengthRule = helpers.withMessage(
@@ -94,10 +105,16 @@ const validator = useVuelidate(formRules, payload)
 console.log('validator', validator)
 
 watch(
-  () => payload.region_id,
+  () => payload,
   () => {
-    console.log('watcher', payload.region_id)
-  }
+    console.table({
+      region_id: payload.region_id,
+      province_id: payload.province_id,
+      city_id: payload.city_id,
+      barangay_id: payload.barangay_id,
+    })
+  },
+  { deep: true }
 )
 </script>
 <template>
@@ -115,7 +132,7 @@ watch(
         :disabled="publicStore.regionOptionsIsLoading"
       >
         <template #prepend-icon>
-          <i class="pi pi-map text-surface-500" />
+          <i class="pi pi-map" />
         </template>
       </WbAutoComplete>
       <WbAutoComplete
@@ -126,10 +143,10 @@ watch(
         forceSelection
         @true-value="(value) => handleTrueValue('province', value)"
         :loading="publicStore.provinceOptionsIsLoading"
-        :disabled="publicStore.provinceOptionsIsLoading"
+        :disabled="publicStore.provinceOptionsIsLoading || !selectedRegion"
       >
         <template #prepend-icon>
-          <i class="pi pi-map text-surface-500" />
+          <i class="pi pi-map" />
         </template>
       </WbAutoComplete>
     </div>
@@ -144,11 +161,11 @@ watch(
         forceSelection
         @true-value="(value) => handleTrueValue('city', value)"
         :loading="publicStore.cityOptionsIsLoading"
-        :disabled="publicStore.cityOptionsIsLoading"
+        :disabled="publicStore.cityOptionsIsLoading || !selectedProvince"
         :virtualScrollerOptions="{ itemSize: 38 }"
       >
         <template #prepend-icon>
-          <i class="pi pi-map text-surface-500" />
+          <i class="pi pi-map" />
         </template>
       </WbAutoComplete>
       <WbAutoComplete
@@ -159,11 +176,11 @@ watch(
         forceSelection
         @true-value="(value) => handleTrueValue('barangay', value)"
         :loading="publicStore.barangayOptionsIsLoading"
-        :disabled="publicStore.barangayOptionsIsLoading"
+        :disabled="publicStore.barangayOptionsIsLoading || !selectedCity"
         :virtualScrollerOptions="{ itemSize: 38 }"
       >
         <template #prepend-icon>
-          <i class="pi pi-map text-surface-500" />
+          <i class="pi pi-map" />
         </template>
       </WbAutoComplete>
     </div>
