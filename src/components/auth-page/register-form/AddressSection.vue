@@ -1,14 +1,29 @@
 <script setup lang="ts">
 import WbInputText from '@/components/webkit/WbInputText.vue'
 import WbAutoComplete from '@/components/webkit/WbAutoComplete.vue'
-import { reactive, ref, watch } from 'vue'
+import { onBeforeMount, reactive, ref, toRef, watch } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, maxLength } from '@vuelidate/validators'
 import { digitCountRule } from '@/utils/custom-validations.ts'
 import Button from 'primevue/button'
+import { usePublicStore } from '@/stores/public.ts'
+import { useFilterByParentId } from '@/composables/address.options.ts'
+import { WbAutoCompleteOption } from '@/types/ui.types.ts'
+import { storeToRefs } from 'pinia'
+
+/** Events */
+const emits = defineEmits(['saveButtonClicked', 'previousButtonClicked'])
 
 /** Component States */
-const payload = reactive({
+type Payload = {
+  home_address: string | null
+  barangay_id: string | number | null
+  city_id: string | number | null
+  region_id: string | number | null
+  province_id: string | number | null
+  postal_code: string | null
+}
+const payload = reactive<Payload>({
   home_address: null,
   barangay_id: null,
   city_id: null,
@@ -17,8 +32,48 @@ const payload = reactive({
   postal_code: null,
 })
 
-/** Events */
-const emits = defineEmits(['saveButtonClicked', 'previousButtonClicked'])
+/** Initialize Address Options List */
+const publicStore = usePublicStore()
+onBeforeMount(async () => {
+  await Promise.allSettled([
+    publicStore.fetchRegions(),
+    publicStore.fetchProvinces(),
+    publicStore.fetchCities(),
+    publicStore.fetchBarangays(),
+  ])
+})
+
+/** Address WbAutoComplete Object References */
+const selectedRegion = ref<WbAutoCompleteOption>()
+const selectedProvince = ref<WbAutoCompleteOption>()
+const selectedCity = ref<WbAutoCompleteOption>()
+const selectedBarangay = ref<WbAutoCompleteOption>()
+
+/** Address WbAutoComplete True Value */
+const handleTrueValue = (addressType: 'region' | 'province' | 'city' | 'barangay', value: number | string | null) => {
+  switch (addressType) {
+    case 'region':
+      payload.region_id = value
+      break
+    case 'province':
+      payload.province_id = value
+      break
+    case 'city':
+      payload.city_id = value
+      break
+    case 'barangay':
+      payload.barangay_id = value
+      break
+    default:
+      break
+  }
+}
+
+/** We only display a list based on parent address */
+const { provinceOptions, cityOptions, barangayOptions } = storeToRefs(publicStore)
+const filteredProvinceOptionsByRegion = useFilterByParentId(toRef(payload, 'region_id'), provinceOptions)
+const filteredCityOptionsByProvince = useFilterByParentId(toRef(payload, 'province_id'), cityOptions)
+const filteredBarangayOptionsByCity = useFilterByParentId(toRef(payload, 'city_id'), barangayOptions)
 
 /** Form Validation */
 const globalStringMaxLength = import.meta.env.VITE_GLOBAL_STRING_MAX_LENGTH
@@ -38,16 +93,11 @@ const formRules = {
 const validator = useVuelidate(formRules, payload)
 console.log('validator', validator)
 
-const selectedRegion = ref()
-const regionsList = ref([
-  { value: 1, label: 'Manila' },
-  { value: 2, label: 'Cebu' },
-  { value: 3, label: 'Davao' },
-])
-
 watch(
-  () => selectedRegion.value,
-  () => console.log('selectedregion', selectedRegion.value)
+  () => payload.region_id,
+  () => {
+    console.log('watcher', payload.region_id)
+  }
 )
 </script>
 <template>
@@ -56,36 +106,66 @@ watch(
     <div class="flex gap-4">
       <WbAutoComplete
         v-model="selectedRegion"
-        :suggestions="regionsList"
+        :suggestions="publicStore.regionOptions"
         label="Region"
         optionLabel="label"
         forceSelection
-        @true-value="(value) => (payload.region_id = value)"
-        loading
+        @true-value="(value) => handleTrueValue('region', value)"
+        :loading="publicStore.regionOptionsIsLoading"
+        :disabled="publicStore.regionOptionsIsLoading"
       >
         <template #prepend-icon>
           <i class="pi pi-map text-surface-500" />
         </template>
       </WbAutoComplete>
-      <WbInputText v-model="payload.province_id" label="Province">
+      <WbAutoComplete
+        v-model="selectedProvince"
+        :suggestions="filteredProvinceOptionsByRegion"
+        label="Province"
+        optionLabel="label"
+        forceSelection
+        @true-value="(value) => handleTrueValue('province', value)"
+        :loading="publicStore.provinceOptionsIsLoading"
+        :disabled="publicStore.provinceOptionsIsLoading"
+      >
         <template #prepend-icon>
           <i class="pi pi-map text-surface-500" />
         </template>
-      </WbInputText>
+      </WbAutoComplete>
     </div>
     <!-- End Region and Province -->
     <!-- Start City and Barangay -->
     <div class="flex gap-4">
-      <WbInputText v-model="payload.city_id" label="City or Municipality">
+      <WbAutoComplete
+        v-model="selectedCity"
+        :suggestions="filteredCityOptionsByProvince"
+        label="City"
+        optionLabel="label"
+        forceSelection
+        @true-value="(value) => handleTrueValue('city', value)"
+        :loading="publicStore.cityOptionsIsLoading"
+        :disabled="publicStore.cityOptionsIsLoading"
+        :virtualScrollerOptions="{ itemSize: 38 }"
+      >
         <template #prepend-icon>
           <i class="pi pi-map text-surface-500" />
         </template>
-      </WbInputText>
-      <WbInputText v-model="payload.barangay_id" label="Barangay">
+      </WbAutoComplete>
+      <WbAutoComplete
+        v-model="selectedBarangay"
+        :suggestions="filteredBarangayOptionsByCity"
+        label="Barangay"
+        optionLabel="label"
+        forceSelection
+        @true-value="(value) => handleTrueValue('barangay', value)"
+        :loading="publicStore.barangayOptionsIsLoading"
+        :disabled="publicStore.barangayOptionsIsLoading"
+        :virtualScrollerOptions="{ itemSize: 38 }"
+      >
         <template #prepend-icon>
           <i class="pi pi-map text-surface-500" />
         </template>
-      </WbInputText>
+      </WbAutoComplete>
     </div>
     <!-- End City and Barangay -->
     <!-- Start Home Address and Zip Code -->

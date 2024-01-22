@@ -5,6 +5,7 @@
  */
 import AutoComplete, { AutoCompleteCompleteEvent, AutoCompleteItemSelectEvent } from 'primevue/autocomplete'
 import { ref, useAttrs, useSlots, PropType } from 'vue'
+import { WbAutoCompleteOption, WbAutoCompleteOptionKey } from '@/types/ui.types.ts'
 
 const attrs = useAttrs()
 const slots = useSlots()
@@ -13,24 +14,19 @@ defineOptions({
   inheritAttrs: false,
 })
 
-type Option = {
-  value: string
-  label: string
-}
-type OptionKey = 'value' | 'label'
-
 const emit = defineEmits(['trueValue'])
+
 const props = defineProps({
   label: {
     type: String,
     required: true,
   },
   suggestions: {
-    type: Array as PropType<Option[]>,
+    type: Array as PropType<WbAutoCompleteOption[]>,
     required: true,
   },
   trueValueKey: {
-    type: String as PropType<OptionKey>,
+    type: String as PropType<WbAutoCompleteOptionKey>,
     default: 'value',
   },
   invalid: {
@@ -56,10 +52,11 @@ const props = defineProps({
 })
 
 /** Search functionality */
-const filteredSuggestions = ref<Option[]>()
-const search = (event: AutoCompleteCompleteEvent) => {
+const filteredSuggestions = ref<WbAutoCompleteOption[]>()
+const search = (event: AutoCompleteCompleteEvent): void => {
   if (!event.query.trim().length) {
-    return (filteredSuggestions.value = [...props.suggestions])
+    filteredSuggestions.value = [...props.suggestions]
+    return
   }
 
   filteredSuggestions.value = props.suggestions.filter((suggestion) => {
@@ -68,9 +65,13 @@ const search = (event: AutoCompleteCompleteEvent) => {
 }
 
 /** Send back the true value of an object to the parent */
-const handleTrueValueEmit = (event: AutoCompleteItemSelectEvent) => {
-  const selectedOption: Option = event.value
+const handleItemSelect = (event: AutoCompleteItemSelectEvent): void => {
+  const selectedOption: WbAutoCompleteOption = event.value
   emit('trueValue', selectedOption[props.trueValueKey])
+}
+
+const handleItemClear = (): void => {
+  emit('trueValue', null)
 }
 </script>
 
@@ -94,7 +95,8 @@ const handleTrueValueEmit = (event: AutoCompleteItemSelectEvent) => {
         ${attrs.inputClass}`"
         @complete="search"
         :suggestions="filteredSuggestions"
-        @item-select="(event: AutoCompleteItemSelectEvent) => handleTrueValueEmit(event)"
+        @item-select="(event: AutoCompleteItemSelectEvent) => handleItemSelect(event)"
+        @clear="handleItemClear"
       />
     </div>
     <!-- End AutoComplete -->
