@@ -2,7 +2,8 @@ import { defineStore } from 'pinia'
 import { apiCall } from '@/utils/network'
 import { parsePhoneNumber } from 'libphonenumber-js'
 import { ref } from 'vue'
-import { ApiResponse, BarangayResponse, CityResponse, ProvinceResponse, RegionResponse } from '@/types/http.types.ts'
+import { ApiResponse } from '@/types/http/base.types.ts'
+import { BarangayResponse, CityResponse, ProvinceResponse, RegionResponse } from '@/types/http/address.types.ts'
 import { WbAutoCompleteOption } from '@/types/ui.types.ts'
 
 export const usePublicStore = defineStore('public', () => {

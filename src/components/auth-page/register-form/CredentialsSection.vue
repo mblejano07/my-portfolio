@@ -7,17 +7,18 @@ import { helpers, required, email, minLength, maxLength, sameAs } from '@vuelida
 import { mobilePhoneRule, passwordRule, uniqueUserIdentifierRule } from '@/utils/custom-validations.ts'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
-import { useRouter } from 'vue-router'
 import WbInputMask from '@/components/webkit/WbInputMask.vue'
+import { RegistrationCredentialsSection } from '@/types/models/auth.ts'
+import { useFormsStore } from '@/stores/forms.ts'
 
 /** Component States */
-const payload = reactive({
-  email: null,
-  mobile_number: null,
-  password: null,
-  password_confirmation: null,
+const formStore = useFormsStore()
+const model = reactive<RegistrationCredentialsSection>({
+  email: formStore.registrationInfo.credentials?.email || null,
+  mobile_number: formStore.registrationInfo.credentials?.mobile_number || null,
+  password: formStore.registrationInfo.credentials?.password || null,
+  password_confirmation: formStore.registrationInfo.credentials?.password || null,
 })
-const router = useRouter()
 
 /** Events */
 const emits = defineEmits(['nextButtonClicked'])
@@ -44,15 +45,16 @@ const formRules = {
   },
   password_confirmation: {
     required: helpers.withMessage('Please confirm your password', required),
-    sameAsPassword: helpers.withMessage('Must match the password field', sameAs(computed(() => payload.password))),
+    sameAsPassword: helpers.withMessage('Must match the password field', sameAs(computed(() => model.password))),
   },
 }
 
 /** Handle Next Section */
-const validator = useVuelidate(formRules, payload)
+const validator = useVuelidate(formRules, model)
 const handleNextSection = async () => {
   const valid = await validator.value.$validate()
   if (!valid) return false
+  formStore.saveRegistrationCredentialsSection(model)
   emits('nextButtonClicked')
 }
 </script>
@@ -61,20 +63,20 @@ const handleNextSection = async () => {
     <!-- Start Email and Mobile Number -->
     <div class="flex gap-4">
       <WbInputText
-        v-model="payload.email"
+        v-model="model.email"
         placeholder="you@example.com"
-        label="Email or mobile number"
+        label="Email *"
         :invalid="validator.email.$invalid"
         :invalid-text="validator.email.$errors[0]?.$message"
         @blur="validator.email.$touch"
         @focusin="validator.email.$dirty = false"
       >
         <template #prepend-icon>
-          <i class="pi pi-envelope text-surface-500" />
+          <i class="pi pi-envelope" />
         </template>
       </WbInputText>
       <WbInputMask
-        v-model="payload.mobile_number"
+        v-model="model.mobile_number"
         label="Mobile Number"
         mask="+63 999 999 9999"
         placeholder="+63 XXX XXX XXXX"
@@ -84,7 +86,7 @@ const handleNextSection = async () => {
         @focusin="validator.mobile_number.$dirty = false"
       >
         <template #prepend-icon>
-          <i class="pi pi-phone text-surface-500" />
+          <i class="pi pi-phone" />
         </template>
       </WbInputMask>
     </div>
@@ -92,8 +94,8 @@ const handleNextSection = async () => {
     <!-- Start Password and Password Confirmation -->
     <div class="flex gap-4">
       <WbPassword
-        v-model="payload.password"
-        label="Password"
+        v-model="model.password"
+        label="Password *"
         toggleMask
         :invalid="validator.password.$invalid"
         :invalid-text="validator.password.$errors[0]?.$message"
@@ -101,7 +103,7 @@ const handleNextSection = async () => {
         @focusin="validator.password.$dirty = false"
       >
         <template #prepend-icon>
-          <i class="pi pi-lock text-surface-500" />
+          <i class="pi pi-lock" />
         </template>
         <template #footer-panel>
           <Divider />
@@ -115,23 +117,23 @@ const handleNextSection = async () => {
         </template>
       </WbPassword>
       <WbPassword
-        v-model="payload.password_confirmation"
-        label="Confirm Password"
+        v-model="model.password_confirmation"
+        label="Confirm Password *"
         :feedback="false"
         toggleMask
         :invalid="validator.password_confirmation.$invalid"
         :invalid-text="validator.password_confirmation.$errors[0]?.$message"
       >
         <template #prepend-icon>
-          <i class="pi pi-lock text-surface-500" />
+          <i class="pi pi-lock" />
         </template>
       </WbPassword>
     </div>
     <!-- End Password and Password Confirmation -->
     <!-- Start Action Buttons -->
     <div class="mt-4 flex justify-between">
-      <Button @click="router.push({ name: 'login' })" label="Login instead" size="large" severity="secondary" class="px-6" />
-      <Button @click="handleNextSection" label="Next" size="large" class="px-10">
+      <Button @click="$router.push({ name: 'login' })" label="Login instead" size="large" severity="secondary" />
+      <Button @click="handleNextSection" label="Next" size="large">
         <template #icon>
           <i class="pi pi-arrow-right mr-2"></i>
         </template>

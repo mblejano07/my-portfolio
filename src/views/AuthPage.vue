@@ -43,7 +43,7 @@ watch(
       </div>
       <div
         :class="`h-full w-full bg-surface-0 p-8 transition-all duration-500 sm:w-auto sm:rounded-lg md:flex md:h-full md:items-center md:justify-center md:rounded-none md:p-10 lg:p-14 ${
-          showLogin ? 'md:w-2/5' : 'md:w-2/4'
+          showLogin ? 'md:w-2/5' : 'md:w-3/4'
         }`"
       >
         <!-- Start Login Form -->

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import WbInputText from '@/components/webkit/WbInputText.vue'
 import WbAutoComplete from '@/components/webkit/WbAutoComplete.vue'
-import { onBeforeMount, reactive, ref, toRef, toRefs, watch } from 'vue'
+import WbInputMask from '@/components/webkit/WbInputMask.vue'
+import { onBeforeMount, reactive, ref, toRef, toRefs } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, maxLength } from '@vuelidate/validators'
 import { digitCountRule } from '@/utils/custom-validations.ts'
@@ -10,26 +11,21 @@ import { usePublicStore } from '@/stores/public.ts'
 import { useClearSelectedAddressIfNotInParentList, useFilterByParentId } from '@/composables/address.options.ts'
 import { WbAutoCompleteOption } from '@/types/ui.types.ts'
 import { storeToRefs } from 'pinia'
+import { RegistrationAddressSection } from '@/types/models/auth.ts'
+import { useFormsStore } from '@/stores/forms.ts'
 
 /** Events */
-const emits = defineEmits(['saveButtonClicked', 'previousButtonClicked'])
+const emit = defineEmits(['saveButtonClicked', 'previousButtonClicked'])
 
 /** Component States */
-export type AddressFormPayload = {
-  home_address: string | null
-  barangay_id: string | number | null
-  city_id: string | number | null
-  region_id: string | number | null
-  province_id: string | number | null
-  postal_code: string | null
-}
-const payload = reactive<AddressFormPayload>({
-  home_address: null,
-  barangay_id: null,
-  city_id: null,
-  region_id: null,
-  province_id: null,
-  postal_code: null,
+const formStore = useFormsStore()
+const model = reactive<RegistrationAddressSection>({
+  home_address: formStore.registrationInfo.address?.home_address || null,
+  barangay_id: formStore.registrationInfo.address?.barangay_id || null,
+  city_id: formStore.registrationInfo.address?.city_id || null,
+  region_id: formStore.registrationInfo.address?.region_id || null,
+  province_id: formStore.registrationInfo.address?.province_id || null,
+  postal_code: formStore.registrationInfo.address?.postal_code || null,
 })
 
 /** Initialize Address Options List */
@@ -53,16 +49,16 @@ const selectedBarangay = ref<WbAutoCompleteOption | null>(null)
 const handleTrueValue = (addressType: 'region' | 'province' | 'city' | 'barangay', value: number | string | null) => {
   switch (addressType) {
     case 'region':
-      payload.region_id = value
+      model.region_id = value
       break
     case 'province':
-      payload.province_id = value
+      model.province_id = value
       break
     case 'city':
-      payload.city_id = value
+      model.city_id = value
       break
     case 'barangay':
-      payload.barangay_id = value
+      model.barangay_id = value
       break
     default:
       break
@@ -71,13 +67,13 @@ const handleTrueValue = (addressType: 'region' | 'province' | 'city' | 'barangay
 
 /** We only display a list based on parent address */
 const { provinceOptions, cityOptions, barangayOptions } = storeToRefs(publicStore)
-const filteredProvinceOptionsByRegion = useFilterByParentId(toRef(payload, 'region_id'), provinceOptions)
-const filteredCityOptionsByProvince = useFilterByParentId(toRef(payload, 'province_id'), cityOptions)
-const filteredBarangayOptionsByCity = useFilterByParentId(toRef(payload, 'city_id'), barangayOptions)
+const filteredProvinceOptionsByRegion = useFilterByParentId(toRef(model, 'region_id'), provinceOptions)
+const filteredCityOptionsByProvince = useFilterByParentId(toRef(model, 'province_id'), cityOptions)
+const filteredBarangayOptionsByCity = useFilterByParentId(toRef(model, 'city_id'), barangayOptions)
 
 /** We set the `selected<Address>` and `payload.<address>_id` to null if the parent is changed */
 useClearSelectedAddressIfNotInParentList(
-  toRefs(payload),
+  toRefs(model),
   selectedProvince,
   selectedCity,
   selectedBarangay,
@@ -101,21 +97,16 @@ const formRules = {
     digitCount: helpers.withMessage('Enter your 4-digit zip code', digitCountRule(4)),
   },
 }
-const validator = useVuelidate(formRules, payload)
-console.log('validator', validator)
 
-watch(
-  () => payload,
-  () => {
-    console.table({
-      region_id: payload.region_id,
-      province_id: payload.province_id,
-      city_id: payload.city_id,
-      barangay_id: payload.barangay_id,
-    })
-  },
-  { deep: true }
-)
+/** Handle Save */
+const validator = useVuelidate(formRules, model)
+const handleSaveButtonClicked = async () => {
+  const valid = await validator.value.$validate()
+  if (!valid) return false
+
+  formStore.saveRegistrationAddressSection(model)
+  emit('saveButtonClicked')
+}
 </script>
 <template>
   <div class="flex flex-col gap-4">
@@ -143,7 +134,7 @@ watch(
         forceSelection
         @true-value="(value) => handleTrueValue('province', value)"
         :loading="publicStore.provinceOptionsIsLoading"
-        :disabled="publicStore.provinceOptionsIsLoading || !selectedRegion"
+        :disabled="publicStore.provinceOptionsIsLoading"
       >
         <template #prepend-icon>
           <i class="pi pi-map" />
@@ -161,7 +152,7 @@ watch(
         forceSelection
         @true-value="(value) => handleTrueValue('city', value)"
         :loading="publicStore.cityOptionsIsLoading"
-        :disabled="publicStore.cityOptionsIsLoading || !selectedProvince"
+        :disabled="publicStore.cityOptionsIsLoading"
         :virtualScrollerOptions="{ itemSize: 38 }"
       >
         <template #prepend-icon>
@@ -176,7 +167,7 @@ watch(
         forceSelection
         @true-value="(value) => handleTrueValue('barangay', value)"
         :loading="publicStore.barangayOptionsIsLoading"
-        :disabled="publicStore.barangayOptionsIsLoading || !selectedCity"
+        :disabled="publicStore.barangayOptionsIsLoading"
         :virtualScrollerOptions="{ itemSize: 38 }"
       >
         <template #prepend-icon>
@@ -187,26 +178,26 @@ watch(
     <!-- End City and Barangay -->
     <!-- Start Home Address and Zip Code -->
     <div class="flex gap-4">
-      <WbInputText v-model="payload.home_address" label="Home Address">
+      <WbInputText v-model="model.home_address" label="Home Address">
         <template #prepend-icon>
-          <i class="pi pi-map text-surface-500" />
+          <i class="pi pi-map" />
         </template>
       </WbInputText>
-      <WbInputText v-model="payload.postal_code" label="Zip Code">
+      <WbInputMask v-model="model.postal_code" label="Zip Code" mask="9999">
         <template #prepend-icon>
-          <i class="pi pi-map text-surface-500" />
+          <i class="pi pi-map" />
         </template>
-      </WbInputText>
+      </WbInputMask>
     </div>
     <!-- End Home Address and Zip Code -->
     <!-- Start Action Buttons -->
     <div class="mt-4 flex justify-between">
-      <Button @click="emits('previousButtonClicked')" label="Back" size="large" severity="secondary" class="px-10">
+      <Button @click="emit('previousButtonClicked')" label="Back" size="large" severity="secondary" class="px-10">
         <template #icon>
           <i class="pi pi-arrow-left mr-2"></i>
         </template>
       </Button>
-      <Button @click="emits('saveButtonClicked')" label="Save" size="large" class="px-10">
+      <Button @click="handleSaveButtonClicked" label="Save" size="large" class="px-10">
         <template #icon>
           <i class="pi pi-save mr-2"></i>
         </template>

@@ -1,15 +1,4 @@
-export interface ApiResponse {
-  success: boolean
-  data?: Array<object> | object
-  message?: string
-  error_code?: string
-}
-
-interface ApiResponseData {
-  id: number | string
-  created_at: string
-  updated_at: string
-}
+import { ApiResponseData } from '@/types/http/base.types.ts'
 
 export interface RegionResponse extends ApiResponseData {
   code_correspondence: string

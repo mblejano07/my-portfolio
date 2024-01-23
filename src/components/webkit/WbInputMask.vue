@@ -47,9 +47,9 @@ const props = defineProps({
     <label :for="attrs.id" class="text-xs text-surface-500">{{ props.label }}</label>
 
     <!-- Start InputText-->
-    <div class="relative">
+    <div :class="`relative ${attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">
       <!-- Start Prepend Icon -->
-      <div class="absolute left-3 top-2/4 -mt-2.5">
+      <div :class="`absolute left-3 top-2/4 z-10 -mt-2.5 ${attrs.disabled ? 'text-surface-300' : 'text-surface-500'}`">
         <slot name="prepend-icon"></slot>
       </div>
       <!-- End Prepend Icon -->
