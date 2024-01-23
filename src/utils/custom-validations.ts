@@ -10,7 +10,7 @@
 
 import { email, helpers } from '@vuelidate/validators'
 import { parsePhoneNumber } from 'libphonenumber-js/max'
-import { usePublicStore } from '@/stores/public.ts'
+import { AvailabilityResponse, usePublicStore } from '@/stores/public.ts'
 import useVuelidate from '@vuelidate/core'
 
 /**
@@ -78,5 +78,5 @@ export const uniqueUserIdentifierRule =
       }
 
       const res = await publicStore.checkAvailability(key, value, excludedId)
-      return res.data?.is_available
+      return (res.data as AvailabilityResponse).is_available
     }

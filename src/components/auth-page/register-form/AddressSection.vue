@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import WbInputText from '@/components/webkit/WbInputText.vue'
-import WbAutoComplete from '@/components/webkit/WbAutoComplete.vue'
+import WbAutoComplete, { WbAutoCompleteOption } from '@/components/webkit/WbAutoComplete.vue'
 import WbInputMask from '@/components/webkit/WbInputMask.vue'
 import { onBeforeMount, reactive, ref, toRef, toRefs } from 'vue'
 import useVuelidate from '@vuelidate/core'
@@ -9,17 +9,15 @@ import { digitCountRule } from '@/utils/custom-validations.ts'
 import Button from 'primevue/button'
 import { usePublicStore } from '@/stores/public.ts'
 import { useClearSelectedAddressIfNotInParentList, useFilterByParentId } from '@/composables/address.options.ts'
-import { WbAutoCompleteOption } from '@/types/ui.types.ts'
 import { storeToRefs } from 'pinia'
-import { RegistrationAddressSection } from '@/types/models/auth.ts'
-import { useFormsStore } from '@/stores/forms.ts'
+import { RegistrationAddressPayload, useFormsStore } from '@/stores/forms.ts'
 
 /** Events */
 const emit = defineEmits(['saveButtonClicked', 'previousButtonClicked'])
 
 /** Component States */
 const formStore = useFormsStore()
-const model = reactive<RegistrationAddressSection>({
+const payload = reactive<RegistrationAddressPayload>({
   home_address: formStore.registrationInfo.address?.home_address || null,
   barangay_id: formStore.registrationInfo.address?.barangay_id || null,
   city_id: formStore.registrationInfo.address?.city_id || null,
@@ -49,16 +47,16 @@ const selectedBarangay = ref<WbAutoCompleteOption | null>(null)
 const handleTrueValue = (addressType: 'region' | 'province' | 'city' | 'barangay', value: number | string | null) => {
   switch (addressType) {
     case 'region':
-      model.region_id = value
+      payload.region_id = value
       break
     case 'province':
-      model.province_id = value
+      payload.province_id = value
       break
     case 'city':
-      model.city_id = value
+      payload.city_id = value
       break
     case 'barangay':
-      model.barangay_id = value
+      payload.barangay_id = value
       break
     default:
       break
@@ -67,13 +65,13 @@ const handleTrueValue = (addressType: 'region' | 'province' | 'city' | 'barangay
 
 /** We only display a list based on parent address */
 const { provinceOptions, cityOptions, barangayOptions } = storeToRefs(publicStore)
-const filteredProvinceOptionsByRegion = useFilterByParentId(toRef(model, 'region_id'), provinceOptions)
-const filteredCityOptionsByProvince = useFilterByParentId(toRef(model, 'province_id'), cityOptions)
-const filteredBarangayOptionsByCity = useFilterByParentId(toRef(model, 'city_id'), barangayOptions)
+const filteredProvinceOptionsByRegion = useFilterByParentId(toRef(payload, 'region_id'), provinceOptions)
+const filteredCityOptionsByProvince = useFilterByParentId(toRef(payload, 'province_id'), cityOptions)
+const filteredBarangayOptionsByCity = useFilterByParentId(toRef(payload, 'city_id'), barangayOptions)
 
 /** We set the `selected<Address>` and `payload.<address>_id` to null if the parent is changed */
 useClearSelectedAddressIfNotInParentList(
-  toRefs(model),
+  toRefs(payload),
   selectedProvince,
   selectedCity,
   selectedBarangay,
@@ -99,12 +97,12 @@ const formRules = {
 }
 
 /** Handle Save */
-const validator = useVuelidate(formRules, model)
+const validator = useVuelidate<RegistrationAddressPayload>(formRules, payload)
 const handleSaveButtonClicked = async () => {
   const valid = await validator.value.$validate()
   if (!valid) return false
 
-  formStore.saveRegistrationAddressSection(model)
+  formStore.saveRegistrationAddressSection(payload)
   emit('saveButtonClicked')
 }
 </script>
@@ -178,12 +176,12 @@ const handleSaveButtonClicked = async () => {
     <!-- End City and Barangay -->
     <!-- Start Home Address and Zip Code -->
     <div class="flex gap-4">
-      <WbInputText v-model="model.home_address" label="Home Address">
+      <WbInputText v-model="payload.home_address" label="Home Address">
         <template #prepend-icon>
           <i class="pi pi-map" />
         </template>
       </WbInputText>
-      <WbInputMask v-model="model.postal_code" label="Zip Code" mask="9999">
+      <WbInputMask v-model="payload.postal_code" label="Zip Code" mask="9999">
         <template #prepend-icon>
           <i class="pi pi-map" />
         </template>

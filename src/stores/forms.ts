@@ -1,28 +1,22 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import {
-  RegistrationAddressSection,
-  RegistrationCredentialsSection,
-  RegistrationModel,
-  RegistrationPersonalInfoSection,
-} from '@/types/models/auth.ts'
 
 export const useFormsStore = defineStore('forms', () => {
-  const registrationInfo = ref<RegistrationModel>({
+  const registrationInfo = ref<RegistrationPayload>({
     credentials: null,
     personal_info: null,
     address: null,
   })
 
-  const saveRegistrationCredentialsSection = (model: RegistrationCredentialsSection) => {
+  const saveRegistrationCredentialsSection = (model: RegistrationCredentialsPayload) => {
     registrationInfo.value.credentials = model
   }
 
-  const saveRegistrationPersonalInfoSection = (model: RegistrationPersonalInfoSection) => {
+  const saveRegistrationPersonalInfoSection = (model: RegistrationPersonalInfoPayload) => {
     registrationInfo.value.personal_info = model
   }
 
-  const saveRegistrationAddressSection = (model: RegistrationAddressSection) => {
+  const saveRegistrationAddressSection = (model: RegistrationAddressPayload) => {
     registrationInfo.value.address = model
   }
 
@@ -40,3 +34,35 @@ export const useFormsStore = defineStore('forms', () => {
     saveRegistrationAddressSection,
   }
 })
+
+/** Typings */
+export type RegistrationCredentialsPayload = {
+  email: string | null
+  mobile_number: string | null
+  password: string | null
+  password_confirmation: string | null
+}
+
+export type RegistrationPersonalInfoPayload = {
+  first_name: string | null
+  middle_name: string | null
+  last_name: string | null
+  ext_name: string | null
+  sex: string | null
+  birthday: Date | null
+}
+
+export type RegistrationAddressPayload = {
+  region_id: string | number | null
+  province_id: string | number | null
+  city_id: string | number | null
+  barangay_id: string | number | null
+  home_address: string | null
+  postal_code: string | null
+}
+
+export type RegistrationPayload = {
+  credentials: RegistrationCredentialsPayload | null
+  personal_info: RegistrationPersonalInfoPayload | null
+  address: RegistrationAddressPayload | null
+}

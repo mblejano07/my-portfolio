@@ -1,6 +1,6 @@
 import { computed, Ref, ToRefs, UnwrapNestedRefs, watch } from 'vue'
-import { WbAutoCompleteOption } from '@/types/ui.types.ts'
-import { RegistrationAddressSection } from '@/types/models/auth.ts'
+import { WbAutoCompleteOption } from '@/components/webkit/WbAutoComplete.vue'
+import { RegistrationAddressPayload } from '@/stores/forms.ts'
 
 /**
  * @description Filter the list of address based on the parent.
@@ -22,8 +22,14 @@ export const useFilterByParentId = (parentId: Ref<number | string | null>, fullO
   })
 }
 
+/**
+ * @description Clear the selected address if the parent is changed or cleared.
+ * Let's say the region, province, city, and barangay are already selected,
+ * then the user decided to change the province -- the behavior for this will be:
+ * the selected values for barangay and city will be cleared.
+ */
 export const useClearSelectedAddressIfNotInParentList = (
-  payload: ToRefs<UnwrapNestedRefs<RegistrationAddressSection>>,
+  payload: ToRefs<UnwrapNestedRefs<RegistrationAddressPayload>>,
   selectedProvinceObjRef: Ref<WbAutoCompleteOption | null>,
   selectedCityObjectRef: Ref<WbAutoCompleteOption | null>,
   selectedBarangayObjectRef: Ref<WbAutoCompleteOption | null>,

@@ -5,7 +5,6 @@ import ProfilePage from '@/views/ProfilePage.vue'
 import SupportPage from '@/views/SupportPage.vue'
 import AboutUsPage from '@/views/AboutUsPage.vue'
 import AnnouncementsPage from '@/views/AnnouncementsPage.vue'
-import { RouteGroup } from '@/types/router.types.ts'
 
 const routes = [
   {
@@ -127,11 +126,31 @@ const routes = [
     },
   },
 ]
-/** End Routes Definition **/
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
 })
+
+/** Typings */
+export const enum RouteGroup {
+  HOME = 'Home',
+  ADMIN_TOOLS = 'Admin Tools',
+  MISC = 'Misc',
+  AUTH = 'Auth',
+}
+
+/**
+ * Extending vue-router type
+ * @see https://router.vuejs.org/guide/advanced/meta.html#TypeScript
+ */
+declare module 'vue-router' {
+  interface RouteMeta {
+    group?: RouteGroup
+    label: string
+    isSidebarMenu?: boolean
+    hideNavigation?: boolean
+  }
+}
 
 vueApp.use(router)

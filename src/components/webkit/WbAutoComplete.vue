@@ -5,7 +5,6 @@
  */
 import AutoComplete, { AutoCompleteCompleteEvent, AutoCompleteItemSelectEvent } from 'primevue/autocomplete'
 import { ref, useAttrs, useSlots, PropType } from 'vue'
-import { WbAutoCompleteOption, WbAutoCompleteOptionKey } from '@/types/ui.types.ts'
 
 const attrs = useAttrs()
 const slots = useSlots()
@@ -70,9 +69,18 @@ const handleItemSelect = (event: AutoCompleteItemSelectEvent): void => {
   emit('trueValue', selectedOption[props.trueValueKey])
 }
 
+/** We send back null as the true value when the clear event is emitted */
 const handleItemClear = (): void => {
   emit('trueValue', null)
 }
+
+/** Typings */
+export type WbAutoCompleteOption = {
+  value: string | number
+  label: string
+  parent_value?: string | number
+}
+export type WbAutoCompleteOptionKey = 'value' | 'label'
 </script>
 
 <template>

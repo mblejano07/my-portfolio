@@ -2,9 +2,8 @@ import { defineStore } from 'pinia'
 import { apiCall } from '@/utils/network'
 import { parsePhoneNumber } from 'libphonenumber-js'
 import { ref } from 'vue'
-import { ApiResponse } from '@/types/http/base.types.ts'
-import { BarangayResponse, CityResponse, ProvinceResponse, RegionResponse } from '@/types/http/address.types.ts'
-import { WbAutoCompleteOption } from '@/types/ui.types.ts'
+import { ApiResponse } from '@/types/http.responses.ts'
+import { WbAutoCompleteOption } from '@/components/webkit/WbAutoComplete.vue'
 
 export const usePublicStore = defineStore('public', () => {
   /** States */
@@ -25,9 +24,10 @@ export const usePublicStore = defineStore('public', () => {
     const { data } = await apiCall('/address/regions').get().json()
     const res: ApiResponse = data.value
 
-    if (res.success && Array.isArray(res.data)) {
+    const regionsListResponse = res.data as RegionResponse[]
+    if (res.success) {
       regionOptions.value = []
-      res.data.forEach((region: RegionResponse) => {
+      regionsListResponse.forEach((region: RegionResponse) => {
         regionOptions.value.push({ value: region.id, label: region.name })
       })
     }
@@ -44,9 +44,10 @@ export const usePublicStore = defineStore('public', () => {
     const { data } = await apiCall('/address/provinces').get().json()
     const res: ApiResponse = data.value
 
-    if (res.success && Array.isArray(res.data)) {
+    const provinceListResponse = res.data as ProvinceResponse[]
+    if (res.success) {
       provinceOptions.value = []
-      res.data.forEach((province: ProvinceResponse) => {
+      provinceListResponse.forEach((province: ProvinceResponse) => {
         provinceOptions.value.push({ value: province.id, label: province.name, parent_value: province.region_id })
       })
     }
@@ -63,9 +64,10 @@ export const usePublicStore = defineStore('public', () => {
     const { data } = await apiCall('/address/cities').get().json()
     const res: ApiResponse = data.value
 
-    if (res.success && Array.isArray(res.data)) {
+    const citiesListResponse = res.data as CityResponse[]
+    if (res.success) {
       cityOptions.value = []
-      res.data.forEach((city: CityResponse) => {
+      citiesListResponse.forEach((city: CityResponse) => {
         cityOptions.value.push({ value: city.id, label: city.name, parent_value: city.province_id })
       })
     }
@@ -82,9 +84,10 @@ export const usePublicStore = defineStore('public', () => {
     const { data } = await apiCall('/address/barangays').get().json()
     const res: ApiResponse = data.value
 
-    if (res.success && Array.isArray(res.data)) {
+    const barangaysListResponse = res.data as BarangayResponse[]
+    if (res.success) {
       barangayOptions.value = []
-      res.data.forEach((barangay: BarangayResponse) => {
+      barangaysListResponse.forEach((barangay: BarangayResponse) => {
         barangayOptions.value.push({ value: barangay.id, label: barangay.name, parent_value: barangay.city_id })
       })
     }
@@ -102,7 +105,7 @@ export const usePublicStore = defineStore('public', () => {
     if (excludeId) url += `&excluded_id=${excludeId}`
 
     const { data } = await apiCall(url).get().json()
-    return data.value
+    return data.value as ApiResponse
   }
 
   return {
@@ -121,3 +124,60 @@ export const usePublicStore = defineStore('public', () => {
     checkAvailability,
   }
 })
+
+/** Typings */
+import { ApiResponseData } from '@/types/http.responses.ts'
+
+export interface AvailabilityResponse extends ApiResponse {
+  is_available: boolean
+}
+
+interface RegionResponse extends ApiResponseData {
+  code_correspondence: string
+  code: string
+  name: string
+  alt_name: string
+  geo_level: string
+}
+
+interface ProvinceResponse extends ApiResponseData {
+  code_correspondence: string
+  code: string
+  name: string
+  alt_name: string
+  geo_level: string
+  region_id: number
+  old_name?: string
+  income_classification: string
+}
+
+interface CityResponse extends ApiResponseData {
+  code_correspondence: string
+  code: string
+  name: string
+  alt_name: string
+  province_id: number
+  old_name?: string
+  income_classification: string
+  classification: 'city' | 'municipality'
+  city_class?: string
+}
+
+interface BarangayResponse extends ApiResponseData {
+  code_correspondence: string
+  city_id: number
+  name: string
+}
+
+export interface AddressResponse extends ApiResponseData {
+  home_address: string | null
+  postal_code: string | null
+  barangay_id: string | number | null
+  city_id: string | number | null
+  province_id: string | number | null
+  region_id: string | number | null
+  barangay: BarangayResponse | null
+  city: CityResponse | null
+  province: ProvinceResponse | null
+  region: RegionResponse | null
+}

@@ -8,12 +8,11 @@ import { mobilePhoneRule, passwordRule, uniqueUserIdentifierRule } from '@/utils
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import WbInputMask from '@/components/webkit/WbInputMask.vue'
-import { RegistrationCredentialsSection } from '@/types/models/auth.ts'
-import { useFormsStore } from '@/stores/forms.ts'
+import { RegistrationCredentialsPayload, useFormsStore } from '@/stores/forms.ts'
 
 /** Component States */
 const formStore = useFormsStore()
-const model = reactive<RegistrationCredentialsSection>({
+const payload = reactive<RegistrationCredentialsPayload>({
   email: formStore.registrationInfo.credentials?.email || null,
   mobile_number: formStore.registrationInfo.credentials?.mobile_number || null,
   password: formStore.registrationInfo.credentials?.password || null,
@@ -45,16 +44,16 @@ const formRules = {
   },
   password_confirmation: {
     required: helpers.withMessage('Please confirm your password', required),
-    sameAsPassword: helpers.withMessage('Must match the password field', sameAs(computed(() => model.password))),
+    sameAsPassword: helpers.withMessage('Must match the password field', sameAs(computed(() => payload.password))),
   },
 }
 
 /** Handle Next Section */
-const validator = useVuelidate(formRules, model)
+const validator = useVuelidate<RegistrationCredentialsPayload>(formRules, payload)
 const handleNextSection = async () => {
   const valid = await validator.value.$validate()
   if (!valid) return false
-  formStore.saveRegistrationCredentialsSection(model)
+  formStore.saveRegistrationCredentialsSection(payload)
   emits('nextButtonClicked')
 }
 </script>
@@ -63,7 +62,7 @@ const handleNextSection = async () => {
     <!-- Start Email and Mobile Number -->
     <div class="flex gap-4">
       <WbInputText
-        v-model="model.email"
+        v-model="payload.email"
         placeholder="you@example.com"
         label="Email *"
         :invalid="validator.email.$invalid"
@@ -76,7 +75,7 @@ const handleNextSection = async () => {
         </template>
       </WbInputText>
       <WbInputMask
-        v-model="model.mobile_number"
+        v-model="payload.mobile_number"
         label="Mobile Number"
         mask="+63 999 999 9999"
         placeholder="+63 XXX XXX XXXX"
@@ -94,7 +93,7 @@ const handleNextSection = async () => {
     <!-- Start Password and Password Confirmation -->
     <div class="flex gap-4">
       <WbPassword
-        v-model="model.password"
+        v-model="payload.password"
         label="Password *"
         toggleMask
         :invalid="validator.password.$invalid"
@@ -117,7 +116,7 @@ const handleNextSection = async () => {
         </template>
       </WbPassword>
       <WbPassword
-        v-model="model.password_confirmation"
+        v-model="payload.password_confirmation"
         label="Confirm Password *"
         :feedback="false"
         toggleMask

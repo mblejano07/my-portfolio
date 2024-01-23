@@ -7,12 +7,11 @@ import Button from 'primevue/button'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import WbCalendar from '@/components/webkit/WbCalendar.vue'
 import WbDropdown from '@/components/webkit/WbDropdown.vue'
-import { RegistrationPersonalInfoSection } from '@/types/models/auth.ts'
-import { useFormsStore } from '@/stores/forms.ts'
+import { RegistrationPersonalInfoPayload, useFormsStore } from '@/stores/forms.ts'
 
 /** Component States */
 const formStore = useFormsStore()
-const model = reactive<RegistrationPersonalInfoSection>({
+const payload = reactive<RegistrationPersonalInfoPayload>({
   first_name: formStore.registrationInfo.personal_info?.first_name || null,
   last_name: formStore.registrationInfo.personal_info?.last_name || null,
   middle_name: formStore.registrationInfo.personal_info?.middle_name || null,
@@ -53,13 +52,13 @@ const formRules = {
 }
 
 /** Handle Next Section */
-const validator = useVuelidate(formRules, model)
+const validator = useVuelidate<RegistrationPersonalInfoPayload>(formRules, payload)
 const handleNextSection = async () => {
   const valid = await validator.value.$validate()
   if (!valid) return false
 
   // Save to state manager
-  formStore.saveRegistrationPersonalInfoSection(model)
+  formStore.saveRegistrationPersonalInfoSection(payload)
 
   emits('nextButtonClicked')
 }
@@ -69,7 +68,7 @@ const handleNextSection = async () => {
     <!-- Start First name and Middle name -->
     <div class="flex gap-4">
       <WbInputText
-        v-model="model.first_name"
+        v-model="payload.first_name"
         label="First name *"
         :invalid="validator.first_name.$invalid"
         :invalid-text="validator.first_name.$invalid ? validator.first_name.$errors[0].$message : null"
@@ -79,7 +78,7 @@ const handleNextSection = async () => {
         </template>
       </WbInputText>
       <WbInputText
-        v-model="model.middle_name"
+        v-model="payload.middle_name"
         label="Middle name"
         :invalid="validator.middle_name.$invalid"
         :invalid-text="validator.middle_name.$invalid ? validator.middle_name.$errors[0].$message : null"
@@ -93,7 +92,7 @@ const handleNextSection = async () => {
     <!-- Start Last name and Extension name -->
     <div class="flex gap-4">
       <WbInputText
-        v-model="model.last_name"
+        v-model="payload.last_name"
         label="Last name *"
         :invalid="validator.last_name.$invalid"
         :invalid-text="validator.last_name.$invalid ? validator.last_name.$errors[0].$message : null"
@@ -103,7 +102,7 @@ const handleNextSection = async () => {
         </template>
       </WbInputText>
       <WbInputText
-        v-model="model.ext_name"
+        v-model="payload.ext_name"
         label="Ext. name"
         :invalid="validator.ext_name.$invalid"
         :invalid-text="validator.ext_name.$invalid ? validator.ext_name.$errors[0].$message : null"
@@ -116,12 +115,12 @@ const handleNextSection = async () => {
     <!-- End Last name and Extension name -->
     <!-- Start Sex and Birthday -->
     <div class="flex gap-4">
-      <WbDropdown v-model="model.sex" :options="genderOptions" optionLabel="label" optionValue="value" label="Sex">
+      <WbDropdown v-model="payload.sex" :options="genderOptions" optionLabel="label" optionValue="value" label="Sex">
         <template #prepend-icon>
           <FontAwesomeIcon icon="fa-solid fa-mars-and-venus" />
         </template>
       </WbDropdown>
-      <WbCalendar v-model="model.birthday" dateFormat="MM dd, yy" :maxDate="new Date()" label="Birthday">
+      <WbCalendar v-model="payload.birthday" dateFormat="MM dd, yy" :maxDate="new Date()" label="Birthday">
         <template #prepend-icon>
           <i class="pi pi-gift" />
         </template>
