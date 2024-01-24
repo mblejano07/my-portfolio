@@ -2,8 +2,9 @@ import { defineStore } from 'pinia'
 import { apiCall } from '@/utils/network'
 import { parsePhoneNumber } from 'libphonenumber-js'
 import { ref } from 'vue'
-import { ApiResponse } from '@/types/http.responses.ts'
+import { ApiResponse } from '@/typings/http.ts'
 import { WbAutoCompleteOption } from '@/components/webkit/WbAutoComplete.vue'
+import { ApiResponseData } from '@/typings/http.ts'
 
 export const usePublicStore = defineStore('public', () => {
   /** States */
@@ -126,21 +127,19 @@ export const usePublicStore = defineStore('public', () => {
 })
 
 /** Typings */
-import { ApiResponseData } from '@/types/http.responses.ts'
-
-export interface AvailabilityResponse extends ApiResponse {
+export type AvailabilityResponse = {
   is_available: boolean
-}
+} & ApiResponseData
 
-interface RegionResponse extends ApiResponseData {
+export type RegionResponse = {
   code_correspondence: string
   code: string
   name: string
   alt_name: string
   geo_level: string
-}
+} & ApiResponseData
 
-interface ProvinceResponse extends ApiResponseData {
+export type ProvinceResponse = {
   code_correspondence: string
   code: string
   name: string
@@ -149,9 +148,9 @@ interface ProvinceResponse extends ApiResponseData {
   region_id: number
   old_name?: string
   income_classification: string
-}
+} & ApiResponseData
 
-interface CityResponse extends ApiResponseData {
+export type CityResponse = {
   code_correspondence: string
   code: string
   name: string
@@ -161,15 +160,15 @@ interface CityResponse extends ApiResponseData {
   income_classification: string
   classification: 'city' | 'municipality'
   city_class?: string
-}
+} & ApiResponseData
 
-interface BarangayResponse extends ApiResponseData {
+export type BarangayResponse = {
   code_correspondence: string
   city_id: number
   name: string
-}
+} & ApiResponseData
 
-export interface AddressResponse extends ApiResponseData {
+export type AddressResponse = {
   home_address: string | null
   postal_code: string | null
   barangay_id: string | number | null
@@ -180,4 +179,4 @@ export interface AddressResponse extends ApiResponseData {
   city: CityResponse | null
   province: ProvinceResponse | null
   region: RegionResponse | null
-}
+} & ApiResponseData

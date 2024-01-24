@@ -88,19 +88,14 @@ const handleFormSubmit = async () => {
         toggleMask
         :invalid="validator.password.$invalid"
         :invalid-text="validator.password.$errors[0]?.$message"
+        @keyup.enter="handleFormSubmit"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />
         </template>
       </WbPassword>
       <div>
-        <Button
-          @click="handleFormSubmit"
-          label="Sign in"
-          size="large"
-          class="mt-3 w-full font-menu"
-          :loading="formIsSubmitting"
-        ></Button>
+        <Button @click="handleFormSubmit" label="Sign in" size="large" class="mt-3 w-full" :loading="formIsSubmitting"></Button>
       </div>
       <p class="flex justify-between pt-3 text-center">
         <Button

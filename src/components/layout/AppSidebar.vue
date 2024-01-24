@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppLogo from '@/components/AppLogo.vue'
+import AppLogo from '@/components/layout/AppLogo.vue'
 import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import AppFooter from '@/layout/AppFooter.vue'
-import AppToolbar from '@/layout/AppToolbar.vue'
-import AppSideBar from '@/layout/AppSidebar.vue'
+import AppFooter from '@/components/layout/AppFooter.vue'
+import AppToolbar from '@/components/layout/AppToolbar.vue'
+import AppSideBar from '@/components/layout/AppSidebar.vue'
 import { useGlobalStore } from '@/stores/global.ts'
 import { useRoute } from 'vue-router'
 
