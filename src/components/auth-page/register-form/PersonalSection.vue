@@ -71,7 +71,7 @@ const handleNextSection = async () => {
         v-model="payload.first_name"
         label="First name *"
         :invalid="validator.first_name.$invalid"
-        :invalid-text="validator.first_name.$invalid ? validator.first_name.$errors[0].$message : null"
+        :invalid-text="validator.first_name.$errors[0]?.$message"
       >
         <template #prepend-icon>
           <i class="pi pi-id-card" />
@@ -81,7 +81,7 @@ const handleNextSection = async () => {
         v-model="payload.middle_name"
         label="Middle name"
         :invalid="validator.middle_name.$invalid"
-        :invalid-text="validator.middle_name.$invalid ? validator.middle_name.$errors[0].$message : null"
+        :invalid-text="validator.middle_name.$errors[0]?.$message"
       >
         <template #prepend-icon>
           <i class="pi pi-id-card" />
@@ -95,7 +95,7 @@ const handleNextSection = async () => {
         v-model="payload.last_name"
         label="Last name *"
         :invalid="validator.last_name.$invalid"
-        :invalid-text="validator.last_name.$invalid ? validator.last_name.$errors[0].$message : null"
+        :invalid-text="validator.last_name.$errors[0]?.$message"
       >
         <template #prepend-icon>
           <i class="pi pi-id-card" />
@@ -105,7 +105,7 @@ const handleNextSection = async () => {
         v-model="payload.ext_name"
         label="Ext. name"
         :invalid="validator.ext_name.$invalid"
-        :invalid-text="validator.ext_name.$invalid ? validator.ext_name.$errors[0].$message : null"
+        :invalid-text="validator.ext_name.$errors[0]?.$message"
       >
         <template #prepend-icon>
           <i class="pi pi-id-card" />

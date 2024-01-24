@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import WbInputText from '@/components/webkit/WbInputText.vue'
-import WbAutoComplete, { WbAutoCompleteOption } from '@/components/webkit/WbAutoComplete.vue'
+import WbAutoComplete, { WbAutoCompleteOption, WbAutoCompleteOptionTrueValue } from '@/components/webkit/WbAutoComplete.vue'
 import WbInputMask from '@/components/webkit/WbInputMask.vue'
 import { onBeforeMount, reactive, ref, toRef, toRefs } from 'vue'
 import useVuelidate from '@vuelidate/core'
@@ -12,9 +12,6 @@ import { useClearSelectedAddressIfNotInParentList, useFilterByParentId } from '@
 import { storeToRefs } from 'pinia'
 import { RegistrationAddressPayload, useFormsStore } from '@/stores/forms.ts'
 
-/** Events */
-const emit = defineEmits(['saveButtonClicked', 'previousButtonClicked'])
-
 /** Component States */
 const formStore = useFormsStore()
 const payload = reactive<RegistrationAddressPayload>({
@@ -25,6 +22,12 @@ const payload = reactive<RegistrationAddressPayload>({
   province_id: formStore.registrationInfo.address?.province_id || null,
   postal_code: formStore.registrationInfo.address?.postal_code || null,
 })
+
+/** Emits */
+const emit = defineEmits<{
+  (e: 'saveButtonClicked', value: boolean): void
+  (e: 'previousButtonClicked', value: boolean): void
+}>()
 
 /** Initialize Address Options List */
 const publicStore = usePublicStore()
@@ -44,7 +47,7 @@ const selectedCity = ref<WbAutoCompleteOption | null>(null)
 const selectedBarangay = ref<WbAutoCompleteOption | null>(null)
 
 /** Address WbAutoComplete True Value */
-const handleTrueValue = (addressType: 'region' | 'province' | 'city' | 'barangay', value: number | string | null) => {
+const handleTrueValue = (addressType: 'region' | 'province' | 'city' | 'barangay', value: WbAutoCompleteOptionTrueValue) => {
   switch (addressType) {
     case 'region':
       payload.region_id = value
@@ -103,7 +106,7 @@ const handleSaveButtonClicked = async () => {
   if (!valid) return false
 
   formStore.saveRegistrationAddressSection(payload)
-  emit('saveButtonClicked')
+  emit('saveButtonClicked', true)
 }
 </script>
 <template>
@@ -116,7 +119,7 @@ const handleSaveButtonClicked = async () => {
         label="Region"
         optionLabel="label"
         forceSelection
-        @true-value="(value) => handleTrueValue('region', value)"
+        @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('region', value)"
         :loading="publicStore.regionOptionsIsLoading"
         :disabled="publicStore.regionOptionsIsLoading"
       >
@@ -130,7 +133,7 @@ const handleSaveButtonClicked = async () => {
         label="Province"
         optionLabel="label"
         forceSelection
-        @true-value="(value) => handleTrueValue('province', value)"
+        @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('province', value)"
         :loading="publicStore.provinceOptionsIsLoading"
         :disabled="publicStore.provinceOptionsIsLoading"
       >
@@ -148,7 +151,7 @@ const handleSaveButtonClicked = async () => {
         label="City"
         optionLabel="label"
         forceSelection
-        @true-value="(value) => handleTrueValue('city', value)"
+        @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('city', value)"
         :loading="publicStore.cityOptionsIsLoading"
         :disabled="publicStore.cityOptionsIsLoading"
         :virtualScrollerOptions="{ itemSize: 38 }"
@@ -163,7 +166,7 @@ const handleSaveButtonClicked = async () => {
         label="Barangay"
         optionLabel="label"
         forceSelection
-        @true-value="(value) => handleTrueValue('barangay', value)"
+        @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('barangay', value)"
         :loading="publicStore.barangayOptionsIsLoading"
         :disabled="publicStore.barangayOptionsIsLoading"
         :virtualScrollerOptions="{ itemSize: 38 }"
@@ -190,7 +193,7 @@ const handleSaveButtonClicked = async () => {
     <!-- End Home Address and Zip Code -->
     <!-- Start Action Buttons -->
     <div class="mt-4 flex justify-between">
-      <Button @click="emit('previousButtonClicked')" label="Back" size="large" severity="secondary" class="px-10">
+      <Button @click="emit('previousButtonClicked', true)" label="Back" size="large" severity="secondary" class="px-10">
         <template #icon>
           <i class="pi pi-arrow-left mr-2"></i>
         </template>

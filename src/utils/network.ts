@@ -3,10 +3,16 @@ import { useGlobalStore } from '@/stores/global.ts'
 import { useAuthStore } from '@/stores/auth.ts'
 
 /**
- * @description Make an HTTP request to an endpoint
+ * @description Make an HTTP request to an endpoint.
+ * This is a wrapper for VueUse's useFetch composable.
  *
- * @param uri
- * @param authToken
+ * @example
+ * const { data, statusCode } = await apiCall('auth/tokens').post(payload).json()
+ * if (statusCode.value === 200) {
+ *   console.log(data.value)
+ * }
+ *
+ * @see https://vueuse.org/core/useFetch/
  */
 export const apiCall = (uri: string, authToken: string | null = null) => {
   const baseUrl = import.meta.env.VITE_API_ROOT_URL
@@ -44,5 +50,6 @@ export const apiCall = (uri: string, authToken: string | null = null) => {
 
       return ctx
     },
+    updateDataOnError: true,
   })
 }

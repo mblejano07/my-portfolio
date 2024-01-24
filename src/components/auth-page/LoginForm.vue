@@ -1,20 +1,27 @@
 <script setup lang="ts">
 import WbInputText from '@/components/webkit/WbInputText.vue'
+import Message from 'primevue/message'
 import Button from 'primevue/button'
 import WbPassword from '@/components/webkit/WbPassword.vue'
-import Divider from 'primevue/divider'
 import { reactive, ref } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import { useRouter } from 'vue-router'
-import { sleep } from '@/utils/helpers.ts'
+import { LoginPayload, useAuthStore } from '@/stores/auth.ts'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /** Component States */
-const payload = reactive({
+const payload = reactive<LoginPayload>({
   email: '',
   password: '',
 })
 const formIsSubmitting = ref(false)
+const showCredsErrorAlert = ref(false)
+
+/** Emits */
+const emit = defineEmits<{
+  (e: 'onCredentialsError', value: boolean): void
+}>()
 
 /** Form Validation */
 const formRules = {
@@ -26,15 +33,23 @@ const formRules = {
     required: helpers.withMessage('Enter your password', required),
   },
 }
-const validator = useVuelidate(formRules, payload)
+const validator = useVuelidate<LoginPayload>(formRules, payload)
 
 /** Form Submission */
 const router = useRouter()
+const authStore = useAuthStore()
 const handleFormSubmit = async () => {
   formIsSubmitting.value = true
   const valid = await validator.value.$validate()
-  await sleep(2)
   if (!valid) return (formIsSubmitting.value = false)
+
+  const res = await authStore.login(payload)
+  if (!res.success) {
+    formIsSubmitting.value = false
+    showCredsErrorAlert.value = true
+    emit('onCredentialsError', true)
+    return
+  }
 
   formIsSubmitting.value = false
   return await router.replace({ name: 'dashboard' })
@@ -42,20 +57,28 @@ const handleFormSubmit = async () => {
 </script>
 
 <template>
-  <section>
+  <section class="bg-inherit">
     <div class="text-center">
-      <h2 class="mt-6 font-menu text-3xl font-bold">Account Login</h2>
-      <p class="mb-4 mt-2 text-sm text-gray-500">Sign in to your existing account</p>
+      <h2 class="mt-6 font-menu text-3xl font-bold dark:text-surface-0">Account Login</h2>
+      <p class="mb-4 mt-2 text-sm text-gray-500 dark:!text-surface-300">Sign in to your existing account</p>
     </div>
+    <!-- Start Alert Message -->
+    <transition enter-active-class="transition duration-200" enter-from-class="scale-50 opacity-0" leave-to-class="opacity-0">
+      <Message v-if="showCredsErrorAlert" :closable="false" severity="error">
+        <span>The credentials you've provided are invalid</span>
+      </Message>
+    </transition>
+    <!-- End Alert Message -->
+    <!-- Start Form -->
     <form class="mt-8 flex flex-col space-y-6" @submit.prevent>
       <WbInputText
         v-model="payload.email"
         label="Email or mobile number"
         :invalid="validator.email.$invalid"
-        :invalid-text="validator.email.$invalid ? validator.email.$errors[0].$message : null"
+        :invalid-text="validator.email.$errors[0]?.$message"
       >
         <template #prepend-icon>
-          <i class="pi pi-envelope text-surface-500" />
+          <i class="pi pi-envelope" />
         </template>
       </WbInputText>
       <WbPassword
@@ -64,10 +87,10 @@ const handleFormSubmit = async () => {
         :feedback="false"
         toggleMask
         :invalid="validator.password.$invalid"
-        :invalid-text="validator.password.$invalid ? validator.password.$errors[0].$message : null"
+        :invalid-text="validator.password.$errors[0]?.$message"
       >
         <template #prepend-icon>
-          <i class="pi pi-lock text-surface-500" />
+          <i class="pi pi-lock" />
         </template>
       </WbPassword>
       <div>
@@ -75,19 +98,31 @@ const handleFormSubmit = async () => {
           @click="handleFormSubmit"
           label="Sign in"
           size="large"
-          class="w-full font-menu"
+          class="mt-3 w-full font-menu"
           :loading="formIsSubmitting"
         ></Button>
       </div>
-      <Divider class="text-xs text-surface-400">or</Divider>
-      <p class="flex justify-center text-center">
-        <RouterLink
-          :to="{ name: 'sign-up' }"
-          class="cursor-pointer text-sm text-primary-500 no-underline transition duration-300 ease-in hover:text-blue-500 hover:underline"
-          >Create an account
-        </RouterLink>
+      <p class="flex justify-between pt-3 text-center">
+        <Button
+          label="Forgot Password"
+          size="small"
+          class="text-xs"
+          severity="secondary"
+          text
+          @click="$router.push({ name: 'sign-up' })"
+        >
+          <template #icon>
+            <FontAwesomeIcon icon="fa-solid fa-lock" class="mr-1.5" />
+          </template>
+        </Button>
+        <Button label="Create an account" size="small" class="text-xs" text @click="$router.push({ name: 'sign-up' })">
+          <template #icon>
+            <FontAwesomeIcon icon="fa-solid fa-right-to-bracket" class="mr-1.5" />
+          </template>
+        </Button>
       </p>
     </form>
+    <!-- End Form -->
   </section>
 </template>
 

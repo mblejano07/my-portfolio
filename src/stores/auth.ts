@@ -6,8 +6,11 @@ import { ApiResponse, ApiResponseData } from '@/types/http.responses.ts'
 import { UserResponse } from '@/stores/users.ts'
 
 export const useAuthStore = defineStore('auth', () => {
-  // States. We use sessionStorage to hydrate state when the page reloads
-  // @see https://vueuse.org/core/useStorage/#custom-serialization on why we need a serializer for `null` defaults
+  /**
+   * States
+   * We use sessionStorage to hydrate state when the page reloads
+   * @see https://vueuse.org/core/useStorage/#custom-serialization on why we need a serializer for `null` defaults
+   */
   const authenticationToken = useStorage('auth-token', null, sessionStorage, {
     serializer: StorageSerializers.string,
   })
@@ -18,6 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
   })
   const authExpired = ref(false)
 
+  /** Actions */
   const login = async (payload: LoginPayload) => {
     payload.with_user = true
     payload.client_name = 'Web Browser'
@@ -25,8 +29,8 @@ export const useAuthStore = defineStore('auth', () => {
     const { data } = await apiCall('auth/tokens').post(payload).json()
     const res: ApiResponse = data.value
 
-    const loginResponse = res.data as LoginResponse
     if (res.success) {
+      const loginResponse = res.data as LoginResponse
       authenticationToken.value = loginResponse.token
       authenticatedUser.value = loginResponse.user
     }

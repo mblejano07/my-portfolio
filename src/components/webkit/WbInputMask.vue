@@ -12,7 +12,7 @@ defineOptions({
 /** Props */
 type WbInputMaskProps = {
   label: string
-  invalid: boolean
+  invalid?: boolean
   invalidText?: string
   success?: boolean
   successText?: string

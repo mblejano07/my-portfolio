@@ -7,13 +7,15 @@ export default {
       'ring-1 ring-inset ring-surface-200 dark:ring-surface-700 ring-offset-0',
 
       // Colors
-      'bg-surface-0 dark:bg-surface-800',
-
       {
-        'text-blue-500 dark:text-blue-300': props.severity == 'info',
-        'text-green-500 dark:text-green-300': props.severity == 'success',
-        'text-orange-500 dark:text-orange-300': props.severity == 'warn',
-        'text-red-500 dark:text-red-300': props.severity == 'error',
+        'bg-info-50 dark:bg-surface-800 text-info-500 !ring-info-500 dark:ring-2 dark:!ring-info-300 dark:bg-surface-800 dark:text-info-300':
+          props.severity === 'info',
+        'bg-success-50 dark:bg-surface-800 text-success-500 !ring-success-500 dark:ring-2 dark:!ring-success-300  dark:text-success-300':
+          props.severity === 'success',
+        'bg-warn-50 dark:bg-surface-800 text-warn-500 !ring-warn-500 dark:ring-2 dark:!ring-warn-300  dark:text-warn-300':
+          props.severity === 'warn',
+        'bg-error-50 dark:bg-surface-800 text-error-500 !ring-error-500 dark:ring-2 dark:!ring-error-300 dark:text-error-300':
+          props.severity === 'error',
       },
     ],
   }),
@@ -55,8 +57,14 @@ export default {
       'rounded-full',
 
       // Colors
-      'bg-transparent',
-      'text-surface-700 dark:text-surface-0/80',
+      {
+        'text-error-500 dark:text-error-300': props.severity === 'error',
+        'text-warn-500 dark:text-warn-300': props.severity === 'warn',
+        'text-info-500 dark:text-info-300': props.severity === 'info',
+        'text-success-500 dark:text-success-300': props.severity === 'success',
+      },
+
+      'text-error-500 dark:text-error-300',
 
       // Transitions
       'transition duration-200 ease-in-out',

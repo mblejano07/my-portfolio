@@ -9,6 +9,7 @@ import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import WbInputMask from '@/components/webkit/WbInputMask.vue'
 import { RegistrationCredentialsPayload, useFormsStore } from '@/stores/forms.ts'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /** Component States */
 const formStore = useFormsStore()
@@ -131,7 +132,18 @@ const handleNextSection = async () => {
     <!-- End Password and Password Confirmation -->
     <!-- Start Action Buttons -->
     <div class="mt-4 flex justify-between">
-      <Button @click="$router.push({ name: 'login' })" label="Login instead" size="large" severity="secondary" />
+      <Button
+        @click="$router.push({ name: 'login' })"
+        label="Back to Login"
+        size="small"
+        severity="secondary"
+        text
+        class="text-sm"
+      >
+        <template #icon>
+          <FontAwesomeIcon icon="fa-solid fa-sign-in" class="mr-1.5"></FontAwesomeIcon>
+        </template>
+      </Button>
       <Button @click="handleNextSection" label="Next" size="large">
         <template #icon>
           <i class="pi pi-arrow-right mr-2"></i>

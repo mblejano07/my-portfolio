@@ -2,12 +2,14 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useFormsStore = defineStore('forms', () => {
+  /** States */
   const registrationInfo = ref<RegistrationPayload>({
     credentials: null,
     personal_info: null,
     address: null,
   })
 
+  /** Actions */
   const saveRegistrationCredentialsSection = (model: RegistrationCredentialsPayload) => {
     registrationInfo.value.credentials = model
   }

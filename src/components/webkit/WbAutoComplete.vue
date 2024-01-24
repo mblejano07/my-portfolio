@@ -11,7 +11,10 @@ defineOptions({
 })
 
 /** Emits **/
-const emit = defineEmits(['trueValue'])
+export type WbAutoCompleteOptionTrueValue = string | number | null
+const emit = defineEmits<{
+  (e: 'onTrueValueComputed', value: WbAutoCompleteOptionTrueValue): void
+}>()
 
 /** Props */
 export type WbAutoCompleteOption = {
@@ -58,12 +61,12 @@ const search = (event: AutoCompleteCompleteEvent): void => {
 /** Send back the true value of an object to the parent */
 const handleItemSelect = (event: AutoCompleteItemSelectEvent): void => {
   const selectedOption: WbAutoCompleteOption = event.value
-  emit('trueValue', selectedOption[props.trueValueKey])
+  emit('onTrueValueComputed', selectedOption[props.trueValueKey])
 }
 
 /** We send back null as the true value when the clear event is emitted */
 const handleItemClear = (): void => {
-  emit('trueValue', null)
+  emit('onTrueValueComputed', null)
 }
 </script>
 
