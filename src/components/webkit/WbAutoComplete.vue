@@ -4,50 +4,42 @@
  * @see https://tailwind.primevue.org/autocomplete/
  */
 import AutoComplete, { AutoCompleteCompleteEvent, AutoCompleteItemSelectEvent } from 'primevue/autocomplete'
-import { ref, useAttrs, useSlots, PropType } from 'vue'
-
-const attrs = useAttrs()
-const slots = useSlots()
+import { ref } from 'vue'
 
 defineOptions({
   inheritAttrs: false,
 })
 
+/** Emits **/
 const emit = defineEmits(['trueValue'])
 
-const props = defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
-  suggestions: {
-    type: Array as PropType<WbAutoCompleteOption[]>,
-    required: true,
-  },
-  trueValueKey: {
-    type: String as PropType<WbAutoCompleteOptionKey>,
-    default: 'value',
-  },
-  invalid: {
-    type: Boolean,
-    default: false,
-  },
-  invalidText: {
-    type: String,
-    default: null,
-  },
-  success: {
-    type: Boolean,
-    default: false,
-  },
-  successText: {
-    type: String,
-    default: null,
-  },
-  wrapperClass: {
-    type: String,
-    default: '',
-  },
+/** Props */
+export type WbAutoCompleteOption = {
+  value: string | number
+  label: string
+  parent_value?: string | number
+}
+
+export type WbAutoCompleteOptionKey = 'value' | 'label'
+
+type WbAutoCompleteProps = {
+  label: string
+  suggestions: WbAutoCompleteOption[]
+  trueValueKey?: WbAutoCompleteOptionKey
+  invalid?: boolean
+  invalidText?: string
+  success?: boolean
+  successText?: string
+  wrapperClass?: string
+}
+
+const props = withDefaults(defineProps<WbAutoCompleteProps>(), {
+  trueValueKey: 'value',
+  invalid: false,
+  invalidText: '',
+  success: false,
+  successText: '',
+  wrapperClass: '',
 })
 
 /** Search functionality */
@@ -73,36 +65,28 @@ const handleItemSelect = (event: AutoCompleteItemSelectEvent): void => {
 const handleItemClear = (): void => {
   emit('trueValue', null)
 }
-
-/** Typings */
-export type WbAutoCompleteOption = {
-  value: string | number
-  label: string
-  parent_value?: string | number
-}
-export type WbAutoCompleteOptionKey = 'value' | 'label'
 </script>
 
 <template>
   <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
     <!-- @vue-expect-error inputId will be passed dynamically -->
-    <label :for="attrs.id" class="text-xs text-surface-500">
+    <label :for="$attrs.id" class="text-xs text-surface-500">
       {{ props.label }}
     </label>
     <!-- Start AutoComplete-->
-    <div :class="`relative ${attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">
+    <div :class="`relative ${$attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">
       <!-- Start Prepend Icon -->
-      <div :class="`absolute left-3 top-2/4 z-10 -mt-2.5 ${attrs.disabled ? 'text-surface-300' : 'text-surface-500'}`">
+      <div :class="`absolute left-3 top-2/4 z-10 -mt-2.5 ${$attrs.disabled ? 'text-surface-300' : 'text-surface-500'}`">
         <slot name="prepend-icon"></slot>
       </div>
       <!-- End Prepend Icon -->
       <AutoComplete
-        v-bind="attrs"
-        :aria-describedby="`${attrs.id}-help`"
-        :class="`h-12 w-full ${attrs.class}`"
-        :input-class="`h-12 w-full ${slots['prepend-icon'] ? 'pl-10' : ''}
+        v-bind="$attrs"
+        :aria-describedby="`${$attrs.id}-help`"
+        :class="`h-12 w-full ${$attrs.class}`"
+        :input-class="`h-12 w-full ${$slots['prepend-icon'] ? 'pl-10' : ''}
         ${props.invalid ? '!ring-error-500' : ''}
-        ${attrs.inputClass}`"
+        ${$attrs.inputClass}`"
         @complete="search"
         :suggestions="filteredSuggestions"
         @item-select="(event: AutoCompleteItemSelectEvent) => handleItemSelect(event)"
