@@ -4,7 +4,6 @@ import { ref } from 'vue'
 import CredentialsSection from '@/components/auth-page/register-form/CredentialsSection.vue'
 import PersonalSection from '@/components/auth-page/register-form/PersonalSection.vue'
 import AddressSection from '@/components/auth-page/register-form/AddressSection.vue'
-import { useFormsStore } from '@/stores/forms.ts'
 
 /** Component States */
 const activeStep = ref(1)
@@ -20,12 +19,6 @@ const registrationSteps = ref([
     label: 'Address',
   },
 ])
-
-/** Form Submission */
-const formStore = useFormsStore()
-const handleFormSubmit = async () => {
-  console.log('Register Form: ', formStore.registrationInfo)
-}
 
 /** UI Handlers */
 const handleNextButtonClicked = () => {
@@ -57,12 +50,7 @@ const handlePreviousButtonClicked = () => {
           @previous-button-clicked="handlePreviousButtonClicked"
           class="mt-4"
         />
-        <AddressSection
-          v-else-if="activeStep === 2"
-          @previous-button-clicked="handlePreviousButtonClicked"
-          @save-button-clicked="handleFormSubmit"
-          class="mt-4"
-        />
+        <AddressSection v-else-if="activeStep === 2" @previous-button-clicked="handlePreviousButtonClicked" class="mt-4" />
       </transition>
     </form>
   </section>

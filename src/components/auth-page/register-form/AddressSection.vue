@@ -7,10 +7,12 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, maxLength } from '@vuelidate/validators'
 import { useDigitCountRule } from '@/composables/custom-validations.ts'
 import Button from 'primevue/button'
-import { usePublicStore } from '@/stores/public.ts'
+import { useAddressStore } from '@/stores/address.ts'
 import { useClearSelectedAddressIfNotInParentList, useFilterByParentId } from '@/composables/address.options.ts'
 import { storeToRefs } from 'pinia'
 import { RegistrationAddressPayload, useFormsStore } from '@/stores/forms.ts'
+import { useAuthStore } from '@/stores/auth.ts'
+import { useRouter } from 'vue-router'
 
 /** Component States */
 const formStore = useFormsStore()
@@ -24,13 +26,10 @@ const payload = reactive<RegistrationAddressPayload>({
 })
 
 /** Emits */
-const emit = defineEmits<{
-  (e: 'saveButtonClicked', value: boolean): void
-  (e: 'previousButtonClicked', value: boolean): void
-}>()
+const emit = defineEmits<{ (e: 'previousButtonClicked', value: boolean): void }>()
 
 /** Initialize Address Options List */
-const publicStore = usePublicStore()
+const publicStore = useAddressStore()
 onBeforeMount(async () => {
   await Promise.allSettled([
     publicStore.fetchRegions(),
@@ -99,14 +98,29 @@ const formRules = {
   },
 }
 
-/** Handle Save */
 const validator = useVuelidate<RegistrationAddressPayload>(formRules, payload)
-const handleSaveButtonClicked = async () => {
+
+/** Handle Form Submission */
+const authStore = useAuthStore()
+const router = useRouter()
+const formIsSubmitting = ref(false)
+const handleFormSubmission = async () => {
+  // We save the address info in the central store first
   const valid = await validator.value.$validate()
   if (!valid) return false
 
   formStore.saveRegistrationAddressSection(payload)
-  emit('saveButtonClicked', true)
+
+  formIsSubmitting.value = true
+  // We now make the API call to submit the credentials, personal info, and address
+  const responseData = await authStore.register(formStore.registrationInfo)
+  if (!responseData.success) {
+    return (formIsSubmitting.value = false)
+  }
+
+  formIsSubmitting.value = false
+  formStore.resetRegistrationInfo()
+  await router.replace({ name: 'dashboard' })
 }
 </script>
 <template>
@@ -193,12 +207,26 @@ const handleSaveButtonClicked = async () => {
     <!-- End Home Address and Zip Code -->
     <!-- Start Action Buttons -->
     <div class="mt-4 flex justify-between">
-      <Button @click="emit('previousButtonClicked', true)" label="Back" size="large" severity="secondary" class="px-10">
+      <Button
+        @click="emit('previousButtonClicked', true)"
+        label="Back"
+        size="large"
+        severity="secondary"
+        class="px-10"
+        :disabled="formIsSubmitting"
+      >
         <template #icon>
           <i class="pi pi-arrow-left mr-2"></i>
         </template>
       </Button>
-      <Button @click="handleSaveButtonClicked" label="Save" size="large" class="px-10">
+      <Button
+        @click="handleFormSubmission"
+        label="Save"
+        size="large"
+        class="px-10"
+        :loading="formIsSubmitting"
+        :disabled="formIsSubmitting"
+      >
         <template #icon>
           <i class="pi pi-save mr-2"></i>
         </template>

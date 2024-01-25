@@ -2,11 +2,23 @@
 import AppFooter from '@/components/layout/AppFooter.vue'
 import AppToolbar from '@/components/layout/AppToolbar.vue'
 import AppSideBar from '@/components/layout/AppSidebar.vue'
-import { useGlobalStore } from '@/stores/global.ts'
+import { useGlobalStore } from '@/stores/ui.ts'
 import { useRoute } from 'vue-router'
+import { onBeforeMount } from 'vue'
+import { useAuthStore } from '@/stores/auth.ts'
+import { useProfileStore } from '@/stores/profile.ts'
 
 const globalStore = useGlobalStore()
+const authStore = useAuthStore()
+const profileStore = useProfileStore()
 const route = useRoute()
+
+onBeforeMount(async () => {
+  // Rehydrate profile info on reload if there is an authenticated user
+  if (authStore.isAuthenticated && authStore.authenticatedUser.email_verified_at) {
+    await profileStore.fetchProfile()
+  }
+})
 </script>
 
 <template>

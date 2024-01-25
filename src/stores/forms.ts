@@ -50,7 +50,7 @@ export type RegistrationPersonalInfoPayload = {
   middle_name: string | null
   last_name: string | null
   ext_name: string | null
-  sex: string | null
+  sex: 'male' | 'female' | null
   birthday: Date | null
 }
 
@@ -67,4 +67,5 @@ export type RegistrationPayload = {
   credentials: RegistrationCredentialsPayload | null
   personal_info: RegistrationPersonalInfoPayload | null
   address: RegistrationAddressPayload | null
+  client_name?: string
 }

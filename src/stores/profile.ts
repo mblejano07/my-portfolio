@@ -1,0 +1,61 @@
+import { defineStore, storeToRefs } from 'pinia'
+import { useApiCall } from '@/composables/network'
+import { useAuthStore } from '@/stores/auth'
+import { UserProfilePayload, UserResponse } from '@/typings/user.models.ts'
+import { ApiResponse } from '@/typings/http-resources.ts'
+
+export const useProfileStore = defineStore('profile', () => {
+  /**
+   * VueUse's useStorage() loses reactivity after serialization,
+   * we make it reactive again by wrapping storeToRefs()
+   *
+   * @see https://pinia.vuejs.org/core-concepts/#Destructuring-from-a-Store
+   */
+  const auth = storeToRefs(useAuthStore())
+
+  const fetchProfile = async () => {
+    const { data } = await useApiCall('/profile', auth.authenticationToken.value).get().json()
+
+    const responseBody: ApiResponse = data.value
+    if (responseBody.success) {
+      auth.authenticatedUser.value = responseBody.data as UserResponse
+    }
+
+    return responseBody
+  }
+
+  const updateProfile = async (payload: Partial<UserProfilePayload>) => {
+    const { data } = await useApiCall('/profile', auth.authenticationToken.value).patch(payload).json()
+
+    const responseBody: ApiResponse = data.value
+    if (responseBody.success) {
+      auth.authenticatedUser.value = responseBody.data as UserResponse
+    }
+
+    return responseBody
+  }
+
+  const uploadProfilePicture = async (payload: FormData) => {
+    const { data } = await useApiCall('/profile/profile-picture', auth.authenticationToken.value).post(payload).json()
+
+    const responseBody: ApiResponse = data.value
+    if (responseBody.success && auth.authenticatedUser.value.user_profile) {
+      const uploadProfilePictureResponse = responseBody.data as UploadProfilePictureResponse
+      auth.authenticatedUser.value.user_profile.profile_picture_url = uploadProfilePictureResponse.url
+    }
+
+    return responseBody
+  }
+
+  const changePassword = async (payload: ChangePasswordPayload) => {
+    const { data } = await useApiCall('/profile/password', auth.authenticationToken.value).patch(payload).json()
+    return data.value as ApiResponse
+  }
+
+  return { fetchProfile, updateProfile, uploadProfilePicture, changePassword }
+})
+
+/** Typings */
+export type ChangePasswordPayload = { old_password: string; password: string; password_confirmation: string }
+
+export type UploadProfilePictureResponse = { owner_id: string | number; path: string; url: string }

@@ -1,5 +1,5 @@
 import { useFetch } from '@vueuse/core'
-import { useGlobalStore } from '@/stores/global.ts'
+import { useGlobalStore } from '@/stores/ui.ts'
 import { useAuthStore } from '@/stores/auth.ts'
 
 /**

@@ -1,12 +1,11 @@
 import { defineStore } from 'pinia'
 import { useApiCall } from '@/composables/network.ts'
-import { parsePhoneNumber } from 'libphonenumber-js'
 import { ref } from 'vue'
-import { ApiResponse } from '@/typings/http.ts'
+import { ApiResponse } from '@/typings/http-resources.ts'
 import { WbAutoCompleteOption } from '@/components/webkit/WbAutoComplete.vue'
-import { ApiResponseData } from '@/typings/http.ts'
+import { ProvinceResponse, RegionResponse, BarangayResponse, CityResponse } from '@/typings/address.models.ts'
 
-export const usePublicStore = defineStore('public', () => {
+export const useAddressStore = defineStore('address', () => {
   /** States */
   const regionOptions = ref<WbAutoCompleteOption[]>([])
   const regionOptionsIsLoading = ref(false)
@@ -97,18 +96,6 @@ export const usePublicStore = defineStore('public', () => {
     return res
   }
 
-  const checkAvailability = async (key: 'mobile_number' | 'email', value: string, excludeId: string | null = null) => {
-    if (key === 'mobile_number') {
-      value = encodeURIComponent(parsePhoneNumber(value, 'PH').number)
-    }
-
-    let url = `/availability/${key}?value=${value}`
-    if (excludeId) url += `&excluded_id=${excludeId}`
-
-    const { data } = await useApiCall(url).get().json()
-    return data.value as ApiResponse
-  }
-
   return {
     regionOptions,
     fetchRegions,
@@ -122,61 +109,5 @@ export const usePublicStore = defineStore('public', () => {
     barangayOptions,
     fetchBarangays,
     barangayOptionsIsLoading,
-    checkAvailability,
   }
 })
-
-/** Typings */
-export type AvailabilityResponse = {
-  is_available: boolean
-} & ApiResponseData
-
-export type RegionResponse = {
-  code_correspondence: string
-  code: string
-  name: string
-  alt_name: string
-  geo_level: string
-} & ApiResponseData
-
-export type ProvinceResponse = {
-  code_correspondence: string
-  code: string
-  name: string
-  alt_name: string
-  geo_level: string
-  region_id: number
-  old_name?: string
-  income_classification: string
-} & ApiResponseData
-
-export type CityResponse = {
-  code_correspondence: string
-  code: string
-  name: string
-  alt_name: string
-  province_id: number
-  old_name?: string
-  income_classification: string
-  classification: 'city' | 'municipality'
-  city_class?: string
-} & ApiResponseData
-
-export type BarangayResponse = {
-  code_correspondence: string
-  city_id: number
-  name: string
-} & ApiResponseData
-
-export type AddressResponse = {
-  home_address: string | null
-  postal_code: string | null
-  barangay_id: string | number | null
-  city_id: string | number | null
-  province_id: string | number | null
-  region_id: string | number | null
-  barangay: BarangayResponse | null
-  city: CityResponse | null
-  province: ProvinceResponse | null
-  region: RegionResponse | null
-} & ApiResponseData

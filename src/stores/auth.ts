@@ -2,8 +2,9 @@ import { defineStore } from 'pinia'
 import { StorageSerializers, useStorage } from '@vueuse/core'
 import { ref, computed } from 'vue'
 import { useApiCall } from '@/composables/network.ts'
-import { ApiResponse, ApiResponseData } from '@/typings/http.ts'
-import { UserResponse } from '@/stores/users.ts'
+import { ApiResponse } from '@/typings/http-resources.ts'
+import { UserResponse } from '@/typings/user.models.ts'
+import { RegistrationPayload } from '@/stores/forms.ts'
 
 export const useAuthStore = defineStore('auth', () => {
   /**
@@ -46,15 +47,38 @@ export const useAuthStore = defineStore('auth', () => {
     payload.client_name = 'Web Browser'
 
     const { data } = await useApiCall('auth/tokens').post(payload).json()
-    const res: ApiResponse = data.value
+    const responseData: ApiResponse = data.value
 
-    if (res.success) {
-      const loginResponse = res.data as LoginResponse
-      authenticationToken.value = loginResponse.token
-      authenticatedUser.value = loginResponse.user
+    if (responseData.success) {
+      const authResponse = responseData.data as AuthResponse
+      authenticationToken.value = authResponse.token
+      authenticatedUser.value = authResponse.user
     }
 
-    return res
+    return responseData
+  }
+
+  const register = async (payload: RegistrationPayload) => {
+    const unWrappedPayload = {
+      ...payload.credentials,
+      ...payload.personal_info,
+      ...payload.address,
+      client_name: 'Web Browser',
+    }
+    if (unWrappedPayload.birthday) {
+      console.log('bday', typeof unWrappedPayload.birthday)
+    }
+
+    const { data } = await useApiCall('auth/register').post(unWrappedPayload).json()
+
+    const responseData: ApiResponse = data.value
+    if (responseData.success) {
+      const authResponse = responseData.data as AuthResponse
+      authenticationToken.value = authResponse.token
+      authenticatedUser.value = authResponse.user
+    }
+
+    return responseData
   }
 
   const logout = async () => {
@@ -70,6 +94,7 @@ export const useAuthStore = defineStore('auth', () => {
     isAuthenticated,
     avatarDisplayNamePlaceholder,
     login,
+    register,
     logout,
   }
 })
@@ -83,7 +108,7 @@ export type LoginPayload = {
   client_name?: string
 }
 
-export interface LoginResponse extends ApiResponseData {
+export type AuthResponse = {
   token: string
   token_name: string
   expires_at: string

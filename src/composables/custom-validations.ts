@@ -10,7 +10,7 @@
 
 import { email, helpers } from '@vuelidate/validators'
 import { parsePhoneNumber } from 'libphonenumber-js/max'
-import { AvailabilityResponse, usePublicStore } from '@/stores/public.ts'
+import { useAvailabilitiesStore } from '@/stores/availability.ts'
 import useVuelidate from '@vuelidate/core'
 
 /**
@@ -55,7 +55,7 @@ export const useMobilePhoneRule =
       return phone.isValid()
     }
 
-const publicStore = usePublicStore()
+const availabilityStore = useAvailabilitiesStore()
 /**
  * @description Async check if the email or mobile number is already taken
  */
@@ -77,6 +77,6 @@ export const useUniqueUserIdentifierRule =
         if (!isValidFormat) return true
       }
 
-      const res = await publicStore.checkAvailability(key, value, excludedId)
-      return (res.data as AvailabilityResponse).is_available
+      const res = await availabilityStore.checkUserUniqueIdentifierAvailability(key, value, excludedId)
+      return res.data.is_available
     }
