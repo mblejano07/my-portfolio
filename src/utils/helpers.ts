@@ -11,3 +11,6 @@ export const sleep = (seconds: number): Promise<boolean> => {
     }, seconds * 1000)
   })
 }
+
+export const snakeCaseToTitleCase = (s: string) =>
+  s.replace(/^_*(.)|_+(.)/g, (_s, c, d) => (c ? c.toUpperCase() : ' ' + d.toUpperCase()))

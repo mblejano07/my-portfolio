@@ -27,6 +27,10 @@ export const useAuthStore = defineStore('auth', () => {
     return !!authenticatedUser.value && !!authenticationToken.value && !authExpired.value
   })
 
+  const authRoles = computed(() => {
+    return authenticatedUser?.value?.roles.map((role) => role.name)
+  })
+
   const avatarDisplayNamePlaceholder = computed(() => {
     if (!authenticatedUser.value?.user_profile?.full_name) return null
 
@@ -95,6 +99,7 @@ export const useAuthStore = defineStore('auth', () => {
     authExpired,
     isAuthenticated,
     avatarDisplayNamePlaceholder,
+    authRoles,
     login,
     register,
     logout,
