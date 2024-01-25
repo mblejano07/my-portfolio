@@ -11,6 +11,6 @@
         <i class="pi pi-google"></i>
       </div>
     </div>
-    <div class="h-2 w-full bg-primary-900"></div>
+    <div class="h-2 w-full bg-primary-500"></div>
   </div>
 </template>
