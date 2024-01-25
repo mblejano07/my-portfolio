@@ -48,7 +48,7 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <Toolbar class="min-h-[4rem] bg-surface-200 px-6 py-6 shadow-none ring-0">
+  <Toolbar class="min-h-[4rem] bg-surface-200 px-6 py-6 shadow-none !ring-0">
     <template #start>
       <AppLogo v-if="globalStore.sidebarMinimized" icon-only class="mr-4"></AppLogo>
       <Button

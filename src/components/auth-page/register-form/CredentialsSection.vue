@@ -78,7 +78,7 @@ const handleNextSection = async () => {
       <WbInputMask
         v-model="payload.mobile_number"
         label="Mobile Number"
-        mask="+63 999 999 9999"
+        mask="+639999999999"
         placeholder="+63 XXX XXX XXXX"
         :invalid="validator.mobile_number.$invalid"
         :invalid-text="validator.mobile_number.$errors[0]?.$message"
@@ -97,7 +97,7 @@ const handleNextSection = async () => {
         v-model="payload.password"
         label="Password *"
         toggleMask
-        :invalid="true"
+        :invalid="validator.password.$invalid"
         :invalid-text="validator.password.$errors[0]?.$message"
         @blur="validator.password.$touch"
         @focusin="validator.password.$dirty = false"

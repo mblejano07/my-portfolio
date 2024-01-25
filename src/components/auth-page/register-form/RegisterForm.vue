@@ -6,7 +6,7 @@ import PersonalSection from '@/components/auth-page/register-form/PersonalSectio
 import AddressSection from '@/components/auth-page/register-form/AddressSection.vue'
 
 /** Component States */
-const activeStep = ref(1)
+const activeStep = ref(0)
 const registrationSteps = ref([
   {
     label: 'Credentials',

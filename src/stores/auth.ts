@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { StorageSerializers, useStorage } from '@vueuse/core'
-import { ref, computed } from 'vue'
+import { StorageSerializers, useDateFormat, useStorage } from '@vueuse/core'
+import { computed, ref } from 'vue'
 import { useApiCall } from '@/composables/network.ts'
 import { ApiResponse } from '@/typings/http-resources.ts'
 import { UserResponse } from '@/typings/user.models.ts'
@@ -65,8 +65,10 @@ export const useAuthStore = defineStore('auth', () => {
       ...payload.address,
       client_name: 'Web Browser',
     }
+
+    // The API only accepts Y-m-d format (2024-01-31)
     if (unWrappedPayload.birthday) {
-      console.log('bday', typeof unWrappedPayload.birthday)
+      unWrappedPayload.birthday = useDateFormat(unWrappedPayload.birthday, 'YYYY-MM-DD').value.toString()
     }
 
     const { data } = await useApiCall('auth/register').post(unWrappedPayload).json()
