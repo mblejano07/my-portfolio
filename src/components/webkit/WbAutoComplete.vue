@@ -73,7 +73,7 @@ const handleItemClear = (): void => {
 <template>
   <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
     <!-- @vue-expect-error inputId will be passed dynamically -->
-    <label :for="$attrs.id" class="text-xs text-surface-500">
+    <label :for="$.uid" class="text-xs text-surface-500">
       {{ props.label }}
     </label>
     <!-- Start AutoComplete-->
@@ -85,10 +85,10 @@ const handleItemClear = (): void => {
       <!-- End Prepend Icon -->
       <AutoComplete
         v-bind="$attrs"
-        :aria-describedby="`${$attrs.id}-help`"
+        :aria-describedby="`${$.uid}-help`"
         :class="`h-12 w-full ${$attrs.class}`"
         :input-class="`h-12 w-full ${$slots['prepend-icon'] ? 'pl-10' : ''}
-        ${props.invalid ? '!ring-error-500' : ''}
+        ${props.invalid ? '!ring-error-500 border-error-500' : ''}
         ${$attrs.inputClass}`"
         @complete="search"
         :suggestions="filteredSuggestions"

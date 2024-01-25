@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { StorageSerializers, useStorage } from '@vueuse/core'
 import { ref, computed } from 'vue'
-import { apiCall } from '@/utils/network.ts'
+import { useApiCall } from '@/composables/network.ts'
 import { ApiResponse, ApiResponseData } from '@/typings/http.ts'
 import { UserResponse } from '@/stores/users.ts'
 
@@ -45,7 +45,7 @@ export const useAuthStore = defineStore('auth', () => {
     payload.with_user = true
     payload.client_name = 'Web Browser'
 
-    const { data } = await apiCall('auth/tokens').post(payload).json()
+    const { data } = await useApiCall('auth/tokens').post(payload).json()
     const res: ApiResponse = data.value
 
     if (res.success) {
@@ -58,7 +58,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const logout = async () => {
-    await apiCall('auth/tokens', authenticationToken.value).delete()
+    await useApiCall('auth/tokens', authenticationToken.value).delete()
     authenticatedUser.value = null
     authenticationToken.value = null
   }

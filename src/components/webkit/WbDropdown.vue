@@ -43,10 +43,8 @@ const props = withDefaults(defineProps<WbDropdownProps>(), {
       <Dropdown
         v-bind="$attrs"
         :aria-describedby="`${$attrs.id}-help`"
-        :class="`h-12 !w-full ${$attrs.class}`"
-        :input-class="`h-12 !w-full flex items-center ${$slots['prepend-icon'] ? 'pl-10' : ''} ${
-          props.invalid ? '!ring-error-500' : ''
-        } ${$attrs.inputClass}`"
+        :class="`h-12 !w-full ${props.invalid ? '!ring-error-500' : ''} ${$attrs.class}`"
+        :input-class="`h-12 !w-full flex items-center ${$slots['prepend-icon'] ? 'pl-10' : ''} ${$attrs.inputClass}`"
       />
     </div>
     <!-- End Calendar -->

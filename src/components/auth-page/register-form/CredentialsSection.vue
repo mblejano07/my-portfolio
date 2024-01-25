@@ -4,7 +4,7 @@ import WbPassword from '@/components/webkit/WbPassword.vue'
 import { reactive, computed } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email, minLength, maxLength, sameAs } from '@vuelidate/validators'
-import { mobilePhoneRule, passwordRule, uniqueUserIdentifierRule } from '@/utils/custom-validations.ts'
+import { useMobilePhoneRule, usePasswordRule, useUniqueUserIdentifierRule } from '@/composables/custom-validations.ts'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import WbInputMask from '@/components/webkit/WbInputMask.vue'
@@ -29,19 +29,19 @@ const formRules = {
   email: {
     required: helpers.withMessage('Please enter your email address', required),
     email: helpers.withMessage('Email format is invalid', email),
-    unique: helpers.withAsync(helpers.withMessage('This email is already taken', uniqueUserIdentifierRule('email'))),
+    unique: helpers.withAsync(helpers.withMessage('This email is already taken', useUniqueUserIdentifierRule('email'))),
   },
   mobile_number: {
     unique: helpers.withAsync(
-      helpers.withMessage('This mobile number is already taken', uniqueUserIdentifierRule('mobile_number'))
+      helpers.withMessage('This mobile number is already taken', useUniqueUserIdentifierRule('mobile_number'))
     ),
-    mobile_number: helpers.withMessage('Must be a valid PH mobile number', mobilePhoneRule()),
+    mobile_number: helpers.withMessage('Must be a valid PH mobile number', useMobilePhoneRule()),
   },
   password: {
     required: helpers.withMessage('Please enter your password', required),
     minLength: helpers.withMessage('Must be at least 8 characters long', minLength(8)),
     maxLength: helpers.withMessage('Must be a maximum of 50 characters', maxLength(50)),
-    password: helpers.withMessage('Must include at least one number, and one uppercase and lowercase letter', passwordRule()),
+    password: helpers.withMessage('Must include at least one number, and one uppercase and lowercase letter', usePasswordRule()),
   },
   password_confirmation: {
     required: helpers.withMessage('Please confirm your password', required),
@@ -97,7 +97,7 @@ const handleNextSection = async () => {
         v-model="payload.password"
         label="Password *"
         toggleMask
-        :invalid="validator.password.$invalid"
+        :invalid="true"
         :invalid-text="validator.password.$errors[0]?.$message"
         @blur="validator.password.$touch"
         @focusin="validator.password.$dirty = false"

@@ -41,13 +41,12 @@ export default {
       'text-surface-900 dark:text-surface-0',
       'bg-surface-0 dark:bg-surface-900',
       'placeholder:text-surface-400 dark:placeholder:text-surface-500',
-      'shadow-sm',
 
       // States
       'focus:outline-none focus:outline-offset-0',
       {
         'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0': !state.focused,
-        'ring-2 ring-primary-500 dark:ring-primary-400': state.focused,
+        'ring-1 ring-primary-500 dark:ring-primary-400': state.focused,
       },
 
       // Transition
@@ -88,7 +87,7 @@ export default {
 
       // States
       {
-        'focus:outline-none focus:outline-offset-0 focus:ring-inset focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400':
+        'focus:outline-none focus:outline-offset-0 focus:ring-inset focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400':
           !props.multiple,
       },
 

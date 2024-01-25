@@ -14,7 +14,7 @@ import { useAuthStore } from '@/stores/auth.ts'
  *
  * @see https://vueuse.org/core/useFetch/
  */
-export const apiCall = (uri: string, authToken: string | null = null) => {
+export const useApiCall = (uri: string, authToken: string | null = null) => {
   const baseUrl = import.meta.env.VITE_API_ROOT_URL
 
   // Remove the first char of the uri if it starts with a '/'

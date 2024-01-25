@@ -5,7 +5,7 @@ import WbInputMask from '@/components/webkit/WbInputMask.vue'
 import { onBeforeMount, reactive, ref, toRef, toRefs } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, maxLength } from '@vuelidate/validators'
-import { digitCountRule } from '@/utils/custom-validations.ts'
+import { useDigitCountRule } from '@/composables/custom-validations.ts'
 import Button from 'primevue/button'
 import { usePublicStore } from '@/stores/public.ts'
 import { useClearSelectedAddressIfNotInParentList, useFilterByParentId } from '@/composables/address.options.ts'
@@ -95,7 +95,7 @@ const formRules = {
     maxLength: globalStringMaxLengthRule,
   },
   postal_code: {
-    digitCount: helpers.withMessage('Enter your 4-digit zip code', digitCountRule(4)),
+    digitCount: helpers.withMessage('Enter your 4-digit zip code', useDigitCountRule(4)),
   },
 }
 

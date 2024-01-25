@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { apiCall } from '@/utils/network'
+import { useApiCall } from '@/composables/network.ts'
 import { parsePhoneNumber } from 'libphonenumber-js'
 import { ref } from 'vue'
 import { ApiResponse } from '@/typings/http.ts'
@@ -22,7 +22,7 @@ export const usePublicStore = defineStore('public', () => {
     if (regionOptions.value.length > 0) return null
 
     regionOptionsIsLoading.value = true
-    const { data } = await apiCall('/address/regions').get().json()
+    const { data } = await useApiCall('/address/regions').get().json()
     const res: ApiResponse = data.value
 
     if (res.success) {
@@ -42,7 +42,7 @@ export const usePublicStore = defineStore('public', () => {
     if (provinceOptions.value.length > 0) return null
 
     provinceOptionsIsLoading.value = true
-    const { data } = await apiCall('/address/provinces').get().json()
+    const { data } = await useApiCall('/address/provinces').get().json()
     const res: ApiResponse = data.value
 
     if (res.success) {
@@ -62,7 +62,7 @@ export const usePublicStore = defineStore('public', () => {
     if (cityOptions.value.length > 0) return
 
     cityOptionsIsLoading.value = true
-    const { data } = await apiCall('/address/cities').get().json()
+    const { data } = await useApiCall('/address/cities').get().json()
     const res: ApiResponse = data.value
 
     if (res.success) {
@@ -82,7 +82,7 @@ export const usePublicStore = defineStore('public', () => {
 
     barangayOptionsIsLoading.value = true
 
-    const { data } = await apiCall('/address/barangays').get().json()
+    const { data } = await useApiCall('/address/barangays').get().json()
     const res: ApiResponse = data.value
 
     if (res.success) {
@@ -105,7 +105,7 @@ export const usePublicStore = defineStore('public', () => {
     let url = `/availability/${key}?value=${value}`
     if (excludeId) url += `&excluded_id=${excludeId}`
 
-    const { data } = await apiCall(url).get().json()
+    const { data } = await useApiCall(url).get().json()
     return data.value as ApiResponse
   }
 
