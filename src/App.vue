@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import AppFooter from '@/components/layout/AppFooter.vue'
-import AppToolbar from '@/components/layout/AppToolbar.vue'
-import DesktopSidebar from '@/components/layout/DesktopAppSidebar.vue'
+import AppDesktopToolbar from '@/components/layout/app-toolbar/AppDesktopToolbar.vue'
+import AppDesktopSidebar from '@/components/layout/app-sidebar/AppDesktopSidebar.vue'
 import { useGlobalStore } from '@/stores/ui.ts'
 import { useRoute } from 'vue-router'
 import { onBeforeMount } from 'vue'
 import { useAuthStore } from '@/stores/auth.ts'
 import { useProfileStore } from '@/stores/profile.ts'
+import AppMobileToolbar from '@/components/layout/app-toolbar/AppMobileToolbar.vue'
 
 const globalStore = useGlobalStore()
 const authStore = useAuthStore()
@@ -24,15 +25,16 @@ onBeforeMount(async () => {
 <template>
   <div id="app-container" class="flex min-h-screen bg-surface-200 font-content">
     <!-- Start Sidebar -->
-    <DesktopSidebar
+    <AppDesktopSidebar
       v-if="!route.meta.hideNavigation"
       :class="`${
         !globalStore.sidebarMinimized ? 'w-[20%]' : 'w-[0%] -translate-x-96 transform'
       } hidden overflow-hidden transition-all duration-200 lg:flex`"
-    ></DesktopSidebar>
+    ></AppDesktopSidebar>
     <!-- End Sidebar -->
     <div class="flex flex-1 flex-col">
-      <AppToolbar v-if="!route.meta.hideNavigation" />
+      <AppDesktopToolbar v-if="!route.meta.hideNavigation" class="hidden lg:flex" />
+      <AppMobileToolbar class="lg:hidden" />
       <!-- Start Main Content -->
       <div :class="`${route.meta.hideNavigation ? '' : 'mx-4 mt-4 '} flex-1`">
         <RouterView v-slot="{ Component }">

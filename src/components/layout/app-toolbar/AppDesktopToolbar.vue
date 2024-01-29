@@ -61,8 +61,7 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <!-- Start Desktop Toolbar -->
-  <Toolbar class="hidden min-h-[4rem] bg-surface-200 px-6 py-6 shadow-none !ring-0 md:flex">
+  <Toolbar class="min-h-[4rem] bg-surface-200 px-6 py-6 shadow-none !ring-0">
     <template #start>
       <AppLogo v-if="globalStore.sidebarMinimized" icon-only class="mr-4"></AppLogo>
       <Button
@@ -71,7 +70,7 @@ const handleLogout = async () => {
         text
         rounded
         aria-label="Menu"
-        v-tooltip.bottom="'CMD+1'"
+        v-tooltip.bottom="`${globalStore.sidebarMinimized ? 'Show Sidebar' : 'Hide Sidebar'}`"
         class="mr-4 hover:text-primary-500"
         @click="globalStore.toggleSidebar()"
       />
@@ -141,12 +140,4 @@ const handleLogout = async () => {
       <!-- End Avatar Menu -->
     </template>
   </Toolbar>
-  <!-- End Desktop Toolbar -->
-  <!-- Start Mobile Toolbar -->
-  <Toolbar class="bg-surface-200 px-6 py-6 shadow-none !ring-0 lg:hidden">
-    <template #start>
-      <h1>Toolbar</h1>
-    </template>
-  </Toolbar>
-  <!-- End Mobile Toolbar -->
 </template>
