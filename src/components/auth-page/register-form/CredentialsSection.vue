@@ -131,14 +131,14 @@ const handleNextSection = async () => {
     </div>
     <!-- End Password and Password Confirmation -->
     <!-- Start Action Buttons -->
-    <div class="mt-4 flex justify-between">
+    <div class="mt-4 flex items-center justify-between">
       <Button
         @click="$router.push({ name: 'login' })"
         label="Back to Login"
         size="small"
         severity="secondary"
         text
-        class="text-sm"
+        class="text-xs"
       >
         <template #icon>
           <FontAwesomeIcon icon="fa-solid fa-sign-in" class="mr-1.5"></FontAwesomeIcon>

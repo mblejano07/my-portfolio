@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import CredentialsSection from '@/components/auth-page/register-form/CredentialsSection.vue'
 import PersonalSection from '@/components/auth-page/register-form/PersonalSection.vue'
 import AddressSection from '@/components/auth-page/register-form/AddressSection.vue'
+import AppLogo from '@/components/layout/AppLogo.vue'
 
 /** Component States */
 const activeStep = ref(0)
@@ -32,8 +33,11 @@ const handlePreviousButtonClicked = () => {
 <template>
   <section class="flex w-full flex-col">
     <div class="text-center">
-      <h2 class="mt-6 font-menu text-3xl font-bold">Account Registration</h2>
-      <p class="mb-4 mt-2 text-sm text-gray-500">Complete the form to create your account</p>
+      <div class="mb-2 mt-6 flex justify-center lg:hidden">
+        <AppLogo color="light"></AppLogo>
+      </div>
+      <h2 class="font-menu text-3xl font-bold text-surface-0 lg:mt-6 lg:text-surface-800">Account Registration</h2>
+      <p class="mb-4 mt-2 text-sm text-surface-0 lg:text-surface-500">Complete the form to create your account</p>
     </div>
     <Steps v-model:active-step="activeStep" :model="registrationSteps" />
     <form class="mt-8 flex w-full flex-col space-y-6" @submit.prevent>

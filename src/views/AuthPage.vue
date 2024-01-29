@@ -31,9 +31,10 @@ watch(
 
 <template>
   <div class="relative flex min-h-screen transition">
+    <AnimatedFloaters class="lg:hidden" />
     <div class="flex min-w-0 flex-auto flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start">
       <div
-        :class="`relative hidden h-full flex-auto items-center justify-center overflow-hidden bg-primary-900 p-10 text-surface-0 transition-colors duration-500 sm:w-1/2 md:flex xl:w-3/5 ${
+        :class="`relative hidden h-full flex-auto items-center justify-center overflow-hidden bg-primary-900 p-10 text-surface-0 transition-colors duration-500 md:hidden lg:flex ${
           formHasWarning ? '!bg-warn-500' : ''
         } ${formHasError ? '!bg-error-500' : ''}`"
       >
@@ -54,9 +55,12 @@ watch(
         <AnimatedFloaters />
       </div>
       <div
-        :class="`h-full w-full bg-surface-0 p-8 transition-all duration-500 dark:bg-surface-800 sm:w-auto sm:rounded-lg md:flex md:h-full md:items-center md:justify-center md:rounded-none md:p-10 lg:p-14 ${
-          showLogin ? 'md:w-2/5' : 'md:w-[70%]'
-        }`"
+        :class="`h-full w-full bg-gradient-to-b
+         from-primary-500 to-primary-900 p-8
+         transition-all duration-500 dark:bg-surface-800 sm:w-auto sm:rounded-lg
+         md:flex md:h-full md:items-center
+         md:justify-center md:rounded-none md:p-10 lg:bg-gradient-to-b lg:from-surface-0 lg:to-surface-0
+         lg:p-14 ${showLogin ? 'md:w-[100%] lg:w-[40%]' : 'md:w-[100%] lg:w-[70%]'}`"
       >
         <!-- Start Login Form -->
         <transition

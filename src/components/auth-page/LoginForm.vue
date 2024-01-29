@@ -9,6 +9,7 @@ import { helpers, required } from '@vuelidate/validators'
 import { useRouter } from 'vue-router'
 import { LoginPayload, useAuthStore } from '@/stores/auth.ts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import AppLogo from '@/components/layout/AppLogo.vue'
 
 /** Component States */
 const payload = reactive<LoginPayload>({
@@ -57,10 +58,13 @@ const handleFormSubmit = async () => {
 </script>
 
 <template>
-  <section class="bg-inherit">
-    <div class="text-center">
-      <h2 class="mt-6 font-menu text-3xl font-bold dark:text-surface-0">Account Login</h2>
-      <p class="mb-4 mt-2 text-sm text-gray-500 dark:!text-surface-300">Sign in to your existing account</p>
+  <section class="bg-transparent">
+    <div class="text-center text-surface-0 lg:text-surface-800">
+      <div class="mb-2 mt-6 flex justify-center lg:hidden">
+        <AppLogo color="light"></AppLogo>
+      </div>
+      <h2 class="font-menu text-3xl font-bold text-surface-0 lg:mt-6 lg:text-surface-800">Account Login</h2>
+      <p class="mb-4 mt-2 text-sm text-surface-0 lg:text-surface-500">Sign in to your existing account</p>
     </div>
     <!-- Start Alert Message -->
     <transition enter-active-class="transition duration-200" enter-from-class="scale-50 opacity-0" leave-to-class="opacity-0">
@@ -76,6 +80,7 @@ const handleFormSubmit = async () => {
         label="Email or mobile number"
         :invalid="validator.email.$invalid"
         :invalid-text="validator.email.$errors[0]?.$message"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
       >
         <template #prepend-icon>
           <i class="pi pi-envelope" />
@@ -89,6 +94,7 @@ const handleFormSubmit = async () => {
         :invalid="validator.password.$invalid"
         :invalid-text="validator.password.$errors[0]?.$message"
         @keyup.enter="handleFormSubmit"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />
@@ -101,8 +107,7 @@ const handleFormSubmit = async () => {
         <Button
           label="Forgot Password"
           size="small"
-          class="text-xs"
-          severity="secondary"
+          class="text-xs text-surface-0 lg:text-surface-500 lg:hover:bg-surface-100"
           text
           @click="$router.push({ name: 'sign-up' })"
         >
@@ -110,7 +115,13 @@ const handleFormSubmit = async () => {
             <FontAwesomeIcon icon="fa-solid fa-lock" class="mr-1.5" />
           </template>
         </Button>
-        <Button label="Create an account" size="small" class="text-xs" text @click="$router.push({ name: 'sign-up' })">
+        <Button
+          label="Create an account"
+          size="small"
+          class="text-xs text-surface-0 lg:text-primary-500"
+          text
+          @click="$router.push({ name: 'sign-up' })"
+        >
           <template #icon>
             <FontAwesomeIcon icon="fa-solid fa-right-to-bracket" class="mr-1.5" />
           </template>

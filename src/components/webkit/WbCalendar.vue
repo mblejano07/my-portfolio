@@ -18,6 +18,7 @@ type WbCalendarProps = {
   success?: boolean
   successText?: string
   wrapperClass?: string
+  labelClass?: string
 }
 
 const props = withDefaults(defineProps<WbCalendarProps>(), {
@@ -26,24 +27,24 @@ const props = withDefaults(defineProps<WbCalendarProps>(), {
   success: false,
   successText: '',
   wrapperClass: '',
+  labelClass: '',
 })
 </script>
 
 <template>
   <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
-    <!-- @vue-expect-error inputId will be passed dynamically -->
-    <label :for="$attrs.id" class="text-xs text-surface-500">{{ props.label }}</label>
+    <label :for="$.uid.toString()" :class="`${props.labelClass || 'text-xs text-surface-500'}`">{{ props.label }}</label>
 
     <div :class="`relative ${$attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">
       <!-- Start Prepend Icon -->
-      <div :class="`absolute left-3 top-2/4 z-10 -mt-2.5 ${$attrs.disabled ? 'text-surface-300' : 'text-surface-500'}`">
+      <div :class="`absolute left-3 top-2/4 z-10 -mt-3 ${$attrs.disabled ? 'text-surface-300' : 'text-surface-500'}`">
         <slot name="prepend-icon"></slot>
       </div>
       <!-- End Prepend Icon -->
       <!-- Start Calendar -->
       <Calendar
         v-bind="$attrs"
-        :aria-describedby="`${$attrs.id}-help`"
+        :aria-describedby="`${$.uid.toString()}-help`"
         :class="`h-12 w-full ${$attrs.class}`"
         :input-class="`h-12 w-full ${$slots['prepend-icon'] ? 'pl-10' : ''} ${props.invalid ? '!ring-error-500' : ''} ${
           $attrs.inputClass
