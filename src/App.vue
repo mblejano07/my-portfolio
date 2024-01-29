@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppFooter from '@/components/layout/AppFooter.vue'
 import AppToolbar from '@/components/layout/AppToolbar.vue'
-import AppSideBar from '@/components/layout/AppSidebar.vue'
+import DesktopSidebar from '@/components/layout/DesktopAppSidebar.vue'
 import { useGlobalStore } from '@/stores/ui.ts'
 import { useRoute } from 'vue-router'
 import { onBeforeMount } from 'vue'
@@ -24,12 +24,12 @@ onBeforeMount(async () => {
 <template>
   <div id="app-container" class="flex min-h-screen bg-surface-200 font-content">
     <!-- Start Sidebar -->
-    <AppSideBar
+    <DesktopSidebar
       v-if="!route.meta.hideNavigation"
       :class="`${
         !globalStore.sidebarMinimized ? 'w-[20%]' : 'w-[0%] -translate-x-96 transform'
-      } overflow-hidden transition-all duration-200`"
-    ></AppSideBar>
+      } hidden overflow-hidden transition-all duration-200 lg:flex`"
+    ></DesktopSidebar>
     <!-- End Sidebar -->
     <div class="flex flex-1 flex-col">
       <AppToolbar v-if="!route.meta.hideNavigation" />

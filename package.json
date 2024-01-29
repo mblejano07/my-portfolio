@@ -13,6 +13,7 @@
     "format": "prettier . --write && npm run lint --fix",
     "prepare": "husky install"
   },
+  "web-types": "./web-types.json",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",

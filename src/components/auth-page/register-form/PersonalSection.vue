@@ -66,12 +66,14 @@ const handleNextSection = async () => {
 <template>
   <div class="flex flex-col gap-4">
     <!-- Start First name and Middle name -->
-    <div class="flex gap-4">
+    <div class="flex flex-col gap-4 md:flex-row">
       <WbInputText
         v-model="payload.first_name"
         label="First name *"
         :invalid="validator.first_name.$invalid"
         :invalid-text="validator.first_name.$errors[0]?.$message"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-id-card" />
@@ -82,6 +84,8 @@ const handleNextSection = async () => {
         label="Middle name"
         :invalid="validator.middle_name.$invalid"
         :invalid-text="validator.middle_name.$errors[0]?.$message"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-id-card" />
@@ -90,12 +94,14 @@ const handleNextSection = async () => {
     </div>
     <!-- End First name and Middle name -->
     <!-- Start Last name and Extension name -->
-    <div class="flex gap-4">
+    <div class="flex flex-col gap-4 md:flex-row">
       <WbInputText
         v-model="payload.last_name"
         label="Last name *"
         :invalid="validator.last_name.$invalid"
         :invalid-text="validator.last_name.$errors[0]?.$message"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-id-card" />
@@ -106,6 +112,8 @@ const handleNextSection = async () => {
         label="Ext. name"
         :invalid="validator.ext_name.$invalid"
         :invalid-text="validator.ext_name.$errors[0]?.$message"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-id-card" />
@@ -114,13 +122,24 @@ const handleNextSection = async () => {
     </div>
     <!-- End Last name and Extension name -->
     <!-- Start Sex and Birthday -->
-    <div class="flex gap-4">
-      <WbDropdown v-model="payload.sex" :options="genderOptions" optionLabel="label" optionValue="value" label="Sex">
+    <div class="flex flex-col gap-4 md:flex-row">
+      <WbDropdown
+        v-model="payload.sex"
+        :options="genderOptions"
+        label="Sex"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
+      >
         <template #prepend-icon>
           <FontAwesomeIcon icon="fa-solid fa-mars-and-venus" />
         </template>
       </WbDropdown>
-      <WbCalendar v-model="payload.birthday" dateFormat="MM dd, yy" :maxDate="new Date()" label="Birthday">
+      <WbCalendar
+        v-model="payload.birthday"
+        dateFormat="MM dd, yy"
+        :maxDate="new Date()"
+        label="Birthday"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
+      >
         <template #prepend-icon>
           <i class="pi pi-gift" />
         </template>

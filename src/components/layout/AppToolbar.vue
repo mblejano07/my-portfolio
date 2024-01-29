@@ -15,6 +15,13 @@ import { useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
 import { snakeCaseToTitleCase } from '@/utils/helpers.ts'
 
+import { usePrimeVue } from 'primevue/config'
+
+const $primevue = usePrimeVue()
+defineExpose({
+  $primevue,
+})
+
 const globalStore = useGlobalStore()
 const authStore = useAuthStore()
 const router = useRouter()
@@ -54,7 +61,8 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <Toolbar class="min-h-[4rem] bg-surface-200 px-6 py-6 shadow-none !ring-0">
+  <!-- Start Desktop Toolbar -->
+  <Toolbar class="hidden min-h-[4rem] bg-surface-200 px-6 py-6 shadow-none !ring-0 md:flex">
     <template #start>
       <AppLogo v-if="globalStore.sidebarMinimized" icon-only class="mr-4"></AppLogo>
       <Button
@@ -63,6 +71,7 @@ const handleLogout = async () => {
         text
         rounded
         aria-label="Menu"
+        v-tooltip.bottom="'CMD+1'"
         class="mr-4 hover:text-primary-500"
         @click="globalStore.toggleSidebar()"
       />
@@ -132,4 +141,12 @@ const handleLogout = async () => {
       <!-- End Avatar Menu -->
     </template>
   </Toolbar>
+  <!-- End Desktop Toolbar -->
+  <!-- Start Mobile Toolbar -->
+  <Toolbar class="bg-surface-200 px-6 py-6 shadow-none !ring-0 lg:hidden">
+    <template #start>
+      <h1>Toolbar</h1>
+    </template>
+  </Toolbar>
+  <!-- End Mobile Toolbar -->
 </template>

@@ -18,6 +18,8 @@ type WbInputTextProps = {
   successText?: string
   wrapperClass?: string
   labelClass?: string
+  validationErrorMessageClass?: string
+  validationSuccessMessageClass?: string
 }
 
 const props = withDefaults(defineProps<WbInputTextProps>(), {
@@ -27,13 +29,14 @@ const props = withDefaults(defineProps<WbInputTextProps>(), {
   successText: '',
   wrapperClass: '',
   labelClass: '',
+  validationErrorMessageClass: '',
+  validationSuccessMessageClass: '',
 })
 </script>
 
 <template>
   <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
-    <!-- @vue-expect-error inputId will be passed dynamically -->
-    <label :for="$attrs.id" :class="`${props.labelClass || 'text-xs text-surface-500'}`">{{ props.label }}</label>
+    <label :for="$.uid.toString()" :class="`${props.labelClass || 'text-xs text-surface-500'}`">{{ props.label }}</label>
 
     <!-- Start InputText-->
     <div :class="`relative ${$attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">
@@ -44,17 +47,23 @@ const props = withDefaults(defineProps<WbInputTextProps>(), {
       <!-- End Prepend Icon -->
       <InputText
         v-bind="$attrs"
-        :aria-describedby="`${$attrs.id}-help`"
+        :aria-describedby="`${$.uid.toString()}-help`"
         :class="`h-12 w-full ${$slots['prepend-icon'] ? 'pl-10' : ''} ${props.invalid ? '!ring-error-500' : ''}`"
       />
     </div>
     <!-- End InputTex -->
     <!-- Start validation messages -->
-    <small v-if="props.invalid && props.invalidText" class="ml-0.5 text-xs text-red-500">
+    <small
+      v-if="props.invalid && props.invalidText"
+      :class="`ml-0.5 ${props.validationErrorMessageClass || 'text-xs text-error-500'}`"
+    >
       <i class="pi pi-exclamation-triangle mr-0.5"></i>
       {{ props.invalidText }}
     </small>
-    <small v-if="props.success && props.successText" class="ml-0.5 text-xs text-green-500">
+    <small
+      v-if="props.success && props.successText"
+      :class="`ml-0.5 ${props.validationSuccessMessageClass || 'text-xs text-green-500'}`"
+    >
       <i class="pi pi-check-circle mr-0.5"></i>
       {{ props.successText }}
     </small>

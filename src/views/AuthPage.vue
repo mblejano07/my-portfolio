@@ -32,7 +32,7 @@ watch(
 <template>
   <div class="relative flex min-h-screen transition">
     <AnimatedFloaters class="lg:hidden" />
-    <div class="flex min-w-0 flex-auto flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start">
+    <div class="flex min-w-0 flex-auto flex-col items-center lg:flex-row">
       <div
         :class="`relative hidden h-full flex-auto items-center justify-center overflow-hidden bg-primary-900 p-10 text-surface-0 transition-colors duration-500 md:hidden lg:flex ${
           formHasWarning ? '!bg-warn-500' : ''
@@ -57,10 +57,11 @@ watch(
       <div
         :class="`h-full w-full bg-gradient-to-b
          from-primary-500 to-primary-900 p-8
-         transition-all duration-500 dark:bg-surface-800 sm:w-auto sm:rounded-lg
-         md:flex md:h-full md:items-center
-         md:justify-center md:rounded-none md:p-10 lg:bg-gradient-to-b lg:from-surface-0 lg:to-surface-0
-         lg:p-14 ${showLogin ? 'md:w-[100%] lg:w-[40%]' : 'md:w-[100%] lg:w-[70%]'}`"
+         transition-all duration-500 sm:w-auto
+         md:rounded-none lg:flex lg:h-full
+         lg:items-center lg:justify-center
+         lg:bg-gradient-to-b lg:from-surface-0 lg:to-surface-0 lg:p-10
+         xl:p-14 ${showLogin ? 'md:w-[100%] lg:w-[40%]' : 'md:w-[100%] lg:w-[70%]'}`"
       >
         <!-- Start Login Form -->
         <transition
@@ -70,10 +71,10 @@ watch(
           leave-to-class="opacity-0"
         >
           <template v-if="showLogin">
-            <LoginForm class="w-full space-y-8" @on-credentials-error="formHasError = true" />
+            <LoginForm class="mt-12 w-full space-y-8 lg:mt-0" @on-credentials-error="formHasError = true" />
           </template>
           <template v-else>
-            <RegisterForm class="w-full space-y-8" />
+            <RegisterForm class="mt-12 w-full space-y-8 lg:mt-0" />
           </template>
         </transition>
         <!-- End Login Form -->

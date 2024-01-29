@@ -18,6 +18,8 @@ type WbDropdownProps = {
   successText?: string
   wrapperClass?: string
   labelClass?: string
+  validationErrorMessageClass?: string
+  validationSuccessMessageClass?: string
 }
 
 const props = withDefaults(defineProps<WbDropdownProps>(), {
@@ -27,6 +29,8 @@ const props = withDefaults(defineProps<WbDropdownProps>(), {
   successText: '',
   wrapperClass: '',
   labelClass: '',
+  validationErrorMessageClass: '',
+  validationSuccessMessageClass: '',
 })
 </script>
 
@@ -50,11 +54,17 @@ const props = withDefaults(defineProps<WbDropdownProps>(), {
     </div>
     <!-- End Calendar -->
     <!-- Start validation messages -->
-    <small v-if="props.invalid && props.invalidText" class="ml-0.5 text-xs text-red-500">
+    <small
+      v-if="props.invalid && props.invalidText"
+      :class="`ml-0.5 ${props.validationErrorMessageClass || 'text-xs text-error-500'}`"
+    >
       <i class="pi pi-exclamation-triangle mr-0.5"></i>
       {{ props.invalidText }}
     </small>
-    <small v-if="props.success && props.successText" class="ml-0.5 text-xs text-green-500">
+    <small
+      v-if="props.success && props.successText"
+      :class="`ml-0.5 ${props.validationSuccessMessageClass || 'text-xs text-green-500'}`"
+    >
       <i class="pi pi-check-circle mr-0.5"></i>
       {{ props.successText }}
     </small>

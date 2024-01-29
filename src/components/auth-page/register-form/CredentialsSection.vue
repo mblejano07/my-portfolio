@@ -61,7 +61,7 @@ const handleNextSection = async () => {
 <template>
   <div class="flex flex-col gap-4">
     <!-- Start Email and Mobile Number -->
-    <div class="flex gap-4">
+    <div class="flex flex-col gap-4 md:flex-row">
       <WbInputText
         v-model="payload.email"
         placeholder="you@example.com"
@@ -70,6 +70,8 @@ const handleNextSection = async () => {
         :invalid-text="validator.email.$errors[0]?.$message"
         @blur="validator.email.$touch"
         @focusin="validator.email.$dirty = false"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-envelope" />
@@ -84,6 +86,8 @@ const handleNextSection = async () => {
         :invalid-text="validator.mobile_number.$errors[0]?.$message"
         @blur="validator.mobile_number.$touch"
         @focusin="validator.mobile_number.$dirty = false"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-phone" />
@@ -92,7 +96,7 @@ const handleNextSection = async () => {
     </div>
     <!-- End Email and Mobile Number -->
     <!-- Start Password and Password Confirmation -->
-    <div class="flex gap-4">
+    <div class="flex flex-col gap-4 md:flex-row">
       <WbPassword
         v-model="payload.password"
         label="Password *"
@@ -101,6 +105,8 @@ const handleNextSection = async () => {
         :invalid-text="validator.password.$errors[0]?.$message"
         @blur="validator.password.$touch"
         @focusin="validator.password.$dirty = false"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />
@@ -123,6 +129,8 @@ const handleNextSection = async () => {
         toggleMask
         :invalid="validator.password_confirmation.$invalid"
         :invalid-text="validator.password_confirmation.$errors[0]?.$message"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />
@@ -136,9 +144,8 @@ const handleNextSection = async () => {
         @click="$router.push({ name: 'login' })"
         label="Back to Login"
         size="small"
-        severity="secondary"
         text
-        class="text-xs"
+        class="text-xs text-surface-0 lg:text-surface-500 lg:hover:bg-surface-100"
       >
         <template #icon>
           <FontAwesomeIcon icon="fa-solid fa-sign-in" class="mr-1.5"></FontAwesomeIcon>

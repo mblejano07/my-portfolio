@@ -126,7 +126,7 @@ const handleFormSubmission = async () => {
 <template>
   <div class="flex flex-col gap-4">
     <!-- Start Region and Province -->
-    <div class="flex gap-4">
+    <div class="flex flex-col gap-4 md:flex-row">
       <WbAutoComplete
         v-model="selectedRegion"
         :suggestions="publicStore.regionOptions"
@@ -136,6 +136,7 @@ const handleFormSubmission = async () => {
         @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('region', value)"
         :loading="publicStore.regionOptionsIsLoading"
         :disabled="publicStore.regionOptionsIsLoading"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
       >
         <template #prepend-icon>
           <i class="pi pi-map" />
@@ -150,6 +151,7 @@ const handleFormSubmission = async () => {
         @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('province', value)"
         :loading="publicStore.provinceOptionsIsLoading"
         :disabled="publicStore.provinceOptionsIsLoading"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
       >
         <template #prepend-icon>
           <i class="pi pi-map" />
@@ -158,7 +160,7 @@ const handleFormSubmission = async () => {
     </div>
     <!-- End Region and Province -->
     <!-- Start City and Barangay -->
-    <div class="flex gap-4">
+    <div class="flex flex-col gap-4 md:flex-row">
       <WbAutoComplete
         v-model="selectedCity"
         :suggestions="filteredCityOptionsByProvince"
@@ -169,6 +171,7 @@ const handleFormSubmission = async () => {
         :loading="publicStore.cityOptionsIsLoading"
         :disabled="publicStore.cityOptionsIsLoading"
         :virtualScrollerOptions="{ itemSize: 38 }"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
       >
         <template #prepend-icon>
           <i class="pi pi-map" />
@@ -184,6 +187,7 @@ const handleFormSubmission = async () => {
         :loading="publicStore.barangayOptionsIsLoading"
         :disabled="publicStore.barangayOptionsIsLoading"
         :virtualScrollerOptions="{ itemSize: 38 }"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
       >
         <template #prepend-icon>
           <i class="pi pi-map" />
@@ -192,13 +196,28 @@ const handleFormSubmission = async () => {
     </div>
     <!-- End City and Barangay -->
     <!-- Start Home Address and Zip Code -->
-    <div class="flex gap-4">
-      <WbInputText v-model="payload.home_address" label="Home Address">
+    <div class="flex flex-col gap-4 md:flex-row">
+      <WbInputText
+        v-model="payload.home_address"
+        label="Home Address"
+        :invalid="validator.home_address.$invalid"
+        :invalid-text="validator.home_address.$errors[0]?.$message"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
+      >
         <template #prepend-icon>
           <i class="pi pi-map" />
         </template>
       </WbInputText>
-      <WbInputMask v-model="payload.postal_code" label="Zip Code" mask="9999">
+      <WbInputMask
+        v-model="payload.postal_code"
+        label="Zip Code"
+        mask="9999"
+        :invalid="validator.postal_code.$invalid"
+        :invalid-text="validator.postal_code.$errors[0]?.$message"
+        label-class="text-xs text-surface-0 lg:text-surface-500"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
+      >
         <template #prepend-icon>
           <i class="pi pi-map" />
         </template>

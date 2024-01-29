@@ -81,6 +81,7 @@ const handleFormSubmit = async () => {
         :invalid="validator.email.$invalid"
         :invalid-text="validator.email.$errors[0]?.$message"
         label-class="text-xs text-surface-0 lg:text-surface-500"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-envelope" />
@@ -95,6 +96,7 @@ const handleFormSubmit = async () => {
         :invalid-text="validator.password.$errors[0]?.$message"
         @keyup.enter="handleFormSubmit"
         label-class="text-xs text-surface-0 lg:text-surface-500"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />
