@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import Button from 'primevue/button'
 import Sidebar from 'primevue/sidebar'
 import Avatar from 'primevue/avatar'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { useSidebarNavLinks } from '@/composables/sidebar.ts'
 import { useAuthStore } from '@/stores/auth.ts'
 import { snakeCaseToTitleCase } from '@/utils/helpers.ts'
@@ -11,7 +11,7 @@ import Tag from 'primevue/tag'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const authStore = useAuthStore()
-const authFullname = authStore.authenticatedUser?.user_profile?.full_name
+const authFullName = authStore.authenticatedUser?.user_profile?.full_name
 
 const { navLinks } = useSidebarNavLinks()
 
@@ -19,11 +19,17 @@ const visible = ref(false)
 const toggleVisibility = () => {
   visible.value = !visible.value
 }
+
+const router = useRouter()
+const handleLogout = async () => {
+  await authStore.logout()
+  await router.replace({ name: 'login' })
+}
 </script>
 
 <template>
   <div class="card flex justify-center">
-    <Sidebar v-model:visible="visible" position="right" class="w-full md:w-[20rem] lg:w-[30rem]">
+    <Sidebar v-model:visible="visible" position="right" class="w-full md:w-[20rem] lg:w-[30rem]" @click="toggleVisibility">
       <template #closeicon>
         <FontAwesomeIcon icon="fa fa-xmark" class="h-4 w-4" />
       </template>
@@ -40,12 +46,9 @@ const toggleVisibility = () => {
               size="large"
             />
             <div class="flex flex-col">
-              <span class="font-bold">{{ authFullname }}</span>
+              <span class="font-bold">{{ authFullName }}</span>
               <span class="mx-1 mt-2 flex flex-wrap gap-1">
                 <Tag v-for="role in authStore.authRoles" :value="snakeCaseToTitleCase(role)" :key="role"></Tag>
-                <Tag value="Something"></Tag>
-                <Tag value="Something"></Tag>
-                <Tag value="Something"></Tag>
               </span>
             </div>
           </template>
@@ -72,13 +75,14 @@ const toggleVisibility = () => {
                 <i :class="link.icon"></i>
                 <span class="mx-2 text-sm font-medium">{{ link.label }}</span>
               </RouterLink>
-              <!-- Start Logout Link -->
-              <!-- End Logout Link -->
             </div>
           </nav>
         </div>
       </aside>
       <!-- End Nav Items -->
+      <!-- Start Logout Link -->
+      <Button label="Logout" severity="secondary" class="mt-10 flex w-full" @click="handleLogout"> </Button>
+      <!-- End Logout Link -->
     </Sidebar>
     <Button @click="toggleVisibility" icon="pi pi-th-large" rounded class="text-surface-0" aria-label="Toggle Sidebar button">
     </Button>

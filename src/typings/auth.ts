@@ -1,10 +1,10 @@
-export enum AuthType {
+export const enum AuthType {
   AUTHENTICATED = 'authenticated',
   UNAUTHENTICATED = 'unauthenticated',
   OPEN = 'open',
 }
 
-export enum UserRole {
+export enum AuthRole {
   STANDARD_USER = 'standard_user',
   ADMIN = 'admin',
   SUPER_USER = 'super_user',

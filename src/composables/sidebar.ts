@@ -1,5 +1,5 @@
 import { useRouter } from 'vue-router'
-import { AuthType } from '@/typings/enums.ts'
+import { AuthType } from '@/typings/auth.ts'
 import { useAuthStore } from '@/stores/auth.ts'
 import { watch, ref } from 'vue'
 

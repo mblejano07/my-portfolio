@@ -5,7 +5,8 @@ import ProfilePage from '@/views/ProfilePage.vue'
 import SupportPage from '@/views/SupportPage.vue'
 import AboutUsPage from '@/views/AboutUsPage.vue'
 import AnnouncementsPage from '@/views/AnnouncementsPage.vue'
-import { AuthType, UserRole } from '@/typings/enums.ts'
+import { AuthType, AuthRole } from '@/typings/auth.ts'
+import { useAuthStore } from '@/stores/auth.ts'
 
 const routes = [
   {
@@ -17,7 +18,7 @@ const routes = [
       label: 'Dashboard',
       isSidebarMenu: true,
       authType: AuthType.AUTHENTICATED,
-      roles: [UserRole.STANDARD_USER, UserRole.ADMIN, UserRole.SYSTEM_SUPPORT, UserRole.SUPER_USER],
+      roles: [AuthRole.STANDARD_USER, AuthRole.ADMIN, AuthRole.SYSTEM_SUPPORT, AuthRole.SUPER_USER],
     },
   },
   {
@@ -29,7 +30,7 @@ const routes = [
       label: 'Profile',
       isSidebarMenu: true,
       authType: AuthType.AUTHENTICATED,
-      roles: [UserRole.STANDARD_USER, UserRole.ADMIN, UserRole.SYSTEM_SUPPORT, UserRole.SUPER_USER],
+      roles: [AuthRole.STANDARD_USER, AuthRole.ADMIN, AuthRole.SYSTEM_SUPPORT, AuthRole.SUPER_USER],
     },
   },
   {
@@ -41,7 +42,7 @@ const routes = [
       label: 'Announcements',
       isSidebarMenu: true,
       authType: AuthType.AUTHENTICATED,
-      roles: [UserRole.STANDARD_USER, UserRole.ADMIN, UserRole.SYSTEM_SUPPORT, UserRole.SUPER_USER],
+      roles: [AuthRole.STANDARD_USER, AuthRole.ADMIN, AuthRole.SYSTEM_SUPPORT, AuthRole.SUPER_USER],
     },
   },
   {
@@ -53,7 +54,7 @@ const routes = [
       label: 'Support',
       isSidebarMenu: true,
       authType: AuthType.AUTHENTICATED,
-      roles: [UserRole.STANDARD_USER, UserRole.ADMIN, UserRole.SYSTEM_SUPPORT, UserRole.SUPER_USER],
+      roles: [AuthRole.STANDARD_USER, AuthRole.ADMIN, AuthRole.SYSTEM_SUPPORT, AuthRole.SUPER_USER],
     },
   },
   {
@@ -65,7 +66,7 @@ const routes = [
       label: 'About Us',
       isSidebarMenu: true,
       authType: AuthType.AUTHENTICATED,
-      roles: [UserRole.STANDARD_USER, UserRole.ADMIN, UserRole.SYSTEM_SUPPORT, UserRole.SUPER_USER],
+      roles: [AuthRole.STANDARD_USER, AuthRole.ADMIN, AuthRole.SYSTEM_SUPPORT, AuthRole.SUPER_USER],
     },
   },
   {
@@ -111,7 +112,7 @@ const routes = [
           isSidebarMenu: true,
           group: RouteGroup.ADMIN_TOOLS,
           authType: AuthType.AUTHENTICATED,
-          roles: [UserRole.ADMIN, UserRole.SUPER_USER],
+          roles: [AuthRole.ADMIN, AuthRole.SUPER_USER],
         },
       },
       {
@@ -123,7 +124,7 @@ const routes = [
           isSidebarMenu: true,
           group: RouteGroup.ADMIN_TOOLS,
           authType: AuthType.AUTHENTICATED,
-          roles: [UserRole.ADMIN, UserRole.SUPER_USER],
+          roles: [AuthRole.ADMIN, AuthRole.SUPER_USER],
         },
       },
     ],
@@ -145,8 +146,43 @@ const router = createRouter({
   routes,
 })
 
+/** Route Guards **/
+const appName = import.meta.env.VITE_APP_NAME
+router.beforeEach(async (to, from) => {
+  // Always scroll to the top of the page
+  window.scrollTo(0, 0)
+
+  // Redirect 'domain.com/auth' to 'domain.com/auth/sign-up'
+  if (to.name === 'auth') {
+    return { name: 'sign-up' }
+  }
+
+  // Block authenticated users to routes that require them to be unauthenticated
+  // Ex. Login, Sign-up, Forgot Password
+  const authStore = useAuthStore()
+  if (authStore.isAuthenticated && !authStore.authExpired && to.meta.authType === AuthType.UNAUTHENTICATED) {
+    return from
+  }
+
+  // Protect routes that need authentication
+  if (to.meta.authType === AuthType.AUTHENTICATED && !authStore.isAuthenticated) {
+    return { name: 'login' }
+  }
+
+  // Protect routes that need certain roles to access
+  if (to.meta.authType === AuthType.AUTHENTICATED) {
+    const roles = authStore.authRoles
+    if (to.meta.roles && !to.meta.roles.some((r: string) => roles.includes(r))) {
+      return { name: 'home' }
+    }
+  }
+
+  // Change the browser tab title
+  document.title = `${appName} | ${to.meta.label}` || appName
+})
+
 /** Typings */
-export const enum RouteGroup {
+const enum RouteGroup {
   HOME = 'Home',
   ADMIN_TOOLS = 'Admin Tools',
   MISC = 'Misc',
@@ -157,13 +193,15 @@ export const enum RouteGroup {
  * Extending vue-router type
  * @see https://router.vuejs.org/guide/advanced/meta.html#TypeScript
  */
+export {}
+
 declare module 'vue-router' {
   interface RouteMeta {
     group?: RouteGroup
     label: string
     isSidebarMenu?: boolean
     hideNavigation?: boolean
-    roles?: UserRole[]
+    roles?: AuthRole[]
     authType: AuthType
   }
 }
