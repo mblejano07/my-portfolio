@@ -34,7 +34,7 @@ onBeforeMount(async () => {
     <!-- End Sidebar -->
     <div class="flex flex-1 flex-col">
       <AppDesktopToolbar v-if="!route.meta.hideNavigation" class="hidden lg:flex" />
-      <AppMobileToolbar class="lg:hidden" />
+      <AppMobileToolbar v-if="!route.meta.hideNavigation" class="lg:hidden" />
       <!-- Start Main Content -->
       <div :class="`${route.meta.hideNavigation ? '' : 'mx-4 mt-4 '} flex-1`">
         <RouterView v-slot="{ Component }">

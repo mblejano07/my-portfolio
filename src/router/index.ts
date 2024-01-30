@@ -5,6 +5,7 @@ import ProfilePage from '@/views/ProfilePage.vue'
 import SupportPage from '@/views/SupportPage.vue'
 import AboutUsPage from '@/views/AboutUsPage.vue'
 import AnnouncementsPage from '@/views/AnnouncementsPage.vue'
+import { AuthType, UserRole } from '@/typings/enums.ts'
 
 const routes = [
   {
@@ -15,6 +16,8 @@ const routes = [
       group: RouteGroup.HOME,
       label: 'Dashboard',
       isSidebarMenu: true,
+      authType: AuthType.AUTHENTICATED,
+      roles: [UserRole.STANDARD_USER, UserRole.ADMIN, UserRole.SYSTEM_SUPPORT, UserRole.SUPER_USER],
     },
   },
   {
@@ -25,6 +28,8 @@ const routes = [
       group: RouteGroup.HOME,
       label: 'Profile',
       isSidebarMenu: true,
+      authType: AuthType.AUTHENTICATED,
+      roles: [UserRole.STANDARD_USER, UserRole.ADMIN, UserRole.SYSTEM_SUPPORT, UserRole.SUPER_USER],
     },
   },
   {
@@ -35,6 +40,8 @@ const routes = [
       group: RouteGroup.HOME,
       label: 'Announcements',
       isSidebarMenu: true,
+      authType: AuthType.AUTHENTICATED,
+      roles: [UserRole.STANDARD_USER, UserRole.ADMIN, UserRole.SYSTEM_SUPPORT, UserRole.SUPER_USER],
     },
   },
   {
@@ -45,6 +52,8 @@ const routes = [
       group: RouteGroup.MISC,
       label: 'Support',
       isSidebarMenu: true,
+      authType: AuthType.AUTHENTICATED,
+      roles: [UserRole.STANDARD_USER, UserRole.ADMIN, UserRole.SYSTEM_SUPPORT, UserRole.SUPER_USER],
     },
   },
   {
@@ -55,15 +64,14 @@ const routes = [
       group: RouteGroup.MISC,
       label: 'About Us',
       isSidebarMenu: true,
+      authType: AuthType.AUTHENTICATED,
+      roles: [UserRole.STANDARD_USER, UserRole.ADMIN, UserRole.SYSTEM_SUPPORT, UserRole.SUPER_USER],
     },
   },
   {
     path: '/auth',
     name: 'auth',
     redirect: { name: 'login' },
-    meta: <RouteMeta>{
-      group: RouteGroup.AUTH,
-    },
     children: [
       {
         path: 'login',
@@ -72,6 +80,8 @@ const routes = [
         meta: <RouteMeta>{
           label: 'Login',
           hideNavigation: true,
+          authType: AuthType.UNAUTHENTICATED,
+          group: RouteGroup.AUTH,
         },
       },
       {
@@ -81,6 +91,8 @@ const routes = [
         meta: <RouteMeta>{
           label: 'Sign Up',
           hideNavigation: true,
+          authType: AuthType.UNAUTHENTICATED,
+          group: RouteGroup.AUTH,
         },
       },
     ],
@@ -89,11 +101,6 @@ const routes = [
     path: '/admin',
     name: 'admin-tools',
     redirect: { name: 'user-management' },
-    meta: <RouteMeta>{
-      group: RouteGroup.ADMIN_TOOLS,
-      label: 'Admin Tools',
-      isSidebarMenu: true,
-    },
     children: [
       {
         path: 'user-management',
@@ -102,6 +109,9 @@ const routes = [
         meta: <RouteMeta>{
           label: 'User Management',
           isSidebarMenu: true,
+          group: RouteGroup.ADMIN_TOOLS,
+          authType: AuthType.AUTHENTICATED,
+          roles: [UserRole.ADMIN, UserRole.SUPER_USER],
         },
       },
       {
@@ -111,6 +121,9 @@ const routes = [
         meta: <RouteMeta>{
           label: 'Settings',
           isSidebarMenu: true,
+          group: RouteGroup.ADMIN_TOOLS,
+          authType: AuthType.AUTHENTICATED,
+          roles: [UserRole.ADMIN, UserRole.SUPER_USER],
         },
       },
     ],
@@ -121,8 +134,8 @@ const routes = [
     component: () => import('@/views/misc/404Page.vue'),
     meta: <RouteMeta>{
       label: 'Page not found',
-      isSidebarMenu: false,
       hideNavigation: true,
+      authType: AuthType.OPEN,
     },
   },
 ]
@@ -150,6 +163,8 @@ declare module 'vue-router' {
     label: string
     isSidebarMenu?: boolean
     hideNavigation?: boolean
+    roles?: UserRole[]
+    authType: AuthType
   }
 }
 

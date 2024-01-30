@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Toolbar from 'primevue/toolbar'
-import Button from 'primevue/button'
+import AppMobileSidebar from '@/components/layout/app-sidebar/AppMobileSidebar.vue'
 import AppLogo from '@/components/layout/AppLogo.vue'
 import WbBreadcrumbs from '@/components/layout/AppBreadcrumbs.vue'
 </script>
@@ -13,7 +13,7 @@ import WbBreadcrumbs from '@/components/layout/AppBreadcrumbs.vue'
         <AppLogo color="light" />
       </template>
       <template #end>
-        <Button icon="pi pi-th-large" rounded class="text-surface-0" aria-label="Toggle Sidebar button"> </Button>
+        <AppMobileSidebar />
       </template>
     </Toolbar>
     <!-- End Mobile Toolbar -->

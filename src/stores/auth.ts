@@ -93,6 +93,11 @@ export const useAuthStore = defineStore('auth', () => {
     authenticationToken.value = null
   }
 
+  const authHasRequiredRole = (requiredRoles: string[]) => {
+    const userRoles = authenticatedUser.value.roles.map((role) => role.name)
+    return requiredRoles.some((r: string) => userRoles.includes(r))
+  }
+
   return {
     authenticationToken,
     authenticatedUser,
@@ -100,6 +105,7 @@ export const useAuthStore = defineStore('auth', () => {
     isAuthenticated,
     avatarDisplayNamePlaceholder,
     authRoles,
+    authHasRequiredRole,
     login,
     register,
     logout,

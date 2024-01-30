@@ -1,0 +1,86 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import Button from 'primevue/button'
+import Sidebar from 'primevue/sidebar'
+import Avatar from 'primevue/avatar'
+import { RouterLink } from 'vue-router'
+import { useSidebarNavLinks } from '@/composables/sidebar.ts'
+import { useAuthStore } from '@/stores/auth.ts'
+import { snakeCaseToTitleCase } from '@/utils/helpers.ts'
+import Tag from 'primevue/tag'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+const authStore = useAuthStore()
+const authFullname = authStore.authenticatedUser?.user_profile?.full_name
+
+const { navLinks } = useSidebarNavLinks()
+
+const visible = ref(false)
+const toggleVisibility = () => {
+  visible.value = !visible.value
+}
+</script>
+
+<template>
+  <div class="card flex justify-center">
+    <Sidebar v-model:visible="visible" position="right" class="w-full md:w-[20rem] lg:w-[30rem]">
+      <template #closeicon>
+        <FontAwesomeIcon icon="fa fa-xmark" class="h-4 w-4" />
+      </template>
+      <template #header>
+        <div class="flex items-center gap-2">
+          <template v-if="authStore.isAuthenticated">
+            <Avatar
+              :image="authStore.authenticatedUser.user_profile?.profile_picture_url"
+              :label="`${
+                !authStore.authenticatedUser.user_profile?.profile_picture_url ? authStore.avatarDisplayNamePlaceholder : ''
+              }`"
+              class="mr-2.5 overflow-hidden"
+              shape="square"
+              size="large"
+            />
+            <div class="flex flex-col">
+              <span class="font-bold">{{ authFullname }}</span>
+              <span class="mx-1 mt-2 flex flex-wrap gap-1">
+                <Tag v-for="role in authStore.authRoles" :value="snakeCaseToTitleCase(role)" :key="role"></Tag>
+                <Tag value="Something"></Tag>
+                <Tag value="Something"></Tag>
+                <Tag value="Something"></Tag>
+              </span>
+            </div>
+          </template>
+        </div>
+      </template>
+      <!-- End Logo -->
+      <!-- Start Nav Items -->
+      <aside class="flex flex-col overflow-y-auto">
+        <div class="flex flex-1 flex-col justify-between">
+          <nav class="space-y-6">
+            <div v-for="item in navLinks" :key="item.group" class="space-y-3">
+              <label class="px-3 text-xs uppercase dark:text-gray-400">
+                {{ item.group }}
+              </label>
+              <RouterLink
+                as="div"
+                v-for="link in item.links"
+                :key="link.label"
+                :to="{ name: link.name }"
+                :class="`flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 hover:bg-surface-200 hover:text-surface-900 ${
+                  $route.name === link.name ? 'bg-surface-200' : ''
+                }`"
+              >
+                <i :class="link.icon"></i>
+                <span class="mx-2 text-sm font-medium">{{ link.label }}</span>
+              </RouterLink>
+              <!-- Start Logout Link -->
+              <!-- End Logout Link -->
+            </div>
+          </nav>
+        </div>
+      </aside>
+      <!-- End Nav Items -->
+    </Sidebar>
+    <Button @click="toggleVisibility" icon="pi pi-th-large" rounded class="text-surface-0" aria-label="Toggle Sidebar button">
+    </Button>
+  </div>
+</template>

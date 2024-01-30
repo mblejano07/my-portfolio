@@ -11,6 +11,10 @@
           "description": "VuePrime Ripple Directive"
         },
         {
+          "name": "styleclass",
+          "description": "VuePrime Style Class Directive"
+        },
+        {
           "name": "tooltip",
           "description": "VuePrime Tooltip Directive",
           "modifiers": [
