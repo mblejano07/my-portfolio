@@ -15,13 +15,6 @@ import { useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
 import { snakeCaseToTitleCase } from '@/utils/helpers.ts'
 
-import { usePrimeVue } from 'primevue/config'
-
-const $primevue = usePrimeVue()
-defineExpose({
-  $primevue,
-})
-
 const globalStore = useGlobalStore()
 const authStore = useAuthStore()
 const router = useRouter()
