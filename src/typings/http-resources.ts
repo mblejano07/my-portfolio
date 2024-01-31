@@ -3,6 +3,8 @@ export type ApiResponse = {
   data?: Array<object> | object
   message?: string
   error_code?: string
+  error_message?: string
+  errors?: Array<{ field: string; messages: string[] }>
 }
 
 export type ApiResponseData = {

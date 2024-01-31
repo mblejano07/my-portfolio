@@ -5,7 +5,7 @@ export default {
       'w-96 rounded-md',
 
       // Positioning
-      { '-translate-x-2/4': props.position == 'top-center' || props.position == 'bottom-center' },
+      { '-translate-x-2/4': props.position === 'top-center' || props.position === 'bottom-center' },
     ],
   }),
   container: ({ props }) => ({
@@ -15,12 +15,13 @@ export default {
       'shadow-lg',
       'bg-surface-0 dark:bg-surface-800',
       'ring-1 ring-inset ring-surface-200 dark:ring-surface-700 ring-offset-0',
+
       // Colors
       {
-        'text-blue-500 dark:text-blue-300': props.message.severity == 'info',
-        'text-green-500 dark:text-green-300': props.message.severity == 'success',
-        'text-orange-500 dark:text-orange-300': props.message.severity == 'warn',
-        'text-red-500 dark:text-red-300': props.message.severity == 'error',
+        'bg-info-500 dark:text-info-500': props.message.severity === 'info',
+        'text-success-500 dark:text-success-300': props.message.severity === 'success',
+        'text-warn-500 dark:text-warn-300': props.message.severity === 'warn',
+        'text-error-500 dark:text-error-300': props.message.severity === 'error',
       },
     ],
   }),
@@ -71,8 +72,6 @@ export default {
 
       // States
       'hover:bg-surface-100 dark:hover:bg-surface-700',
-      'outline-none focus:ring-1 focus:ring-inset',
-      'focus:ring-primary-500 dark:focus:ring-primary-400',
 
       // Misc
       'overflow-hidden',

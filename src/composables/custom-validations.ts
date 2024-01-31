@@ -80,3 +80,13 @@ export const useUniqueUserIdentifierRule =
       const res = await availabilityStore.checkUserUniqueIdentifierAvailability(key, value, excludedId)
       return res.data.is_available
     }
+
+/** @description Only allow certain file extensions **/
+export const mimeTypeRule = (mimeTypes: string[]) => (value: File) => {
+  return mimeTypes.includes(value.type)
+}
+
+/** @description The file size must not exceed the specified size in MB*/
+export const maxFileSizeRule = (maxMb: number) => (value: File) => {
+  return value.size <= maxMb * 1024 * 1024
+}

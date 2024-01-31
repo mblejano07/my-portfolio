@@ -8,6 +8,7 @@ import { onBeforeMount } from 'vue'
 import { useAuthStore } from '@/stores/auth.ts'
 import { useProfileStore } from '@/stores/profile.ts'
 import AppMobileToolbar from '@/components/layout/app-toolbar/AppMobileToolbar.vue'
+import Toast from 'primevue/toast'
 
 const globalStore = useGlobalStore()
 const authStore = useAuthStore()
@@ -24,6 +25,7 @@ onBeforeMount(async () => {
 
 <template>
   <div id="app-container" class="flex min-h-screen bg-surface-200 font-content">
+    <Toast />
     <!-- Start Sidebar -->
     <AppDesktopSidebar
       v-if="!route.meta.hideNavigation"

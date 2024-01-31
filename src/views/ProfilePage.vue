@@ -22,7 +22,7 @@ const profileInfoShown = ref(true)
             <template v-if="authStore.isAuthenticated">
               <WbAvatarFileInput />
             </template>
-            <div class="ml-8 flex flex-col text-xl">
+            <div class="ml-8 flex flex-col text-lg lg:text-2xl">
               <span class="font-bold">{{ authStore.authFullName }}</span>
               <span class="text-xs sm:text-sm">{{ authStore.authFullAddress }}</span>
             </div>

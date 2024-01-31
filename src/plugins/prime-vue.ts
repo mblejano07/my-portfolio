@@ -11,6 +11,7 @@ import StyleClass from 'primevue/styleclass'
 const config: PrimeVueConfiguration = { unstyled: true, pt: WindPreset, ripple: true }
 vueApp.use(PrimeVue, config)
 vueApp.use(ToastService)
+
 vueApp.directive('tooltip', Tooltip)
 vueApp.directive('ripple', Ripple)
 vueApp.directive('styleclass', StyleClass)

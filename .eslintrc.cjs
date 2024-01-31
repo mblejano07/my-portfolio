@@ -25,7 +25,7 @@ module.exports = {
   rules: {
     indent: ['warn', 2, { SwitchCase: 1 }],
     'linebreak-style': ['warn', 'unix'],
-    quotes: ['warn', 'single'],
+    quotes: ['warn', 'single', { avoidEscape: true }],
     semi: ['warn', 'never'],
     'vue/component-tags-order': [
       'warn',
