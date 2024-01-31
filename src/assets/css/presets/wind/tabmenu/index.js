@@ -13,7 +13,7 @@ export default {
 
       // Colors
       'bg-surface-0 dark:bg-surface-800',
-      'border-b border-surface-200 dark:border-surface-700',
+      // 'border-b border-surface-200 dark:border-surface-700',
       'text-surface-900 dark:text-surface-0/80',
     ],
   },

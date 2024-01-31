@@ -31,6 +31,10 @@ export const useAuthStore = defineStore('auth', () => {
     return authenticatedUser?.value?.roles.map((role) => role.name)
   })
 
+  const authFullName = computed(() => {
+    return authenticatedUser?.value?.user_profile?.full_name
+  })
+
   const avatarDisplayNamePlaceholder = computed(() => {
     if (!authenticatedUser.value?.user_profile?.full_name) return null
 
@@ -43,6 +47,29 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     return initials
+  })
+
+  const authFullAddress = computed(() => {
+    if (!authenticatedUser.value) return null
+
+    let address = ''
+    address += authenticatedUser.value?.user_profile?.address?.home_address
+      ? authenticatedUser.value.user_profile.address.home_address + ', '
+      : ''
+    address += authenticatedUser.value?.user_profile?.address?.barangay?.name
+      ? authenticatedUser.value.user_profile.address.barangay.name + ', '
+      : ''
+    address += authenticatedUser.value?.user_profile?.address?.city?.name
+      ? authenticatedUser.value.user_profile.address.city.name + ', '
+      : ''
+    address += authenticatedUser.value?.user_profile?.address?.province?.name
+      ? authenticatedUser.value.user_profile.address.province.name + ', '
+      : ''
+    address += authenticatedUser.value?.user_profile?.address?.region?.name
+      ? authenticatedUser.value.user_profile.address.region.name
+      : ''
+
+    return address
   })
 
   /** Actions */
@@ -106,6 +133,8 @@ export const useAuthStore = defineStore('auth', () => {
     avatarDisplayNamePlaceholder,
     authRoles,
     authHasRequiredRole,
+    authFullName,
+    authFullAddress,
     login,
     register,
     logout,

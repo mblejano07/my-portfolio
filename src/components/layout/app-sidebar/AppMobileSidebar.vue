@@ -10,17 +10,15 @@ import { snakeCaseToTitleCase } from '@/utils/helpers.ts'
 import Tag from 'primevue/tag'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-const authStore = useAuthStore()
-const authFullName = authStore.authenticatedUser?.user_profile?.full_name
-
 const { navLinks } = useSidebarNavLinks()
-
 const visible = ref(false)
 const toggleVisibility = () => {
   visible.value = !visible.value
 }
 
+/** Handle Logout */
 const router = useRouter()
+const authStore = useAuthStore()
 const handleLogout = async () => {
   await authStore.logout()
   await router.replace({ name: 'login' })
@@ -46,7 +44,7 @@ const handleLogout = async () => {
               size="large"
             />
             <div class="flex flex-col">
-              <span class="font-bold">{{ authFullName }}</span>
+              <span class="font-bold">{{ authStore.authFullName }}</span>
               <span class="mx-1 mt-2 flex flex-wrap gap-1">
                 <Tag v-for="role in authStore.authRoles" :value="snakeCaseToTitleCase(role)" :key="role"></Tag>
               </span>
