@@ -17,29 +17,9 @@ export type UserProfileResponse = {
   ext_name: string | null
   mobile_number: string | null
   telephone_number: string | null
-  sex: string
-  birthday: string
+  sex: 'male' | 'female' | null
+  birthday: string | null
   full_name: string
-  profile_picture_url: string
+  profile_picture_url: string | null
   address: AddressResponse
 } & ApiResponseData
-
-/** Client Payloads (SPA) */
-export type UserProfilePayload = {
-  email: string
-  first_name?: string
-  last_name?: string
-  middle_name: string
-  ext_name: string
-  mobile_number?: string
-  telephone_number?: string
-  sex?: 'male' | 'female'
-  birthday?: string
-  home_address?: string
-  barangay_id?: string | number
-  city_id?: string | number
-  province_id?: string | number
-  region_id?: string | number
-  postal_code?: string
-  profile_picture_path?: string | number
-}

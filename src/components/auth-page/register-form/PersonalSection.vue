@@ -50,9 +50,9 @@ const formRules = {
     maxLength: globalStringMaxLengthRule,
   },
 }
+const validator = useVuelidate<RegistrationPersonalInfoPayload>(formRules, payload)
 
 /** Handle Next Section */
-const validator = useVuelidate<RegistrationPersonalInfoPayload>(formRules, payload)
 const handleNextSection = async () => {
   const valid = await validator.value.$validate()
   if (!valid) return false
@@ -126,6 +126,7 @@ const handleNextSection = async () => {
       <WbDropdown
         v-model="payload.sex"
         :options="genderOptions"
+        optionLabel="label"
         label="Sex"
         label-class="text-xs text-surface-0 lg:text-surface-500"
       >

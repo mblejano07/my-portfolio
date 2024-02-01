@@ -7,7 +7,7 @@ export const useAvailabilitiesStore = defineStore('availabilities', () => {
   const checkUserUniqueIdentifierAvailability = async (
     key: 'mobile_number' | 'email',
     value: string,
-    excludeId: string | null = null
+    excludeId: string | number | null = null
   ) => {
     if (key === 'mobile_number') {
       value = encodeURIComponent(parsePhoneNumber(value, 'PH').number)

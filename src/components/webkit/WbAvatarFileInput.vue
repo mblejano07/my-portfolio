@@ -4,7 +4,7 @@ import Button from 'primevue/button'
 import { useAuthStore } from '@/stores/auth.ts'
 import { ref, watch } from 'vue'
 import { useImage } from '@vueuse/core'
-import { mimeTypeRule, maxFileSizeRule } from '@/composables/custom-validations.ts'
+import { mimeTypeRule, maxFileSizeRule } from '@/utils/custom-validations.ts'
 import { useToast } from 'primevue/usetoast'
 import { useProfileStore } from '@/stores/profile.ts'
 

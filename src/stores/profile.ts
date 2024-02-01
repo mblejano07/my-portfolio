@@ -1,7 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { useApiCall } from '@/composables/network'
 import { useAuthStore } from '@/stores/auth'
-import { UserProfilePayload, UserResponse } from '@/typings/user.models.ts'
+import { UserResponse } from '@/typings/user.models.ts'
 import { ApiResponse } from '@/typings/http-resources.ts'
 
 export const useProfileStore = defineStore('profile', () => {
@@ -59,3 +59,22 @@ export const useProfileStore = defineStore('profile', () => {
 export type ChangePasswordPayload = { old_password: string; password: string; password_confirmation: string }
 
 export type UploadProfilePictureResponse = { owner_id: string | number; path: string; url: string }
+
+export type UserProfilePayload = {
+  email: string
+  first_name?: string
+  last_name?: string
+  middle_name?: string | null
+  ext_name?: string | null
+  mobile_number?: string | null
+  telephone_number?: string | null
+  sex?: 'male' | 'female' | null
+  birthday?: string | null
+  home_address?: string | null
+  barangay_id?: string | number | null
+  city_id?: string | number | null
+  province_id?: string | number | null
+  region_id?: string | number | null
+  postal_code?: string | null
+  profile_picture_path?: string | number | null
+}

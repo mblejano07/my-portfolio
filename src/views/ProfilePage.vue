@@ -3,6 +3,7 @@ import Card from 'primevue/card'
 import { useAuthStore } from '@/stores/auth.ts'
 import { ref } from 'vue'
 import WbAvatarFileInput from '@/components/webkit/WbAvatarFileInput.vue'
+import UpdateProfileForm from '@/components/profile-page/UpdateProfileForm.vue'
 
 const authStore = useAuthStore()
 
@@ -17,7 +18,7 @@ const profileInfoShown = ref(true)
         <div class="h-2 w-full rounded-t-lg bg-primary-500"></div>
       </template>
       <template #content>
-        <div class="flex flex-col">
+        <div class="flex flex-col px-4">
           <div class="flex items-center">
             <template v-if="authStore.isAuthenticated">
               <WbAvatarFileInput />
@@ -53,7 +54,9 @@ const profileInfoShown = ref(true)
       </template>
     </Card>
     <Card class="mt-3">
-      <h1>Form is here</h1>
+      <template #content>
+        <UpdateProfileForm />
+      </template>
     </Card>
   </div>
 </template>
