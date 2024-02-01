@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref } from 'vue'
 import { useProfileStore, UserProfilePayload } from '@/stores/profile.ts'
 import { useAuthStore } from '@/stores/auth.ts'
 import useVuelidate from '@vuelidate/core'
@@ -121,13 +121,6 @@ const handleFormSubmission = async () => {
     life: 5000,
   })
 }
-
-watch(
-  () => payload.sex,
-  () => {
-    console.log('sex', payload.sex)
-  }
-)
 </script>
 
 <template>
@@ -195,6 +188,7 @@ watch(
           v-model="payload.sex"
           :options="genderOptions"
           optionLabel="label"
+          optionValue="value"
           label="Sex"
           label-class="text-xs text-surface-0 lg:text-surface-500"
         >

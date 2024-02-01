@@ -127,6 +127,7 @@ const handleNextSection = async () => {
         v-model="payload.sex"
         :options="genderOptions"
         optionLabel="label"
+        optionValue="value"
         label="Sex"
         label-class="text-xs text-surface-0 lg:text-surface-500"
       >
