@@ -38,7 +38,7 @@ onBeforeMount(async () => {
       <AppDesktopToolbar v-if="!route.meta.hideNavigation" class="hidden lg:flex" />
       <AppMobileToolbar v-if="!route.meta.hideNavigation" class="lg:hidden" />
       <!-- Start Main Content -->
-      <div :class="`${route.meta.hideNavigation ? '' : 'mx-4 mt-4 '} flex-1`">
+      <div :class="`${route.meta.hideNavigation ? '' : 'mx-4 mt-4 lg:mt-0'} flex-1`">
         <RouterView v-slot="{ Component }">
           <transition
             enter-active-class="transition duration-500"
