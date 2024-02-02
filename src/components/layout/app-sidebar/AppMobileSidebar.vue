@@ -27,7 +27,7 @@ const handleLogout = async () => {
 
 <template>
   <div class="card flex justify-center">
-    <Sidebar v-model:visible="visible" position="right" class="w-full md:w-[20rem] lg:w-[30rem]" @click="toggleVisibility">
+    <Sidebar v-model:visible="visible" position="right" class="w-full md:w-[20rem] lg:w-[30rem]" @click="visible = false">
       <template #closeicon>
         <FontAwesomeIcon icon="fa fa-xmark" class="h-4 w-4" />
       </template>
@@ -82,7 +82,12 @@ const handleLogout = async () => {
       <Button label="Logout" severity="secondary" class="mt-10 flex w-full" @click="handleLogout"> </Button>
       <!-- End Logout Link -->
     </Sidebar>
-    <Button @click="toggleVisibility" icon="pi pi-th-large" rounded class="text-surface-0" aria-label="Toggle Sidebar button">
-    </Button>
+    <Button
+      @click="toggleVisibility"
+      icon="pi pi-th-large"
+      rounded
+      class="text-surface-0"
+      aria-label="Toggle Sidebar button"
+    ></Button>
   </div>
 </template>

@@ -1,5 +1,13 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 
-import { faMarsAndVenus, faLock, faRightToBracket, faSignIn, faXmark } from '@fortawesome/free-solid-svg-icons'
+import {
+  faMarsAndVenus,
+  faLock,
+  faRightToBracket,
+  faSignIn,
+  faXmark,
+  faFileUpload,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons'
 
-library.add(faMarsAndVenus, faLock, faRightToBracket, faSignIn, faXmark)
+library.add(faMarsAndVenus, faLock, faRightToBracket, faSignIn, faXmark, faFileUpload, faSpinner)

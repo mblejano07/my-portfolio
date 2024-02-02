@@ -104,14 +104,14 @@ export const useAuthStore = defineStore('auth', () => {
 
     const { data } = await useApiCall('auth/register').post(unWrappedPayload).json()
 
-    const responseData: ApiResponse = data.value
-    if (responseData.success) {
-      const authResponse = responseData.data as AuthResponse
+    const responseBody: ApiResponse = data.value
+    if (responseBody.success) {
+      const authResponse = responseBody.data as AuthResponse
       authenticationToken.value = authResponse.token
       authenticatedUser.value = authResponse.user
     }
 
-    return responseData
+    return responseBody
   }
 
   const logout = async () => {

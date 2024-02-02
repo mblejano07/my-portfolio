@@ -3,6 +3,7 @@ import { useApiCall } from '@/composables/network'
 import { useAuthStore } from '@/stores/auth'
 import { UserResponse } from '@/typings/user.models.ts'
 import { ApiResponse } from '@/typings/http-resources.ts'
+import { useDateFormat } from '@vueuse/core'
 
 export const useProfileStore = defineStore('profile', () => {
   /**
@@ -25,6 +26,11 @@ export const useProfileStore = defineStore('profile', () => {
   }
 
   const updateProfile = async (payload: Partial<UserProfilePayload>) => {
+    // The API only accepts Y-m-d format (2024-01-31)
+    if (payload.birthday) {
+      payload.birthday = useDateFormat(payload.birthday, 'YYYY-MM-DD').value.toString()
+    }
+
     const { data } = await useApiCall('/profile', auth.authenticationToken.value).patch(payload).json()
 
     const responseBody: ApiResponse = data.value
@@ -62,19 +68,19 @@ export type UploadProfilePictureResponse = { owner_id: string | number; path: st
 
 export type UserProfilePayload = {
   email: string
-  first_name?: string
-  last_name?: string
-  middle_name?: string | null
-  ext_name?: string | null
-  mobile_number?: string | null
+  first_name: string
+  last_name: string
+  middle_name: string | null
+  ext_name: string | null
+  mobile_number: string | null
+  sex: 'male' | 'female' | null
+  birthday: string | null
+  home_address: string | null
+  barangay_id: string | number | null
+  city_id: string | number | null
+  province_id: string | number | null
+  region_id: string | number | null
+  postal_code: string | null
   telephone_number?: string | null
-  sex?: 'male' | 'female' | null
-  birthday?: string | null
-  home_address?: string | null
-  barangay_id?: string | number | null
-  city_id?: string | number | null
-  province_id?: string | number | null
-  region_id?: string | number | null
-  postal_code?: string | null
   profile_picture_path?: string | number | null
 }

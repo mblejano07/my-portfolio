@@ -7,6 +7,7 @@ import { useImage } from '@vueuse/core'
 import { mimeTypeRule, maxFileSizeRule } from '@/utils/custom-validations.ts'
 import { useToast } from 'primevue/usetoast'
 import { useProfileStore } from '@/stores/profile.ts'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const authStore = useAuthStore()
 const imageSource = ref<string | undefined | null>(authStore.authenticatedUser?.user_profile?.profile_picture_url)
@@ -133,7 +134,10 @@ const handleImageUpload = async () => {
         class="w-24 text-xs lg:w-28"
       >
         <template #icon>
-          <i :class="`${imageIsUploading ? 'pi pi-spinner animate-spin' : 'pi pi-upload'} mr-2`"></i>
+          <FontAwesomeIcon
+            :icon="`${imageIsUploading ? 'fa-solid fa-spinner' : 'fa-solid fa-file-upload'}`"
+            :class="`${imageIsUploading ? 'animate-spin' : ''}`"
+          />
         </template>
       </Button>
     </div>

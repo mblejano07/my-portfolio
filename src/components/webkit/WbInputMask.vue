@@ -49,7 +49,11 @@ const props = withDefaults(defineProps<WbInputMaskProps>(), {
       <InputMask
         v-bind="$attrs"
         :aria-describedby="`${$.uid.toString()}-help`"
-        :class="`h-12 w-full ${$slots['prepend-icon'] ? 'pl-10' : ''} ${props.invalid ? '!ring-error-500' : ''}`"
+        :class="`h-12 w-full
+        ${$slots['prepend-icon'] ? 'pl-10' : ''}
+        ${props.invalid ? '!ring-error-500' : ''}
+        ${$attrs.disabled ? '!text-surface-600' : ''}
+        `"
       />
     </div>
     <!-- End InputTex -->

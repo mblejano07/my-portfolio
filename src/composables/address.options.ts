@@ -1,6 +1,7 @@
 import { computed, Ref, ToRefs, UnwrapNestedRefs, watch } from 'vue'
 import { WbAutoCompleteOption } from '@/components/webkit/WbAutoComplete.vue'
 import { RegistrationAddressPayload } from '@/stores/forms.ts'
+import { UserProfilePayload } from '@/stores/profile.ts'
 
 /**
  * @description Filter the list of address based on the parent.
@@ -29,7 +30,7 @@ export const useFilterByParentId = (parentId: Ref<number | string | null>, fullO
  * the selected values for barangay and city will be cleared.
  */
 export const useClearSelectedAddressIfNotInParentList = (
-  payload: ToRefs<UnwrapNestedRefs<RegistrationAddressPayload>>,
+  payload: ToRefs<UnwrapNestedRefs<RegistrationAddressPayload | UserProfilePayload>>,
   selectedProvinceObjRef: Ref<WbAutoCompleteOption | null>,
   selectedCityObjectRef: Ref<WbAutoCompleteOption | null>,
   selectedBarangayObjectRef: Ref<WbAutoCompleteOption | null>,
