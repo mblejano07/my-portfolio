@@ -211,7 +211,7 @@ const handleFormSubmission = async () => {
     <!-- Start Toggle Edit Switch -->
     <div class="flex items-center justify-end lg:mb-2">
       <span class="mr-3 text-xs text-surface-500">{{ !editingEnabled ? 'Enable Editing' : 'Disabled Editing' }}</span>
-      <InputSwitch v-model="editingEnabled"> </InputSwitch>
+      <InputSwitch v-model="editingEnabled"></InputSwitch>
     </div>
     <!-- End Toggle Edit Switch -->
     <div class="flex flex-col gap-4">
@@ -225,8 +225,6 @@ const handleFormSubmission = async () => {
           :invalid-text="validator.email.$errors[0]?.$message"
           @blur="validator.email.$touch"
           @focusin="validator.email.$dirty = false"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
-          validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -242,8 +240,6 @@ const handleFormSubmission = async () => {
           :invalid-text="validator.mobile_number.$errors[0]?.$message"
           @blur="validator.mobile_number.$touch"
           @focusin="validator.mobile_number.$dirty = false"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
-          validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -262,8 +258,6 @@ const handleFormSubmission = async () => {
           label="First name *"
           :invalid="validator.first_name.$invalid"
           :invalid-text="validator.first_name.$errors[0]?.$message"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
-          validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -275,8 +269,6 @@ const handleFormSubmission = async () => {
           label="Middle name"
           :invalid="validator.middle_name.$invalid"
           :invalid-text="validator.middle_name.$errors[0]?.$message"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
-          validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -292,8 +284,6 @@ const handleFormSubmission = async () => {
           label="Last name *"
           :invalid="validator.last_name.$invalid"
           :invalid-text="validator.last_name.$errors[0]?.$message"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
-          validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -305,8 +295,6 @@ const handleFormSubmission = async () => {
           label="Ext. name"
           :invalid="validator.ext_name.$invalid"
           :invalid-text="validator.ext_name.$errors[0]?.$message"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
-          validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -323,7 +311,6 @@ const handleFormSubmission = async () => {
           optionLabel="label"
           optionValue="value"
           label="Sex"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -335,7 +322,6 @@ const handleFormSubmission = async () => {
           dateFormat="MM dd, yy"
           :maxDate="new Date()"
           label="Birthday"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -358,7 +344,6 @@ const handleFormSubmission = async () => {
           @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('region', value)"
           :loading="publicStore.regionOptionsIsLoading"
           :disabled="publicStore.regionOptionsIsLoading || !editingEnabled"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
         >
           <template #prepend-icon>
             <i class="pi pi-map" />
@@ -373,7 +358,6 @@ const handleFormSubmission = async () => {
           @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('province', value)"
           :loading="publicStore.provinceOptionsIsLoading"
           :disabled="publicStore.provinceOptionsIsLoading || !editingEnabled"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
         >
           <template #prepend-icon>
             <i class="pi pi-map" />
@@ -393,7 +377,6 @@ const handleFormSubmission = async () => {
           :loading="publicStore.cityOptionsIsLoading"
           :disabled="publicStore.cityOptionsIsLoading || !editingEnabled"
           :virtualScrollerOptions="{ itemSize: 38 }"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
         >
           <template #prepend-icon>
             <i class="pi pi-map" />
@@ -409,7 +392,6 @@ const handleFormSubmission = async () => {
           :loading="publicStore.barangayOptionsIsLoading"
           :disabled="publicStore.barangayOptionsIsLoading || !editingEnabled"
           :virtualScrollerOptions="{ itemSize: 38 }"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
         >
           <template #prepend-icon>
             <i class="pi pi-map" />
@@ -424,8 +406,6 @@ const handleFormSubmission = async () => {
           label="Home Address"
           :invalid="validator.home_address.$invalid"
           :invalid-text="validator.home_address.$errors[0]?.$message"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
-          validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -438,8 +418,6 @@ const handleFormSubmission = async () => {
           mask="9999"
           :invalid="validator.postal_code.$invalid"
           :invalid-text="validator.postal_code.$errors[0]?.$message"
-          label-class="text-xs text-surface-0 lg:text-surface-500"
-          validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -449,7 +427,7 @@ const handleFormSubmission = async () => {
       </div>
       <!-- End Home Address and Zip Code -->
       <!-- End Address -->
-      <div class="mt-3 flex justify-end">
+      <div class="mt-6 flex justify-end">
         <Button
           @click="handleFormSubmission"
           label="Save"
@@ -464,5 +442,3 @@ const handleFormSubmission = async () => {
     </div>
   </form>
 </template>
-
-<style scoped></style>

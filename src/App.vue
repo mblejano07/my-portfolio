@@ -25,7 +25,6 @@ onBeforeMount(async () => {
 
 <template>
   <div id="app-container" class="flex min-h-screen bg-surface-200 font-content">
-    <Toast />
     <!-- Start Sidebar -->
     <AppDesktopSidebar
       v-if="!route.meta.hideNavigation"
@@ -39,6 +38,7 @@ onBeforeMount(async () => {
       <AppMobileToolbar v-if="!route.meta.hideNavigation" class="lg:hidden" />
       <!-- Start Main Content -->
       <div :class="`${route.meta.hideNavigation ? '' : 'mx-4 mt-4 lg:mt-0'} flex-1`">
+        <Toast position="top-right" />
         <RouterView v-slot="{ Component }">
           <transition
             enter-active-class="transition duration-500"

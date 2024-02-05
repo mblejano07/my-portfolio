@@ -176,7 +176,7 @@ export default {
       'rounded-md',
       'shadow-md',
       'max-h-[15rem]',
-      'overflow-auto',
+      'overflow-hidden',
 
       // Color
       'bg-surface-0 dark:bg-surface-800',

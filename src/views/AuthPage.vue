@@ -71,10 +71,10 @@ watch(
           leave-to-class="opacity-0"
         >
           <template v-if="showLogin">
-            <LoginForm class="mt-12 w-full space-y-8 lg:mt-0" @on-credentials-error="formHasError = true" />
+            <LoginForm class="mt-6 w-full lg:mt-0" @on-credentials-error="formHasError = true" />
           </template>
           <template v-else>
-            <RegisterForm class="mt-12 w-full space-y-8 lg:mt-0" />
+            <RegisterForm class="mt-6 w-full lg:mt-0" />
           </template>
         </transition>
         <!-- End Login Form -->

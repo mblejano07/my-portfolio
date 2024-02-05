@@ -112,8 +112,6 @@ const clearForm = () => {
         toggleMask
         :invalid="validator.old_password.$invalid"
         :invalid-text="validator.old_password.$errors[0]?.$message"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />
@@ -131,8 +129,6 @@ const clearForm = () => {
         :invalid-text="validator.password.$errors[0]?.$message"
         @blur="validator.password.$touch"
         @focusin="validator.password.$dirty = false"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />
@@ -155,8 +151,6 @@ const clearForm = () => {
         toggleMask
         :invalid="validator.password_confirmation.$invalid"
         :invalid-text="validator.password_confirmation.$errors[0]?.$message"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />
@@ -165,7 +159,7 @@ const clearForm = () => {
     </div>
     <!-- End Password and Password Confirmation -->
     <!-- Start Submit Button -->
-    <div class="mt-3 flex justify-end">
+    <div class="mt-6 flex justify-end">
       <Button @click="handleFormSubmission" label="Save" :loading="formIsSubmitting" :disabled="formIsSubmitting">
         <template #icon>
           <i class="pi pi-save mr-2"></i>

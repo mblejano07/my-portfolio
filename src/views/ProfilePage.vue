@@ -26,11 +26,11 @@ onBeforeMount(async () => {
       </template>
       <template #content>
         <div class="flex flex-col px-4">
-          <div class="flex items-center">
+          <div class="flex flex-col items-center md:flex-row">
             <template v-if="authStore.isAuthenticated">
               <WbAvatarFileInput />
             </template>
-            <div class="ml-8 flex flex-col text-lg lg:text-2xl">
+            <div class="mt-3 flex flex-col text-center text-lg md:ml-8 md:mt-0 md:text-left lg:text-2xl">
               <span class="font-bold">{{ authStore.authFullName }}</span>
               <span class="text-xs sm:text-sm">{{ authStore.authFullAddress }}</span>
             </div>
@@ -41,7 +41,7 @@ onBeforeMount(async () => {
         <!-- Start Tab Buttons -->
         <div class="flex justify-center gap-x-1 text-sm md:justify-end">
           <button
-            :class="`mr-6 rounded-lg px-2 py-1 transition hover:scale-105 hover:bg-surface-200 ${
+            :class="`rounded-lg px-2 py-1 transition hover:scale-105 hover:bg-surface-200 md:mr-6 ${
               profileInfoShown ? 'bg-surface-200' : ''
             }`"
             @click="profileInfoShown = true"
@@ -49,7 +49,7 @@ onBeforeMount(async () => {
             Profile Details
           </button>
           <button
-            :class="`mr-6 rounded-lg px-2 py-1 transition hover:scale-105 hover:bg-surface-200 ${
+            :class="`rounded-lg px-2 py-1 transition hover:scale-105 hover:bg-surface-200 md:mr-6 ${
               !profileInfoShown ? 'bg-surface-200' : ''
             }`"
             @click="profileInfoShown = false"
