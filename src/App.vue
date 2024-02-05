@@ -51,7 +51,7 @@ onBeforeMount(async () => {
       </div>
       <!-- End Main Content -->
       <!-- Start Footer -->
-      <AppFooter v-if="!route.meta.hideNavigation"></AppFooter>
+      <AppFooter v-if="!route.meta.hideNavigation" class="mt-6"></AppFooter>
       <!-- End Footer -->
     </div>
   </div>

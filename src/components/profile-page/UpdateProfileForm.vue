@@ -169,9 +169,6 @@ const validator = useVuelidate<Partial<UserProfilePayload>>(formRules, payload)
 /** Handle Form Submission */
 const formIsSubmitting = ref(false)
 const profileStore = useProfileStore()
-const showErrorAlert = ref(false)
-const errorMessage = ref<string | null>(null)
-const errorDetails = ref<string[]>([])
 const toast = useToast()
 const handleFormSubmission = async () => {
   const valid = await validator.value.$validate()
@@ -185,18 +182,14 @@ const handleFormSubmission = async () => {
     })
     return
   }
+
   formIsSubmitting.value = true
-
   const response = await profileStore.updateProfile(payload)
-
   // Handle the API error
   if (!response.success) {
     const result = parseApiResponseError(response)
     if (!result) return (formIsSubmitting.value = false)
 
-    showErrorAlert.value = true
-    errorMessage.value = result.message
-    errorDetails.value = result.errors
     await sleep(0.2)
     formIsSubmitting.value = false
     return window.scrollTo({ top: 0, behavior: 'smooth' })

@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import Card from 'primevue/card'
 import { useAuthStore } from '@/stores/auth.ts'
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import WbAvatarFileInput from '@/components/webkit/WbAvatarFileInput.vue'
 import UpdateProfileForm from '@/components/profile-page/UpdateProfileForm.vue'
+import { useProfileStore } from '@/stores/profile.ts'
+import ChangePasswordForm from '@/components/profile-page/ChangePasswordForm.vue'
 
 const authStore = useAuthStore()
 
 /** Tab Menu Items */
 const profileInfoShown = ref(true)
+const profileStore = useProfileStore()
+
+onBeforeMount(async () => {
+  await profileStore.fetchProfile()
+})
 </script>
 
 <template>
@@ -53,9 +60,16 @@ const profileInfoShown = ref(true)
         <!-- End Tab Buttons -->
       </template>
     </Card>
-    <Card class="mt-3">
+    <Card class="mt-4">
       <template #content>
-        <UpdateProfileForm />
+        <transition
+          enter-active-class="transition duration-500"
+          enter-from-class="translate-y-[20%] opacity-0"
+          leave-to-class="opacity-0"
+        >
+          <UpdateProfileForm v-if="profileInfoShown" />
+          <ChangePasswordForm v-else />
+        </transition>
       </template>
     </Card>
   </div>
