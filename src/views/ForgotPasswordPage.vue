@@ -75,24 +75,28 @@ const handleSubmitForm = async () => {
 </script>
 
 <template>
-  <div class="flex h-full w-full flex-col items-center bg-gradient-to-b from-primary-500 to-primary-900">
+  <div
+    :class="`flex h-full w-full flex-col items-center bg-gradient-to-b pt-2 transition-colors md:pt-6 ${
+      showErrorAlert ? 'from-error-500 to-error-900' : 'from-primary-500 to-primary-900'
+    }`"
+  >
     <!-- Start Alert Message -->
     <transition enter-active-class="transition duration-200" enter-from-class="scale-50 opacity-0" leave-to-class="opacity-0">
-      <Message v-if="showErrorAlert" :closable="false" severity="error" class="mb-6">
+      <Message v-if="showErrorAlert" :closable="false" severity="error" class="mx-4 mb-6 md:mx-0">
         <span
           >We were unable to send you a password reset email, please try again in a few moments or contact our support team.</span
         >
       </Message>
     </transition>
     <!-- End Alert Message -->
-    <Card class="z-10 mx-4 mt-6 max-w-3xl px-2 md:mx-0 lg:mt-8">
+    <Card :class="`z-10 mx-2 max-w-3xl px-0.5 md:mx-0 md:px-2 ${showErrorAlert ? 'lg:mt-0' : 'lg:mt-8'}`">
       <template #content>
         <div class="flex flex-col">
           <form autocomplete="off" @submit.prevent>
             <div class="item-center mb-8 flex justify-between">
               <AppLogo />
               <Button label="Back to Login" text size="small" @click="$router.push({ name: 'login' })" class="text-xs">
-                <template #icon><i class="pi pi-arrow-left mr-2" /></template>
+                <template #icon><i class="pi pi-arrow-left mr-2 hidden md:block" /></template>
               </Button>
             </div>
             <div class="mb-8">
