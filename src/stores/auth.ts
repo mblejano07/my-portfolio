@@ -120,6 +120,24 @@ export const useAuthStore = defineStore('auth', () => {
     authenticationToken.value = null
   }
 
+  const requestForgotPassword = async (email: string) => {
+    const { data } = await useApiCall('auth/forgot-password').post({ email }).json()
+    return data.value as ApiResponse
+  }
+
+  const resetPassword = async ({ email, token, password, password_confirmation }: ResetPasswordPayload) => {
+    const { data } = await useApiCall('auth/reset-password')
+      .post({
+        email,
+        token,
+        password,
+        password_confirmation,
+      })
+      .json()
+
+    return data.value as ApiResponse
+  }
+
   const authHasRequiredRole = (requiredRoles: string[]) => {
     const userRoles = authenticatedUser.value.roles.map((role) => role.name)
     return requiredRoles.some((r: string) => userRoles.includes(r))
@@ -138,6 +156,8 @@ export const useAuthStore = defineStore('auth', () => {
     login,
     register,
     logout,
+    requestForgotPassword,
+    resetPassword,
   }
 })
 
@@ -155,4 +175,11 @@ export type AuthResponse = {
   token_name: string
   expires_at: string
   user: UserResponse
+}
+
+export type ResetPasswordPayload = {
+  email: string
+  token: string
+  password: string
+  password_confirmation: string
 }

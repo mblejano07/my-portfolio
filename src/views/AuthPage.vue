@@ -30,7 +30,7 @@ watch(
 </script>
 
 <template>
-  <div class="relative flex min-h-screen transition">
+  <div class="relative flex min-h-screen">
     <AnimatedFloaters class="lg:hidden" />
     <div class="flex min-w-0 flex-auto flex-col items-center lg:flex-row">
       <div
@@ -52,7 +52,7 @@ watch(
           </div>
         </div>
         <!-- End Webkit Text -->
-        <AnimatedFloaters />
+        <AnimatedFloaters class="hidden lg:flex" />
       </div>
       <div
         :class="`h-full w-full bg-gradient-to-b

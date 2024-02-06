@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<WbInputMaskProps>(), {
 
 <template>
   <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
-    <label :for="$.uid.toString()" :class="`${labelClass ? props.labelClass : 'text-xs text-surface-500'}`">{{
+    <label :for="$.uid.toString()" :class="`${labelClass ? props.labelClass : 'text-xs text-surface-800'}`">{{
       props.label
     }}</label>
 

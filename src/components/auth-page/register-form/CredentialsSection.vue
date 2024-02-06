@@ -70,7 +70,7 @@ const handleNextSection = async () => {
         :invalid-text="validator.email.$errors[0]?.$message"
         @blur="validator.email.$touch"
         @focusin="validator.email.$dirty = false"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800"
         validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
@@ -86,7 +86,7 @@ const handleNextSection = async () => {
         :invalid-text="validator.mobile_number.$errors[0]?.$message"
         @blur="validator.mobile_number.$touch"
         @focusin="validator.mobile_number.$dirty = false"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800"
         validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
@@ -105,7 +105,7 @@ const handleNextSection = async () => {
         :invalid-text="validator.password.$errors[0]?.$message"
         @blur="validator.password.$touch"
         @focusin="validator.password.$dirty = false"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800"
         validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
@@ -129,7 +129,7 @@ const handleNextSection = async () => {
         toggleMask
         :invalid="validator.password_confirmation.$invalid"
         :invalid-text="validator.password_confirmation.$errors[0]?.$message"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800"
         validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>

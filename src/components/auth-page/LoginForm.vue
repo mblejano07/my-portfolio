@@ -80,7 +80,7 @@ const handleFormSubmit = async () => {
         label="Email or mobile number"
         :invalid="validator.email.$invalid"
         :invalid-text="validator.email.$errors[0]?.$message"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800"
         validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
@@ -95,7 +95,7 @@ const handleFormSubmit = async () => {
         :invalid="validator.password.$invalid"
         :invalid-text="validator.password.$errors[0]?.$message"
         @keyup.enter="handleFormSubmit"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800"
         validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
@@ -111,7 +111,7 @@ const handleFormSubmit = async () => {
           size="small"
           class="text-xs text-surface-0 lg:text-surface-500 lg:hover:bg-surface-100"
           text
-          @click="$router.push({ name: 'sign-up' })"
+          @click="$router.push({ name: 'forgot-password' })"
         >
           <template #icon>
             <FontAwesomeIcon icon="fa-solid fa-lock" class="mr-1.5" />

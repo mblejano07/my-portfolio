@@ -136,7 +136,7 @@ const handleFormSubmission = async () => {
         @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('region', value)"
         :loading="publicStore.regionOptionsIsLoading"
         :disabled="publicStore.regionOptionsIsLoading"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800"
       >
         <template #prepend-icon>
           <i class="pi pi-map" />
@@ -151,7 +151,7 @@ const handleFormSubmission = async () => {
         @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('province', value)"
         :loading="publicStore.provinceOptionsIsLoading"
         :disabled="publicStore.provinceOptionsIsLoading"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800"
       >
         <template #prepend-icon>
           <i class="pi pi-map" />
@@ -171,7 +171,7 @@ const handleFormSubmission = async () => {
         :loading="publicStore.cityOptionsIsLoading"
         :disabled="publicStore.cityOptionsIsLoading"
         :virtualScrollerOptions="{ itemSize: 38 }"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800"
       >
         <template #prepend-icon>
           <i class="pi pi-map" />
@@ -187,7 +187,7 @@ const handleFormSubmission = async () => {
         :loading="publicStore.barangayOptionsIsLoading"
         :disabled="publicStore.barangayOptionsIsLoading"
         :virtualScrollerOptions="{ itemSize: 38 }"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800"
       >
         <template #prepend-icon>
           <i class="pi pi-map" />
@@ -202,7 +202,7 @@ const handleFormSubmission = async () => {
         label="Home Address"
         :invalid="validator.home_address.$invalid"
         :invalid-text="validator.home_address.$errors[0]?.$message"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800"
         validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>
@@ -215,7 +215,7 @@ const handleFormSubmission = async () => {
         mask="9999"
         :invalid="validator.postal_code.$invalid"
         :invalid-text="validator.postal_code.$errors[0]?.$message"
-        label-class="text-xs text-surface-0 lg:text-surface-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800"
         validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >
         <template #prepend-icon>

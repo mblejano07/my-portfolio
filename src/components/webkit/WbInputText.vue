@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<WbInputTextProps>(), {
 
 <template>
   <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
-    <label :for="$.uid.toString()" :class="`${props.labelClass || 'text-xs text-surface-500'}`">{{ props.label }}</label>
+    <label :for="$.uid.toString()" :class="`${props.labelClass || 'text-xs text-surface-800'}`">{{ props.label }}</label>
 
     <!-- Start InputText-->
     <div :class="`relative ${$attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">

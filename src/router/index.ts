@@ -96,6 +96,28 @@ const routes = [
           group: RouteGroup.AUTH,
         },
       },
+      {
+        path: 'forgot-password',
+        name: 'forgot-password',
+        component: () => import('@/views/ForgotPasswordPage.vue'),
+        meta: <RouteMeta>{
+          label: 'Forgot Password',
+          hideNavigation: true,
+          authType: AuthType.UNAUTHENTICATED,
+          group: RouteGroup.AUTH,
+        },
+      },
+      {
+        path: 'reset-password',
+        name: 'reset-password',
+        component: () => import('@/views/ForgotPasswordPage.vue'),
+        meta: <RouteMeta>{
+          label: 'Reset Password',
+          hideNavigation: true,
+          authType: AuthType.UNAUTHENTICATED,
+          group: RouteGroup.AUTH,
+        },
+      },
     ],
   },
   {
@@ -187,6 +209,7 @@ const enum RouteGroup {
   ADMIN_TOOLS = 'Admin Tools',
   MISC = 'Misc',
   AUTH = 'Auth',
+  DATA_ENTRY = 'Data Entry',
 }
 
 /**

@@ -78,7 +78,7 @@ const handleItemClear = (): void => {
 
 <template>
   <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
-    <label :for="$.uid.toString()" :class="`${props.labelClass || 'text-xs text-surface-500'}`">
+    <label :for="$.uid.toString()" :class="`${props.labelClass || 'text-xs text-surface-800'}`">
       {{ props.label }}
     </label>
     <!-- Start AutoComplete-->

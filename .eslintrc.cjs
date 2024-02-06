@@ -27,6 +27,7 @@ module.exports = {
     'linebreak-style': ['warn', 'unix'],
     quotes: ['warn', 'single', { avoidEscape: true }],
     semi: ['warn', 'never'],
+    'no-undef': 'off',
     'vue/component-tags-order': [
       'warn',
       {
