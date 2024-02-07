@@ -138,6 +138,17 @@ export const useAuthStore = defineStore('auth', () => {
     return data.value as ApiResponse
   }
 
+  const resendEmailVerification = async () => {
+    const { data } = await useApiCall('auth/email/send-verification', authenticationToken.value).get().json()
+    return data.value as ApiResponse
+  }
+
+  const verifyEmail = async ({ id, hash, signature, expires }: VerifyEmailPayload) => {
+    const url = `auth/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`
+    const { data } = await useApiCall(url, authenticationToken.value).get().json()
+    return data.value as ApiResponse
+  }
+
   const authHasRequiredRole = (requiredRoles: string[]) => {
     const userRoles = authenticatedUser.value.roles.map((role) => role.name)
     return requiredRoles.some((r: string) => userRoles.includes(r))
@@ -158,6 +169,8 @@ export const useAuthStore = defineStore('auth', () => {
     logout,
     requestForgotPassword,
     resetPassword,
+    resendEmailVerification,
+    verifyEmail,
   }
 })
 
@@ -182,4 +195,11 @@ export type ResetPasswordPayload = {
   token: string
   password: string
   password_confirmation: string
+}
+
+export type VerifyEmailPayload = {
+  id: string
+  hash: string
+  signature: string
+  expires: string
 }

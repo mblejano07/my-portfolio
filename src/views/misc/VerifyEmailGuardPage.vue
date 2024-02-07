@@ -1,0 +1,126 @@
+<script setup lang="ts">
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { useAuthStore } from '@/stores/auth.ts'
+import { ref } from 'vue'
+import { useToast } from 'primevue/usetoast'
+import Button from 'primevue/button'
+import Card from 'primevue/card'
+import { useRouter } from 'vue-router'
+import AnimatedFloaters from '@/components/misc/AnimatedFloaters.vue'
+import AppLogo from '@/components/layout/AppLogo.vue'
+
+const authStore = useAuthStore()
+const authEmail = authStore.authenticatedUser.email
+
+// Prevent the user from submitting too many emails
+const resendEmailButtonIsLocked = ref(false)
+const resendEmailButtonTimer = ref(60)
+let resendEmailButtonTimerId: NodeJS.Timeout | undefined = undefined
+
+const resetRequestPasswordButtonLock = () => {
+  clearInterval(resendEmailButtonTimerId)
+  resendEmailButtonIsLocked.value = false
+  resendEmailButtonTimer.value = 60
+}
+
+// Handle Form Submission
+const formIsLoading = ref(false)
+const toast = useToast()
+const handleResendEmailVerification = async () => {
+  if (resendEmailButtonIsLocked.value) return
+
+  formIsLoading.value = true
+  const response = await authStore.resendEmailVerification()
+  formIsLoading.value = false
+
+  // If it's a validation error, then the email is incorrect (or someone is trying to guess an email)
+  if (!response.success) {
+    return toast.add({
+      severity: 'error',
+      summary: 'Verify Email',
+      detail: 'Unable to resend the email verification',
+      life: 5000,
+    })
+  }
+
+  toast.add({
+    severity: 'success',
+    summary: 'Forgot Password',
+    detail: "We've sent you another email verification",
+    life: 5000,
+  })
+
+  // Lock the send email button for 60 seconds
+  resendEmailButtonIsLocked.value = true
+  resendEmailButtonTimerId = setInterval(async () => {
+    resendEmailButtonTimer.value -= 1
+    if (resendEmailButtonTimer.value <= 0) {
+      resetRequestPasswordButtonLock()
+    }
+  }, 1000)
+}
+
+// Handle Logout
+const router = useRouter()
+const handleLogout = async () => {
+  await authStore.logout()
+  await router.replace({ name: 'login' })
+}
+</script>
+
+<template>
+  <div class="flex h-full justify-center bg-gradient-to-b from-primary-500 to-primary-900 lg:mx-0">
+    <Card class="z-10 mx-4 mt-4 h-fit md:mx-0 md:mt-8 lg:mt-16">
+      <template #content>
+        <div class="mx-2 flex flex-col items-center">
+          <div class="mb-8 flex w-full items-center justify-between">
+            <AppLogo />
+            <Button
+              label="Logout"
+              text
+              size="small"
+              @click="handleLogout"
+              :loading="formIsLoading"
+              :disabled="formIsLoading"
+              class="text-xs"
+            >
+              <template #icon><i class="pi pi-arrow-left mr-2 hidden md:block" /></template>
+            </Button>
+          </div>
+          <h1 class="self-start font-menu text-xl text-surface-800">Verify Your Email</h1>
+          <div class="flex w-full flex-col text-surface-600">
+            <p class="mt-2 text-sm leading-relaxed">
+              We've sent a verification link to
+              <span class="mx-1 font-medium text-primary-500 underline underline-offset-4">{{ authEmail }}</span>
+              to verify your email address and activate your account.
+            </p>
+            <p class="mt-3 text-sm leading-relaxed md:mt-2">
+              The link in the email will expire in 1 hour. You may need to check your spam folder if you can't find the email in
+              your inbox.
+            </p>
+            <!-- Start Action Buttons -->
+            <div class="mt-6 flex flex-col justify-end md:flex-row lg:mt-8">
+              <div class="mt-4 flex flex-col md:mt-0">
+                <Button
+                  :disabled="resendEmailButtonIsLocked"
+                  :is-loading="formIsLoading"
+                  @click="handleResendEmailVerification"
+                  label="Resend Email"
+                >
+                  <template #icon>
+                    <FontAwesomeIcon icon="fa-solid fa-paper-plane" class="mr-2" />
+                  </template>
+                </Button>
+                <p v-if="resendEmailButtonIsLocked" class="mt-3 text-center text-xs italic text-surface-600 lg:text-sm">
+                  You can send again after <span class="font-bold">{{ resendEmailButtonTimer }}</span> seconds
+                </p>
+              </div>
+            </div>
+            <!-- End Action Buttons -->
+          </div>
+        </div>
+      </template>
+    </Card>
+    <AnimatedFloaters class="opacity-75" />
+  </div>
+</template>

@@ -118,6 +118,26 @@ const routes = [
           group: RouteGroup.AUTH,
         },
       },
+      {
+        path: 'verify-email-guard',
+        name: 'verify-email-guard',
+        component: () => import('@/views/misc/VerifyEmailGuardPage.vue'),
+        meta: {
+          label: 'Verify Email',
+          hideNavigation: true,
+          authType: AuthType.AUTHENTICATED,
+        },
+      },
+      {
+        path: 'verify-email/:id/:hash',
+        name: 'process-email-verification',
+        component: () => import('@/views/misc/ProcessEmailVerificationPage.vue'),
+        meta: {
+          label: 'Email Verification In-progress',
+          hideNavigation: true,
+          authType: AuthType.OPEN,
+        },
+      },
     ],
   },
   {

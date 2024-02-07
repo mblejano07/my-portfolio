@@ -10,7 +10,7 @@ const handleNavigateToHome = async () => {
 </script>
 <template>
   <div
-    class="flex h-[100vh] w-[100vw] flex-col items-center justify-start bg-gradient-to-b from-primary-500 to-primary-900 pt-16 opacity-75 md:justify-center md:pt-0"
+    class="flex h-[100vh] w-[100vw] flex-col items-center justify-start bg-gradient-to-b from-primary-500 to-primary-900 pt-16 md:justify-center md:pt-0"
   >
     <AnimatedFloaters />
     <h1 class="font-menu text-[7rem] font-bold text-surface-200">404</h1>

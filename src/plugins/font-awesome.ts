@@ -8,6 +8,22 @@ import {
   faXmark,
   faFileUpload,
   faSpinner,
+  faEnvelope,
+  faPaperPlane,
+  faAngleLeft,
+  faXmarkCircle,
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faMarsAndVenus, faLock, faRightToBracket, faSignIn, faXmark, faFileUpload, faSpinner)
+library.add(
+  faMarsAndVenus,
+  faLock,
+  faRightToBracket,
+  faSignIn,
+  faXmark,
+  faFileUpload,
+  faSpinner,
+  faEnvelope,
+  faPaperPlane,
+  faAngleLeft,
+  faXmarkCircle
+)
