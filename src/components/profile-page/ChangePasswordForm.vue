@@ -169,5 +169,3 @@ const clearForm = () => {
     <!-- End Submit Button -->
   </form>
 </template>
-
-<style scoped></style>

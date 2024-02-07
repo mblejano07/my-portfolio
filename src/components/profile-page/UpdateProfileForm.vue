@@ -20,6 +20,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import WbInputMask from '@/components/webkit/WbInputMask.vue'
 import WbAutoComplete from '@/components/webkit/WbAutoComplete.vue'
 import { WbAutoCompleteOption, WbAutoCompleteOptionTrueValue } from '@/components/webkit/WbAutoComplete.vue'
+import { useWbAutoCompleteHandleTrueValue } from '@/composables/wb-ui-components.ts'
 
 /** Component States */
 const authStore = useAuthStore()
@@ -80,26 +81,6 @@ onBeforeMount(async () => {
 
   addressesAreLoading.value = false
 })
-
-/** Address WbAutoComplete True Value */
-const handleTrueValue = (addressType: 'region' | 'province' | 'city' | 'barangay', value: WbAutoCompleteOptionTrueValue) => {
-  switch (addressType) {
-    case 'region':
-      payload.region_id = value
-      break
-    case 'province':
-      payload.province_id = value
-      break
-    case 'city':
-      payload.city_id = value
-      break
-    case 'barangay':
-      payload.barangay_id = value
-      break
-    default:
-      break
-  }
-}
 
 /** We only display a list based on parent address */
 const { provinceOptions, cityOptions, barangayOptions } = storeToRefs(publicStore)
@@ -341,7 +322,9 @@ const handleFormSubmission = async () => {
           label="Region"
           optionLabel="label"
           forceSelection
-          @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('region', value)"
+          @on-true-value-computed="
+            (value: WbAutoCompleteOptionTrueValue) => useWbAutoCompleteHandleTrueValue(value, toRef(payload, 'region_id'))
+          "
           :loading="publicStore.regionOptionsIsLoading"
           :disabled="publicStore.regionOptionsIsLoading || !editingEnabled"
         >
@@ -355,7 +338,9 @@ const handleFormSubmission = async () => {
           label="Province"
           optionLabel="label"
           forceSelection
-          @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('province', value)"
+          @on-true-value-computed="
+            (value: WbAutoCompleteOptionTrueValue) => useWbAutoCompleteHandleTrueValue(value, toRef(payload, 'province_id'))
+          "
           :loading="publicStore.provinceOptionsIsLoading"
           :disabled="publicStore.provinceOptionsIsLoading || !editingEnabled"
         >
@@ -373,7 +358,9 @@ const handleFormSubmission = async () => {
           label="City"
           optionLabel="label"
           forceSelection
-          @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('city', value)"
+          @on-true-value-computed="
+            (value: WbAutoCompleteOptionTrueValue) => useWbAutoCompleteHandleTrueValue(value, toRef(payload, 'city_id'))
+          "
           :loading="publicStore.cityOptionsIsLoading"
           :disabled="publicStore.cityOptionsIsLoading || !editingEnabled"
           :virtualScrollerOptions="{ itemSize: 38 }"
@@ -388,7 +375,9 @@ const handleFormSubmission = async () => {
           label="Barangay"
           optionLabel="label"
           forceSelection
-          @on-true-value-computed="(value: WbAutoCompleteOptionTrueValue) => handleTrueValue('barangay', value)"
+          @on-true-value-computed="
+            (value: WbAutoCompleteOptionTrueValue) => useWbAutoCompleteHandleTrueValue(value, toRef(payload, 'barangay_id'))
+          "
           :loading="publicStore.barangayOptionsIsLoading"
           :disabled="publicStore.barangayOptionsIsLoading || !editingEnabled"
           :virtualScrollerOptions="{ itemSize: 38 }"

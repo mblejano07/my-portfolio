@@ -100,7 +100,7 @@ const handleSubmitForm = async () => {
               </Button>
             </div>
             <div class="mb-8">
-              <h1 class="mb-1 font-menu text-lg text-surface-800 sm:text-xl">FORGOT YOUR PASSWORD?</h1>
+              <h1 class="mb-1 font-menu text-lg text-surface-800 sm:text-xl">Forgot Your Password?</h1>
               <p class="text-sm leading-relaxed text-surface-600">
                 Please enter the email you've used to sign-in to the application. If you've entered a valid email address, you
                 will receive the reset link in your inbox.
@@ -117,7 +117,7 @@ const handleSubmitForm = async () => {
               <Button
                 label="Submit"
                 :loading="formIsLoading"
-                :disabled="requestPasswordButtonIsLocked"
+                :disabled="requestPasswordButtonIsLocked || formIsLoading"
                 @click="handleSubmitForm"
                 class="w-full md:w-auto"
               >

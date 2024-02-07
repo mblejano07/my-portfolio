@@ -110,7 +110,7 @@ const routes = [
       {
         path: 'reset-password',
         name: 'reset-password',
-        component: () => import('@/views/ForgotPasswordPage.vue'),
+        component: () => import('@/views/ResetPasswordPage.vue'),
         meta: <RouteMeta>{
           label: 'Reset Password',
           hideNavigation: true,
