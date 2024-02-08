@@ -14,6 +14,7 @@ import {
   faXmarkCircle,
   faUserLock,
   faEnvelopeOpenText,
+  faUserAstronaut,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -29,5 +30,6 @@ library.add(
   faAngleLeft,
   faXmarkCircle,
   faUserLock,
-  faEnvelopeOpenText
+  faEnvelopeOpenText,
+  faUserAstronaut
 )

@@ -11,7 +11,6 @@ const activeStep = ref(0)
 const registrationSteps = ref([
   {
     label: 'Credentials',
-    icon: 'pi pi-home',
   },
   {
     label: 'Basic Information',
