@@ -6,6 +6,8 @@ import { onUnmounted, ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth.ts'
 import { useRoute } from 'vue-router'
 import { sleep } from '@/utils/helpers.ts'
+import { useBroadcastChannel } from '@vueuse/core'
+import { BroadcastChannelName } from '@/typings/broadcasts.ts'
 
 const isLoading = ref(false)
 const verificationSuccess = ref<boolean | undefined>(undefined)
@@ -15,6 +17,7 @@ const timer = ref(10)
 let timerId: NodeJS.Timeout | undefined = undefined
 const authStore = useAuthStore()
 const route = useRoute()
+const broadcaster = useBroadcastChannel({ name: BroadcastChannelName.EMAIL_VERIFICATION_CHANNEL })
 onMounted(async () => {
   isLoading.value = true
 
@@ -33,6 +36,12 @@ onMounted(async () => {
     return (verificationSuccess.value = false)
   }
 
+  // We broadcast an event to other tabs if successful
+  if (broadcaster.isSupported) {
+    broadcaster.post(true)
+  }
+
+  // We set the time before closing the tab
   verificationSuccess.value = true
   timerId = setInterval(async () => {
     timer.value -= 1

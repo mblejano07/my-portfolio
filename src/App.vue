@@ -17,7 +17,7 @@ const route = useRoute()
 
 onBeforeMount(async () => {
   // Rehydrate profile info on reload if there is an authenticated user
-  if (authStore.isAuthenticated && authStore.authenticatedUser.email_verified_at) {
+  if (authStore.isAuthenticated) {
     await profileStore.fetchProfile()
   }
 })

@@ -35,6 +35,10 @@ export const useAuthStore = defineStore('auth', () => {
     return authenticatedUser?.value?.user_profile?.full_name
   })
 
+  const authEmailIsVerified = computed(() => {
+    return !!authenticatedUser?.value?.email_verified_at
+  })
+
   const avatarDisplayNamePlaceholder = computed(() => {
     if (!authenticatedUser.value?.user_profile?.full_name) return null
 
@@ -159,6 +163,7 @@ export const useAuthStore = defineStore('auth', () => {
     authenticatedUser,
     authExpired,
     isAuthenticated,
+    authEmailIsVerified,
     avatarDisplayNamePlaceholder,
     authRoles,
     authHasRequiredRole,

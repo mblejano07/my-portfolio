@@ -5,7 +5,7 @@ import ProfilePage from '@/views/ProfilePage.vue'
 import SupportPage from '@/views/SupportPage.vue'
 import AboutUsPage from '@/views/AboutUsPage.vue'
 import AnnouncementsPage from '@/views/AnnouncementsPage.vue'
-import { AuthType, AuthRole } from '@/typings/auth.ts'
+import { AuthRole, AuthType } from '@/typings/auth.ts'
 import { useAuthStore } from '@/stores/auth.ts'
 
 const routes = [
@@ -204,6 +204,22 @@ router.beforeEach(async (to, from) => {
   const authStore = useAuthStore()
   if (authStore.isAuthenticated && !authStore.authExpired && to.meta.authType === AuthType.UNAUTHENTICATED) {
     return from
+  }
+
+  // Redirect users to the Verify Email Guard Page if they are authenticated but don't have their email verified
+  if (
+    to.meta.authType === AuthType.AUTHENTICATED &&
+    authStore.isAuthenticated &&
+    to.name !== 'verify-email-guard' &&
+    to.name !== 'verify-account-page' && // this page is omitted, uses can access even if their email is unverified
+    !authStore.authEmailIsVerified
+  ) {
+    return { name: 'verify-email-guard' }
+  }
+
+  // Verify email guard page can only be accessed if the user have not validated their email address
+  if (to.name === 'verify-email-guard' && authStore.authEmailIsVerified) {
+    return { name: 'dashboard' }
   }
 
   // Protect routes that need authentication

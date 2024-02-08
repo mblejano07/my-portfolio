@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useAuthStore } from '@/stores/auth.ts'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import { useRouter } from 'vue-router'
 import AnimatedFloaters from '@/components/misc/AnimatedFloaters.vue'
 import AppLogo from '@/components/layout/AppLogo.vue'
+import { useBroadcastChannel } from '@vueuse/core'
+import { BroadcastChannelName } from '@/typings/broadcasts.ts'
+import { useProfileStore } from '@/stores/profile.ts'
 
 const authStore = useAuthStore()
 const authEmail = authStore.authenticatedUser.email
@@ -66,61 +69,84 @@ const handleLogout = async () => {
   await authStore.logout()
   await router.replace({ name: 'login' })
 }
+
+// Handle Broadcast even from the Process Email Verification Page
+const broadcaster = useBroadcastChannel({ name: BroadcastChannelName.EMAIL_VERIFICATION_CHANNEL })
+const profileStore = useProfileStore()
+watch(
+  () => broadcaster.data.value,
+  async (value) => {
+    if (value) {
+      await profileStore.fetchProfile()
+      await router.replace({ name: 'dashboard' })
+    }
+  }
+)
 </script>
 
 <template>
-  <div class="flex h-full justify-center bg-gradient-to-b from-primary-500 to-primary-900 lg:mx-0">
-    <Card class="z-10 mx-4 mt-4 h-fit md:mx-0 md:mt-8 lg:mt-16">
-      <template #content>
-        <div class="mx-2 flex flex-col items-center">
-          <div class="mb-8 flex w-full items-center justify-between">
-            <AppLogo />
-            <Button
-              label="Logout"
-              text
-              size="small"
-              @click="handleLogout"
-              :loading="formIsLoading"
-              :disabled="formIsLoading"
-              class="text-xs"
-            >
-              <template #icon><i class="pi pi-arrow-left mr-2 hidden md:block" /></template>
-            </Button>
-          </div>
-          <h1 class="self-start font-menu text-xl text-surface-800">Verify Your Email</h1>
-          <div class="flex w-full flex-col text-surface-600">
-            <p class="mt-2 text-sm leading-relaxed">
-              We've sent a verification link to
-              <span class="mx-1 font-medium text-primary-500 underline underline-offset-4">{{ authEmail }}</span>
-              to verify your email address and activate your account.
-            </p>
-            <p class="mt-3 text-sm leading-relaxed md:mt-2">
-              The link in the email will expire in 1 hour. You may need to check your spam folder if you can't find the email in
-              your inbox.
-            </p>
-            <!-- Start Action Buttons -->
-            <div class="mt-6 flex flex-col justify-end md:flex-row lg:mt-8">
-              <div class="mt-4 flex flex-col md:mt-0">
-                <Button
-                  :disabled="resendEmailButtonIsLocked"
-                  :is-loading="formIsLoading"
-                  @click="handleResendEmailVerification"
-                  label="Resend Email"
-                >
-                  <template #icon>
-                    <FontAwesomeIcon icon="fa-solid fa-paper-plane" class="mr-2" />
-                  </template>
-                </Button>
-                <p v-if="resendEmailButtonIsLocked" class="mt-3 text-center text-xs italic text-surface-600 lg:text-sm">
-                  You can send again after <span class="font-bold">{{ resendEmailButtonTimer }}</span> seconds
-                </p>
-              </div>
+  <div class="flex h-full justify-center bg-gradient-to-b from-warn-500 to-warn-900 lg:mx-0">
+    <div class="relative z-10">
+      <!-- Start Header Icon -->
+      <div
+        class="absolute left-1/2 top-6 hidden h-28 w-28 -translate-x-1/2 transform items-center justify-center rounded-full bg-primary-500 lg:flex"
+      >
+        <FontAwesomeIcon icon="fa-solid fa-envelope-open-text" class="h-16 text-surface-0"></FontAwesomeIcon>
+      </div>
+      <!-- End Header Icon -->
+      <Card class="mx-4 mt-4 h-fit ring-2 ring-primary-500 md:mx-4 md:mt-8 lg:mt-16">
+        <template #content>
+          <div class="mx-2 flex flex-col items-center">
+            <div class="mb-8 flex w-full items-center justify-between">
+              <AppLogo />
+              <Button
+                label="Logout"
+                text
+                size="small"
+                @click="handleLogout"
+                :loading="formIsLoading"
+                :disabled="formIsLoading"
+                class="text-xs"
+              >
+                <template #icon><i class="pi pi-arrow-left mr-2 hidden md:block" /></template>
+              </Button>
             </div>
-            <!-- End Action Buttons -->
+            <h1 class="self-start font-menu text-xl text-surface-800">Verify Your Email</h1>
+            <div class="flex w-full flex-col text-surface-600">
+              <p class="mt-2 text-sm leading-relaxed">
+                We've sent a verification link to
+                <span class="mx-1 font-medium text-primary-500 underline underline-offset-4">{{ authEmail }}</span>
+                to verify your email address and activate your account.
+              </p>
+              <p class="mt-3 text-sm leading-relaxed md:mt-2">
+                The link in the email will expire in 1 hour. You may need to check your spam folder if you can't find the email in
+                your inbox.
+              </p>
+              <!-- Start Action Buttons -->
+              <div class="mt-6 flex flex-col justify-end md:flex-row lg:mt-8">
+                <div class="mt-4 flex flex-col md:mt-0">
+                  <Button
+                    :disabled="resendEmailButtonIsLocked"
+                    :is-loading="formIsLoading"
+                    @click="handleResendEmailVerification"
+                    severity="warning"
+                    label="Resend Email"
+                  >
+                    <template #icon>
+                      <FontAwesomeIcon icon="fa-solid fa-paper-plane" class="mr-2" />
+                    </template>
+                  </Button>
+                  <p v-if="resendEmailButtonIsLocked" class="mt-3 text-center text-xs italic text-surface-600 lg:text-sm">
+                    You can send again after <span class="font-bold">{{ resendEmailButtonTimer }}</span> seconds
+                  </p>
+                </div>
+              </div>
+              <!-- End Action Buttons -->
+            </div>
           </div>
-        </div>
-      </template>
-    </Card>
+        </template>
+      </Card>
+    </div>
     <AnimatedFloaters class="opacity-75" />
   </div>
 </template>
