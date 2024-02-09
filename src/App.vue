@@ -2,15 +2,16 @@
 import AppFooter from '@/components/layout/AppFooter.vue'
 import AppDesktopToolbar from '@/components/layout/app-toolbar/AppDesktopToolbar.vue'
 import AppDesktopSidebar from '@/components/layout/app-sidebar/AppDesktopSidebar.vue'
-import { useGlobalStore } from '@/stores/ui.ts'
+import { useGlobalUiStore } from '@/stores/ui.ts'
 import { useRoute } from 'vue-router'
-import { onBeforeMount } from 'vue'
+import { onBeforeMount, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth.ts'
 import { useProfileStore } from '@/stores/profile.ts'
 import AppMobileToolbar from '@/components/layout/app-toolbar/AppMobileToolbar.vue'
 import Toast from 'primevue/toast'
+import { useToast } from 'primevue/usetoast'
 
-const globalStore = useGlobalStore()
+const globalStore = useGlobalUiStore()
 const authStore = useAuthStore()
 const profileStore = useProfileStore()
 const route = useRoute()
@@ -21,6 +22,21 @@ onBeforeMount(async () => {
     await profileStore.fetchProfile()
   }
 })
+
+// Handle for Rate Limit
+const uiStore = useGlobalUiStore()
+const toast = useToast()
+watch(
+  () => uiStore.showRateLimitToast,
+  () => {
+    toast.add({
+      severity: 'error',
+      summary: 'Too Many Requests',
+      detail: 'Please wait for a few moments before trying again.',
+      life: 5000,
+    })
+  }
+)
 </script>
 
 <template>

@@ -30,7 +30,7 @@ export const useFilterByParentId = (parentId: Ref<number | string | null>, fullO
  * the selected values for barangay and city will be cleared.
  */
 export const useClearSelectedAddressIfNotInParentList = (
-  payload: ToRefs<UnwrapNestedRefs<RegistrationAddressPayload | UserProfilePayload>>,
+  payload: ToRefs<UnwrapNestedRefs<RegistrationAddressPayload | Partial<UserProfilePayload>>>,
   selectedProvinceObjRef: Ref<WbAutoCompleteOption | null>,
   selectedCityObjectRef: Ref<WbAutoCompleteOption | null>,
   selectedBarangayObjectRef: Ref<WbAutoCompleteOption | null>,
@@ -42,9 +42,9 @@ export const useClearSelectedAddressIfNotInParentList = (
   watch(
     () => payload.region_id,
     (newRegionId) => {
-      if (!newRegionId.value) return clearProvinceAndDown()
+      if (!newRegionId?.value) return clearProvinceAndDown()
 
-      const provinceStillInList = !!provinceOptionsList.value.find((p) => p.value === payload.province_id.value)
+      const provinceStillInList = !!provinceOptionsList.value.find((p) => p.value === payload.province_id?.value)
       if (!provinceStillInList) clearProvinceAndDown()
     },
     { deep: true }
@@ -54,9 +54,9 @@ export const useClearSelectedAddressIfNotInParentList = (
   watch(
     () => payload.province_id,
     (newProvinceId) => {
-      if (!newProvinceId.value) return clearCityAndDown()
+      if (!newProvinceId?.value) return clearCityAndDown()
 
-      const cityStillInList = !!cityOptionsList.value.find((c) => c.value === payload.city_id.value)
+      const cityStillInList = !!cityOptionsList.value.find((c) => c.value === payload.city_id?.value)
       if (!cityStillInList) clearCityAndDown()
     },
     { deep: true }
@@ -66,9 +66,9 @@ export const useClearSelectedAddressIfNotInParentList = (
   watch(
     () => payload.city_id,
     (newCityId) => {
-      if (!newCityId.value) return clearBarangay()
+      if (!newCityId?.value) return clearBarangay()
 
-      const barangayStillInList = !!barangayOptionsList.value.find((b) => b.value === payload.barangay_id.value)
+      const barangayStillInList = !!barangayOptionsList.value.find((b) => b.value === payload.barangay_id?.value)
       if (!barangayStillInList) clearBarangay()
     },
     { deep: true }
@@ -76,25 +76,28 @@ export const useClearSelectedAddressIfNotInParentList = (
 
   const clearProvinceAndDown = () => {
     // Clear current selection for province, city, and barangay
-    payload.province_id.value = null
+    if (payload.province_id !== undefined) payload.province_id.value = null
     selectedProvinceObjRef.value = null
-    payload.city_id.value = null
+
+    if (payload.city_id !== undefined) payload.city_id.value = null
     selectedCityObjectRef.value = null
-    payload.barangay_id.value = null
+
+    if (payload.barangay_id !== undefined) payload.barangay_id.value = null
     selectedBarangayObjectRef.value = null
   }
 
   const clearCityAndDown = () => {
     // Clear current selection for city, and barangay
-    payload.city_id.value = null
+    if (payload.city_id !== undefined) payload.city_id.value = null
     selectedCityObjectRef.value = null
-    payload.barangay_id.value = null
+
+    if (payload.barangay_id !== undefined) payload.barangay_id.value = null
     selectedBarangayObjectRef.value = null
   }
 
   const clearBarangay = () => {
     // Clear current selection for barangay
-    payload.barangay_id.value = null
+    if (payload.barangay_id !== undefined) payload.barangay_id.value = null
     selectedBarangayObjectRef.value = null
   }
 }

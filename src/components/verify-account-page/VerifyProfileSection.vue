@@ -6,26 +6,30 @@ import { useFilterByParentId, useClearSelectedAddressIfNotInParentList } from '@
 import { useAuthStore } from '@/stores/auth.ts'
 import { useAddressStore } from '@/stores/address.ts'
 import useVuelidate from '@vuelidate/core'
-import { email, helpers, required, maxLength } from '@vuelidate/validators'
+import { helpers, required, maxLength } from '@vuelidate/validators'
 import { digitCountRule, mobilePhoneRule, uniqueUserIdentifierRule } from '@/utils/custom-validations.ts'
 import { parseApiResponseError } from '@/utils/error-handle.ts'
 import { sleep } from '@/utils/helpers.ts'
-import { useToast } from 'primevue/usetoast'
 import WbInputText from '@/components/webkit/WbInputText.vue'
 import WbCalendar from '@/components/webkit/WbCalendar.vue'
 import WbDropdown from '@/components/webkit/WbDropdown.vue'
 import Button from 'primevue/button'
-import InputSwitch from 'primevue/inputswitch'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import WbInputMask from '@/components/webkit/WbInputMask.vue'
 import WbAutoComplete from '@/components/webkit/WbAutoComplete.vue'
 import { WbAutoCompleteOption, WbAutoCompleteOptionTrueValue } from '@/components/webkit/WbAutoComplete.vue'
 import { useWbAutoCompleteHandleTrueValue } from '@/composables/wb-ui-components.ts'
+import Message from 'primevue/message'
+
+/** Emits */
+const emit = defineEmits<{
+  (e: 'profileVerified', value: boolean): void
+  (e: 'previousButtonClicked', value: boolean): void
+}>()
 
 /** Component States */
 const authStore = useAuthStore()
-const payload = reactive<UserProfilePayload>({
-  email: authStore.authenticatedUser?.email || '',
+const payload = reactive<Partial<UserProfilePayload>>({
   mobile_number: authStore.authenticatedUser?.user_profile?.mobile_number || null,
   first_name: authStore.authenticatedUser?.user_profile?.first_name || '',
   last_name: authStore.authenticatedUser?.user_profile?.last_name || '',
@@ -40,9 +44,8 @@ const payload = reactive<UserProfilePayload>({
   postal_code: authStore.authenticatedUser?.user_profile?.address?.postal_code || null,
   barangay_id: authStore.authenticatedUser?.user_profile?.address?.barangay?.id || null,
 })
-
-// Toggle Edit Button
-const editingEnabled = ref(false)
+// We don't include the email in the payload when verifying the account
+const tmpEmailField = authStore.authenticatedUser?.email || ''
 
 // Start combo and select box options
 const genderOptions = [
@@ -107,13 +110,6 @@ const globalStringMaxLengthRule = helpers.withMessage(
 )
 const formRules = {
   $lazy: true,
-  email: {
-    required: helpers.withMessage('Please enter your email address', required),
-    email: helpers.withMessage('Email format is invalid', email),
-    unique: helpers.withAsync(
-      helpers.withMessage('This email is already taken', uniqueUserIdentifierRule('email', authStore.authenticatedUser?.id))
-    ),
-  },
   mobile_number: {
     mobile_number: helpers.withMessage('Must be a valid PH mobile number', mobilePhoneRule),
     unique: helpers.withAsync(
@@ -150,63 +146,55 @@ const validator = useVuelidate<Partial<UserProfilePayload>>(formRules, payload)
 /** Handle Form Submission */
 const formIsSubmitting = ref(false)
 const profileStore = useProfileStore()
-const toast = useToast()
+const showErrorAlert = ref(false)
+const errorMessage = ref('')
+
 const handleFormSubmission = async () => {
   const valid = await validator.value.$validate()
   if (!valid) {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    toast.add({
-      severity: 'error',
-      summary: 'Update profile',
-      detail: 'Please see the validation messages',
-      life: 5000,
-    })
-    return
   }
 
   formIsSubmitting.value = true
+
   const response = await profileStore.updateProfile(payload)
   // Handle the API error
   if (!response.success) {
     const result = parseApiResponseError(response)
     if (!result) return (formIsSubmitting.value = false)
 
+    showErrorAlert.value = true
+    errorMessage.value = result.message
     await sleep(0.2)
     formIsSubmitting.value = false
     return window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   formIsSubmitting.value = false
-  toast.add({
-    severity: 'success',
-    summary: 'Update profile',
-    detail: "You've successfully updated your profile",
-    life: 5000,
-  })
-  return window.scrollTo({ top: 0, behavior: 'smooth' })
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+  return emit('profileVerified', true)
 }
 </script>
 
 <template>
-  <form @submit.prevent autocomplete="off">
-    <!-- Start Toggle Edit Switch -->
-    <div class="flex items-center justify-end lg:mb-2">
-      <span class="mr-3 text-xs text-surface-500">{{ !editingEnabled ? 'Enable Editing' : 'Disabled Editing' }}</span>
-      <InputSwitch v-model="editingEnabled"></InputSwitch>
-    </div>
-    <!-- End Toggle Edit Switch -->
-    <div class="flex flex-col gap-4">
+  <form @submit.prevent autocomplete="off" class="flex w-full">
+    <div class="flex w-full flex-col gap-4">
+      <!-- Start Alert Message -->
+      <transition enter-active-class="transition duration-200" enter-from-class="scale-50 opacity-0" leave-to-class="opacity-0">
+        <Message v-if="showErrorAlert" :closable="false" severity="error" class="mx-4 mb-2 md:mx-0">
+          <span>{{ errorMessage }}</span>
+        </Message>
+      </transition>
+      <!-- End Alert Message -->
+
       <!-- Start Credentials -->
       <!-- Start Email and Mobile Number -->
       <div class="flex flex-col gap-4 md:flex-row">
         <WbInputText
-          v-model="payload.email"
+          v-model="tmpEmailField"
           label="Email *"
-          :invalid="validator.email.$invalid"
-          :invalid-text="validator.email.$errors[0]?.$message"
-          @blur="validator.email.$touch"
-          @focusin="validator.email.$dirty = false"
-          :disabled="!editingEnabled"
+          :disabled="true"
+          v-tooltip.top="'You cannot change your email at this moment'"
         >
           <template #prepend-icon>
             <i class="pi pi-envelope" />
@@ -221,7 +209,6 @@ const handleFormSubmission = async () => {
           :invalid-text="validator.mobile_number.$errors[0]?.$message"
           @blur="validator.mobile_number.$touch"
           @focusin="validator.mobile_number.$dirty = false"
-          :disabled="!editingEnabled"
         >
           <template #prepend-icon>
             <i class="pi pi-phone" />
@@ -239,7 +226,6 @@ const handleFormSubmission = async () => {
           label="First name *"
           :invalid="validator.first_name.$invalid"
           :invalid-text="validator.first_name.$errors[0]?.$message"
-          :disabled="!editingEnabled"
         >
           <template #prepend-icon>
             <i class="pi pi-id-card" />
@@ -250,7 +236,6 @@ const handleFormSubmission = async () => {
           label="Middle name"
           :invalid="validator.middle_name.$invalid"
           :invalid-text="validator.middle_name.$errors[0]?.$message"
-          :disabled="!editingEnabled"
         >
           <template #prepend-icon>
             <i class="pi pi-id-card" />
@@ -265,7 +250,6 @@ const handleFormSubmission = async () => {
           label="Last name *"
           :invalid="validator.last_name.$invalid"
           :invalid-text="validator.last_name.$errors[0]?.$message"
-          :disabled="!editingEnabled"
         >
           <template #prepend-icon>
             <i class="pi pi-id-card" />
@@ -276,7 +260,6 @@ const handleFormSubmission = async () => {
           label="Ext. name"
           :invalid="validator.ext_name.$invalid"
           :invalid-text="validator.ext_name.$errors[0]?.$message"
-          :disabled="!editingEnabled"
         >
           <template #prepend-icon>
             <i class="pi pi-id-card" />
@@ -286,25 +269,12 @@ const handleFormSubmission = async () => {
       <!-- End Last name and Extension name -->
       <!-- Start Sex and Birthday -->
       <div class="flex flex-col gap-4 md:flex-row">
-        <WbDropdown
-          v-model="payload.sex"
-          :options="genderOptions"
-          optionLabel="label"
-          optionValue="value"
-          label="Sex"
-          :disabled="!editingEnabled"
-        >
+        <WbDropdown v-model="payload.sex" :options="genderOptions" optionLabel="label" optionValue="value" label="Sex">
           <template #prepend-icon>
             <FontAwesomeIcon icon="fa-solid fa-mars-and-venus" />
           </template>
         </WbDropdown>
-        <WbCalendar
-          v-model="payload.birthday"
-          dateFormat="MM dd, yy"
-          :maxDate="new Date()"
-          label="Birthday"
-          :disabled="!editingEnabled"
-        >
+        <WbCalendar v-model="payload.birthday" dateFormat="MM dd, yy" :maxDate="new Date()" label="Birthday">
           <template #prepend-icon>
             <i class="pi pi-gift" />
           </template>
@@ -326,7 +296,7 @@ const handleFormSubmission = async () => {
             (value: WbAutoCompleteOptionTrueValue) => useWbAutoCompleteHandleTrueValue(value, toRef(payload, 'region_id'))
           "
           :loading="publicStore.regionOptionsIsLoading"
-          :disabled="publicStore.regionOptionsIsLoading || !editingEnabled"
+          :disabled="publicStore.regionOptionsIsLoading"
         >
           <template #prepend-icon>
             <i class="pi pi-map" />
@@ -342,7 +312,7 @@ const handleFormSubmission = async () => {
             (value: WbAutoCompleteOptionTrueValue) => useWbAutoCompleteHandleTrueValue(value, toRef(payload, 'province_id'))
           "
           :loading="publicStore.provinceOptionsIsLoading"
-          :disabled="publicStore.provinceOptionsIsLoading || !editingEnabled"
+          :disabled="publicStore.provinceOptionsIsLoading"
         >
           <template #prepend-icon>
             <i class="pi pi-map" />
@@ -362,7 +332,7 @@ const handleFormSubmission = async () => {
             (value: WbAutoCompleteOptionTrueValue) => useWbAutoCompleteHandleTrueValue(value, toRef(payload, 'city_id'))
           "
           :loading="publicStore.cityOptionsIsLoading"
-          :disabled="publicStore.cityOptionsIsLoading || !editingEnabled"
+          :disabled="publicStore.cityOptionsIsLoading"
           :virtualScrollerOptions="{ itemSize: 38 }"
         >
           <template #prepend-icon>
@@ -379,7 +349,7 @@ const handleFormSubmission = async () => {
             (value: WbAutoCompleteOptionTrueValue) => useWbAutoCompleteHandleTrueValue(value, toRef(payload, 'barangay_id'))
           "
           :loading="publicStore.barangayOptionsIsLoading"
-          :disabled="publicStore.barangayOptionsIsLoading || !editingEnabled"
+          :disabled="publicStore.barangayOptionsIsLoading"
           :virtualScrollerOptions="{ itemSize: 38 }"
         >
           <template #prepend-icon>
@@ -395,7 +365,6 @@ const handleFormSubmission = async () => {
           label="Home Address"
           :invalid="validator.home_address.$invalid"
           :invalid-text="validator.home_address.$errors[0]?.$message"
-          :disabled="!editingEnabled"
         >
           <template #prepend-icon>
             <i class="pi pi-map" />
@@ -407,7 +376,6 @@ const handleFormSubmission = async () => {
           mask="9999"
           :invalid="validator.postal_code.$invalid"
           :invalid-text="validator.postal_code.$errors[0]?.$message"
-          :disabled="!editingEnabled"
         >
           <template #prepend-icon>
             <i class="pi pi-map" />
@@ -416,18 +384,25 @@ const handleFormSubmission = async () => {
       </div>
       <!-- End Home Address and Zip Code -->
       <!-- End Address -->
-      <div class="mt-6 flex justify-end">
+      <!-- Start Action Buttons -->
+      <div class="mt-6 flex justify-between">
+        <Button @click="emit('previousButtonClicked', true)" label="Back" severity="secondary" :disabled="formIsSubmitting">
+          <template #icon>
+            <i class="pi pi-arrow-left mr-2" />
+          </template>
+        </Button>
         <Button
           @click="handleFormSubmission"
-          label="Save"
+          label="Next"
           :loading="formIsSubmitting"
-          :disabled="formIsSubmitting || addressesAreLoading || !editingEnabled"
+          :disabled="formIsSubmitting || addressesAreLoading"
         >
           <template #icon>
-            <i class="pi pi-save mr-2"></i>
+            <i class="pi pi-arrow-right mr-2" />
           </template>
         </Button>
       </div>
+      <!-- End Action Buttons -->
     </div>
   </form>
 </template>

@@ -4,13 +4,18 @@ import { ChangePasswordPayload, useProfileStore } from '@/stores/profile.ts'
 import { helpers, required, minLength, sameAs, maxLength } from '@vuelidate/validators'
 import { passwordRule } from '@/utils/custom-validations.ts'
 import useVuelidate from '@vuelidate/core'
-import { useToast } from 'primevue/usetoast'
 import { parseApiResponseError } from '@/utils/error-handle.ts'
 import { sleep } from '@/utils/helpers.ts'
 import WbPassword from '@/components/webkit/WbPassword.vue'
 import Divider from 'primevue/divider'
 import Button from 'primevue/button'
 import Message from 'primevue/message'
+
+/** Emits */
+const emit = defineEmits<{
+  (e: 'passwordChanged', value: boolean): void
+  (e: 'previousButtonClicked', value: boolean): void
+}>()
 
 /** Component States */
 const payload = reactive<ChangePasswordPayload>({
@@ -41,7 +46,6 @@ const validator = useVuelidate<ChangePasswordPayload>(formRules, payload)
 
 /** Handle Form Submission */
 const profileStore = useProfileStore()
-const toast = useToast()
 const formIsSubmitting = ref(false)
 const showErrorAlert = ref(false)
 const errorMessage = ref<string | null>(null)
@@ -49,14 +53,7 @@ const errorDetails = ref<string[]>([])
 const handleFormSubmission = async () => {
   const valid = validator.value.$validate()
   if (!valid) {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    toast.add({
-      severity: 'error',
-      summary: 'Update profile',
-      detail: 'Please see the validation messages',
-      life: 5000,
-    })
-    return
+    return window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   formIsSubmitting.value = true
@@ -76,13 +73,8 @@ const handleFormSubmission = async () => {
 
   formIsSubmitting.value = false
   clearForm()
-  toast.add({
-    severity: 'success',
-    summary: 'Update profile',
-    detail: "You've successfully updated your password",
-    life: 5000,
-  })
-  return window.scrollTo({ top: 0, behavior: 'smooth' })
+
+  emit('passwordChanged', true)
 }
 
 const clearForm = () => {
@@ -95,7 +87,7 @@ const clearForm = () => {
 </script>
 
 <template>
-  <form @submit.prevent autocomplete="off">
+  <form @submit.prevent autocomplete="off" class="w-full">
     <!-- Start Alert Message -->
     <transition enter-active-class="transition duration-200" enter-from-class="scale-50 opacity-0" leave-to-class="opacity-0">
       <Message v-if="showErrorAlert" :closable="false" severity="error" class="mb-6">
@@ -158,14 +150,19 @@ const clearForm = () => {
       </WbPassword>
     </div>
     <!-- End Password and Password Confirmation -->
-    <!-- Start Submit Button -->
-    <div class="mt-6 flex justify-end">
-      <Button @click="handleFormSubmission" label="Save" :loading="formIsSubmitting" :disabled="formIsSubmitting">
+    <!-- Start Action Buttons -->
+    <div class="mt-6 flex justify-between">
+      <Button @click="emit('previousButtonClicked', true)" label="Back" severity="secondary" :disabled="formIsSubmitting">
         <template #icon>
-          <i class="pi pi-save mr-2"></i>
+          <i class="pi pi-arrow-left mr-2" />
+        </template>
+      </Button>
+      <Button @click="handleFormSubmission" label="Complete" :loading="formIsSubmitting" :disabled="formIsSubmitting">
+        <template #icon>
+          <i class="pi pi-check-circle mr-2"></i>
         </template>
       </Button>
     </div>
-    <!-- End Submit Button -->
+    <!-- End Action Buttons -->
   </form>
 </template>

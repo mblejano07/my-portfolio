@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-export const useGlobalStore = defineStore('ui', () => {
+export const useGlobalUiStore = defineStore('ui', () => {
   /** States */
   const sidebarMinimized = ref(false)
-  const showRateLimitToast = ref(false)
+  const showRateLimitToast = ref<Date | null>(null)
 
   /** Actions */
   const toggleSidebar = (): boolean => {

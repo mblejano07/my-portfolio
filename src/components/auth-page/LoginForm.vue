@@ -6,7 +6,7 @@ import WbPassword from '@/components/webkit/WbPassword.vue'
 import { reactive, ref } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { LoginPayload, useAuthStore } from '@/stores/auth.ts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AppLogo from '@/components/layout/AppLogo.vue'
@@ -18,6 +18,7 @@ const payload = reactive<LoginPayload>({
 })
 const formIsSubmitting = ref(false)
 const showCredsErrorAlert = ref(false)
+const credsErrorMessage = ref('')
 
 /** Emits */
 const emit = defineEmits<{
@@ -38,6 +39,7 @@ const validator = useVuelidate<LoginPayload>(formRules, payload)
 
 /** Form Submission */
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 const handleFormSubmit = async () => {
   formIsSubmitting.value = true
@@ -48,12 +50,37 @@ const handleFormSubmit = async () => {
   if (!res.success) {
     formIsSubmitting.value = false
     showCredsErrorAlert.value = true
+    credsErrorMessage.value = "The credentials you've inputted are incorrect"
     emit('onCredentialsError', true)
     return
   }
 
   formIsSubmitting.value = false
-  return await router.replace({ name: 'dashboard' })
+
+  // Handle route redirection from account verification page with params and queries
+  if (route.query.from === 'verify-account') {
+    return await router.replace({
+      name: route.query.from,
+      params: {
+        id: route.query.id as string,
+        hash: route.query.hash as string,
+      },
+      query: {
+        expires: route.query.expires,
+        signature: route.query.signature,
+      },
+    })
+  }
+
+  // Redirect to the `from` route if it exists
+  if (route.query.from) {
+    return await router.replace({ name: route.query.from as string })
+  }
+
+  // For normal log-ins, we go the dashboard page for verified emails, and to the guard page for those who
+  // have un-verified emails
+  if (authStore.authenticatedUser.email_verified_at) return await router.replace({ name: 'dashboard' })
+  else return await router.replace({ name: 'verify-email-guard' })
 }
 </script>
 
@@ -69,7 +96,7 @@ const handleFormSubmit = async () => {
     <!-- Start Alert Message -->
     <transition enter-active-class="transition duration-200" enter-from-class="scale-50 opacity-0" leave-to-class="opacity-0">
       <Message v-if="showCredsErrorAlert" :closable="false" severity="error">
-        <span>The credentials you've provided are invalid</span>
+        <span>{{ credsErrorMessage }}</span>
       </Message>
     </transition>
     <!-- End Alert Message -->

@@ -8,14 +8,14 @@ import Badge from 'primevue/badge'
 import Menu from 'primevue/menu'
 import Tag from 'primevue/tag'
 import type { MenuItem } from 'primevue/menuitem'
-import { useGlobalStore } from '@/stores/ui.ts'
+import { useGlobalUiStore } from '@/stores/ui.ts'
 import AppLogo from '@/components/layout/AppLogo.vue'
 import { useAuthStore } from '@/stores/auth.ts'
 import { useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
 import { snakeCaseToTitleCase } from '@/utils/helpers.ts'
 
-const globalStore = useGlobalStore()
+const globalStore = useGlobalUiStore()
 const authStore = useAuthStore()
 const router = useRouter()
 

@@ -1,5 +1,5 @@
 import { useFetch } from '@vueuse/core'
-import { useGlobalStore } from '@/stores/ui.ts'
+import { useGlobalUiStore } from '@/stores/ui.ts'
 import { useAuthStore } from '@/stores/auth.ts'
 
 /**
@@ -43,9 +43,9 @@ export const useApiCall = (uri: string, authToken: string | null = null) => {
       }
 
       // Handle Rate limit
-      const globalStore = useGlobalStore()
+      const globalStore = useGlobalUiStore()
       if (ctx?.response?.status === 429) {
-        globalStore.showRateLimitToast = true
+        globalStore.showRateLimitToast = new Date()
       }
 
       return ctx
