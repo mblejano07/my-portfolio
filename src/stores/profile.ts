@@ -1,7 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { useApiCall } from '@/composables/network'
 import { useAuthStore } from '@/stores/auth'
-import { UserResponse } from '@/typings/user.models.ts'
+import { UserResponse } from '@/typings/models.ts'
 import { ApiResponse } from '@/typings/http-resources.ts'
 import { useDateFormat } from '@vueuse/core'
 

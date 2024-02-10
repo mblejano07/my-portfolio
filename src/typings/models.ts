@@ -23,3 +23,10 @@ export type UserProfileResponse = {
   profile_picture_url: string | null
   address: AddressResponse
 } & ApiResponseData
+
+export type RoleResponse = {
+  id: string | number
+  name: string
+  created_at: string
+  updated_at: string
+}

@@ -3,7 +3,7 @@ import { StorageSerializers, useDateFormat, useStorage } from '@vueuse/core'
 import { computed, ref } from 'vue'
 import { useApiCall } from '@/composables/network.ts'
 import { ApiResponse } from '@/typings/http-resources.ts'
-import { UserResponse } from '@/typings/user.models.ts'
+import { UserResponse } from '@/typings/models.ts'
 import { RegistrationPayload } from '@/stores/forms.ts'
 
 export const useAuthStore = defineStore('auth', () => {
@@ -39,7 +39,7 @@ export const useAuthStore = defineStore('auth', () => {
     return !!authenticatedUser?.value?.email_verified_at
   })
 
-  const avatarDisplayNamePlaceholder = computed(() => {
+  const authAvatarDisplayNamePlaceholder = computed(() => {
     if (!authenticatedUser.value?.user_profile?.full_name) return null
 
     // we'll display the initials for the fake avatar
@@ -164,7 +164,7 @@ export const useAuthStore = defineStore('auth', () => {
     authExpired,
     isAuthenticated,
     authEmailIsVerified,
-    avatarDisplayNamePlaceholder,
+    avatarDisplayNamePlaceholder: authAvatarDisplayNamePlaceholder,
     authRoles,
     authHasRequiredRole,
     authFullName,

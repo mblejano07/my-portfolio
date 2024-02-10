@@ -158,7 +158,7 @@ const routes = [
       {
         path: 'user-management',
         name: 'user-management',
-        component: () => import('@/views/UsersPage.vue'),
+        component: () => import('@/views/UsersManagementPage.vue'),
         meta: <RouteMeta>{
           label: 'User Management',
           isSidebarMenu: true,
