@@ -10,7 +10,7 @@ const usersStore = useUsersStore()
 const usersListIsLoading = ref(true)
 onBeforeMount(async () => {
   usersListIsLoading.value = true
-  const response = await usersStore.fetchUsers(null, 12)
+  const response = await usersStore.fetchUsers(roleFilter.value, 12)
 
   if (response.success && response.pagination) {
     pagination.value = response.pagination
@@ -25,7 +25,7 @@ const handlePaginationPageChange = async (event: PageState) => {
   const pageSelected = event.page + 1 // The page state object starts at 0
 
   usersListIsLoading.value = true
-  const response = await usersStore.fetchUsers(null, 12, pageSelected)
+  const response = await usersStore.fetchUsers(roleFilter.value, 12, pageSelected)
 
   if (response.success && response.pagination) {
     pagination.value = response.pagination
@@ -33,6 +33,9 @@ const handlePaginationPageChange = async (event: PageState) => {
 
   usersListIsLoading.value = false
 }
+
+// Search and Filters
+const roleFilter = ref<number | null>(null)
 </script>
 
 <template>
@@ -68,7 +71,7 @@ const handlePaginationPageChange = async (event: PageState) => {
     <!-- Start Pagination -->
     <div class="mt-6 flex w-full justify-center md:mt-10">
       <Paginator
-        v-if="pagination"
+        v-if="pagination && pagination.total > 0"
         :rows="pagination.per_page"
         :total-records="pagination.total"
         template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
@@ -78,5 +81,11 @@ const handlePaginationPageChange = async (event: PageState) => {
       />
     </div>
     <!-- End Pagination -->
+    <!-- Start No Users Message -->
+    <div v-if="!usersListIsLoading && !pagination?.total" class="flex w-fit flex-col items-center self-center font-menu text-lg">
+      <i class="pi pi-exclamation-triangle text-2xl"></i>
+      <p class="mt-2">No users found</p>
+    </div>
+    <!-- End No Users Message -->
   </div>
 </template>
