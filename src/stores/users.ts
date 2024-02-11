@@ -28,8 +28,24 @@ export const useUsersStore = defineStore('users', () => {
     return responseBody
   }
 
+  const searchUsers = async (query: string | null) => {
+    let uri = '/users/search?'
+    if (query) uri += `query=${query}`
+
+    const { data } = await useApiCall(uri, authStore.authenticationToken).get().json()
+    const responseBody: ApiResponseBody = data.value
+
+    if (responseBody.success) {
+      const usersList = responseBody.data as UserResponse[]
+      users.value = [...usersList]
+    }
+
+    return responseBody
+  }
+
   return {
     users,
     fetchUsers,
+    searchUsers,
   }
 })

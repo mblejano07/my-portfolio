@@ -1,22 +1,33 @@
 <script setup lang="ts">
 import Paginator, { PageState } from 'primevue/paginator'
-import { onBeforeMount, ref } from 'vue'
+import Button from 'primevue/button'
+import Dropdown from 'primevue/dropdown'
+import InputText from 'primevue/inputtext'
+import InputGroup from 'primevue/inputgroup'
+import { onBeforeMount, ref, watch } from 'vue'
 import { useUsersStore } from '@/stores/users.ts'
 import { ApiResponsePagination } from '@/typings/http-resources.ts'
 import UserCard from '@/components/users-management-page/UserCard.vue'
+import { useRolesStore } from '@/stores/roles.ts'
+import { useToast } from 'primevue/usetoast'
 
-// Initial Users Fetch
+// Initial Users Fetch & Role Options
 const usersStore = useUsersStore()
-const usersListIsLoading = ref(true)
+const usersListIsLoading = ref(false)
+const rolesStore = useRolesStore()
+const rolesOptionsIsLoading = ref(false)
+const paginationLimit = 12
 onBeforeMount(async () => {
   usersListIsLoading.value = true
-  const response = await usersStore.fetchUsers(roleFilter.value, 12)
-
+  const response = await usersStore.fetchUsers(roleFilter.value, paginationLimit)
   if (response.success && response.pagination) {
     pagination.value = response.pagination
   }
-
   usersListIsLoading.value = false
+
+  rolesOptionsIsLoading.value = true
+  await rolesStore.fetchRoles()
+  rolesOptionsIsLoading.value = false
 })
 
 // Pagination
@@ -25,7 +36,7 @@ const handlePaginationPageChange = async (event: PageState) => {
   const pageSelected = event.page + 1 // The page state object starts at 0
 
   usersListIsLoading.value = true
-  const response = await usersStore.fetchUsers(roleFilter.value, 12, pageSelected)
+  const response = await usersStore.fetchUsers(roleFilter.value, paginationLimit, pageSelected)
 
   if (response.success && response.pagination) {
     pagination.value = response.pagination
@@ -36,12 +47,90 @@ const handlePaginationPageChange = async (event: PageState) => {
 
 // Search and Filters
 const roleFilter = ref<number | null>(null)
+const searchQuery = ref<string | null>(null)
+watch(
+  () => roleFilter.value,
+  async () => {
+    usersListIsLoading.value = true
+    searchQuery.value = null // We clear the search query
+    const response = await usersStore.fetchUsers(roleFilter.value, paginationLimit)
+    if (response.success && response.pagination) {
+      pagination.value = response.pagination
+    }
+    usersListIsLoading.value = false
+  }
+)
+
+const toast = useToast()
+const handleSearchUser = async () => {
+  // We do regular fetch if the query is null / empty
+  usersListIsLoading.value = true
+  if (!searchQuery.value) {
+    const response = await usersStore.fetchUsers(roleFilter.value, paginationLimit)
+    if (response.success && response.pagination) {
+      pagination.value = response.pagination
+    }
+    return (usersListIsLoading.value = false)
+  }
+
+  // Handle the search if the search query
+  const response = await usersStore.searchUsers(searchQuery.value)
+  if (response.success && response.pagination) {
+    pagination.value = response.pagination
+    roleFilter.value = null
+    toast.add({
+      severity: 'success',
+      summary: 'Search Users',
+      detail: 'Note that role filters are ignored',
+      life: 8000,
+    })
+  }
+
+  usersListIsLoading.value = false
+}
 </script>
 
 <template>
   <div class="mx-auto flex h-[100%] w-full flex-col">
     <!-- Start Filters & Controls -->
-    <div class="my-4 flex h-16 w-full items-center justify-center bg-surface-500 text-surface-0">Controls Placeholder</div>
+    <div
+      class="my-6 flex w-full flex-col items-center justify-between gap-4 rounded-lg bg-surface-0 px-6 py-4 shadow-sm md:my-4 md:flex-row"
+    >
+      <div class="flex w-full">
+        <Button label="Create User" class="mx-3 h-8 w-full md:mx-0 md:h-fit md:w-fit md:text-xs">
+          <template #icon>
+            <i class="pi pi-plus mr-2" />
+          </template>
+        </Button>
+      </div>
+      <div class="flex flex-col justify-end gap-4 md:flex-row">
+        <Dropdown
+          v-model="roleFilter"
+          label="Role Filter"
+          :loading="rolesOptionsIsLoading"
+          :disabled="rolesOptionsIsLoading"
+          :options="rolesStore.roleOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Role Filter"
+          show-clear
+        >
+          <template #loadingicon>
+            <i class="pi pi-spinner mr-2 animate-spin" />
+          </template>
+        </Dropdown>
+        <InputGroup v-model="searchQuery">
+          <InputText
+            v-model="searchQuery"
+            placeholder="Name or Email"
+            class="w-full"
+            :disabled="usersListIsLoading"
+            @keyup.enter="handleSearchUser"
+          />
+          <Button icon="pi pi-search" @click="handleSearchUser" :loading="usersListIsLoading" :disabled="usersListIsLoading" />
+        </InputGroup>
+      </div>
+    </div>
     <!-- End Filters & Controls -->
     <!-- Start User Cards -->
     <div

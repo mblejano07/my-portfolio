@@ -243,7 +243,7 @@ export default {
   clearicon: {
     class: [
       // Color
-      'text-surface-500',
+      'text-surface-500 hover:cursor-pointer',
 
       // Position
       'absolute',

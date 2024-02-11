@@ -29,5 +29,6 @@ export const useRolesStore = defineStore('roles', () => {
 
   return {
     fetchRoles,
+    roleOptions,
   }
 })
