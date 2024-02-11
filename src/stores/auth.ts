@@ -88,6 +88,7 @@ export const useAuthStore = defineStore('auth', () => {
       const authResponse = responseData.data as AuthResponse
       authenticationToken.value = authResponse.token
       authenticatedUser.value = authResponse.user
+      authExpired.value = false
     }
 
     return responseData
@@ -113,6 +114,7 @@ export const useAuthStore = defineStore('auth', () => {
       const authResponse = responseBody.data as AuthResponse
       authenticationToken.value = authResponse.token
       authenticatedUser.value = authResponse.user
+      authExpired.value = false
     }
 
     return responseBody
@@ -122,6 +124,7 @@ export const useAuthStore = defineStore('auth', () => {
     await useApiCall('auth/tokens', authenticationToken.value).delete()
     authenticatedUser.value = null
     authenticationToken.value = null
+    authExpired.value = false
   }
 
   const requestForgotPassword = async (email: string) => {

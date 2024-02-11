@@ -3,7 +3,7 @@ import AppFooter from '@/components/layout/AppFooter.vue'
 import AppDesktopToolbar from '@/components/layout/app-toolbar/AppDesktopToolbar.vue'
 import AppDesktopSidebar from '@/components/layout/app-sidebar/AppDesktopSidebar.vue'
 import { useGlobalUiStore } from '@/stores/ui.ts'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { onBeforeMount, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth.ts'
 import { useProfileStore } from '@/stores/profile.ts'
@@ -22,6 +22,20 @@ onBeforeMount(async () => {
     await profileStore.fetchProfile()
   }
 })
+
+// Observe when the token expires, go to login page with `from` (page) query
+const router = useRouter()
+watch(
+  () => authStore.authExpired,
+  async (tokenIsExpired) => {
+    if (tokenIsExpired) {
+      await router.replace({
+        name: 'login',
+        query: { from: route.name as string },
+      })
+    }
+  }
+)
 
 // Handle for Rate Limit
 const uiStore = useGlobalUiStore()

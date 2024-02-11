@@ -11,19 +11,21 @@ import { LoginPayload, useAuthStore } from '@/stores/auth.ts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AppLogo from '@/components/layout/AppLogo.vue'
 
+/** Emits */
+const emit = defineEmits<{
+  (e: 'onCredentialsError', value: boolean): void
+}>()
+
+/** Props */
+const props = withDefaults(defineProps<{ showLoginExpiredAlert: boolean }>(), {
+  showLoginExpiredAlert: false,
+})
+
 /** Component States */
 const payload = reactive<LoginPayload>({
   email: '',
   password: '',
 })
-const formIsSubmitting = ref(false)
-const showCredsErrorAlert = ref(false)
-const credsErrorMessage = ref('')
-
-/** Emits */
-const emit = defineEmits<{
-  (e: 'onCredentialsError', value: boolean): void
-}>()
 
 /** Form Validation */
 const formRules = {
@@ -38,6 +40,9 @@ const formRules = {
 const validator = useVuelidate<LoginPayload>(formRules, payload)
 
 /** Form Submission */
+const formIsSubmitting = ref(false)
+const showCredsErrorAlert = ref(false)
+const credsErrorMessage = ref('')
 const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
@@ -74,13 +79,19 @@ const handleFormSubmit = async () => {
 
   // Redirect to the `from` route if it exists
   if (route.query.from) {
+    console.log('login', route.query.from)
     return await router.replace({ name: route.query.from as string })
   }
 
   // For normal log-ins, we go the dashboard page for verified emails, and to the guard page for those who
   // have un-verified emails
-  if (authStore.authenticatedUser.email_verified_at) return await router.replace({ name: 'dashboard' })
-  else return await router.replace({ name: 'verify-email-guard' })
+  if (authStore.authenticatedUser.email_verified_at) {
+    console.log('login', 'email is verified')
+    return await router.replace({ name: 'dashboard' })
+  } else {
+    console.log('login', 'email is not verified')
+    return await router.replace({ name: 'verify-email-guard' })
+  }
 }
 </script>
 
@@ -100,6 +111,13 @@ const handleFormSubmit = async () => {
       </Message>
     </transition>
     <!-- End Alert Message -->
+    <!-- Start Auth Token Expired Message -->
+    <transition enter-active-class="transition duration-200" enter-from-class="scale-50 opacity-0" leave-to-class="opacity-0">
+      <Message v-if="props.showLoginExpiredAlert && !showCredsErrorAlert" :closable="false" severity="warn">
+        <span>Your login session has expired, please enter your credentials again to continue.</span>
+      </Message>
+    </transition>
+    <!-- End Auth Token Expired Message -->
     <!-- Start Form -->
     <form class="mt-8 flex flex-col space-y-6" @submit.prevent>
       <WbInputText

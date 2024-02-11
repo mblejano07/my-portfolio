@@ -2,8 +2,9 @@
 import AnimatedFloaters from '@/components/misc/AnimatedFloaters.vue'
 import LoginForm from '@/components/auth-page/LoginForm.vue'
 import { useRoute } from 'vue-router'
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import RegisterForm from '@/components/auth-page/register-form/RegisterForm.vue'
+import { useAuthStore } from '@/stores/auth.ts'
 
 /** We either show the Login Form or the Create Account Form based on the route */
 const route = useRoute()
@@ -27,6 +28,12 @@ watch(
     formHasWarning.value = false
   }
 )
+
+// Handle Login Expiration
+const authStore = useAuthStore()
+const showLoginExpiredAlert = computed(() => {
+  return authStore.authExpired
+})
 </script>
 
 <template>
@@ -35,16 +42,16 @@ watch(
     <div class="flex min-w-0 flex-auto flex-col items-center lg:flex-row">
       <div
         :class="`relative hidden h-full flex-auto items-center justify-center overflow-hidden bg-primary-900 p-10 text-surface-0 transition-colors duration-500 md:hidden lg:flex ${
-          formHasWarning ? '!bg-warn-500' : ''
+          formHasWarning || showLoginExpiredAlert ? '!bg-warn-500' : ''
         } ${formHasError ? '!bg-error-500' : ''}`"
       >
         <div
           :class="`absolute inset-0 z-0 bg-gradient-to-b from-primary-500 to-primary-900 opacity-75 transition-colors duration-500 ${
-            formHasWarning ? '!from-warn-500 !to-warn-900 ' : ''
+            formHasWarning || showLoginExpiredAlert ? '!from-warn-500 !to-warn-900 ' : ''
           } ${formHasError ? '!from-error-500 !to-error-900 ' : ''}`"
         ></div>
         <!-- Start Webkit Text -->
-        <div :class="`z-10 w-full max-w-md ${formHasError || formHasWarning ? 'animate-shake' : ''}`">
+        <div :class="`z-10 w-full max-w-md ${formHasError || formHasWarning || showLoginExpiredAlert ? 'animate-shake' : ''}`">
           <div class="mb-6 font-menu font-bold leading-tight sm:text-4xl xl:text-5xl">Webkit (Prime)</div>
           <div class="xl:text-md font-normal text-gray-200 sm:text-sm">
             Nipper holystone six pounders barkadeer rutters Privateer hail-shot warp black spot fore. Knave six pounders
@@ -61,7 +68,7 @@ watch(
          md:rounded-none lg:flex lg:h-full
          lg:items-center lg:justify-center
          lg:bg-gradient-to-b lg:from-surface-0 lg:to-surface-0 lg:p-10
-         xl:p-14 ${showLogin ? 'md:w-[100%] lg:w-[40%]' : 'md:w-[100%] lg:w-[70%]'}`"
+         xl:p-14 ${showLogin ? 'md:w-[100%] md:px-16 lg:w-[40%]' : 'md:w-[100%] md:px-16 lg:w-[70%]'}`"
       >
         <!-- Start Login Form -->
         <transition
@@ -71,7 +78,11 @@ watch(
           leave-to-class="opacity-0"
         >
           <template v-if="showLogin">
-            <LoginForm class="mt-6 w-full lg:mt-0" @on-credentials-error="formHasError = true" />
+            <LoginForm
+              class="mt-6 w-full lg:mt-0"
+              @on-credentials-error="formHasError = true"
+              :show-login-expired-alert="showLoginExpiredAlert"
+            />
           </template>
           <template v-else>
             <RegisterForm class="mt-6 w-full lg:mt-0" />

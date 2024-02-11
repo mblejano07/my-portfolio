@@ -255,7 +255,6 @@ const enum RouteGroup {
   ADMIN_TOOLS = 'Admin Tools',
   MISC = 'Misc',
   AUTH = 'Auth',
-  DATA_ENTRY = 'Data Entry',
 }
 
 /**

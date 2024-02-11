@@ -38,7 +38,7 @@ export default {
   text: {
     class: [
       // Font and Text
-      'text-sm leading-none',
+      'text-sm',
       'font-medium',
     ],
   },
