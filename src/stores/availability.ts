@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { useApiCall } from '@/composables/network.ts'
 import { parsePhoneNumber } from 'libphonenumber-js'
-import { ApiResponse } from '@/typings/http-resources.ts'
+import { ApiResponseBody } from '@/typings/http-resources.ts'
 
 export const useAvailabilitiesStore = defineStore('availabilities', () => {
   const checkUserUniqueIdentifierAvailability = async (
@@ -17,7 +17,7 @@ export const useAvailabilitiesStore = defineStore('availabilities', () => {
     if (excludeId) url += `&excluded_id=${excludeId}`
 
     const { data } = await useApiCall(url).get().json()
-    return data.value as ApiResponse & { data: { is_available: boolean } }
+    return data.value as ApiResponseBody & { data: { is_available: boolean } }
   }
 
   return {

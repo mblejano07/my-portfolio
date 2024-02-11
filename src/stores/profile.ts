@@ -2,7 +2,7 @@ import { defineStore, storeToRefs } from 'pinia'
 import { useApiCall } from '@/composables/network'
 import { useAuthStore } from '@/stores/auth'
 import { UserResponse } from '@/typings/models.ts'
-import { ApiResponse } from '@/typings/http-resources.ts'
+import { ApiResponseBody } from '@/typings/http-resources.ts'
 import { useDateFormat } from '@vueuse/core'
 
 export const useProfileStore = defineStore('profile', () => {
@@ -17,7 +17,7 @@ export const useProfileStore = defineStore('profile', () => {
   const fetchProfile = async () => {
     const { data } = await useApiCall('/profile', auth.authenticationToken.value).get().json()
 
-    const responseBody: ApiResponse = data.value
+    const responseBody: ApiResponseBody = data.value
     if (responseBody.success) {
       auth.authenticatedUser.value = responseBody.data as UserResponse
     }
@@ -33,7 +33,7 @@ export const useProfileStore = defineStore('profile', () => {
 
     const { data } = await useApiCall('/profile', auth.authenticationToken.value).patch(payload).json()
 
-    const responseBody: ApiResponse = data.value
+    const responseBody: ApiResponseBody = data.value
     if (responseBody.success) {
       auth.authenticatedUser.value = responseBody.data as UserResponse
     }
@@ -44,7 +44,7 @@ export const useProfileStore = defineStore('profile', () => {
   const uploadProfilePicture = async (payload: FormData) => {
     const { data } = await useApiCall('/profile/profile-picture', auth.authenticationToken.value).post(payload).json()
 
-    const responseBody: ApiResponse = data.value
+    const responseBody: ApiResponseBody = data.value
     if (responseBody.success && auth.authenticatedUser.value.user_profile) {
       const uploadProfilePictureResponse = responseBody.data as UploadProfilePictureResponse
       auth.authenticatedUser.value.user_profile.profile_picture_url = uploadProfilePictureResponse.url
@@ -55,7 +55,7 @@ export const useProfileStore = defineStore('profile', () => {
 
   const changePassword = async (payload: ChangePasswordPayload) => {
     const { data } = await useApiCall('/profile/password', auth.authenticationToken.value).patch(payload).json()
-    return data.value as ApiResponse
+    return data.value as ApiResponseBody
   }
 
   return { fetchProfile, updateProfile, uploadProfilePicture, changePassword }

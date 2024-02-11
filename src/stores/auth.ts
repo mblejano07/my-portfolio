@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { StorageSerializers, useDateFormat, useStorage } from '@vueuse/core'
 import { computed, ref } from 'vue'
 import { useApiCall } from '@/composables/network.ts'
-import { ApiResponse } from '@/typings/http-resources.ts'
+import { ApiResponseBody } from '@/typings/http-resources.ts'
 import { UserResponse } from '@/typings/models.ts'
 import { RegistrationPayload } from '@/stores/forms.ts'
 
@@ -82,7 +82,7 @@ export const useAuthStore = defineStore('auth', () => {
     payload.client_name = 'Web Browser'
 
     const { data } = await useApiCall('auth/tokens').post(payload).json()
-    const responseData: ApiResponse = data.value
+    const responseData: ApiResponseBody = data.value
 
     if (responseData.success) {
       const authResponse = responseData.data as AuthResponse
@@ -108,7 +108,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     const { data } = await useApiCall('auth/register').post(unWrappedPayload).json()
 
-    const responseBody: ApiResponse = data.value
+    const responseBody: ApiResponseBody = data.value
     if (responseBody.success) {
       const authResponse = responseBody.data as AuthResponse
       authenticationToken.value = authResponse.token
@@ -126,7 +126,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const requestForgotPassword = async (email: string) => {
     const { data } = await useApiCall('auth/forgot-password').post({ email }).json()
-    return data.value as ApiResponse
+    return data.value as ApiResponseBody
   }
 
   const resetPassword = async ({ email, token, password, password_confirmation }: ResetPasswordPayload) => {
@@ -139,18 +139,18 @@ export const useAuthStore = defineStore('auth', () => {
       })
       .json()
 
-    return data.value as ApiResponse
+    return data.value as ApiResponseBody
   }
 
   const resendEmailVerification = async () => {
     const { data } = await useApiCall('auth/email/send-verification', authenticationToken.value).get().json()
-    return data.value as ApiResponse
+    return data.value as ApiResponseBody
   }
 
   const verifyEmail = async ({ id, hash, signature, expires }: VerifyEmailPayload) => {
     const url = `auth/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`
     const { data } = await useApiCall(url, authenticationToken.value).get().json()
-    return data.value as ApiResponse
+    return data.value as ApiResponseBody
   }
 
   const authHasRequiredRole = (requiredRoles: string[]) => {

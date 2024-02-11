@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { useApiCall } from '@/composables/network'
 import { useAuthStore } from '@/stores/auth'
 import { RoleResponse } from '@/typings/models.ts'
-import { ApiResponse } from '@/typings/http-resources.ts'
+import { ApiResponseBody } from '@/typings/http-resources.ts'
 import { ref } from 'vue'
 import { snakeCaseToTitleCase } from '@/utils/helpers.ts'
 
@@ -15,7 +15,7 @@ export const useRolesStore = defineStore('roles', () => {
   /** Actions */
   const fetchRoles = async () => {
     const { data } = await useApiCall('/roles', authStore.authenticationToken).get().json()
-    const responseBody = data.value as ApiResponse
+    const responseBody = data.value as ApiResponseBody
 
     if (responseBody.success) {
       const rolesList = responseBody.data as RoleResponse[]

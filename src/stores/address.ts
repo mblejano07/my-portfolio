@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { useApiCall } from '@/composables/network.ts'
 import { ref } from 'vue'
-import { ApiResponse } from '@/typings/http-resources.ts'
+import { ApiResponseBody } from '@/typings/http-resources.ts'
 import { WbAutoCompleteOption } from '@/components/webkit/WbAutoComplete.vue'
 import { ProvinceResponse, RegionResponse, BarangayResponse, CityResponse } from '@/typings/address.models.ts'
 
@@ -22,7 +22,7 @@ export const useAddressStore = defineStore('address', () => {
 
     regionOptionsIsLoading.value = true
     const { data } = await useApiCall('/address/regions').get().json()
-    const res: ApiResponse = data.value
+    const res: ApiResponseBody = data.value
 
     if (res.success) {
       regionOptions.value = []
@@ -42,7 +42,7 @@ export const useAddressStore = defineStore('address', () => {
 
     provinceOptionsIsLoading.value = true
     const { data } = await useApiCall('/address/provinces').get().json()
-    const res: ApiResponse = data.value
+    const res: ApiResponseBody = data.value
 
     if (res.success) {
       provinceOptions.value = []
@@ -62,7 +62,7 @@ export const useAddressStore = defineStore('address', () => {
 
     cityOptionsIsLoading.value = true
     const { data } = await useApiCall('/address/cities').get().json()
-    const res: ApiResponse = data.value
+    const res: ApiResponseBody = data.value
 
     if (res.success) {
       cityOptions.value = []
@@ -82,7 +82,7 @@ export const useAddressStore = defineStore('address', () => {
     barangayOptionsIsLoading.value = true
 
     const { data } = await useApiCall('/address/barangays').get().json()
-    const res: ApiResponse = data.value
+    const res: ApiResponseBody = data.value
 
     if (res.success) {
       barangayOptions.value = []

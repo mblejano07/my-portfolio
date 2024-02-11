@@ -1,10 +1,25 @@
-export type ApiResponse = {
+export type ApiResponseBody = {
   success: boolean
   data?: Array<object> | object
   message?: string
   error_code?: string
   error_message?: string
   errors?: Array<{ field: string; messages: string[] }>
+  pagination?: ApiResponsePagination
+}
+
+export type ApiResponsePagination = {
+  current_page: number
+  last_page: number
+  first_page_url: string
+  last_page_url: string
+  next_page_url: string | null
+  previous_page_url: string | null
+  from: number
+  to: number
+  per_page: number
+  total: number
+  path: string
 }
 
 export type ApiResponseData = {
