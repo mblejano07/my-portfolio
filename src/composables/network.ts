@@ -1,6 +1,6 @@
 import { useFetch } from '@vueuse/core'
-import { useGlobalUiStore } from '@/stores/ui.ts'
-import { useAuthStore } from '@/stores/auth.ts'
+import { useGlobalUiStore } from '@/stores/ui.store.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
 
 /**
  * @description Make an HTTP request to an endpoint.

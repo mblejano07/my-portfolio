@@ -7,9 +7,9 @@ import Button from 'primevue/button'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import WbCalendar from '@/components/webkit/WbCalendar.vue'
 import WbDropdown from '@/components/webkit/WbDropdown.vue'
-import { RegistrationPersonalInfoPayload, useFormsStore } from '@/stores/forms.ts'
+import { RegistrationPersonalInfoPayload, useFormsStore } from '@/stores/forms.store.ts'
 
-/** Component States */
+/** Payload */
 const formStore = useFormsStore()
 const payload = reactive<RegistrationPersonalInfoPayload>({
   first_name: formStore.registrationInfo.personal_info?.first_name || null,
@@ -19,6 +19,8 @@ const payload = reactive<RegistrationPersonalInfoPayload>({
   sex: formStore.registrationInfo.personal_info?.sex || null,
   birthday: formStore.registrationInfo.personal_info?.birthday || null,
 })
+
+/** Component States */
 const genderOptions = ref([
   { value: 'male', label: 'Male' },
   { value: 'female', label: 'Female' },

@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import { useApiCall } from '@/composables/network'
-import { useAuthStore } from '@/stores/auth'
-import { RoleResponse } from '@/typings/models.ts'
-import { ApiResponseBody } from '@/typings/http-resources.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
+import { RoleResponse } from '@/typings/models.types.ts'
+import { ApiResponseBody } from '@/typings/http-resources.types.ts'
 import { ref } from 'vue'
 import { snakeCaseToTitleCase } from '@/utils/helpers.ts'
 

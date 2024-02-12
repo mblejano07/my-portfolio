@@ -7,7 +7,7 @@ import { reactive, ref } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import { useRoute, useRouter } from 'vue-router'
-import { LoginPayload, useAuthStore } from '@/stores/auth.ts'
+import { LoginPayload, useAuthStore } from '@/stores/auth.store.ts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AppLogo from '@/components/layout/AppLogo.vue'
 
@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<{ showLoginExpiredAlert: boolean }>(), {
   showLoginExpiredAlert: false,
 })
 
-/** Component States */
+/** Payload */
 const payload = reactive<LoginPayload>({
   email: '',
   password: '',

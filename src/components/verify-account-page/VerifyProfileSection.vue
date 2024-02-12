@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { reactive, ref, onBeforeMount, toRef, toRefs } from 'vue'
-import { useProfileStore, UserProfilePayload } from '@/stores/profile.ts'
+import { useProfileStore, UserProfilePayload } from '@/stores/profile.store.ts'
 import { storeToRefs } from 'pinia'
 import { useFilterByParentId, useClearSelectedAddressIfNotInParentList } from '@/composables/address.options.ts'
-import { useAuthStore } from '@/stores/auth.ts'
-import { useAddressStore } from '@/stores/address.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
+import { useAddressStore } from '@/stores/address.store.ts'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, maxLength } from '@vuelidate/validators'
 import { digitCountRule, mobilePhoneRule, uniqueUserIdentifierRule } from '@/utils/custom-validations.ts'
@@ -27,7 +27,7 @@ const emit = defineEmits<{
   (e: 'previousButtonClicked', value: boolean): void
 }>()
 
-/** Component States */
+/** Payload */
 const authStore = useAuthStore()
 const payload = reactive<Partial<UserProfilePayload>>({
   mobile_number: authStore.authenticatedUser?.user_profile?.mobile_number || null,

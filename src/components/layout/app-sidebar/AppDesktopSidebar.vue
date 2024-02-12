@@ -18,7 +18,7 @@ const { navLinks } = useSidebarNavLinks()
       <div class="flex flex-1 flex-col justify-between">
         <nav class="-mx-3 space-y-6">
           <div v-for="item in navLinks" :key="item.group" class="space-y-3">
-            <label class="px-3 text-xs uppercase dark:text-gray-400">
+            <label class="px-3 text-xs font-bold uppercase text-surface-600">
               {{ item.group }}
             </label>
             <RouterLink
@@ -26,8 +26,8 @@ const { navLinks } = useSidebarNavLinks()
               v-for="link in item.links"
               :key="link.label"
               :to="{ name: link.name }"
-              :class="`flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 hover:bg-surface-200 hover:text-surface-900 ${
-                $route.name === link.name ? 'bg-surface-200' : ''
+              :class="`flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 hover:bg-primary-100 hover:text-primary-900 ${
+                $route.name === link.name ? 'bg-primary-100 text-primary-900' : ''
               }`"
             >
               <i :class="link.icon"></i>

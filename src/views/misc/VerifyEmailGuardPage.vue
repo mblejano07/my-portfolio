@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { useAuthStore } from '@/stores/auth.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
 import { ref, watch } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import Button from 'primevue/button'
@@ -9,8 +9,8 @@ import { useRouter } from 'vue-router'
 import AnimatedFloaters from '@/components/misc/AnimatedFloaters.vue'
 import AppLogo from '@/components/layout/AppLogo.vue'
 import { useBroadcastChannel } from '@vueuse/core'
-import { BroadcastChannelName } from '@/typings/broadcasts.ts'
-import { useProfileStore } from '@/stores/profile.ts'
+import { BroadcastChannelName } from '@/typings/broadcasts.types.ts'
+import { useProfileStore } from '@/stores/profile.store.ts'
 
 const authStore = useAuthStore()
 const authEmail = authStore.authenticatedUser.email

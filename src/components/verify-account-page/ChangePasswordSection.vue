@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, computed, ref } from 'vue'
-import { ChangePasswordPayload, useProfileStore } from '@/stores/profile.ts'
+import { ChangePasswordPayload, useProfileStore } from '@/stores/profile.store.ts'
 import { helpers, required, minLength, sameAs, maxLength } from '@vuelidate/validators'
 import { passwordRule } from '@/utils/custom-validations.ts'
 import useVuelidate from '@vuelidate/core'

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, computed, ref } from 'vue'
-import { ChangePasswordPayload, useProfileStore } from '@/stores/profile.ts'
+import { ChangePasswordPayload, useProfileStore } from '@/stores/profile.store.ts'
 import { helpers, required, minLength, sameAs, maxLength } from '@vuelidate/validators'
 import { passwordRule } from '@/utils/custom-validations.ts'
 import useVuelidate from '@vuelidate/core'
@@ -12,7 +12,7 @@ import Divider from 'primevue/divider'
 import Button from 'primevue/button'
 import Message from 'primevue/message'
 
-/** Component States */
+/** Payload */
 const payload = reactive<ChangePasswordPayload>({
   old_password: '',
   password: '',
@@ -151,6 +151,7 @@ const clearForm = () => {
         toggleMask
         :invalid="validator.password_confirmation.$invalid"
         :invalid-text="validator.password_confirmation.$errors[0]?.$message"
+        @blur="validator.password_confirmation.$touch"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />

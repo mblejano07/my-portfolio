@@ -5,7 +5,7 @@ import Sidebar from 'primevue/sidebar'
 import Avatar from 'primevue/avatar'
 import { RouterLink, useRouter } from 'vue-router'
 import { useSidebarNavLinks } from '@/composables/sidebar.ts'
-import { useAuthStore } from '@/stores/auth.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
 import { snakeCaseToTitleCase } from '@/utils/helpers.ts'
 import Tag from 'primevue/tag'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -32,7 +32,7 @@ const handleLogout = async () => {
         <FontAwesomeIcon icon="fa fa-xmark" class="h-4 w-4" />
       </template>
       <template #header>
-        <div class="flex items-center gap-2">
+        <button class="flex items-center gap-2" @click="router.push({ name: 'profile' })">
           <template v-if="authStore.isAuthenticated">
             <Avatar
               :image="authStore.authenticatedUser.user_profile?.profile_picture_url"
@@ -50,15 +50,14 @@ const handleLogout = async () => {
               </span>
             </div>
           </template>
-        </div>
+        </button>
       </template>
-      <!-- End Logo -->
       <!-- Start Nav Items -->
       <aside class="flex flex-col overflow-y-auto">
         <div class="flex flex-1 flex-col justify-between">
           <nav class="space-y-6">
             <div v-for="item in navLinks" :key="item.group" class="space-y-3">
-              <label class="px-3 text-xs uppercase dark:text-gray-400">
+              <label class="px-3 text-xs font-bold uppercase text-surface-600">
                 {{ item.group }}
               </label>
               <RouterLink
@@ -66,8 +65,8 @@ const handleLogout = async () => {
                 v-for="link in item.links"
                 :key="link.label"
                 :to="{ name: link.name }"
-                :class="`flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 hover:bg-surface-200 hover:text-surface-900 ${
-                  $route.name === link.name ? 'bg-surface-200' : ''
+                :class="`flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 hover:bg-primary-100 hover:text-primary-900 ${
+                  $route.name === link.name ? 'bg-primary-100 text-primary-900' : ''
                 }`"
               >
                 <i :class="link.icon"></i>
@@ -79,7 +78,7 @@ const handleLogout = async () => {
       </aside>
       <!-- End Nav Items -->
       <!-- Start Logout Link -->
-      <Button label="Logout" severity="secondary" class="mt-10 flex w-full" @click="handleLogout"> </Button>
+      <Button label="Logout" severity="secondary" class="mt-10 flex w-full" @click="handleLogout"></Button>
       <!-- End Logout Link -->
     </Sidebar>
     <Button

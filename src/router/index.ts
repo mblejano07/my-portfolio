@@ -5,8 +5,8 @@ import ProfilePage from '@/views/ProfilePage.vue'
 import SupportPage from '@/views/SupportPage.vue'
 import AboutUsPage from '@/views/AboutUsPage.vue'
 import AnnouncementsPage from '@/views/AnnouncementsPage.vue'
-import { AuthRole, AuthType } from '@/typings/auth.ts'
-import { useAuthStore } from '@/stores/auth.ts'
+import { AuthRole, AuthType } from '@/typings/auth.types.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
 
 const routes = [
   {

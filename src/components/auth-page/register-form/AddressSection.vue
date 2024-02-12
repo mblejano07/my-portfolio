@@ -7,15 +7,15 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, maxLength } from '@vuelidate/validators'
 import { digitCountRule } from '@/utils/custom-validations.ts'
 import Button from 'primevue/button'
-import { useAddressStore } from '@/stores/address.ts'
+import { useAddressStore } from '@/stores/address.store.ts'
 import { useClearSelectedAddressIfNotInParentList, useFilterByParentId } from '@/composables/address.options.ts'
 import { storeToRefs } from 'pinia'
-import { RegistrationAddressPayload, useFormsStore } from '@/stores/forms.ts'
-import { useAuthStore } from '@/stores/auth.ts'
+import { RegistrationAddressPayload, useFormsStore } from '@/stores/forms.store.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
 import { useRouter } from 'vue-router'
 import { useWbAutoCompleteHandleTrueValue } from '@/composables/wb-ui-components.ts'
 
-/** Component States */
+/** Payload */
 const formStore = useFormsStore()
 const payload = reactive<RegistrationAddressPayload>({
   home_address: formStore.registrationInfo.address?.home_address || null,

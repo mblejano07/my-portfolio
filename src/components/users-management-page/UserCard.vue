@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Tag from 'primevue/tag'
-import { UserResponse } from '@/typings/models.ts'
+import { UserResponse } from '@/typings/models.types.ts'
 import { getAvatarDisplayNamePlaceholder, snakeCaseToTitleCase } from '@/utils/helpers.ts'
 
 const props = defineProps<{ user: UserResponse }>()

@@ -1,7 +1,7 @@
 import { computed, Ref, ToRefs, UnwrapNestedRefs, watch } from 'vue'
 import { WbAutoCompleteOption } from '@/components/webkit/WbAutoComplete.vue'
-import { RegistrationAddressPayload } from '@/stores/forms.ts'
-import { UserProfilePayload } from '@/stores/profile.ts'
+import { RegistrationAddressPayload } from '@/stores/forms.store.ts'
+import { UserProfilePayload } from '@/stores/profile.store.ts'
 
 /**
  * @description Filter the list of address based on the parent.

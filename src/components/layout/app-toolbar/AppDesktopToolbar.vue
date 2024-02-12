@@ -8,9 +8,9 @@ import Badge from 'primevue/badge'
 import Menu from 'primevue/menu'
 import Tag from 'primevue/tag'
 import type { MenuItem } from 'primevue/menuitem'
-import { useGlobalUiStore } from '@/stores/ui.ts'
+import { useGlobalUiStore } from '@/stores/ui.store.ts'
 import AppLogo from '@/components/layout/AppLogo.vue'
-import { useAuthStore } from '@/stores/auth.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
 import { useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
 import { snakeCaseToTitleCase } from '@/utils/helpers.ts'
@@ -102,6 +102,7 @@ const handleLogout = async () => {
           <template #start>
             <button
               class="p-link relative mb-2 flex w-full items-center overflow-hidden rounded-md p-2 pl-3 hover:bg-surface-100"
+              @click="router.push({ name: 'profile' })"
             >
               <Avatar
                 :image="authStore.authenticatedUser.user_profile?.profile_picture_url"

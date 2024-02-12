@@ -3,7 +3,7 @@ import Button from 'primevue/button'
 import Message from 'primevue/message'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useAuthStore } from '@/stores/auth.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
 
 // Emits
 const emit = defineEmits<{

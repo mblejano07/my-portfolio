@@ -10,7 +10,7 @@
 
 import { email, helpers } from '@vuelidate/validators'
 import { parsePhoneNumber } from 'libphonenumber-js/max'
-import { useAvailabilitiesStore } from '@/stores/availability.ts'
+import { useAvailabilitiesStore } from '@/stores/availability.store.ts'
 import useVuelidate from '@vuelidate/core'
 
 /**

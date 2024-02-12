@@ -1,8 +1,8 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { useApiCall } from '@/composables/network'
-import { useAuthStore } from '@/stores/auth'
-import { UserResponse } from '@/typings/models.ts'
-import { ApiResponseBody } from '@/typings/http-resources.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
+import { UserResponse } from '@/typings/models.types.ts'
+import { ApiResponseBody } from '@/typings/http-resources.types.ts'
 import { useDateFormat } from '@vueuse/core'
 
 export const useProfileStore = defineStore('profile', () => {

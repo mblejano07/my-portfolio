@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import Card from 'primevue/card'
-import { useAuthStore } from '@/stores/auth.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
 import { onBeforeMount, ref } from 'vue'
 import WbAvatarFileInput from '@/components/webkit/WbAvatarFileInput.vue'
 import UpdateProfileForm from '@/components/profile-page/UpdateProfileForm.vue'
-import { useProfileStore } from '@/stores/profile.ts'
+import { useProfileStore } from '@/stores/profile.store.ts'
 import ChangePasswordForm from '@/components/profile-page/ChangePasswordForm.vue'
 
 const authStore = useAuthStore()

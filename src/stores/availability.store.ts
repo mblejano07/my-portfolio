@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { useApiCall } from '@/composables/network.ts'
 import { parsePhoneNumber } from 'libphonenumber-js'
-import { ApiResponseBody } from '@/typings/http-resources.ts'
+import { ApiResponseBody } from '@/typings/http-resources.types.ts'
 
 export const useAvailabilitiesStore = defineStore('availabilities', () => {
   const checkUserUniqueIdentifierAvailability = async (

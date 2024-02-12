@@ -8,10 +8,10 @@ import { mobilePhoneRule, passwordRule, uniqueUserIdentifierRule } from '@/utils
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import WbInputMask from '@/components/webkit/WbInputMask.vue'
-import { RegistrationCredentialsPayload, useFormsStore } from '@/stores/forms.ts'
+import { RegistrationCredentialsPayload, useFormsStore } from '@/stores/forms.store.ts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-/** Component States */
+/** Payload */
 const formStore = useFormsStore()
 const payload = reactive<RegistrationCredentialsPayload>({
   email: formStore.registrationInfo.credentials?.email || null,
@@ -129,6 +129,7 @@ const handleNextSection = async () => {
         toggleMask
         :invalid="validator.password_confirmation.$invalid"
         :invalid-text="validator.password_confirmation.$errors[0]?.$message"
+        @blur="validator.password_confirmation.$touch"
         label-class="text-xs text-surface-0 lg:text-surface-800"
         validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
       >

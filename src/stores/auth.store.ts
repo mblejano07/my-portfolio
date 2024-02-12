@@ -2,9 +2,9 @@ import { defineStore } from 'pinia'
 import { StorageSerializers, useDateFormat, useStorage } from '@vueuse/core'
 import { computed, ref } from 'vue'
 import { useApiCall } from '@/composables/network.ts'
-import { ApiResponseBody } from '@/typings/http-resources.ts'
-import { UserResponse } from '@/typings/models.ts'
-import { RegistrationPayload } from '@/stores/forms.ts'
+import { ApiResponseBody } from '@/typings/http-resources.types.ts'
+import { UserResponse } from '@/typings/models.types.ts'
+import { RegistrationPayload } from '@/stores/forms.store.ts'
 
 export const useAuthStore = defineStore('auth', () => {
   /**

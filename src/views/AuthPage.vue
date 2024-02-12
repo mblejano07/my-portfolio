@@ -4,7 +4,7 @@ import LoginForm from '@/components/auth-page/LoginForm.vue'
 import { useRoute } from 'vue-router'
 import { computed, onMounted, ref, watch } from 'vue'
 import RegisterForm from '@/components/auth-page/register-form/RegisterForm.vue'
-import { useAuthStore } from '@/stores/auth.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
 
 /** We either show the Login Form or the Create Account Form based on the route */
 const route = useRoute()

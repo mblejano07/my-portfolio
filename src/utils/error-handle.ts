@@ -1,4 +1,4 @@
-import { ApiResponseBody, ApiErrorCode } from '@/typings/http-resources.ts'
+import { ApiResponseBody, ApiErrorCode } from '@/typings/http-resources.types.ts'
 
 /** @description Format the error response from the API */
 export const parseApiResponseError = (response: ApiResponseBody) => {

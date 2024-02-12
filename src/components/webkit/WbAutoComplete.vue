@@ -94,6 +94,7 @@ const handleItemClear = (): void => {
         :class="`h-12 w-full ${$attrs.class}`"
         :input-class="`h-12 w-full ${$slots['prepend-icon'] ? 'pl-10' : ''}
         ${props.invalid ? '!ring-error-500 border-error-500' : ''}
+        ${$attrs.disabled ? '!text-surface-600' : ''}
         ${$attrs.inputClass}`"
         @complete="search"
         :suggestions="filteredSuggestions"

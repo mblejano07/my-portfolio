@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 import { useApiCall } from '@/composables/network.ts'
 import { ref } from 'vue'
-import { ApiResponseBody } from '@/typings/http-resources.ts'
+import { ApiResponseBody } from '@/typings/http-resources.types.ts'
 import { WbAutoCompleteOption } from '@/components/webkit/WbAutoComplete.vue'
-import { ProvinceResponse, RegionResponse, BarangayResponse, CityResponse } from '@/typings/address.models.ts'
+import { ProvinceResponse, RegionResponse, BarangayResponse, CityResponse } from '@/typings/models.types.ts'
 
 export const useAddressStore = defineStore('address', () => {
   /** States */

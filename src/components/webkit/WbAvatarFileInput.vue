@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import Skeleton from 'primevue/skeleton'
 import Button from 'primevue/button'
-import { useAuthStore } from '@/stores/auth.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
 import { ref, watch } from 'vue'
 import { useImage } from '@vueuse/core'
 import { mimeTypeRule, maxFileSizeRule } from '@/utils/custom-validations.ts'
 import { useToast } from 'primevue/usetoast'
-import { useProfileStore } from '@/stores/profile.ts'
+import { useProfileStore } from '@/stores/profile.store.ts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const authStore = useAuthStore()

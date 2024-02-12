@@ -3,11 +3,11 @@ import AnimatedFloaters from '@/components/misc/AnimatedFloaters.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AppLogo from '@/components/layout/AppLogo.vue'
 import { onUnmounted, ref, onMounted } from 'vue'
-import { useAuthStore } from '@/stores/auth.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
 import { useRoute } from 'vue-router'
 import { sleep } from '@/utils/helpers.ts'
 import { useBroadcastChannel } from '@vueuse/core'
-import { BroadcastChannelName } from '@/typings/broadcasts.ts'
+import { BroadcastChannelName } from '@/typings/broadcasts.types.ts'
 
 const isLoading = ref(false)
 const verificationSuccess = ref<boolean | undefined>(undefined)
