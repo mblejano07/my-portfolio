@@ -63,11 +63,47 @@ export const useUsersStore = defineStore('users', () => {
     return responseBody
   }
 
+  const updateUser = async (user: Partial<UserPayload>, id: string | number, roleFilter: string | number | null = null) => {
+    // The API only accepts Y-m-d format (2024-01-31)
+    if (user.birthday) {
+      user.birthday = useDateFormat(user.birthday, 'YYYY-MM-DD').value.toString()
+    }
+
+    const { data } = await useApiCall(`/users/${id}`, authStore.authenticationToken).patch(user).json()
+    const responseBody: ApiResponseBody = data.value
+
+    if (responseBody.success) {
+      const index = users.value.findIndex((user) => user.id === id)
+      if (index === -1) return responseBody
+      users.value[index] = responseBody.data as UserResponse
+
+      // Check if the update is still within the role filters param
+      if (user.roles?.length && roleFilter !== null && !user.roles.includes(roleFilter)) {
+        users.value.splice(index, 1)
+      }
+    }
+
+    return responseBody
+  }
+
+  const deleteUser = async (id: string | number) => {
+    const { data, statusCode } = await useApiCall(`/users/${id}`, authStore.authenticationToken).delete().json()
+
+    if (statusCode.value === 204) {
+      users.value = users.value.filter((user) => user.id !== id)
+      return { success: true, message: 'User deleted' }
+    }
+
+    return data.value as ApiResponseBody
+  }
+
   return {
     users,
     fetchUsers,
     searchUsers,
     createUser,
+    updateUser,
+    deleteUser,
   }
 })
 

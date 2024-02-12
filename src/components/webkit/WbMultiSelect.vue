@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<WbMultiSelectProps>(), {
 
     <div :class="`relative !w-full ${$attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">
       <!-- Start Prepend Icon -->
-      <div :class="`absolute left-3 top-2/4 z-10 -mt-3 ${$attrs.disabled ? 'text-surface-300' : 'text-surface-500'}`">
+      <div :class="`absolute left-3 top-2/4 z-10 -mt-2.5 ${$attrs.disabled ? 'text-surface-300' : 'text-surface-500'}`">
         <slot name="prepend-icon"></slot>
       </div>
       <!-- End Prepend Icon -->

@@ -14,6 +14,9 @@ export const useRolesStore = defineStore('roles', () => {
 
   /** Actions */
   const fetchRoles = async () => {
+    // Since the roles are not dynamically added, we only fetch them once
+    if (roleOptions.value.length > 0) return null
+
     const { data } = await useApiCall('/roles', authStore.authenticationToken).get().json()
     const responseBody = data.value as ApiResponseBody
 

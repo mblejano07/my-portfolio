@@ -2,12 +2,22 @@
 import Tag from 'primevue/tag'
 import { UserResponse } from '@/typings/models.types.ts'
 import { getAvatarDisplayNamePlaceholder, snakeCaseToTitleCase } from '@/utils/helpers.ts'
+import Dialog from 'primevue/dialog'
+import UserDetailsForm from '@/components/users-management-page/UserDetailsForm.vue'
+import { ref } from 'vue'
 
-const props = defineProps<{ user: UserResponse }>()
+const props = defineProps<{ user: UserResponse; roleFilter: number | string | null }>()
+
+/** Update User Dialog */
+const showUserDetailsDialog = ref(false)
+const toggleUserDetailsDialog = () => (showUserDetailsDialog.value = !showUserDetailsDialog.value)
 </script>
 
 <template>
-  <div class="relative flex min-h-56 flex-col items-center rounded-lg bg-surface-0 px-4 py-6 shadow-md">
+  <button
+    @click="toggleUserDetailsDialog"
+    class="relative flex min-h-56 flex-col items-center rounded-lg bg-surface-0 px-4 py-6 shadow-md"
+  >
     <!-- Start Avatar -->
     <div class="absolute -top-6 left-1/2 h-24 w-24 -translate-x-1/2">
       <img
@@ -35,5 +45,11 @@ const props = defineProps<{ user: UserResponse }>()
       <Tag class="bg-surface-500" v-for="role in user.roles" :key="role.id">{{ snakeCaseToTitleCase(role.name) }}</Tag>
     </div>
     <!-- End Role Tags -->
-  </div>
+
+    <!-- Start Update User Dialog -->
+    <Dialog v-model:visible="showUserDetailsDialog" header="User Details" modal :draggable="false" class="py-4" maximizable>
+      <UserDetailsForm :user="props.user" :current-role-filter="props.roleFilter" @user-updated="toggleUserDetailsDialog" />
+    </Dialog>
+    <!-- End Update-User Dialog -->
+  </button>
 </template>

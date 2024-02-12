@@ -116,15 +116,7 @@ const handleSearchUser = async () => {
           </template>
         </Button>
       </div>
-      <Dialog
-        :id="$.uid + 'create-user-dialog'"
-        v-model:visible="showCreateUserDialog"
-        header="User Creation"
-        modal
-        :draggable="false"
-        class="py-4"
-        maximizable
-      >
+      <Dialog v-model:visible="showCreateUserDialog" header="User Creation" modal :draggable="false" class="py-4" maximizable>
         <CreateUserForm :current-role-filter="roleFilter" @user-created="toggleCreateUserDialog" />
       </Dialog>
       <!-- End Create User Button -->
@@ -167,6 +159,7 @@ const handleSearchUser = async () => {
         v-for="user in usersStore.users"
         :key="user.id"
         :user="user"
+        :role-filter="roleFilter"
         class="transition-all hover:scale-105 hover:cursor-pointer hover:shadow-xl"
       />
     </div>

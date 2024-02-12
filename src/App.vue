@@ -10,6 +10,8 @@ import { useProfileStore } from '@/stores/profile.store.ts'
 import AppMobileToolbar from '@/components/layout/app-toolbar/AppMobileToolbar.vue'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
+import ConfirmDialog from 'primevue/confirmdialog'
+import Button from 'primevue/button'
 
 const globalStore = useGlobalUiStore()
 const authStore = useAuthStore()
@@ -68,7 +70,41 @@ watch(
       <AppMobileToolbar v-if="!route.meta.hideNavigation" class="lg:hidden" />
       <!-- Start Main Content -->
       <div :class="`${route.meta.hideNavigation ? '' : 'mx-4 mt-4 lg:mt-0'} flex-1`">
+        <!-- Start Global Toast -->
         <Toast position="top-right" />
+        <!-- End Global Toast -->
+        <!-- Start Global ConfirmDialog -->
+        <ConfirmDialog group="global" :draggable="false">
+          <template
+            #container="{
+              message,
+              acceptCallback,
+              rejectCallback,
+            }: {
+              message: { message: string; header: string }
+              acceptCallback: () => {}
+              rejectCallback: () => {}
+            }"
+          >
+            <div class="flex flex-col items-center rounded-lg bg-surface-0 p-5">
+              <span class="mb-2 mt-4 text-2xl font-bold text-surface-700">{{ message.header }}</span>
+              <p class="my-4">{{ message.message }}</p>
+              <div class="mt-4 flex items-center gap-6">
+                <Button label="Cancel" severity="secondary" outlined @click="rejectCallback" class="flex w-[8rem] gap-1">
+                  <template #icon>
+                    <i class="pi pi-times"></i>
+                  </template>
+                </Button>
+                <Button label="Confirm" @click="acceptCallback" class="flex w-[8rem] gap-1">
+                  <template #icon>
+                    <i class="pi pi-check"></i>
+                  </template>
+                </Button>
+              </div>
+            </div>
+          </template>
+        </ConfirmDialog>
+        <!-- End Global Confirm Dialog -->
         <RouterView v-slot="{ Component }">
           <transition
             enter-active-class="transition duration-500"
