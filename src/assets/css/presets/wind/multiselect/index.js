@@ -6,7 +6,7 @@ export default {
       'relative',
 
       // Shape
-      'w-full md:max-w-[20rem]',
+      'w-full',
       'rounded-md',
       'shadow-sm',
 
@@ -16,7 +16,7 @@ export default {
       // States
       {
         'ring-1 ring-inset ring-surface-300 dark:ring-surface-700': !state.focused,
-        'ring-2 ring-inset ring-primary-500 dark:ring-primary-400': state.focused,
+        'ring-1 ring-inset ring-primary-500 dark:ring-primary-400': state.focused,
       },
 
       // Misc

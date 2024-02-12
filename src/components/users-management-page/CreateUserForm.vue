@@ -20,6 +20,9 @@ import Button from 'primevue/button'
 import WbPassword from '@/components/webkit/WbPassword.vue'
 import Divider from 'primevue/divider'
 import Message from 'primevue/message'
+import WbMultiSelect from '@/components/webkit/WbMultiSelect.vue'
+import { useRolesStore } from '@/stores/roles.store.ts'
+import { AuthRole } from '@/typings/auth.types.ts'
 
 /** Props */
 const props = withDefaults(defineProps<{ currentRoleFilter: number | string | null }>(), {
@@ -42,7 +45,7 @@ const payload = reactive<Partial<UserPayload>>({
   region_id: null,
   postal_code: null,
   barangay_id: null,
-  roles: [1],
+  roles: [],
 })
 
 /** Gender Options */
@@ -51,7 +54,20 @@ const genderOptions = [
   { label: 'Female', value: 'female' },
 ]
 
-/** Address Section **/
+/** Roles Options */
+const rolesStore = useRolesStore()
+const rolesOptionsIsLoading = ref(false)
+const rolesOptions = computed(() => {
+  // Admins should not be able to select the Super User option
+  return rolesStore.roleOptions.filter((r) => r.name !== AuthRole.SUPER_USER.toString())
+})
+onBeforeMount(async () => {
+  rolesOptionsIsLoading.value = true
+  await rolesStore.fetchRoles()
+  rolesOptionsIsLoading.value = false
+})
+
+/** Address Section */
 // Address WbAutoComplete Object References */
 const selectedRegion = ref<WbAutoCompleteOption | null>(null)
 const selectedProvince = ref<WbAutoCompleteOption | null>(null)
@@ -184,7 +200,7 @@ const handleFormSubmission = async () => {
     errorDetails.value = result.errors
 
     formIsSubmitting.value = false
-    return window.scrollTo({ top: 0, behavior: 'smooth' })
+    return document.getElementsByClassName('create-user-creds-section')[0]?.scrollIntoView({ behavior: 'smooth' })
   }
 
   formIsSubmitting.value = false
@@ -255,8 +271,6 @@ const handleFormSubmission = async () => {
           :invalid-text="validator.password.$errors[0]?.$message"
           @blur="validator.password.$touch"
           @focusin="validator.password.$dirty = false"
-          label-class="text-xs text-surface-0 lg:text-surface-800"
-          validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
         >
           <template #prepend-icon>
             <i class="pi pi-lock" />
@@ -280,8 +294,6 @@ const handleFormSubmission = async () => {
           :invalid="validator.password_confirmation.$invalid"
           :invalid-text="validator.password_confirmation.$errors[0]?.$message"
           @blur="validator.password_confirmation.$touch"
-          label-class="text-xs text-surface-0 lg:text-surface-800"
-          validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
         >
           <template #prepend-icon>
             <i class="pi pi-lock" />
@@ -289,6 +301,27 @@ const handleFormSubmission = async () => {
         </WbPassword>
       </div>
       <!-- End Password and Password Confirmation -->
+      <!-- Start Roles Select -->
+      <div class="mb-4 flex w-full flex-col md:w-[49%] md:flex-row">
+        <WbMultiSelect
+          v-model="payload.roles"
+          :options="rolesOptions"
+          label="Roles"
+          placeholder="-- Select Roles --"
+          optionLabel="label"
+          optionValue="value"
+          optionDisabled="disabled"
+          :loading="rolesOptionsIsLoading"
+          :disabled="rolesOptionsIsLoading"
+          display="chip"
+          class="text-xs"
+          :invalid="validator.roles.$invalid"
+          :invalid-text="validator.roles.$errors[0]?.$message"
+          @blur="validator.roles.$touch"
+          @focusin="validator.roles.$dirty = false"
+        />
+      </div>
+      <!-- End Roles Selection -->
       <!-- End Credentials -->
 
       <!-- Start Personal Information -->

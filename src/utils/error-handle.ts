@@ -4,7 +4,7 @@ import { ApiResponseBody, ApiErrorCode } from '@/typings/http-resources.types.ts
 export const parseApiResponseError = (response: ApiResponseBody) => {
   if (!response?.error_code) return null
 
-  const message = getErrorMessage(response.error_code)
+  const message = getErrorMessage(response.error_code, response.error_message)
   const errors = []
   if (Array.isArray(response.errors) && !!response.errors.length) {
     for (const error of response.errors) {
@@ -15,7 +15,7 @@ export const parseApiResponseError = (response: ApiResponseBody) => {
   return { code: response.error_code, message, errors: errors.flat() }
 }
 
-const getErrorMessage = (errorCode: string) => {
+const getErrorMessage = (errorCode: string, errorMessage?: string) => {
   let message: string
   switch (errorCode) {
     case ApiErrorCode[ApiErrorCode.UNAUTHENTICATED_ERROR]:
@@ -52,7 +52,7 @@ const getErrorMessage = (errorCode: string) => {
       message = 'Please validate your email address before proceeding'
       break
     case ApiErrorCode[ApiErrorCode.BAD_REQUEST_ERROR]:
-      message = "Sorry, but we can't process your request"
+      message = errorMessage || "Sorry, but we can't process your request"
       break
     default:
       message = 'Something went wrong. Please contact our technical support'

@@ -10,7 +10,7 @@ export const useRolesStore = defineStore('roles', () => {
   const authStore = useAuthStore()
 
   /** States */
-  const roleOptions = ref<Array<{ value: string | number; label: string }>>([])
+  const roleOptions = ref<Array<{ value: string | number; label: string; name: string }>>([])
 
   /** Actions */
   const fetchRoles = async () => {
@@ -20,7 +20,7 @@ export const useRolesStore = defineStore('roles', () => {
     if (responseBody.success) {
       const rolesList = responseBody.data as RoleResponse[]
       roleOptions.value = rolesList.map((r: RoleResponse) => {
-        return { value: r.id, label: snakeCaseToTitleCase(r.name) }
+        return { value: r.id, label: snakeCaseToTitleCase(r.name), name: r.name }
       })
     }
 
