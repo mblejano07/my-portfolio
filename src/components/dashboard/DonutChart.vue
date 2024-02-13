@@ -18,7 +18,7 @@ const options = {
   },
   responsive: [
     {
-      breakpoint: 480,
+      breakpoint: 900,
       options: {
         chart: {
           width: 300,
@@ -36,7 +36,7 @@ const options = {
 </script>
 
 <template>
-  <div class="flex h-full w-full items-center justify-center rounded-lg bg-surface-0 py-4 shadow-md md:py-0">
+  <div class="flex h-full w-full items-center justify-center rounded-lg bg-surface-0 py-4 shadow-md lg:py-0">
     <VueApexCharts class="w-full" type="donut" :series="props.series" :options="options" />
   </div>
 </template>

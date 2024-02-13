@@ -115,7 +115,7 @@ setInterval(() => {
   <div class="mx-auto h-[100%] w-full">
     <!-- Start General Report Cards -->
     <p class="mb-4 text-xs font-semibold uppercase text-surface-600">General Reports</p>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
       <GeneralReportCard
         :id="$.uid + '-people-reached'"
         :categories="peopleReachedCategories"
