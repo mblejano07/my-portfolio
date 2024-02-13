@@ -29,6 +29,9 @@ const avatarMenuItems = ref<MenuItem[]>([
   {
     label: 'Need Help',
     icon: 'pi pi-phone',
+    command: async () => {
+      await router.push({ name: 'support' })
+    },
   },
   {
     label: 'Logout',

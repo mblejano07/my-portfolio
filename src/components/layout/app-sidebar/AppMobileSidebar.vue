@@ -44,7 +44,7 @@ const handleLogout = async () => {
               size="large"
             />
             <div class="flex flex-col">
-              <span class="font-bold">{{ authStore.authFullName }}</span>
+              <span class="text-left font-bold">{{ authStore.authFullName }}</span>
               <span class="mx-1 mt-2 flex flex-wrap gap-1">
                 <Tag v-for="role in authStore.authRoles" :value="snakeCaseToTitleCase(role)" :key="role"></Tag>
               </span>

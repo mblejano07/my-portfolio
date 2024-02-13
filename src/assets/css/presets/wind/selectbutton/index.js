@@ -23,17 +23,16 @@ export default {
       // Color
       {
         'bg-surface-0 dark:bg-surface-900': !context.active,
-        'text-surface-700 dark:text-white/80': !context.active,
-        'bg-surface-100 dark:bg-surface-700': context.active,
+        'text-surface-700': !context.active,
+        'bg-primary-500 text-surface-0': context.active,
       },
 
       // States
       'focus:outline-none focus:outline-offset-0 focus:ring-primary-500 dark:focus:ring-primary-400',
-      'hover:bg-surface-200 dark:hover:bg-surface-600/80',
       { 'opacity-60 select-none pointer-events-none cursor-default': context.disabled },
 
       // Transition
-      'transition duration-200',
+      'transition duration-100',
 
       // Misc
       'cursor-pointer select-none overflow-hidden',

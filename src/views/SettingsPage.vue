@@ -1,21 +1,22 @@
 <script setup lang="ts">
+import AppThemeSelection from '@/components/settings-page/AppThemeSelection.vue'
 import Card from 'primevue/card'
-import Button from 'primevue/button'
 </script>
 
 <template>
   <div class="mx-auto h-[100%] w-full">
-    <Card>
-      <template #title>Settings</template>
-      <template #content>
-        <p class="m-0">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-          quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
-        </p>
-      </template>
-    </Card>
-    <div class="mt-4 flex justify-end">
-      <Button label="Click Me"></Button>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <AppThemeSelection />
+      <!-- Start Placeholder -->
+      <Card class="flex items-center justify-center">
+        <template #content>
+          <div class="flex flex-col items-center justify-center text-surface-700">
+            <i class="pi pi-cog mb-2 text-2xl"></i>
+            <h1 class="font-menu">More Configurations Coming Soon...</h1>
+          </div>
+        </template>
+      </Card>
+      <!-- End Placeholder -->
     </div>
   </div>
 </template>
