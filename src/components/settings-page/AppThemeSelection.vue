@@ -12,8 +12,9 @@ const options = ref([
 ])
 
 // Handle Theme Selection
-const selectedOption = ref<'light' | 'dark'>('light')
 const { selectedTheme } = useThemeConfig()
+console.log('settings init', selectedTheme.value)
+const selectedOption = ref<'light' | 'dark'>(selectedTheme.value?.value || 'light')
 onBeforeMount(() => {
   selectedOption.value = selectedTheme.value?.value || 'light'
 })
@@ -21,10 +22,12 @@ onBeforeMount(() => {
 watch(
   () => selectedOption.value,
   () => {
+    console.log('selectedOptions', selectedOption.value)
     selectedTheme.value = {
       value: selectedOption.value,
       label: (selectedOption.value[0].toUpperCase() + selectedOption.value.slice(1)) as 'Light' | 'Dark',
     }
+    console.log('selectedOptions', selectedTheme.value)
   }
 )
 </script>
@@ -33,12 +36,12 @@ watch(
   <Card>
     <template #content>
       <div class="w-full">
-        <h1 class="font-menu text-lg font-bold md:text-xl">Application Theme</h1>
-        <p class="md:text-medium mt-1 text-sm text-surface-700">
+        <h1 class="font-menu text-lg font-bold dark:text-surface-200 md:text-xl">Application Theme</h1>
+        <p class="md:text-medium mt-1 text-sm text-surface-700 dark:text-surface-400">
           You can select a theme below to change the look and feel of the website for all users.
         </p>
         <div class="justify-left mt-6 flex">
-          <SelectButton v-model="selectedTheme" :options="options" optionLabel="value" dataKey="value">
+          <SelectButton v-model="selectedOption" :options="options" optionLabel="Label" optionValue="value">
             <template #option="slotProps">
               <div class="flex items-center p-2">
                 <FontAwesomeIcon :icon="slotProps.option.icon" class="h-4 w-4 md:h-6 md:w-6" />

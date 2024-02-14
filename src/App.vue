@@ -12,8 +12,9 @@ import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 import ConfirmDialog from 'primevue/confirmdialog'
 import Button from 'primevue/button'
+import { useThemeConfig } from '@/composables/theme.ts'
 
-const globalStore = useGlobalUiStore()
+const uiStore = useGlobalUiStore()
 const authStore = useAuthStore()
 const profileStore = useProfileStore()
 const route = useRoute()
@@ -25,7 +26,7 @@ onBeforeMount(async () => {
   }
 })
 
-// Observe when the token expires, go to login page with `from` (page) query
+/** Observe when the token expires, go to login page with `from` (page) query */
 const router = useRouter()
 watch(
   () => authStore.authExpired,
@@ -39,8 +40,7 @@ watch(
   }
 )
 
-// Handle for Rate Limit
-const uiStore = useGlobalUiStore()
+/** Handle for Rate Limit */
 const toast = useToast()
 watch(
   () => uiStore.showRateLimitToast,
@@ -53,15 +53,19 @@ watch(
     })
   }
 )
+
+/** Handle Theme */
+const { selectedTheme } = useThemeConfig()
+console.log('app', selectedTheme.value)
 </script>
 
 <template>
-  <div id="app-container" class="flex min-h-screen bg-surface-200 font-content">
+  <div id="app-container" class="flex min-h-screen bg-surface-200 font-content dark:bg-surface-950">
     <!-- Start Sidebar -->
     <AppDesktopSidebar
       v-if="!route.meta.hideNavigation"
       :class="`${
-        !globalStore.sidebarMinimized ? 'w-[20%]' : 'w-[0%] -translate-x-96 transform'
+        !uiStore.sidebarMinimized ? 'w-[20%]' : 'w-[0%] -translate-x-96 transform'
       } hidden overflow-hidden transition-all duration-200 lg:flex`"
     ></AppDesktopSidebar>
     <!-- End Sidebar -->
@@ -74,7 +78,7 @@ watch(
         <Toast position="top-right" />
         <!-- End Global Toast -->
         <!-- Start Global ConfirmDialog -->
-        <ConfirmDialog group="global" :draggable="false">
+        <ConfirmDialog group="global" :draggable="false" modal>
           <template
             #container="{
               message,
@@ -86,9 +90,9 @@ watch(
               rejectCallback: () => {}
             }"
           >
-            <div class="flex flex-col items-center rounded-lg bg-surface-0 p-5">
-              <span class="mb-2 mt-4 text-2xl font-bold text-surface-700">{{ message.header }}</span>
-              <p class="my-4">{{ message.message }}</p>
+            <div class="flex flex-col items-center rounded-lg bg-surface-0 p-5 dark:bg-surface-800">
+              <span class="mb-2 mt-4 text-2xl font-bold text-surface-700 dark:text-surface-100">{{ message.header }}</span>
+              <p class="my-4 dark:text-surface-100">{{ message.message }}</p>
               <div class="mt-4 flex items-center gap-6">
                 <Button label="Cancel" severity="secondary" outlined @click="rejectCallback" class="flex w-[8rem] gap-1">
                   <template #icon>

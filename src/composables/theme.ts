@@ -1,14 +1,14 @@
 import { ref, watch } from 'vue'
-import { useSettingsStore } from '@/stores/settings.store.ts'
-import { SettingsResponse } from '@/typings/models.types.ts'
+// import { useSettingsStore } from '@/stores/settings.store.ts'
+// import { SettingsResponse } from '@/typings/models.types.ts'
 
-const selectedTheme = ref<AvailableTheme | null>(null)
+const selectedTheme = ref<AvailableTheme | null>({ value: 'dark', label: 'Dark' })
 
 /**
  *  @description Change the current theme of the web-app
  */
 export const useThemeConfig = () => {
-  selectedTheme.value = getThemeFromAppSettings() as AvailableTheme | null
+  // selectedTheme.value = (getThemeFromAppSettings() as AvailableTheme) || { value: 'dark', label: 'Dark' } as AvailableTheme
 
   // Apply the theme in the <body> tag
   watch(
@@ -29,16 +29,16 @@ export const useThemeConfig = () => {
   return { selectedTheme }
 }
 
-const getThemeFromAppSettings = () => {
-  const settingsStore = useSettingsStore()
-  if (!settingsStore.appSettings) return null
-
-  for (const setting of settingsStore.appSettings) {
-    if (setting.name === 'theme') return setting.value as SettingsResponse
-  }
-
-  return null
-}
+// const getThemeFromAppSettings = () => {
+//   const settingsStore = useSettingsStore()
+//   if (!settingsStore.appSettings) return null
+//
+//   for (const setting of settingsStore.appSettings) {
+//     if (setting.name === 'theme') return setting.value as SettingsResponse
+//   }
+//
+//   return null
+// }
 
 /** Typings */
 export type AvailableTheme = {

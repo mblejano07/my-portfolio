@@ -188,7 +188,9 @@ const handleFormSubmission = async () => {
   <form @submit.prevent autocomplete="off">
     <!-- Start Toggle Edit Switch -->
     <div class="flex items-center justify-end lg:mb-2">
-      <span class="mr-3 text-xs text-surface-500">{{ !editingEnabled ? 'Enable Editing' : 'Disabled Editing' }}</span>
+      <span class="mr-3 text-xs text-surface-500 dark:text-surface-300">{{
+        !editingEnabled ? 'Enable Editing' : 'Disabled Editing'
+      }}</span>
       <InputSwitch v-model="editingEnabled"></InputSwitch>
     </div>
     <!-- End Toggle Edit Switch -->

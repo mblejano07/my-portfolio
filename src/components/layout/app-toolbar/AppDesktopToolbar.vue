@@ -2,7 +2,6 @@
 import Toolbar from 'primevue/toolbar'
 import Avatar from 'primevue/avatar'
 import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
 import WbBreadcrumbs from '@/components/layout/AppBreadcrumbs.vue'
 import Badge from 'primevue/badge'
 import Menu from 'primevue/menu'
@@ -14,8 +13,9 @@ import { useAuthStore } from '@/stores/auth.store.ts'
 import { useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
 import { snakeCaseToTitleCase } from '@/utils/helpers.ts'
+import InputText from 'primevue/inputtext'
 
-const globalStore = useGlobalUiStore()
+const uiStore = useGlobalUiStore()
 const authStore = useAuthStore()
 const router = useRouter()
 
@@ -57,18 +57,18 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <Toolbar class="min-h-[4rem] bg-surface-200 px-6 py-6 shadow-none !ring-0">
+  <Toolbar class="min-h-[4rem] bg-surface-200 px-6 py-6 shadow-none !ring-0 dark:bg-surface-950">
     <template #start>
-      <AppLogo v-if="globalStore.sidebarMinimized" icon-only class="mr-4"></AppLogo>
+      <AppLogo v-if="uiStore.sidebarMinimized" icon-only class="mr-4"></AppLogo>
       <Button
         icon="pi pi-th-large"
         severity="secondary"
         text
         rounded
         aria-label="Menu"
-        v-tooltip.bottom="`${globalStore.sidebarMinimized ? 'Show Sidebar' : 'Hide Sidebar'}`"
-        class="mr-4 hover:text-primary-500"
-        @click="globalStore.toggleSidebar()"
+        v-tooltip.bottom="`${uiStore.sidebarMinimized ? 'Show Sidebar' : 'Hide Sidebar'}`"
+        class="mr-4 hover:text-primary-500 dark:!text-surface-200"
+        @click="uiStore.toggleSidebar()"
       />
       <WbBreadcrumbs />
     </template>
@@ -78,12 +78,13 @@ const handleLogout = async () => {
         <i class="pi pi-search absolute left-3 top-2/4 -mt-2 text-surface-400 dark:text-surface-600" />
         <InputText placeholder="Search" class="pl-10" />
       </span>
+
       <!-- Start Avatar Menu -->
       <template v-if="authStore.isAuthenticated">
         <Avatar
           :image="authStore.authenticatedUser.user_profile?.profile_picture_url"
           shape="circle"
-          class="cursor-pointer overflow-hidden transition-transform hover:scale-105 hover:ring-1 hover:ring-primary-500"
+          class="cursor-pointer overflow-hidden transition-transform hover:scale-105 hover:ring-1 hover:ring-primary-500 dark:!bg-primary-500"
           :label="`${
             !authStore.authenticatedUser.user_profile?.profile_picture_url ? authStore.avatarDisplayNamePlaceholder : ''
           }`"
@@ -104,7 +105,7 @@ const handleLogout = async () => {
         >
           <template #start>
             <button
-              class="p-link relative mb-2 flex w-full items-center overflow-hidden rounded-md p-2 pl-3 hover:bg-surface-100"
+              class="p-link relative mb-2 flex w-full items-center overflow-hidden rounded-md p-2 pl-3 hover:bg-surface-100 dark:hover:bg-surface-400/10"
               @click="router.push({ name: 'profile' })"
             >
               <Avatar
@@ -112,7 +113,7 @@ const handleLogout = async () => {
                 :label="`${
                   !authStore.authenticatedUser.user_profile?.profile_picture_url ? authStore.avatarDisplayNamePlaceholder : ''
                 }`"
-                class="mr-2.5 overflow-hidden"
+                class="mr-2.5 overflow-hidden dark:!bg-primary-500"
                 shape="square"
                 size="large"
               />

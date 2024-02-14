@@ -36,8 +36,11 @@ onMounted(async () => {
 // Handle Logout
 const router = useRouter()
 const authStore = useAuthStore()
+const isLoggingOut = ref(false)
 const handleLogout = async () => {
+  isLoggingOut.value = true
   await authStore.logout()
+  isLoggingOut.value = false
   await router.replace({ name: 'login' })
 }
 
@@ -69,11 +72,19 @@ const handleCompleteVerification = async () => {
           <div class="mx-2 flex flex-col items-center transition-transform">
             <div class="mb-8 flex w-full items-center justify-between">
               <AppLogo />
-              <Button label="Logout" text size="small" @click="handleLogout" class="text-xs">
+              <Button
+                label="Logout"
+                text
+                size="small"
+                @click="handleLogout"
+                :disabled="isLoggingOut"
+                :loading="isLoggingOut"
+                class="text-xs"
+              >
                 <template #icon><i class="pi pi-arrow-left mr-2 hidden md:block" /></template>
               </Button>
             </div>
-            <div class="flex items-center self-start font-menu text-xl text-surface-800">
+            <div class="flex items-center self-start font-menu text-xl text-surface-800 dark:text-surface-200">
               Verify Your Account
               <Tag class="ml-3 h-fit">{{ activeStep + 1 + '/3' }}</Tag>
             </div>

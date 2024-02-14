@@ -88,7 +88,7 @@ const handleSearchUser = async () => {
       severity: 'success',
       summary: 'Search Users',
       detail: 'Note that role filters are ignored',
-      life: 8000,
+      life: 4000,
     })
   }
 
@@ -100,7 +100,7 @@ const handleSearchUser = async () => {
   <div class="mx-auto flex h-[100%] w-full flex-col">
     <!-- Start Filters & Controls -->
     <div
-      class="my-6 flex w-full flex-col items-center justify-between gap-4 rounded-lg bg-surface-0 px-6 py-6 shadow-sm md:my-4 md:flex-row md:px-4 md:py-4"
+      class="my-6 flex w-full flex-col items-center justify-between gap-4 rounded-lg bg-surface-0 px-6 py-6 shadow-sm dark:bg-surface-800 md:my-4 md:flex-row md:px-4 md:py-4"
     >
       <!-- Start Create User Button -->
       <div class="flex w-full">
@@ -108,7 +108,7 @@ const handleSearchUser = async () => {
           label="Create User"
           severity="secondary"
           outlined
-          class="mx-3 h-8 w-full md:mx-0 md:h-fit md:w-fit md:text-xs"
+          class="h-8 w-full !ring-surface-400 dark:text-surface-400 md:mx-0 md:h-fit md:w-fit md:text-xs"
           @click="toggleCreateUserDialog"
         >
           <template #icon>
@@ -121,7 +121,7 @@ const handleSearchUser = async () => {
       </Dialog>
       <!-- End Create User Button -->
       <!-- Start Filter & Search Inputs -->
-      <div class="flex flex-col justify-end gap-4 md:flex-row">
+      <div class="flex w-full flex-col justify-end gap-4 md:flex-row">
         <Dropdown
           v-model="roleFilter"
           :loading="rolesOptionsIsLoading"
@@ -131,6 +131,7 @@ const handleSearchUser = async () => {
           optionValue="value"
           placeholder="Filter by Role"
           show-clear
+          class="md:min-w-52"
         >
           <template #loadingicon>
             <i class="pi pi-spinner mr-2 animate-spin" />
@@ -170,7 +171,7 @@ const handleSearchUser = async () => {
       <div
         v-for="i in 4"
         :key="i"
-        class="flex min-h-56 animate-pulse flex-col items-center justify-center rounded-lg bg-surface-100 p-1 shadow-md"
+        class="flex min-h-56 animate-pulse flex-col items-center justify-center rounded-lg bg-surface-100 p-1 shadow-md dark:bg-surface-800"
       >
         <i class="pi pi-spinner animate-spin text-lg text-surface-400" />
       </div>
@@ -190,7 +191,10 @@ const handleSearchUser = async () => {
     </div>
     <!-- End Pagination -->
     <!-- Start No Users Message -->
-    <div v-if="!usersListIsLoading && !pagination?.total" class="flex w-fit flex-col items-center self-center font-menu text-lg">
+    <div
+      v-if="!usersListIsLoading && !pagination?.total"
+      class="flex w-fit flex-col items-center self-center font-menu text-lg dark:text-surface-300"
+    >
       <i class="pi pi-exclamation-triangle text-2xl"></i>
       <p class="mt-2">No users found</p>
     </div>

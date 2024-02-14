@@ -316,7 +316,6 @@ const requireConfirmation = (event: Event) => {
           v-model="payload.mobile_number"
           label="Mobile Number"
           mask="+639999999999"
-          placeholder="+63 XXX XXX XXXX"
           :invalid="validator.mobile_number.$invalid"
           :invalid-text="validator.mobile_number.$errors[0]?.$message"
           @blur="validator.mobile_number.$touch"

@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import GeneralReportCard from '@/components/dashboard/GeneralReportCard.vue'
 import TreeMap from '@/components/dashboard/TreeMap.vue'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import TimelineChart from '@/components/dashboard/TimelineChart.vue'
 import DonutChart from '@/components/dashboard/DonutChart.vue'
+import { useGlobalUiStore } from '@/stores/ui.store.ts'
+import { sleep } from '@/utils/helpers.ts'
+import { useThemeConfig } from '@/composables/theme.ts'
 
 /** General Report Cards */
 const formatNumber = (number: number) => {
@@ -97,7 +100,41 @@ const programsDonutChartLabels = ref([
 ])
 const programsDonutChartColors = ref(['#524ebb', '#2d724f', '#046ac5', '#af510a', '#07b1c0'])
 
-/** Simulate Live Data Changes */
+/** We Force Update the page to eliminate the delay when hiding the sidebar in desktop view*/
+const uiStore = useGlobalUiStore()
+const mountCharts = ref(true)
+watch(
+  () => uiStore.sidebarMinimized,
+  async (isMinimized) => {
+    if (!isMinimized) {
+      mountCharts.value = false
+      await sleep(0.2)
+      mountCharts.value = true
+    }
+  }
+)
+
+/** Handle Dark Mode */
+const { selectedTheme } = useThemeConfig()
+const chartsInDarkMode = ref(selectedTheme.value?.value === 'dark')
+watch(
+  () => selectedTheme.value,
+  (value) => {
+    console.log(value)
+    if (selectedTheme.value?.value === 'dark') {
+      return (chartsInDarkMode.value = true)
+    }
+
+    chartsInDarkMode.value = false
+  }
+)
+
+console.log('dashboard', selectedTheme.value)
+
+/**
+ * Simulate Live Data Changes.
+ * This is just for demo purposes. Use Websockets for real work.
+ */
 setInterval(() => {
   peopleReachedSeriesData.value[peopleReachedSeriesData.value.length - 1] += Math.floor(Math.random() * 20 + 1)
   expensesSeriesData.value[expensesSeriesData.value.length - 1] += Math.floor(Math.random() * 1000 + 100)
@@ -112,9 +149,9 @@ setInterval(() => {
 </script>
 
 <template>
-  <div class="mx-auto h-[100%] w-full">
+  <div v-if="mountCharts" class="mx-auto h-[100%] w-[100%] px-2 md:px-0">
     <!-- Start General Report Cards -->
-    <p class="mb-4 text-xs font-semibold uppercase text-surface-600">General Reports</p>
+    <p class="mb-4 mt-2 text-xs font-semibold uppercase text-surface-600 dark:text-surface-400 md:mt-1">General Reports</p>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
       <GeneralReportCard
         :id="$.uid + '-people-reached'"
@@ -124,6 +161,7 @@ setInterval(() => {
         series-name="People Reached"
         title="Total Beneficiaries Reached"
         :total="peopleReachedTotal"
+        :dark-mode="chartsInDarkMode"
       />
       <GeneralReportCard
         :id="$.uid + '-expenses'"
@@ -133,6 +171,7 @@ setInterval(() => {
         series-name="Expenses (PHP)"
         title="Total Expenses"
         :total="'₱' + expensesTotal"
+        :dark-mode="chartsInDarkMode"
       />
       <GeneralReportCard
         :id="$.uid + '-onboarded'"
@@ -142,24 +181,30 @@ setInterval(() => {
         series-name="Onboarded Beneficiaries"
         title="Total On-Boarded"
         :total="onboardedTotal"
+        :dark-mode="chartsInDarkMode"
       />
     </div>
     <!-- End General Report Cards -->
     <!-- Start Heatmap -->
-    <p class="mb-4 mt-8 text-xs font-semibold uppercase text-surface-600">Regional Breakdown</p>
+    <p class="mb-4 mt-8 text-xs font-semibold uppercase text-surface-600 dark:text-surface-400">Regional Breakdown</p>
     <div class="flex max-h-96 w-full">
-      <TreeMap :series="nationalBreakdownSeries" :colors="['#524ebb', '#2d724f', '#0a4177']" />
+      <TreeMap :series="nationalBreakdownSeries" :colors="['#524ebb', '#2d724f', '#0a4177']" :dark-mode="chartsInDarkMode" />
     </div>
     <!-- End Heatmap -->
     <!-- Start Programs & Timeline -->
     <div class="grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
       <div class="flex h-full w-full flex-col">
-        <p class="mb-4 mt-8 text-xs font-semibold uppercase text-surface-600">Beneficiaries Per Program</p>
-        <DonutChart :series="programsDonutChartSeries" :labels="programsDonutChartLabels" :colors="programsDonutChartColors" />
+        <p class="mb-4 mt-8 text-xs font-semibold uppercase text-surface-600 dark:text-surface-400">Beneficiaries Per Program</p>
+        <DonutChart
+          :dark-mode="chartsInDarkMode"
+          :series="programsDonutChartSeries"
+          :labels="programsDonutChartLabels"
+          :colors="programsDonutChartColors"
+        />
       </div>
       <div class="flex w-full flex-col">
-        <p class="mb-4 mt-8 text-xs font-semibold uppercase text-surface-600">Deployment Timeline</p>
-        <TimelineChart :series="deploymentTimelineSeries" />
+        <p class="mb-4 mt-8 text-xs font-semibold uppercase text-surface-600 dark:text-surface-400">Deployment Timeline</p>
+        <TimelineChart :dark-mode="chartsInDarkMode" :series="deploymentTimelineSeries" />
       </div>
     </div>
     <!-- End Programs & Timeline -->

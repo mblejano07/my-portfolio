@@ -11,6 +11,7 @@ type GeneralReportCardProps = {
   seriesData: number[]
   categories: Array<string | number>
   color: string
+  darkMode: boolean
 }
 
 const props = defineProps<GeneralReportCardProps>()
@@ -23,6 +24,9 @@ const series = [
 ]
 
 const options = {
+  theme: {
+    mode: props.darkMode ? 'dark' : 'light',
+  },
   chart: {
     id: props.id,
     toolbar: {
@@ -31,6 +35,7 @@ const options = {
     sparkline: {
       enabled: true,
     },
+    background: 'transparent',
   },
   title: {
     text: props.total,
@@ -72,6 +77,9 @@ watch(
   () => props.total,
   (newTotal) => {
     ApexCharts.exec(props.id, 'updateOptions', {
+      theme: {
+        mode: props.darkMode ? 'dark' : 'light',
+      },
       chart: {
         id: props.id,
         toolbar: {
@@ -80,6 +88,7 @@ watch(
         sparkline: {
           enabled: true,
         },
+        background: 'transparent',
       },
       title: {
         text: newTotal,
@@ -121,9 +130,9 @@ watch(
 </script>
 
 <template>
-  <div class="relative flex min-h-56 w-full overflow-hidden rounded-lg bg-surface-0 shadow-md">
+  <div class="relative flex min-h-56 w-full overflow-hidden rounded-lg bg-surface-0 shadow-md dark:bg-surface-700">
     <div class="flex w-full">
-      <VueApexCharts class="absolute top-4 w-full md:top-0.5" type="area" :series="series" :options="options" />
+      <VueApexCharts class="absolute top-4 h-full w-full md:top-0.5" type="area" :series="series" :options="options" />
     </div>
   </div>
 </template>

@@ -57,7 +57,7 @@ const handleLogout = async () => {
         <div class="flex flex-1 flex-col justify-between">
           <nav class="space-y-6">
             <div v-for="item in navLinks" :key="item.group" class="space-y-3">
-              <label class="px-3 text-xs font-bold uppercase text-surface-600">
+              <label class="px-3 text-xs font-bold uppercase text-surface-600 dark:text-surface-400">
                 {{ item.group }}
               </label>
               <RouterLink
@@ -65,8 +65,10 @@ const handleLogout = async () => {
                 v-for="link in item.links"
                 :key="link.label"
                 :to="{ name: link.name }"
-                :class="`flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 hover:bg-primary-100 hover:text-primary-900 ${
-                  $route.name === link.name ? 'bg-primary-100 text-primary-900' : ''
+                :class="`flex transform items-center rounded-lg px-3 py-2 transition-colors duration-300 hover:bg-primary-100 hover:text-primary-900 dark:text-surface-200 dark:hover:bg-primary-400/70${
+                  $route.name === link.name
+                    ? 'bg-primary-100 text-primary-900 dark:!bg-primary-400/70 dark:!text-surface-200'
+                    : ''
                 }`"
               >
                 <i :class="link.icon"></i>
@@ -85,7 +87,7 @@ const handleLogout = async () => {
       @click="toggleVisibility"
       icon="pi pi-th-large"
       rounded
-      class="text-surface-0"
+      class="text-surface-0 dark:!text-surface-100"
       aria-label="Toggle Sidebar button"
     ></Button>
   </div>

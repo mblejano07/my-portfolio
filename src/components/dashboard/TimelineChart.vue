@@ -4,11 +4,15 @@ import { toRaw } from 'vue'
 
 type TimelineChartProps = {
   series: Array<{ data: Array<{ x: string; y: Array<Date>; fillColor: string }> }>
+  darkMode: boolean
 }
 
 const props = defineProps<TimelineChartProps>()
 
 const options = {
+  theme: {
+    mode: props.darkMode ? 'dark' : 'light',
+  },
   chart: {
     sparkline: {
       enabled: false,
@@ -16,6 +20,7 @@ const options = {
     toolbar: {
       show: false,
     },
+    background: 'transparent',
   },
   xaxis: {
     type: 'datetime',
@@ -37,7 +42,7 @@ const options = {
 </script>
 
 <template>
-  <div class="flex h-full w-full items-center rounded-lg bg-surface-0 shadow-md">
+  <div class="flex h-full w-full items-center rounded-lg bg-surface-0 shadow-md dark:bg-surface-700">
     <!-- toRaw(): @see https://stackoverflow.com/questions/77458993/vue-warn-maximum-recursive-updates-exceeded -->
     <VueApexCharts class="w-full" type="rangeBar" :series="toRaw(props.series)" :options="options" />
   </div>

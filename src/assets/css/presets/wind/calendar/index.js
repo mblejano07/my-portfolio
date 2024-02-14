@@ -8,7 +8,7 @@ export default {
       'shadow-sm',
       'rounded-md',
       // Misc
-      { 'opacity-40 select-none pointer-events-none cursor-default': props.disabled },
+      { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled },
     ],
   }),
   input: ({ props }) => ({
@@ -266,7 +266,7 @@ export default {
 
       // Colors
       {
-        'text-surface-600 dark:text-white/70 bg-transparent': !context.selected && !context.disabled,
+        'text-surface-600 dark:text-surface-0/70 bg-transparent': !context.selected && !context.disabled,
         'text-primary-500  dark:text-primary-400': context.selected && !context.disabled,
       },
 
@@ -295,7 +295,7 @@ export default {
       {
         'text-surface-0 bg-surface-900 dark:text-surface-900 dark:bg-surface-0':
           context.date.today && !context.selected && !context.disabled,
-        'text-surface-600 dark:text-white/70 bg-transparent': !context.selected && !context.disabled && !context.date.today,
+        'text-surface-600 dark:text-surface-0/70 bg-transparent': !context.selected && !context.disabled && !context.date.today,
         'text-primary-500 dark:text-primary-400': context.selected && !context.disabled && !context.date.today,
         'text-primary-200 dark:text-primary-600 bg-surface-900 dark:bg-surface-0':
           context.selected && !context.disabled && context.date.today,
@@ -336,7 +336,7 @@ export default {
 
       // Colors
       {
-        'text-surface-600 dark:text-white/70 bg-transparent': !context.selected && !context.disabled,
+        'text-surface-600 dark:text-surface-0/70 bg-transparent': !context.selected && !context.disabled,
         'text-primary-500 dark:text-primary-400': context.selected && !context.disabled,
       },
 
@@ -370,7 +370,7 @@ export default {
 
       // Colors
       {
-        'text-surface-600 dark:text-white/70 bg-transparent': !context.selected && !context.disabled,
+        'text-surface-600 dark:text-surface-0/70 bg-transparent': !context.selected && !context.disabled,
         'text-primary-500 dark:text-primary-400': context.selected && !context.disabled,
       },
 

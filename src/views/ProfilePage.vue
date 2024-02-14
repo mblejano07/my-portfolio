@@ -41,16 +41,16 @@ onBeforeMount(async () => {
         <!-- Start Tab Buttons -->
         <div class="flex justify-center gap-x-1 text-sm md:justify-end">
           <button
-            :class="`rounded-lg px-2 py-1 transition hover:scale-105 hover:bg-surface-200 md:mr-6 ${
-              profileInfoShown ? 'bg-surface-200' : ''
+            :class="`rounded-lg px-2 py-1 transition hover:scale-105 hover:bg-surface-200 dark:hover:bg-primary-500 dark:hover:text-surface-950 md:mr-6 ${
+              profileInfoShown ? 'bg-surface-200 dark:bg-primary-500 dark:text-surface-950' : ''
             }`"
             @click="profileInfoShown = true"
           >
             Profile Details
           </button>
           <button
-            :class="`rounded-lg px-2 py-1 transition hover:scale-105 hover:bg-surface-200 md:mr-6 ${
-              !profileInfoShown ? 'bg-surface-200' : ''
+            :class="`rounded-lg px-2 py-1 transition hover:scale-105 hover:bg-surface-200 dark:hover:bg-primary-500 dark:hover:text-surface-950 md:mr-6 ${
+              !profileInfoShown ? 'bg-surface-200 dark:bg-primary-500 dark:text-surface-950' : ''
             }`"
             @click="profileInfoShown = false"
           >

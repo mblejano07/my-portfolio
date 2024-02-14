@@ -16,7 +16,7 @@ const toggleUserDetailsDialog = () => (showUserDetailsDialog.value = !showUserDe
 <template>
   <button
     @click="toggleUserDetailsDialog"
-    class="relative flex min-h-56 flex-col items-center rounded-lg bg-surface-0 px-4 py-6 shadow-md"
+    class="relative flex min-h-56 flex-col items-center rounded-lg bg-surface-0 px-4 py-6 shadow-md dark:bg-surface-800"
   >
     <!-- Start Avatar -->
     <div class="absolute -top-6 left-1/2 h-24 w-24 -translate-x-1/2">
@@ -28,17 +28,19 @@ const toggleUserDetailsDialog = () => (showUserDetailsDialog.value = !showUserDe
       />
       <div
         v-if="!props.user.user_profile?.profile_picture_url"
-        class="flex h-full w-full items-center justify-center rounded-lg bg-primary-700 text-xl text-surface-0"
+        class="flex h-full w-full items-center justify-center rounded-lg bg-primary-700 text-xl text-surface-0 dark:bg-primary-400 dark:text-surface-900"
       >
         {{ getAvatarDisplayNamePlaceholder(props.user.user_profile?.full_name || 'User') }}
       </div>
     </div>
     <!-- End Avatar -->
     <!-- Start Name -->
-    <p class="mt-16 text-center font-menu font-bold text-primary-600">{{ props.user.user_profile?.full_name }}</p>
+    <p class="mt-16 text-center font-menu font-bold text-primary-600 dark:text-primary-400">
+      {{ props.user.user_profile?.full_name }}
+    </p>
     <!-- End Name -->
     <!-- Start Email -->
-    <p class="text-center text-sm text-surface-700">{{ props.user.email }}</p>
+    <p class="text-center text-sm text-surface-700 dark:text-surface-400">{{ props.user.email }}</p>
     <!-- End Email -->
     <!-- Start Role Tags -->
     <div class="mt-2.5 flex w-full flex-wrap justify-center gap-2">

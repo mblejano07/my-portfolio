@@ -42,7 +42,11 @@ const props = withDefaults(defineProps<WbDropdownProps>(), {
 
     <div :class="`relative ${$attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">
       <!-- Start Prepend Icon -->
-      <div :class="`absolute left-3 top-2/4 z-10 -mt-2.5 ${$attrs.disabled ? 'text-surface-300' : 'text-surface-500'}`">
+      <div
+        :class="`absolute left-3 top-2/4 z-10 -mt-2.5 ${
+          $attrs.disabled ? 'text-surface-300 dark:text-surface-700' : 'text-surface-500'
+        }`"
+      >
         <slot name="prepend-icon"></slot>
       </div>
       <!-- End Prepend Icon -->
@@ -52,7 +56,7 @@ const props = withDefaults(defineProps<WbDropdownProps>(), {
         :aria-describedby="`${$.uid.toString()}-help`"
         :class="`h-12 !w-full ${props.invalid ? '!ring-error-500 dark:!ring-error-300' : ''} ${$attrs.class}`"
         :input-class="`h-12 !w-full flex items-center ${$slots['prepend-icon'] ? 'pl-10' : ''} ${
-          $attrs.disabled ? '!text-surface-600' : ''
+          $attrs.disabled ? '!text-surface-600 dark:!text-surface-0/70' : ''
         } ${$attrs.inputClass}`"
       />
     </div>
