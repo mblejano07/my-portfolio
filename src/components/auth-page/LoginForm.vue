@@ -79,17 +79,14 @@ const handleFormSubmit = async () => {
 
   // Redirect to the `from` route if it exists
   if (route.query.from) {
-    console.log('login', route.query.from)
     return await router.replace({ name: route.query.from as string })
   }
 
   // For normal log-ins, we go the dashboard page for verified emails, and to the guard page for those who
   // have un-verified emails
   if (authStore.authenticatedUser.email_verified_at) {
-    console.log('login', 'email is verified')
     return await router.replace({ name: 'dashboard' })
   } else {
-    console.log('login', 'email is not verified')
     return await router.replace({ name: 'verify-email-guard' })
   }
 }

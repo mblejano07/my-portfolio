@@ -119,9 +119,8 @@ const { selectedTheme } = useThemeConfig()
 const chartsInDarkMode = ref(selectedTheme.value?.value === 'dark')
 watch(
   () => selectedTheme.value,
-  (value) => {
-    console.log(value)
-    if (selectedTheme.value?.value === 'dark') {
+  (theme) => {
+    if (theme?.value === 'dark') {
       return (chartsInDarkMode.value = true)
     }
 
