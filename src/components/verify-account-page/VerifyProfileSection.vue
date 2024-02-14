@@ -111,7 +111,7 @@ const globalStringMaxLengthRule = helpers.withMessage(
 const formRules = {
   $lazy: true,
   mobile_number: {
-    mobile_number: helpers.withMessage('Must be a valid PH mobile number', mobilePhoneRule),
+    mobile_number: helpers.withMessage('Must be a valid PH mobile number', mobilePhoneRule()),
     unique: helpers.withAsync(
       helpers.withMessage(
         'This mobile number is already taken',
@@ -140,10 +140,8 @@ const formRules = {
     digitCount: helpers.withMessage('Enter your 4-digit zip code', digitCountRule(4)),
   },
 }
-
-const validator = useVuelidate<Partial<UserProfilePayload>>(formRules, payload)
-
 /** Handle Form Submission */
+const validator = useVuelidate<Partial<UserProfilePayload>>(formRules, payload)
 const formIsSubmitting = ref(false)
 const profileStore = useProfileStore()
 const showErrorAlert = ref(false)
@@ -177,7 +175,7 @@ const handleFormSubmission = async () => {
 </script>
 
 <template>
-  <form @submit.prevent autocomplete="off" class="flex w-full">
+  <form autocomplete="off" class="flex w-full">
     <div class="flex w-full flex-col gap-4">
       <!-- Start Alert Message -->
       <transition enter-active-class="transition duration-200" enter-from-class="scale-50 opacity-0" leave-to-class="opacity-0">
@@ -226,6 +224,7 @@ const handleFormSubmission = async () => {
           label="First name *"
           :invalid="validator.first_name.$invalid"
           :invalid-text="validator.first_name.$errors[0]?.$message"
+          @blur="validator.first_name.$touch"
         >
           <template #prepend-icon>
             <i class="pi pi-id-card" />
@@ -236,6 +235,7 @@ const handleFormSubmission = async () => {
           label="Middle name"
           :invalid="validator.middle_name.$invalid"
           :invalid-text="validator.middle_name.$errors[0]?.$message"
+          @blur="validator.middle_name.$touch"
         >
           <template #prepend-icon>
             <i class="pi pi-id-card" />
@@ -250,6 +250,7 @@ const handleFormSubmission = async () => {
           label="Last name *"
           :invalid="validator.last_name.$invalid"
           :invalid-text="validator.last_name.$errors[0]?.$message"
+          @blur="validator.last_name.$touch"
         >
           <template #prepend-icon>
             <i class="pi pi-id-card" />
@@ -260,6 +261,7 @@ const handleFormSubmission = async () => {
           label="Ext. name"
           :invalid="validator.ext_name.$invalid"
           :invalid-text="validator.ext_name.$errors[0]?.$message"
+          @blur="validator.ext_name.$touch"
         >
           <template #prepend-icon>
             <i class="pi pi-id-card" />
@@ -365,6 +367,7 @@ const handleFormSubmission = async () => {
           label="Home Address"
           :invalid="validator.home_address.$invalid"
           :invalid-text="validator.home_address.$errors[0]?.$message"
+          @blur="validator.home_address.$touch"
         >
           <template #prepend-icon>
             <i class="pi pi-map" />
@@ -376,6 +379,7 @@ const handleFormSubmission = async () => {
           mask="9999"
           :invalid="validator.postal_code.$invalid"
           :invalid-text="validator.postal_code.$errors[0]?.$message"
+          @blur="validator.postal_code.$touch"
         >
           <template #prepend-icon>
             <i class="pi pi-map" />

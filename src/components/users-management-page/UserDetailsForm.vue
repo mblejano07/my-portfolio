@@ -149,7 +149,7 @@ const formRules = {
     ),
   },
   mobile_number: {
-    mobile_number: helpers.withMessage('Must be a valid PH mobile number', mobilePhoneRule),
+    mobile_number: helpers.withMessage('Must be a valid PH mobile number', mobilePhoneRule()),
     unique: helpers.withAsync(
       helpers.withMessage('This mobile number is already taken', uniqueUserIdentifierRule('mobile_number', props.user.id))
     ),
@@ -360,6 +360,7 @@ const requireConfirmation = (event: Event) => {
           label="First name *"
           :invalid="validator.first_name.$invalid"
           :invalid-text="validator.first_name.$errors[0]?.$message"
+          @blur="validator.first_name.$touch"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -371,6 +372,7 @@ const requireConfirmation = (event: Event) => {
           label="Middle name"
           :invalid="validator.middle_name.$invalid"
           :invalid-text="validator.middle_name.$errors[0]?.$message"
+          @blur="validator.middle_name.$touch"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -386,6 +388,7 @@ const requireConfirmation = (event: Event) => {
           label="Last name *"
           :invalid="validator.last_name.$invalid"
           :invalid-text="validator.last_name.$errors[0]?.$message"
+          @blur="validator.last_name.$touch"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -397,6 +400,7 @@ const requireConfirmation = (event: Event) => {
           label="Ext. name"
           :invalid="validator.ext_name.$invalid"
           :invalid-text="validator.ext_name.$errors[0]?.$message"
+          @blur="validator.ext_name.$touch"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -517,6 +521,7 @@ const requireConfirmation = (event: Event) => {
           label="Home Address"
           :invalid="validator.home_address.$invalid"
           :invalid-text="validator.home_address.$errors[0]?.$message"
+          @blur="validator.home_address.$touch"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>
@@ -529,6 +534,7 @@ const requireConfirmation = (event: Event) => {
           mask="9999"
           :invalid="validator.postal_code.$invalid"
           :invalid-text="validator.postal_code.$errors[0]?.$message"
+          @blur="validator.postal_code.$touch"
           :disabled="!editingEnabled"
         >
           <template #prepend-icon>

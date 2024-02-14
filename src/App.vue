@@ -4,15 +4,17 @@ import AppDesktopToolbar from '@/components/layout/app-toolbar/AppDesktopToolbar
 import AppDesktopSidebar from '@/components/layout/app-sidebar/AppDesktopSidebar.vue'
 import { useGlobalUiStore } from '@/stores/ui.store.ts'
 import { useRoute, useRouter } from 'vue-router'
-import { onBeforeMount, watch } from 'vue'
+import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth.store.ts'
 import { useProfileStore } from '@/stores/profile.store.ts'
 import AppMobileToolbar from '@/components/layout/app-toolbar/AppMobileToolbar.vue'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
-import ConfirmDialog from 'primevue/confirmdialog'
-import Button from 'primevue/button'
 import { useThemeConfig } from '@/composables/theme.ts'
+import { useSettingsStore } from '@/stores/settings.store.ts'
+import AppConfirmDialog from '@/components/layout/AppConfirmDialog.vue'
+import { sleep } from '@/utils/helpers.ts'
+import AppFullScreenLoader from '@/components/layout/AppFullScreenLoader.vue'
 
 const uiStore = useGlobalUiStore()
 const authStore = useAuthStore()
@@ -55,12 +57,24 @@ watch(
 )
 
 /** Handle Theme */
-const { selectedTheme } = useThemeConfig()
-console.log('app', selectedTheme.value)
+const { applyTheme } = useThemeConfig()
+const settingsStore = useSettingsStore()
+const showFullScreenLoader = ref(false)
+onBeforeMount(async () => {
+  showFullScreenLoader.value = true
+  await sleep(0.5)
+  await settingsStore.fetchSettings()
+  showFullScreenLoader.value = false
+})
+
+onMounted(() => {
+  applyTheme()
+})
 </script>
 
 <template>
   <div id="app-container" class="flex min-h-screen bg-surface-200 font-content dark:bg-surface-950">
+    <AppFullScreenLoader :is-open="showFullScreenLoader" />
     <!-- Start Sidebar -->
     <AppDesktopSidebar
       v-if="!route.meta.hideNavigation"
@@ -74,41 +88,8 @@ console.log('app', selectedTheme.value)
       <AppMobileToolbar v-if="!route.meta.hideNavigation" class="lg:hidden" />
       <!-- Start Main Content -->
       <div :class="`${route.meta.hideNavigation ? '' : 'mx-4 mt-4 lg:mt-0'} flex-1`">
-        <!-- Start Global Toast -->
         <Toast position="top-right" />
-        <!-- End Global Toast -->
-        <!-- Start Global ConfirmDialog -->
-        <ConfirmDialog group="global" :draggable="false" modal>
-          <template
-            #container="{
-              message,
-              acceptCallback,
-              rejectCallback,
-            }: {
-              message: { message: string; header: string }
-              acceptCallback: () => {}
-              rejectCallback: () => {}
-            }"
-          >
-            <div class="flex flex-col items-center rounded-lg bg-surface-0 p-5 dark:bg-surface-800">
-              <span class="mb-2 mt-4 text-2xl font-bold text-surface-700 dark:text-surface-100">{{ message.header }}</span>
-              <p class="my-4 dark:text-surface-100">{{ message.message }}</p>
-              <div class="mt-4 flex items-center gap-6">
-                <Button label="Cancel" severity="secondary" outlined @click="rejectCallback" class="flex w-[8rem] gap-1">
-                  <template #icon>
-                    <i class="pi pi-times"></i>
-                  </template>
-                </Button>
-                <Button label="Confirm" @click="acceptCallback" class="flex w-[8rem] gap-1">
-                  <template #icon>
-                    <i class="pi pi-check"></i>
-                  </template>
-                </Button>
-              </div>
-            </div>
-          </template>
-        </ConfirmDialog>
-        <!-- End Global Confirm Dialog -->
+        <AppConfirmDialog />
         <RouterView v-slot="{ Component }">
           <transition
             enter-active-class="transition duration-500"

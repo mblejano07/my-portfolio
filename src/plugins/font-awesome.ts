@@ -18,6 +18,7 @@ import {
   faSun,
   faMoon,
   faBell,
+  faCog,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -37,5 +38,6 @@ library.add(
   faUserAstronaut,
   faSun,
   faMoon,
-  faBell
+  faBell,
+  faCog
 )

@@ -2,6 +2,7 @@
 import { watch } from 'vue'
 import VueApexCharts from 'vue3-apexcharts'
 import ApexCharts from 'apexcharts'
+import { useGlobalUiStore } from '@/stores/ui.store.ts'
 
 type GeneralReportCardProps = {
   id: string
@@ -127,12 +128,19 @@ watch(
     })
   }
 )
+
+/** Increase card height if sidebar is minimized */
+const uiStore = useGlobalUiStore()
 </script>
 
 <template>
-  <div class="relative flex min-h-56 w-full overflow-hidden rounded-lg bg-surface-0 shadow-md dark:bg-surface-700">
-    <div class="flex w-full">
-      <VueApexCharts class="absolute top-4 h-full w-full md:top-0.5" type="area" :series="series" :options="options" />
+  <div
+    :class="`flex w-full overflow-hidden rounded-lg bg-surface-0 shadow-md dark:bg-surface-700 ${
+      uiStore.sidebarMinimized ? 'min-h-56 lg:min-h-72' : 'min-h-56'
+    }`"
+  >
+    <div class="full relative flex w-full">
+      <VueApexCharts class="absolute top-6 w-full md:top-1" type="area" :series="series" :options="options" />
     </div>
   </div>
 </template>

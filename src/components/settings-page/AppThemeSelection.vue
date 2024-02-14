@@ -3,8 +3,10 @@ import Card from 'primevue/card'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SelectButton from 'primevue/selectbutton'
 import Button from 'primevue/button'
-import { onBeforeMount, ref, watch } from 'vue'
+import { onBeforeMount, onUnmounted, ref, watch } from 'vue'
 import { useThemeConfig } from '@/composables/theme.ts'
+import { useSettingsStore } from '@/stores/settings.store.ts'
+import { useToast } from 'primevue/usetoast'
 
 const options = ref([
   { icon: 'fa-solid fa-sun', value: 'light' },
@@ -13,23 +15,58 @@ const options = ref([
 
 // Handle Theme Selection
 const { selectedTheme } = useThemeConfig()
-console.log('settings init', selectedTheme.value)
 const selectedOption = ref<'light' | 'dark'>(selectedTheme.value?.value || 'light')
 onBeforeMount(() => {
   selectedOption.value = selectedTheme.value?.value || 'light'
 })
 
+const themeConfigIsChanged = ref(false)
 watch(
   () => selectedOption.value,
   () => {
-    console.log('selectedOptions', selectedOption.value)
     selectedTheme.value = {
       value: selectedOption.value,
-      label: (selectedOption.value[0].toUpperCase() + selectedOption.value.slice(1)) as 'Light' | 'Dark',
+      name: (selectedOption.value[0].toUpperCase() + selectedOption.value.slice(1)) as 'Light' | 'Dark',
     }
-    console.log('selectedOptions', selectedTheme.value)
+    themeConfigIsChanged.value = true
   }
 )
+
+/** Handle Save Settings */
+const themeConfigIsSaved = ref(false)
+const formIsLoading = ref(false)
+const settingsStore = useSettingsStore()
+const toast = useToast()
+const saveSettings = async () => {
+  formIsLoading.value = true
+  const res = await settingsStore.storeSettings({ theme: (selectedTheme.value?.value || 'light') as 'light' | 'dark' })
+
+  if (res.success) {
+    themeConfigIsSaved.value = true
+  }
+
+  formIsLoading.value = false
+  toast.add({
+    severity: 'success',
+    summary: 'App Settings',
+    detail: 'Theme configurations saved',
+    life: 4000,
+  })
+}
+
+// Revert back the theme if it was changed but no saved
+onUnmounted(() => {
+  if (themeConfigIsChanged.value && !themeConfigIsSaved.value) {
+    const { applyTheme } = useThemeConfig()
+    applyTheme()
+    toast.add({
+      severity: 'warn',
+      summary: 'App Settings',
+      detail: 'Configuration not saved. The theme of the website has reverted.',
+      life: 4000,
+    })
+  }
+})
 </script>
 
 <template>
@@ -54,7 +91,7 @@ watch(
     </template>
     <template #footer>
       <div class="mx-6 flex justify-end">
-        <Button label="Save">
+        <Button label="Save" @click="saveSettings" :loading="formIsLoading" :disabled="formIsLoading">
           <template #icon>
             <i class="pi pi-save mr-1"></i>
           </template>

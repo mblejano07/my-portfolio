@@ -112,6 +112,7 @@ const clearForm = () => {
         toggleMask
         :invalid="validator.old_password.$invalid"
         :invalid-text="validator.old_password.$errors[0]?.$message"
+        @blur="validator.old_password.$touch"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />

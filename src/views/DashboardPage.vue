@@ -129,8 +129,6 @@ watch(
   }
 )
 
-console.log('dashboard', selectedTheme.value)
-
 /**
  * Simulate Live Data Changes.
  * This is just for demo purposes. Use Websockets for real work.
