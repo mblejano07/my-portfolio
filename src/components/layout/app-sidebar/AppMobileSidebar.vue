@@ -35,7 +35,7 @@ const handleLogout = async () => {
         <button class="flex items-center gap-2" @click="router.push({ name: 'profile' })">
           <template v-if="authStore.isAuthenticated">
             <Avatar
-              :image="authStore.authenticatedUser.user_profile?.profile_picture_url"
+              :image="authStore.authenticatedUser.user_profile?.profile_picture_url ?? undefined"
               :label="`${
                 !authStore.authenticatedUser.user_profile?.profile_picture_url ? authStore.avatarDisplayNamePlaceholder : ''
               }`"

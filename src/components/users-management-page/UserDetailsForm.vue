@@ -61,7 +61,7 @@ const payload = reactive<Partial<UserPayload>>({
 
 // We disabled editing and deletion for super users
 const userIsSuperUser = computed(() => {
-  return props.user.roles.find((r) => AuthRole.SUPER_USER.toString() === r.name)
+  return !!props.user.roles.find((r) => AuthRole.SUPER_USER.toString() === r.name)
 })
 
 // Toggle Edit Button

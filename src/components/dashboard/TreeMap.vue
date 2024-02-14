@@ -2,7 +2,7 @@
 import VueApexCharts from 'vue3-apexcharts'
 
 type TreeMapProps = {
-  series: Array<{ name: 'string'; data: Array<{ x: string; y: number }> }>
+  series: Array<{ name: string; data: Array<{ x: string; y: number }> }>
   colors: string[]
   darkMode: boolean
 }

@@ -82,7 +82,7 @@ const handleLogout = async () => {
       <!-- Start Avatar Menu -->
       <template v-if="authStore.isAuthenticated">
         <Avatar
-          :image="authStore.authenticatedUser.user_profile?.profile_picture_url"
+          :image="authStore.authenticatedUser.user_profile?.profile_picture_url ?? undefined"
           shape="circle"
           class="cursor-pointer overflow-hidden transition-transform hover:scale-105 hover:ring-1 hover:ring-primary-500 dark:!bg-primary-500"
           :label="`${
@@ -109,7 +109,7 @@ const handleLogout = async () => {
               @click="router.push({ name: 'profile' })"
             >
               <Avatar
-                :image="authStore.authenticatedUser.user_profile?.profile_picture_url"
+                :image="authStore.authenticatedUser.user_profile?.profile_picture_url ?? undefined"
                 :label="`${
                   !authStore.authenticatedUser.user_profile?.profile_picture_url ? authStore.avatarDisplayNamePlaceholder : ''
                 }`"

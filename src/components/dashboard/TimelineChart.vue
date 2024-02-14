@@ -3,7 +3,7 @@ import VueApexCharts from 'vue3-apexcharts'
 import { toRaw } from 'vue'
 
 type TimelineChartProps = {
-  series: Array<{ data: Array<{ x: string; y: Array<Date>; fillColor: string }> }>
+  series: Array<{ data: Array<{ x: string; y: Array<number>; fillColor: string }> }>
   darkMode: boolean
 }
 
