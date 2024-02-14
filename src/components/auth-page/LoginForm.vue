@@ -101,8 +101,12 @@ const handleFormSubmit = async () => {
       <div class="mb-2 mt-6 flex justify-center lg:hidden">
         <AppLogo color="light"></AppLogo>
       </div>
-      <h2 class="font-menu text-3xl font-bold text-surface-0 lg:mt-6 lg:text-surface-800">Account Login</h2>
-      <p class="mb-4 mt-2 text-sm text-surface-0 lg:text-surface-500">Sign in to your existing account</p>
+      <h2 class="font-menu text-2xl font-bold text-surface-0 md:text-3xl lg:mt-6 lg:text-surface-800 dark:lg:text-surface-0">
+        Account Login
+      </h2>
+      <p class="mb-4 mt-2 text-sm text-surface-0 lg:text-surface-500 dark:lg:text-surface-200">
+        Sign in to your existing account
+      </p>
     </div>
     <!-- Start Alert Message -->
     <transition enter-active-class="transition duration-200" enter-from-class="scale-50 opacity-0" leave-to-class="opacity-0">
@@ -125,8 +129,8 @@ const handleFormSubmit = async () => {
         label="Email or mobile number"
         :invalid="validator.email.$invalid"
         :invalid-text="validator.email.$errors[0]?.$message"
-        label-class="text-xs text-surface-0 lg:text-surface-800"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500 dark:lg:text-error-300"
       >
         <template #prepend-icon>
           <i class="pi pi-envelope" />
@@ -140,21 +144,21 @@ const handleFormSubmit = async () => {
         :invalid="validator.password.$invalid"
         :invalid-text="validator.password.$errors[0]?.$message"
         @keyup.enter="handleFormSubmit"
-        label-class="text-xs text-surface-0 lg:text-surface-800"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500 dark:lg:text-error-300"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />
         </template>
       </WbPassword>
       <div>
-        <Button @click="handleFormSubmit" label="Sign in" size="large" class="mt-3 w-full" :loading="formIsSubmitting"></Button>
+        <Button @click="handleFormSubmit" label="Sign in" size="large" class="mt-3 w-full" :loading="formIsSubmitting"> </Button>
       </div>
       <p class="flex justify-between pt-3 text-center">
         <Button
           label="Forgot Password"
           size="small"
-          class="text-xs text-surface-0 lg:text-surface-500 lg:hover:bg-surface-100"
+          class="text-xs text-surface-0 dark:text-primary-100 lg:text-surface-400 dark:lg:text-primary-400"
           text
           @click="$router.push({ name: 'forgot-password' })"
         >
@@ -165,7 +169,7 @@ const handleFormSubmit = async () => {
         <Button
           label="Create an account"
           size="small"
-          class="text-xs text-surface-0 lg:text-primary-500"
+          class="text-xs text-surface-0 dark:text-primary-100 lg:text-primary-400 dark:lg:text-primary-400"
           text
           @click="$router.push({ name: 'sign-up' })"
         >

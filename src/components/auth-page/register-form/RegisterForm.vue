@@ -35,8 +35,12 @@ const handlePreviousButtonClicked = () => {
       <div class="mb-2 mt-6 flex justify-center lg:hidden">
         <AppLogo color="light"></AppLogo>
       </div>
-      <h2 class="font-menu text-3xl font-bold text-surface-0 lg:mt-6 lg:text-surface-800">Account Registration</h2>
-      <p class="mb-4 mt-2 text-sm text-surface-0 lg:text-surface-500">Complete the form to create your account</p>
+      <h2 class="font-menu text-2xl font-bold text-surface-0 md:text-3xl lg:mt-6 lg:text-surface-800 dark:lg:text-surface-0">
+        Account Registration
+      </h2>
+      <p class="mb-4 mt-2 text-sm text-surface-0 lg:text-surface-500 dark:lg:text-surface-200">
+        Complete the form to create your account
+      </p>
     </div>
     <Steps v-model:active-step="activeStep" :model="registrationSteps" />
     <form class="mt-8 flex w-full flex-col space-y-6" @submit.prevent>

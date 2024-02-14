@@ -77,7 +77,9 @@ const handleSubmitForm = async () => {
 <template>
   <div
     :class="`flex h-full w-full flex-col items-center bg-gradient-to-b pt-2 transition-colors md:pt-6 ${
-      showErrorAlert ? 'from-error-500 to-error-900' : 'from-primary-500 to-primary-900'
+      showErrorAlert
+        ? 'from-error-500 to-error-900 dark:from-error-800'
+        : 'from-primary-500 to-primary-900 dark:from-primary-800 dark:to-primary-950'
     }`"
   >
     <!-- Start Alert Message -->
@@ -100,8 +102,8 @@ const handleSubmitForm = async () => {
               </Button>
             </div>
             <div class="mb-8">
-              <h1 class="mb-1 font-menu text-lg text-surface-800 sm:text-xl">Forgot Your Password?</h1>
-              <p class="text-sm leading-relaxed text-surface-600">
+              <h1 class="mb-1 font-menu text-lg text-surface-800 dark:text-surface-100 sm:text-xl">Forgot Your Password?</h1>
+              <p class="text-sm leading-relaxed text-surface-600 dark:text-surface-300">
                 Please enter the email you've used to sign-in to the application. If you've entered a valid email address, you
                 will receive the reset link in your inbox.
               </p>
@@ -111,6 +113,7 @@ const handleSubmitForm = async () => {
               label="Email Address"
               :invalid="validator.email.$invalid"
               :invalid-text="validator.email.$errors[0]?.$message"
+              @keyup.enter="handleSubmitForm"
             >
             </WbInputText>
             <div class="mt-6 flex w-full flex-col items-end">

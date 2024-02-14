@@ -76,8 +76,11 @@ export type UserProfileResponse = {
 
 /** Role (HTTP Responses) */
 export type RoleResponse = {
-  id: string | number
   name: string
-  created_at: string
-  updated_at: string
-}
+} & ApiResponseData
+
+/** Settings (HTTPResponse) */
+export type SettingsResponse = {
+  name: string
+  value: string
+} & ApiResponseData

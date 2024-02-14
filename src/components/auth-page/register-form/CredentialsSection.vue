@@ -70,8 +70,8 @@ const handleNextSection = async () => {
         :invalid-text="validator.email.$errors[0]?.$message"
         @blur="validator.email.$touch"
         @focusin="validator.email.$dirty = false"
-        label-class="text-xs text-surface-0 lg:text-surface-800"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500 dark:lg:text-error-300"
       >
         <template #prepend-icon>
           <i class="pi pi-envelope" />
@@ -86,8 +86,8 @@ const handleNextSection = async () => {
         :invalid-text="validator.mobile_number.$errors[0]?.$message"
         @blur="validator.mobile_number.$touch"
         @focusin="validator.mobile_number.$dirty = false"
-        label-class="text-xs text-surface-0 lg:text-surface-800"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500 dark:lg:text-error-300"
       >
         <template #prepend-icon>
           <i class="pi pi-phone" />
@@ -105,8 +105,8 @@ const handleNextSection = async () => {
         :invalid-text="validator.password.$errors[0]?.$message"
         @blur="validator.password.$touch"
         @focusin="validator.password.$dirty = false"
-        label-class="text-xs text-surface-0 lg:text-surface-800"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500 dark:lg:text-error-300"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />
@@ -130,8 +130,8 @@ const handleNextSection = async () => {
         :invalid="validator.password_confirmation.$invalid"
         :invalid-text="validator.password_confirmation.$errors[0]?.$message"
         @blur="validator.password_confirmation.$touch"
-        label-class="text-xs text-surface-0 lg:text-surface-800"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500 dark:lg:text-error-300"
       >
         <template #prepend-icon>
           <i class="pi pi-lock" />
@@ -146,7 +146,7 @@ const handleNextSection = async () => {
         label="Back to Login"
         size="small"
         text
-        class="text-xs text-surface-0 lg:text-surface-500 lg:hover:bg-surface-100"
+        class="text-xs text-surface-0 dark:text-primary-100 lg:text-surface-500 dark:lg:text-primary-400"
       >
         <template #icon>
           <FontAwesomeIcon icon="fa-solid fa-sign-in" class="mr-1.5"></FontAwesomeIcon>

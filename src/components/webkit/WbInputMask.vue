@@ -35,9 +35,11 @@ const props = withDefaults(defineProps<WbInputMaskProps>(), {
 
 <template>
   <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
-    <label :for="$.uid.toString()" :class="`${labelClass ? props.labelClass : 'text-xs text-surface-800'}`">{{
-      props.label
-    }}</label>
+    <label
+      :for="$.uid.toString()"
+      :class="`${labelClass ? props.labelClass : 'text-xs text-surface-800 dark:text-surface-200'}`"
+      >{{ props.label }}</label
+    >
 
     <!-- Start InputText-->
     <div :class="`relative ${$attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">
@@ -51,7 +53,7 @@ const props = withDefaults(defineProps<WbInputMaskProps>(), {
         :aria-describedby="`${$.uid.toString()}-help`"
         :class="`h-12 w-full
         ${$slots['prepend-icon'] ? 'pl-10' : ''}
-        ${props.invalid ? '!ring-error-500' : ''}
+        ${props.invalid ? '!ring-error-500 dark:!ring-error-300' : ''}
         ${$attrs.disabled ? '!text-surface-600' : ''}
         `"
       />
@@ -60,14 +62,14 @@ const props = withDefaults(defineProps<WbInputMaskProps>(), {
     <!-- Start validation messages -->
     <small
       v-if="props.invalid && props.invalidText"
-      :class="`ml-0.5 ${props.validationErrorMessageClass || 'text-xs text-error-500'}`"
+      :class="`ml-0.5 ${props.validationErrorMessageClass || 'text-xs text-error-500 dark:text-error-300'}`"
     >
       <i class="pi pi-exclamation-triangle mr-0.5"></i>
       {{ props.invalidText }}
     </small>
     <small
       v-if="props.success && props.successText"
-      :class="`ml-0.5 ${props.validationSuccessMessageClass || 'text-xs text-green-500'}`"
+      :class="`ml-0.5 ${props.validationSuccessMessageClass || 'text-xs text-success-500 dark:text-success-300'}`"
     >
       <i class="pi pi-check-circle mr-0.5"></i>
       {{ props.successText }}

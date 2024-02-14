@@ -65,8 +65,11 @@ const handleResendEmailVerification = async () => {
 
 // Handle Logout
 const router = useRouter()
+const isLoggingOut = ref(false)
 const handleLogout = async () => {
+  isLoggingOut.value = true
   await authStore.logout()
+  isLoggingOut.value = false
   await router.replace({ name: 'login' })
 }
 
@@ -104,21 +107,21 @@ watch(
                 text
                 size="small"
                 @click="handleLogout"
-                :loading="formIsLoading"
-                :disabled="formIsLoading"
+                :loading="formIsLoading || isLoggingOut"
+                :disabled="formIsLoading || isLoggingOut"
                 class="text-xs"
               >
                 <template #icon><i class="pi pi-arrow-left mr-2 hidden md:block" /></template>
               </Button>
             </div>
-            <h1 class="self-start font-menu text-xl text-surface-800">Verify Your Email</h1>
+            <h1 class="self-start font-menu text-xl text-surface-800 dark:text-surface-100">Verify Your Email</h1>
             <div class="flex w-full flex-col text-surface-600">
-              <p class="mt-2 text-sm leading-relaxed">
+              <p class="mt-2 text-sm leading-relaxed dark:text-surface-100">
                 We've sent a verification link to
-                <span class="mx-1 font-medium text-primary-500 underline underline-offset-4">{{ authEmail }}</span>
+                <span class="mx-1 font-medium text-warn-400 underline underline-offset-4">{{ authEmail }}</span>
                 to verify your email address and activate your account.
               </p>
-              <p class="mt-3 text-sm leading-relaxed md:mt-2">
+              <p class="mt-3 text-sm leading-relaxed dark:text-surface-100 md:mt-2">
                 The link in the email will expire in 1 hour. You may need to check your spam folder if you can't find the email in
                 your inbox.
               </p>

@@ -3,13 +3,30 @@ import Card from 'primevue/card'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SelectButton from 'primevue/selectbutton'
 import Button from 'primevue/button'
-import { ref } from 'vue'
+import { onBeforeMount, ref, watch } from 'vue'
+import { useThemeConfig } from '@/composables/theme.ts'
 
-const selectedTheme = ref(null)
 const options = ref([
   { icon: 'fa-solid fa-sun', value: 'light' },
   { icon: 'fa-solid fa-moon', value: 'dark' },
 ])
+
+// Handle Theme Selection
+const selectedOption = ref<'light' | 'dark'>('light')
+const { selectedTheme } = useThemeConfig()
+onBeforeMount(() => {
+  selectedOption.value = selectedTheme.value?.value || 'light'
+})
+
+watch(
+  () => selectedOption.value,
+  () => {
+    selectedTheme.value = {
+      value: selectedOption.value,
+      label: (selectedOption.value[0].toUpperCase() + selectedOption.value.slice(1)) as 'Light' | 'Dark',
+    }
+  }
+)
 </script>
 
 <template>

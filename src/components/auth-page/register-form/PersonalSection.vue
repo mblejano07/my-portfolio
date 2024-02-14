@@ -74,8 +74,8 @@ const handleNextSection = async () => {
         label="First name *"
         :invalid="validator.first_name.$invalid"
         :invalid-text="validator.first_name.$errors[0]?.$message"
-        label-class="text-xs text-surface-0 lg:text-surface-800"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500 dark:lg:text-error-300"
       >
         <template #prepend-icon>
           <i class="pi pi-id-card" />
@@ -86,8 +86,8 @@ const handleNextSection = async () => {
         label="Middle name"
         :invalid="validator.middle_name.$invalid"
         :invalid-text="validator.middle_name.$errors[0]?.$message"
-        label-class="text-xs text-surface-0 lg:text-surface-800"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500 dark:lg:text-error-300"
       >
         <template #prepend-icon>
           <i class="pi pi-id-card" />
@@ -102,8 +102,8 @@ const handleNextSection = async () => {
         label="Last name *"
         :invalid="validator.last_name.$invalid"
         :invalid-text="validator.last_name.$errors[0]?.$message"
-        label-class="text-xs text-surface-0 lg:text-surface-800"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500 dark:lg:text-error-300"
       >
         <template #prepend-icon>
           <i class="pi pi-id-card" />
@@ -114,8 +114,8 @@ const handleNextSection = async () => {
         label="Ext. name"
         :invalid="validator.ext_name.$invalid"
         :invalid-text="validator.ext_name.$errors[0]?.$message"
-        label-class="text-xs text-surface-0 lg:text-surface-800"
-        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500"
+        label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
+        validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500 dark:lg:text-error-300"
       >
         <template #prepend-icon>
           <i class="pi pi-id-card" />
@@ -131,7 +131,7 @@ const handleNextSection = async () => {
         optionLabel="label"
         optionValue="value"
         label="Sex"
-        label-class="text-xs text-surface-0 lg:text-surface-800"
+        label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
       >
         <template #prepend-icon>
           <FontAwesomeIcon icon="fa-solid fa-mars-and-venus" />
@@ -142,7 +142,7 @@ const handleNextSection = async () => {
         dateFormat="MM dd, yy"
         :maxDate="new Date()"
         label="Birthday"
-        label-class="text-xs text-surface-0 lg:text-surface-800"
+        label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
       >
         <template #prepend-icon>
           <i class="pi pi-gift" />

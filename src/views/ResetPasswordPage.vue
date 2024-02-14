@@ -15,8 +15,9 @@ import { useRoute, useRouter } from 'vue-router'
 import WbPassword from '@/components/webkit/WbPassword.vue'
 import Divider from 'primevue/divider'
 
+const router = useRouter()
 const payload = reactive<ResetPasswordPayload>({
-  email: '',
+  email: router.currentRoute.value.query.email as string,
   password: '',
   password_confirmation: '',
   token: '',
@@ -49,7 +50,6 @@ const formIsLoading = ref(false)
 const showErrorAlert = ref(false)
 const toast = useToast()
 const route = useRoute()
-const router = useRouter()
 const handleSubmitForm = async () => {
   const valid = await validator.value.$validate()
   if (!valid) return
@@ -80,7 +80,9 @@ const handleSubmitForm = async () => {
 <template>
   <div
     :class="`flex h-full w-full flex-col items-center bg-gradient-to-b pt-2 transition-colors md:pt-6 ${
-      showErrorAlert ? 'from-error-500 to-error-900' : 'from-primary-500 to-primary-900'
+      showErrorAlert
+        ? 'from-error-500 to-error-900 dark:from-error-800'
+        : 'from-primary-500 to-primary-900 dark:from-primary-800 dark:to-primary-950'
     }`"
   >
     <!-- Start Alert Message -->
@@ -101,8 +103,8 @@ const handleSubmitForm = async () => {
               </Button>
             </div>
             <div class="mb-8">
-              <h1 class="mb-1 font-menu text-lg text-surface-800 sm:text-xl">Reset Your Password?</h1>
-              <p class="text-sm leading-relaxed text-surface-600">
+              <h1 class="mb-1 font-menu text-lg text-surface-800 dark:text-surface-100 sm:text-xl">Reset Your Password?</h1>
+              <p class="text-sm leading-relaxed text-surface-600 dark:text-surface-300">
                 Enter the email you've used to request this link and input your new password.
               </p>
             </div>
@@ -112,6 +114,7 @@ const handleSubmitForm = async () => {
                 label="Email Address *"
                 :invalid="validator.email.$invalid"
                 :invalid-text="validator.email.$errors[0]?.$message"
+                :disabled="true"
               >
               </WbInputText>
               <WbPassword

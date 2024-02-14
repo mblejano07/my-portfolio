@@ -36,7 +36,9 @@ const props = withDefaults(defineProps<WbDropdownProps>(), {
 
 <template>
   <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
-    <label :for="$.uid.toString()" :class="`${props.labelClass || 'text-xs text-surface-800'}`">{{ props.label }}</label>
+    <label :for="$.uid.toString()" :class="`${props.labelClass || 'text-xs text-surface-800 dark:text-surface-200'}`">{{
+      props.label
+    }}</label>
 
     <div :class="`relative ${$attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">
       <!-- Start Prepend Icon -->
@@ -48,7 +50,7 @@ const props = withDefaults(defineProps<WbDropdownProps>(), {
       <Dropdown
         v-bind="$attrs"
         :aria-describedby="`${$.uid.toString()}-help`"
-        :class="`h-12 !w-full ${props.invalid ? '!ring-error-500' : ''} ${$attrs.class}`"
+        :class="`h-12 !w-full ${props.invalid ? '!ring-error-500 dark:!ring-error-300' : ''} ${$attrs.class}`"
         :input-class="`h-12 !w-full flex items-center ${$slots['prepend-icon'] ? 'pl-10' : ''} ${
           $attrs.disabled ? '!text-surface-600' : ''
         } ${$attrs.inputClass}`"
@@ -58,14 +60,14 @@ const props = withDefaults(defineProps<WbDropdownProps>(), {
     <!-- Start validation messages -->
     <small
       v-if="props.invalid && props.invalidText"
-      :class="`ml-0.5 ${props.validationErrorMessageClass || 'text-xs text-error-500'}`"
+      :class="`ml-0.5 ${props.validationErrorMessageClass || 'dark:tet-error-300 text-xs text-error-500'}`"
     >
       <i class="pi pi-exclamation-triangle mr-0.5"></i>
       {{ props.invalidText }}
     </small>
     <small
       v-if="props.success && props.successText"
-      :class="`ml-0.5 ${props.validationSuccessMessageClass || 'text-xs text-green-500'}`"
+      :class="`ml-0.5 ${props.validationSuccessMessageClass || 'text-xs text-success-500 dark:text-success-300'}`"
     >
       <i class="pi pi-check-circle mr-0.5"></i>
       {{ props.successText }}

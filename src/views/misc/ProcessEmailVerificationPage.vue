@@ -58,7 +58,11 @@ onUnmounted(() => clearInterval(timerId))
 <template>
   <div
     :class="`flex h-full justify-center bg-gradient-to-b lg:mx-0
-     ${!isLoading && !verificationSuccess ? '!from-error-500 !to-error-900' : 'from-primary-500 to-primary-900'}`"
+     ${
+       !isLoading && !verificationSuccess
+         ? '!from-error-500 !to-error-900 dark:!from-error-800'
+         : 'from-primary-500 to-primary-900 dark:from-primary-800 dark:to-primary-950'
+     }`"
   >
     <div class="z-10 mx-4 mt-12 flex h-fit w-full flex-col text-surface-0 md:mx-0 md:mt-16 md:w-fit lg:mt-28">
       <AppLogo color="light" class="mb-1.5 self-center" />
