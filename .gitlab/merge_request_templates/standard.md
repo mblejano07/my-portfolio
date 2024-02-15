@@ -36,4 +36,3 @@
 - [ ] Avoid experimental framework features and libraries
 - [ ] Default to declaring types in the same file they are used. Create a file in the `src/typings` directory for types that will be used by multiple files (typically 3 or more files)
 - [ ] Create composables for reusable logic that has `state`. Pure (stateless) functions should be in the `src/utils` directory
--
