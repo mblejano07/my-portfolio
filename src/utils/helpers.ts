@@ -1,3 +1,5 @@
+import { CountryCode, isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js'
+
 /**
  * @description Halt code execution for x seconds
  * @example
@@ -33,4 +35,23 @@ export const getAvatarDisplayNamePlaceholder = (fullName: string) => {
   }
 
   return initials
+}
+
+/**
+ * @description Check if a string is a valid phone number for a given country
+ */
+export const checkIfValidMobileNumber = (value: string, country: CountryCode = 'PH') => {
+  let phone
+
+  // The library throws a NOT_A_NUMBER error if it can't parse
+  // the value properly
+  try {
+    phone = parsePhoneNumber(value, country)
+  } catch (err) {
+    return false
+  }
+
+  if (!phone) return false
+
+  return isValidPhoneNumber(value, country)
 }

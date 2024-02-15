@@ -10,6 +10,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { LoginPayload, useAuthStore } from '@/stores/auth.store.ts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AppLogo from '@/components/layout/AppLogo.vue'
+import { checkIfValidMobileNumber } from '@/utils/helpers.ts'
 
 /** Emits */
 const emit = defineEmits<{
@@ -51,7 +52,9 @@ const handleFormSubmit = async () => {
   const valid = await validator.value.$validate()
   if (!valid) return (formIsSubmitting.value = false)
 
-  const res = await authStore.login(payload)
+  const newPayload = manageIfEmailIsPhoneNumber(Object.assign({}, payload))
+  const res = await authStore.login(newPayload)
+
   if (!res.success) {
     formIsSubmitting.value = false
     showCredsErrorAlert.value = true
@@ -89,6 +92,14 @@ const handleFormSubmit = async () => {
   } else {
     return await router.replace({ name: 'verify-email-guard' })
   }
+}
+
+const manageIfEmailIsPhoneNumber = (payload: LoginPayload) => {
+  if (checkIfValidMobileNumber(payload.email || '')) {
+    payload.mobile_number = payload.email
+    delete payload.email
+  }
+  return payload
 }
 </script>
 
@@ -155,7 +166,7 @@ const handleFormSubmit = async () => {
         <Button
           label="Forgot Password"
           size="small"
-          class="text-xs text-surface-0 dark:text-primary-100 lg:text-surface-400 dark:lg:text-primary-400"
+          class="text-xs text-surface-0 hover:bg-surface-100 dark:text-primary-100 dark:hover:bg-primary-300/20 lg:text-surface-500 dark:lg:text-primary-400"
           text
           @click="$router.push({ name: 'forgot-password' })"
         >
