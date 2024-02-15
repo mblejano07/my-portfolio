@@ -2,7 +2,7 @@
 
 WebAppKit SPA (Prime) is a VueJS 3 SPA starter kit. This kit includes the following features:
 
-- Implementation of [TypeScrip](https://www.typescriptlang.org/)
+- Implementation of [TypeScript](https://www.typescriptlang.org/)
 - Implementation of [PrimeVue](https://tailwind.primevue.org/overview) with [TailwindCSS](https://tailwindcss.com)
 - Implementation of [Pinia](https://pinia.vuejs.org) for Central State Management
 - Implementation of [Vuelidate](https://vuelidate-next.netlify.app) for form validation
