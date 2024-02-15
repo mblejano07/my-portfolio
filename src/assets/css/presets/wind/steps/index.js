@@ -24,11 +24,10 @@ export default {
       'rounded-md',
 
       // Spacing
-      { 'pr-4 min-[576px]:pr-32 md:pr-40': props.model.length !== context.index + 1 },
+      { 'pr-8 min-[576px]:pr-32 md:pr-40': props.model.length !== context.index + 1 },
 
       // Colors
-      'bg-surface-0',
-      'dark:bg-transparent',
+      'bg-transparent',
 
       // Misc
       { 'cursor-pointer': !props.readonly },
@@ -43,7 +42,7 @@ export default {
       'after:left-0',
       'after:transform',
       'after:-mt-3',
-      { 'after:hidden': props.model.length == context.index + 1 },
+      { 'after:hidden': props.model.length === context.index + 1 },
     ],
   }),
   step: ({ context, props, state }) => ({
@@ -93,8 +92,8 @@ export default {
     class: [
       'relative',
       // Font
-      'text-sm leading-none',
-      { 'font-medium': context.active },
+      'text-xs leading-none',
+      { 'font-bold lg:font-mediumbold': context.active },
 
       // Display
       'block',
@@ -103,7 +102,10 @@ export default {
       'mt-2',
 
       // Colors
-      { 'text-surface-400 dark:text-white/60': !context.active, 'text-surface-800 dark:text-white/80': context.active },
+      {
+        'text-surface-400 dark:text-white/60': !context.active,
+        'text-surface-0 lg:text-primary-500 lg:dark:text-surface-0/80': context.active,
+      },
 
       // Text and Overflow
       'whitespace-nowrap',

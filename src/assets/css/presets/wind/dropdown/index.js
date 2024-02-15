@@ -16,7 +16,7 @@ export default {
       // States
       {
         'ring-1 ring-inset ring-surface-300 dark:ring-surface-700': !state.focused,
-        'ring-2 ring-inset ring-primary-500 dark:ring-primary-400': state.focused,
+        'ring-1 ring-inset ring-primary-500 dark:ring-primary-400': state.focused,
       },
 
       // Misc
@@ -139,15 +139,14 @@ export default {
       // Color
       { 'text-surface-700 dark:text-white/80': !context.focused && !context.selected },
       {
-        'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80':
-          context.focused && !context.selected,
+        'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80': context.focused && !context.selected,
       },
       { 'bg-primary-500 dark:bg-primary-400 text-white dark:text-surface-700': context.focused && context.selected },
       { 'bg-transparent text-surface-700 dark:text-white/80': !context.focused && context.selected },
 
       //States
       'hover:bg-primary-500 dark:hover:bg-primary-400 hover:text-white dark:hover:text-surface-700',
-      'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
+      'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
 
       // Misc
       'cursor-pointer',
@@ -231,7 +230,7 @@ export default {
       'appearance-none',
 
       // States
-      'focus:ring-2 focus:ring-inset focus:outline-none focus:outline-offset-0',
+      'focus:ring-1 focus:ring-inset focus:outline-none focus:outline-offset-0',
       'focus:ring-primary-600 dark:focus:ring-primary-500',
 
       // Misc
@@ -244,7 +243,7 @@ export default {
   clearicon: {
     class: [
       // Color
-      'text-surface-500',
+      'text-surface-500 hover:cursor-pointer',
 
       // Position
       'absolute',

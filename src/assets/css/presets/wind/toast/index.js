@@ -2,10 +2,10 @@ export default {
   root: ({ props }) => ({
     class: [
       //Size and Shape
-      'w-96 rounded-md',
+      'w-80 md:w-96 rounded-md',
 
       // Positioning
-      { '-translate-x-2/4': props.position == 'top-center' || props.position == 'bottom-center' },
+      { '-translate-x-2/4': props.position === 'top-center' || props.position === 'bottom-center' },
     ],
   }),
   container: ({ props }) => ({
@@ -15,12 +15,13 @@ export default {
       'shadow-lg',
       'bg-surface-0 dark:bg-surface-800',
       'ring-1 ring-inset ring-surface-200 dark:ring-surface-700 ring-offset-0',
+
       // Colors
       {
-        'text-blue-500 dark:text-blue-300': props.message.severity == 'info',
-        'text-green-500 dark:text-green-300': props.message.severity == 'success',
-        'text-orange-500 dark:text-orange-300': props.message.severity == 'warn',
-        'text-red-500 dark:text-red-300': props.message.severity == 'error',
+        'bg-info-500 dark:text-info-500': props.message.severity === 'info',
+        'text-success-500 dark:text-success-300': props.message.severity === 'success',
+        'text-warn-500 dark:text-warn-300': props.message.severity === 'warn',
+        'text-error-500 dark:text-error-300': props.message.severity === 'error',
       },
     ],
   }),
@@ -37,7 +38,7 @@ export default {
   text: {
     class: [
       // Font and Text
-      'text-sm leading-none',
+      'text-sm',
       'ml-2',
       'flex-1',
     ],
@@ -71,8 +72,6 @@ export default {
 
       // States
       'hover:bg-surface-100 dark:hover:bg-surface-700',
-      'outline-none focus:ring-1 focus:ring-inset',
-      'focus:ring-primary-500 dark:focus:ring-primary-400',
 
       // Misc
       'overflow-hidden',
@@ -89,8 +88,7 @@ export default {
     enterFromClass: 'opacity-0 translate-y-2/4',
     enterActiveClass: 'transition-[transform,opacity] duration-300',
     leaveFromClass: 'max-h-[1000px]',
-    leaveActiveClass:
-      '!transition-[max-height_.45s_cubic-bezier(0,1,0,1),opacity_.3s,margin-bottom_.3s] overflow-hidden',
+    leaveActiveClass: '!transition-[max-height_.45s_cubic-bezier(0,1,0,1),opacity_.3s,margin-bottom_.3s] overflow-hidden',
     leaveToClass: 'max-h-0 opacity-0 mb-0',
   },
 }

@@ -1,8 +1,12 @@
 /// <reference types="vite/client" />
 
 /**
- * Stop the IDE from complaining about missing types for Vuelidate
- * @see https://github.com/vuelidate/vuelidate/issues/1189
+ * Stop the IDE from complaining about missing type declarations for libphonenumber-js
  */
-declare module '@vuelidate/core'
-declare module '@vuelidate/validators'
+declare module 'libphonenumber-js/max'
+declare module 'libphonenumber-js/types'
+
+/**
+ * Stop the IDE from complaining about missing type declarations for vue3-apexcharts
+ */
+declare module 'vue3-apexcharts'

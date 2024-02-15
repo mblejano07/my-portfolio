@@ -5,7 +5,8 @@ import ProfilePage from '@/views/ProfilePage.vue'
 import SupportPage from '@/views/SupportPage.vue'
 import AboutUsPage from '@/views/AboutUsPage.vue'
 import AnnouncementsPage from '@/views/AnnouncementsPage.vue'
-import { RouteGroup } from '@/types/router.types.ts'
+import { AuthRole, AuthType } from '@/typings/auth.types.ts'
+import { useAuthStore } from '@/stores/auth.store.ts'
 
 const routes = [
   {
@@ -16,6 +17,8 @@ const routes = [
       group: RouteGroup.HOME,
       label: 'Dashboard',
       isSidebarMenu: true,
+      authType: AuthType.AUTHENTICATED,
+      roles: [AuthRole.STANDARD_USER, AuthRole.ADMIN, AuthRole.SYSTEM_SUPPORT, AuthRole.SUPER_USER],
     },
   },
   {
@@ -26,6 +29,8 @@ const routes = [
       group: RouteGroup.HOME,
       label: 'Profile',
       isSidebarMenu: true,
+      authType: AuthType.AUTHENTICATED,
+      roles: [AuthRole.STANDARD_USER, AuthRole.ADMIN, AuthRole.SYSTEM_SUPPORT, AuthRole.SUPER_USER],
     },
   },
   {
@@ -36,6 +41,8 @@ const routes = [
       group: RouteGroup.HOME,
       label: 'Announcements',
       isSidebarMenu: true,
+      authType: AuthType.AUTHENTICATED,
+      roles: [AuthRole.STANDARD_USER, AuthRole.ADMIN, AuthRole.SYSTEM_SUPPORT, AuthRole.SUPER_USER],
     },
   },
   {
@@ -46,6 +53,8 @@ const routes = [
       group: RouteGroup.MISC,
       label: 'Support',
       isSidebarMenu: true,
+      authType: AuthType.AUTHENTICATED,
+      roles: [AuthRole.STANDARD_USER, AuthRole.ADMIN, AuthRole.SYSTEM_SUPPORT, AuthRole.SUPER_USER],
     },
   },
   {
@@ -56,25 +65,87 @@ const routes = [
       group: RouteGroup.MISC,
       label: 'About Us',
       isSidebarMenu: true,
+      authType: AuthType.AUTHENTICATED,
+      roles: [AuthRole.STANDARD_USER, AuthRole.ADMIN, AuthRole.SYSTEM_SUPPORT, AuthRole.SUPER_USER],
     },
   },
   {
     path: '/auth',
     name: 'auth',
     redirect: { name: 'login' },
-    meta: <RouteMeta>{
-      group: RouteGroup.AUTH,
-      label: 'Login',
-    },
     children: [
       {
         path: 'login',
         name: 'login',
-        component: () => import('@/views/LoginPage.vue'),
+        component: () => import('@/views/AuthPage.vue'),
         meta: <RouteMeta>{
-          label: 'User Management',
-          isSidebarMenu: true,
+          label: 'Login',
           hideNavigation: true,
+          authType: AuthType.UNAUTHENTICATED,
+          group: RouteGroup.AUTH,
+        },
+      },
+      {
+        path: 'sign-up',
+        name: 'sign-up',
+        component: () => import('@/views/AuthPage.vue'),
+        meta: <RouteMeta>{
+          label: 'Sign Up',
+          hideNavigation: true,
+          authType: AuthType.UNAUTHENTICATED,
+          group: RouteGroup.AUTH,
+        },
+      },
+      {
+        path: 'forgot-password',
+        name: 'forgot-password',
+        component: () => import('@/views/ForgotPasswordPage.vue'),
+        meta: <RouteMeta>{
+          label: 'Forgot Password',
+          hideNavigation: true,
+          authType: AuthType.UNAUTHENTICATED,
+          group: RouteGroup.AUTH,
+        },
+      },
+      {
+        path: 'reset-password',
+        name: 'reset-password',
+        component: () => import('@/views/ResetPasswordPage.vue'),
+        meta: <RouteMeta>{
+          label: 'Reset Password',
+          hideNavigation: true,
+          authType: AuthType.UNAUTHENTICATED,
+          group: RouteGroup.AUTH,
+        },
+      },
+      {
+        path: 'verify-email-guard',
+        name: 'verify-email-guard',
+        component: () => import('@/views/misc/VerifyEmailGuardPage.vue'),
+        meta: <RouteMeta>{
+          label: 'Verify Email',
+          hideNavigation: true,
+          authType: AuthType.AUTHENTICATED,
+        },
+      },
+      {
+        path: 'verify-email/:id/:hash',
+        name: 'process-email-verification',
+        component: () => import('@/views/misc/ProcessEmailVerificationPage.vue'),
+        meta: <RouteMeta>{
+          label: 'Email Verification In-progress',
+          hideNavigation: true,
+          authType: AuthType.OPEN,
+        },
+      },
+      {
+        path: 'verify-account/:id/:hash',
+        name: 'verify-account',
+        component: () => import('@/views/misc/VerifyAccountPage.vue'),
+        meta: <RouteMeta>{
+          label: 'Verify Your Account',
+          hideNavigation: true,
+          authType: AuthType.OPEN,
         },
       },
     ],
@@ -83,19 +154,17 @@ const routes = [
     path: '/admin',
     name: 'admin-tools',
     redirect: { name: 'user-management' },
-    meta: <RouteMeta>{
-      group: RouteGroup.ADMIN_TOOLS,
-      label: 'Admin Tools',
-      isSidebarMenu: true,
-    },
     children: [
       {
         path: 'user-management',
         name: 'user-management',
-        component: () => import('@/views/UsersPage.vue'),
+        component: () => import('@/views/UsersManagementPage.vue'),
         meta: <RouteMeta>{
           label: 'User Management',
           isSidebarMenu: true,
+          group: RouteGroup.ADMIN_TOOLS,
+          authType: AuthType.AUTHENTICATED,
+          roles: [AuthRole.ADMIN, AuthRole.SUPER_USER],
         },
       },
       {
@@ -105,6 +174,9 @@ const routes = [
         meta: <RouteMeta>{
           label: 'Settings',
           isSidebarMenu: true,
+          group: RouteGroup.ADMIN_TOOLS,
+          authType: AuthType.AUTHENTICATED,
+          roles: [AuthRole.ADMIN, AuthRole.SUPER_USER],
         },
       },
     ],
@@ -115,16 +187,91 @@ const routes = [
     component: () => import('@/views/misc/404Page.vue'),
     meta: <RouteMeta>{
       label: 'Page not found',
-      isSidebarMenu: false,
       hideNavigation: true,
+      authType: AuthType.OPEN,
     },
   },
 ]
-/** End Routes Definition **/
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
 })
+
+/** Route Guards **/
+const appName = import.meta.env.VITE_APP_NAME
+router.beforeEach(async (to, from) => {
+  // Always scroll to the top of the page
+  window.scrollTo(0, 0)
+
+  // Redirect 'domain.com/auth' to 'domain.com/auth/sign-up'
+  if (to.name === 'auth') {
+    return { name: 'sign-up' }
+  }
+
+  // Block authenticated users to routes that require them to be unauthenticated
+  // Ex. Login, Sign-up, Forgot Password
+  const authStore = useAuthStore()
+  if (authStore.isAuthenticated && !authStore.authExpired && to.meta.authType === AuthType.UNAUTHENTICATED) {
+    return from
+  }
+
+  // Redirect users to the Verify Email Guard Page if they are authenticated but don't have their email verified
+  if (
+    to.meta.authType === AuthType.AUTHENTICATED &&
+    authStore.isAuthenticated &&
+    to.name !== 'verify-email-guard' &&
+    to.name !== 'verify-account-page' && // this page is omitted, uses can access even if their email is unverified
+    !authStore.authEmailIsVerified
+  ) {
+    return { name: 'verify-email-guard' }
+  }
+
+  // Verify email guard page can only be accessed if the user have not validated their email address
+  if (to.name === 'verify-email-guard' && authStore.authEmailIsVerified) {
+    return { name: 'dashboard' }
+  }
+
+  // Protect routes that need authentication
+  if (to.meta.authType === AuthType.AUTHENTICATED && !authStore.isAuthenticated) {
+    return { name: 'login' }
+  }
+
+  // Protect routes that need certain roles to access
+  if (to.meta.authType === AuthType.AUTHENTICATED) {
+    const roles = authStore.authRoles
+    if (to.meta.roles && !to.meta.roles.some((r: string) => roles.includes(r))) {
+      return { name: 'home' }
+    }
+  }
+
+  // Change the browser tab title
+  document.title = `${appName} | ${to.meta.label}` || appName
+})
+
+/** Typings */
+const enum RouteGroup {
+  HOME = 'Home',
+  ADMIN_TOOLS = 'Admin Tools',
+  MISC = 'Misc',
+  AUTH = 'Auth',
+}
+
+/**
+ * Extending vue-router type
+ * @see https://router.vuejs.org/guide/advanced/meta.html#TypeScript
+ */
+export {}
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    group?: RouteGroup
+    label: string
+    isSidebarMenu?: boolean
+    hideNavigation?: boolean
+    roles?: AuthRole[]
+    authType: AuthType
+  }
+}
 
 vueApp.use(router)

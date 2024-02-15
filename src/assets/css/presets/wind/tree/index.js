@@ -51,8 +51,7 @@ export default {
 
       // States
       {
-        'hover:bg-surface-200 dark:hover:bg-surface-400/10':
-          props.selectionMode == 'single' || props.selectionMode == 'multiple',
+        'hover:bg-surface-200 dark:hover:bg-surface-400/10': props.selectionMode == 'single' || props.selectionMode == 'multiple',
       },
 
       // Transition

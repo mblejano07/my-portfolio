@@ -18,8 +18,7 @@ export default {
       'bg-surface-0 dark:bg-surface-900',
       'shadow-sm',
       {
-        'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0':
-          parent.instance.$name !== 'InputGroup',
+        'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0': parent.instance.$name !== 'InputGroup',
       },
 
       // Shape

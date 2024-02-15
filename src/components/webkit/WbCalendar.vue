@@ -1,59 +1,82 @@
 <script setup lang="ts">
-/** @see https://tailwind.primevue.org/guides/building-ui-library/ */
+/**
+ * @see https://tailwind.primevue.org/guides/building-ui-library/
+ * @see https://primevue.org/calendar/#api
+ */
 
 import Calendar from 'primevue/calendar'
-import { useAttrs } from 'vue'
-
-const attrs = useAttrs()
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
-  invalid: {
-    type: Boolean,
-    default: false,
-  },
-  invalidText: {
-    type: String,
-    default: null,
-  },
-  success: {
-    type: Boolean,
-    default: false,
-  },
-  successText: {
-    type: String,
-    default: null,
-  },
+/** Props */
+type WbCalendarProps = {
+  label: string
+  invalid?: boolean
+  invalidText?: string
+  success?: boolean
+  successText?: string
+  wrapperClass?: string
+  labelClass?: string
+  validationErrorMessageClass?: string
+  validationSuccessMessageClass?: string
+}
+
+const props = withDefaults(defineProps<WbCalendarProps>(), {
+  invalid: false,
+  invalidText: '',
+  success: false,
+  successText: '',
+  wrapperClass: '',
+  labelClass: '',
+  validationErrorMessageClass: '',
+  validationSuccessMessageClass: '',
 })
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
-    <!-- @vue-expect-error inputId will be passed dynamically -->
-    <label :for="attrs.id" class="text-xs text-surface-500">{{ props.label }}</label>
+  <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
+    <label :for="$.uid.toString()" :class="`${props.labelClass || 'text-xs text-surface-800 dark:text-surface-200'}`">{{
+      props.label
+    }}</label>
 
-    <!-- Start InputText-->
-    <!-- End Prepend Icon -->
-    <Calendar v-bind="attrs" :aria-describedby="`${attrs.id}-help`" />
-    <!-- End InputTex -->
+    <div :class="`relative ${$attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">
+      <!-- Start Prepend Icon -->
+      <div
+        :class="`absolute left-3 top-2/4 z-10 -mt-2.5 ${
+          $attrs.disabled ? 'text-surface-300 dark:!text-surface-700' : 'text-surface-500'
+        }`"
+      >
+        <slot name="prepend-icon"></slot>
+      </div>
+      <!-- End Prepend Icon -->
+      <!-- Start Calendar -->
+      <Calendar
+        v-bind="$attrs"
+        :aria-describedby="`${$.uid.toString()}-help`"
+        :class="`h-12 w-full ${$attrs.class}`"
+        :input-class="`h-12 w-full ${$slots['prepend-icon'] ? 'pl-10' : ''} ${
+          props.invalid ? '!ring-error-500 dark:!ring-error-300' : ''
+        } ${$attrs.inputClass}`"
+      />
+    </div>
+    <!-- End Calendar -->
     <!-- Start validation messages -->
-    <small v-if="props.invalid && props.invalidText" class="text-theme-error ml-1 mt-1.5 text-xs">
-      <i class="pi pi-times-circle"></i>
+    <small
+      v-if="props.invalid && props.invalidText"
+      :class="`ml-0.5 ${props.validationErrorMessageClass || 'text-xs text-error-500 dark:text-error-300'}`"
+    >
+      <i class="pi pi-exclamation-triangle mr-0.5"></i>
       {{ props.invalidText }}
     </small>
-    <small v-if="props.success && props.successText" class="text-theme-success ml-1 mt-1.5 text-xs">
-      <i class="pi pi-check-circle"></i>
+    <small
+      v-if="props.success && props.successText"
+      :class="`ml-0.5 ${props.validationSuccessMessageClass || 'dark:tex-success-300 text-xs text-success-500'}`"
+    >
+      <i class="pi pi-check-circle mr-0.5"></i>
       {{ props.successText }}
     </small>
     <!-- End validation messages -->
   </div>
 </template>
-
-<style scoped></style>

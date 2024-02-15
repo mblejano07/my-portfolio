@@ -7,7 +7,7 @@ export default {
       // Spacing
       'p-1.5',
       // Colors
-      'bg-surface-0 dark:bg-surface-700',
+      'bg-surface-0 dark:bg-surface-800',
       'text-surface-700 dark:text-white/80',
       'ring-1 ring-surface-200 dark:ring-surface-700',
     ],
@@ -34,8 +34,7 @@ export default {
 
       // Colors
       {
-        'text-surface-700 dark:text-surface-0': !context.focused,
-        'bg-surface-100 text-primary-500 dark:bg-surface-300/10 dark:text-primary-400': context.focused,
+        'bg-surface-100 dark:bg-surface-400/10': context.focused,
       },
 
       // Transitions
@@ -43,16 +42,12 @@ export default {
       'duration-200',
 
       // States
-      'hover:text-primary-600 dark:hover:text-primary-400',
       'hover:bg-surface-100 dark:hover:bg-surface-400/10',
     ],
   }),
   action: {
     class: [
       'relative',
-
-      // Font
-      'font-semibold',
 
       // Flexbox
       'flex',
@@ -97,7 +92,7 @@ export default {
 
       // Colors
       'bg-surface-0 dark:bg-surface-700',
-      'text-surface-600 dark:text-surface-0/60',
+      'text-surface-500 dark:text-surface-0/50',
     ],
   },
   transition: {

@@ -34,7 +34,7 @@ export default {
       'rounded-md',
 
       // Spacing
-      'mb-2',
+      'mb-4',
 
       // Colors
       'bg-surface-100 dark:bg-surface-700',

@@ -154,9 +154,7 @@ export default {
       context?.size === 'small' ? 'py-2.5 px-2' : context?.size === 'large' ? 'py-5 px-4' : 'py-3.5 px-3',
 
       // Color
-      (props.sortable === '' || props.sortable) && context.sorted
-        ? 'text-primary-500'
-        : 'bg-surface-0 text-surface-700',
+      (props.sortable === '' || props.sortable) && context.sorted ? 'text-primary-500' : 'bg-surface-0 text-surface-700',
       (props.sortable === '' || props.sortable) && context.sorted
         ? 'dark:text-primary-400'
         : 'dark:text-white/80 dark:bg-surface-800',
@@ -198,9 +196,7 @@ export default {
         context?.size === 'small' ? 'py-2.5 px-2' : context?.size === 'large' ? 'py-5 px-4' : 'py-3.5 px-3',
 
         // Color
-        (props.sortable === '' || props.sortable) && context.sorted
-          ? 'text-primary-500'
-          : 'bg-surface-0 text-surface-700',
+        (props.sortable === '' || props.sortable) && context.sorted ? 'text-primary-500' : 'bg-surface-0 text-surface-700',
         (props.sortable === '' || props.sortable) && context.sorted
           ? 'dark:text-primary-400'
           : 'dark:text-white/80 dark:bg-surface-800',

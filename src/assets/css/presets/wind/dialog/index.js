@@ -8,7 +8,7 @@ export default {
 
       // Size
       'max-h-[90vh]',
-      { 'sm:w-full sm:max-w-lg': !state.maximized },
+      { 'w-full md:max-w-3xl': !state.maximized },
       'm-0',
 
       // Transitions

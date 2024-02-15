@@ -5,8 +5,7 @@ export default {
       'absolute',
       // Spacing
       {
-        'px-1.5':
-          context?.right || context?.left || (!context?.right && !context?.left && !context?.top && !context?.bottom),
+        'px-1.5': context?.right || context?.left || (!context?.right && !context?.left && !context?.top && !context?.bottom),
         'py-1.5': context?.top || context?.bottom,
       },
     ],

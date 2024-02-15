@@ -1,22 +1,46 @@
-<script setup lang="ts">
-import Card from 'primevue/card'
-import Button from 'primevue/button'
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div class="mx-auto h-[100%] w-full">
-    <Card>
-      <template #title>About Us</template>
-      <template #content>
-        <p class="m-0">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam
-          deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate
-          neque quas!
-        </p>
-      </template>
-    </Card>
-    <div class="mt-4 flex justify-end">
-      <Button label="Click Me"></Button>
+  <div class="mx-auto flex h-[100%] items-center justify-center">
+    <div class="flex flex-col items-center">
+      <div class="loader"></div>
+      <h1 class="mt-2 font-menu dark:text-surface-100">Nothing to see here. Just a placeholder.</h1>
     </div>
   </div>
 </template>
+
+<style scoped>
+.loader {
+  display: inline-flex;
+  gap: 10px;
+}
+.loader:before,
+.loader:after {
+  content: '';
+  height: 20px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    linear-gradient(#222 0 0) top/100% 40% no-repeat,
+    radial-gradient(farthest-side, #000 95%, #0000) 50%/8px 8px no-repeat #fff;
+  animation: l7 1.5s infinite alternate ease-in;
+}
+@keyframes l7 {
+  0%,
+  70% {
+    background-size:
+      100% 40%,
+      8px 8px;
+  }
+  85% {
+    background-size:
+      100% 120%,
+      8px 8px;
+  }
+  100% {
+    background-size:
+      100% 40%,
+      8px 8px;
+  }
+}
+</style>

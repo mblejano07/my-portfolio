@@ -77,8 +77,7 @@ export default {
       // States
       'hover:text-surface-700 dark:hover:text-white/80',
       'hover:bg-surface-100 dark:hover:bg-surface-800/80',
-      'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-inset',
-      'focus:ring-primary-500 dark:focus:ring-primary-400',
+      'focus:outline-none focus:outline-offset-0',
 
       // Misc
       'overflow-hidden',

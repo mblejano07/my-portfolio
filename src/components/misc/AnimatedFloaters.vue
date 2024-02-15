@@ -1,8 +1,6 @@
 <template>
   <ul class="absolute left-0 top-0 h-full w-full overflow-hidden">
-    <li
-      class="absolute bottom-[-150px] left-[25%] block h-[80px] w-[80px] animate-float-up bg-surface-0 bg-opacity-20"
-    />
+    <li class="absolute bottom-[-150px] left-[25%] block h-[80px] w-[80px] animate-float-up bg-surface-0 bg-opacity-20" />
     <li
       class="absolute bottom-[-150px] left-[55%] block h-[20px] w-[20px] animate-float-up bg-surface-0 bg-opacity-20 animation-delay-[2s] animation-duration-[17s]"
     />

@@ -2,13 +2,14 @@
 
 WebAppKit SPA (Prime) is a VueJS 3 SPA starter kit. This kit includes the following features:
 
+- Implementation of [TypeScrip](https://www.typescriptlang.org/)
 - Implementation of [PrimeVue](https://tailwind.primevue.org/overview) with [TailwindCSS](https://tailwindcss.com)
 - Implementation of [Pinia](https://pinia.vuejs.org) for Central State Management
 - Implementation of [Vuelidate](https://vuelidate-next.netlify.app) for form validation
 - Installation of [FontAwesome](https://fontawesome.com) and [Hero Icons](https://heroicons.com)
 - Router guards for Role-based Access Control
 - Login and Register Screens
-- Home Screen
+- Dashboard Screen with sample charts from [ApexCharts](https://apexcharts.com/)
 - Manage Users Screen (CRUD, Search)
 - Manage App Settings Screen (with change theme implementation)
 - Update Profile information with image upload
@@ -19,8 +20,8 @@ WebAppKit SPA (Prime) is a VueJS 3 SPA starter kit. This kit includes the follow
 - International phone number validation support
 - Git hook and NPM automation with Husky
 - Implementation of field input masking
-- Implementation of reusable input components
-- Eslint, Prettier, Vite, and TailwindCss styling configuration
+- Implementation of reusable input components (based on Tailwind PrimeVue)
+- Eslint, Prettier, Vite, TypScript, and TailwindCss styling configuration
 - Gitlab MR template in `.gitlab/merge_request_templates`
 
 ## Set up your local development environment

@@ -39,8 +39,7 @@ export default {
 
         // Plain Button
         {
-          'text-white bg-gray-500 ring-1 ring-gray-500':
-            parent.props.plain && !parent.props.outlined && !parent.props.text,
+          'text-white bg-gray-500 ring-1 ring-gray-500': parent.props.plain && !parent.props.outlined && !parent.props.text,
         },
         // Plain Text Button
         { 'text-surface-500': parent.props.plain && parent.props.text },
@@ -78,8 +77,7 @@ export default {
         },
         // Primary Text Button
         {
-          'text-primary-500 dark:text-primary-400':
-            parent.props.text && parent.props.severity === null && !parent.props.plain,
+          'text-primary-500 dark:text-primary-400': parent.props.text && parent.props.severity === null && !parent.props.plain,
         },
         // Primary Outlined Button
         {
@@ -90,20 +88,11 @@ export default {
         // Secondary Button
         {
           'text-white dark:text-surface-900':
-            parent.props.severity === 'secondary' &&
-            !parent.props.text &&
-            !parent.props.outlined &&
-            !parent.props.plain,
+            parent.props.severity === 'secondary' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
           'bg-surface-500 dark:bg-surface-400':
-            parent.props.severity === 'secondary' &&
-            !parent.props.text &&
-            !parent.props.outlined &&
-            !parent.props.plain,
+            parent.props.severity === 'secondary' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
           'ring-1 ring-surface-500 dark:ring-surface-400':
-            parent.props.severity === 'secondary' &&
-            !parent.props.text &&
-            !parent.props.outlined &&
-            !parent.props.plain,
+            parent.props.severity === 'secondary' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
         },
         // Secondary Text Button
         {
@@ -147,8 +136,7 @@ export default {
         },
         // Info Text Button
         {
-          'text-blue-500 dark:text-blue-400':
-            parent.props.text && parent.props.severity === 'info' && !parent.props.plain,
+          'text-blue-500 dark:text-blue-400': parent.props.text && parent.props.severity === 'info' && !parent.props.plain,
         },
         // Info Outlined Button
         {
@@ -167,8 +155,7 @@ export default {
         },
         // Warning Text Button
         {
-          'text-orange-500 dark:text-orange-400':
-            parent.props.text && parent.props.severity === 'warning' && !parent.props.plain,
+          'text-orange-500 dark:text-orange-400': parent.props.text && parent.props.severity === 'warning' && !parent.props.plain,
         },
         // Warning Outlined Button
         {
@@ -187,8 +174,7 @@ export default {
         },
         // Help Text Button
         {
-          'text-purple-500 dark:text-purple-400':
-            parent.props.text && parent.props.severity === 'help' && !parent.props.plain,
+          'text-purple-500 dark:text-purple-400': parent.props.text && parent.props.severity === 'help' && !parent.props.plain,
         },
         // Help Outlined Button
         {
@@ -207,8 +193,7 @@ export default {
         },
         // Danger Text Button
         {
-          'text-red-500 dark:text-red-400':
-            parent.props.text && parent.props.severity === 'danger' && !parent.props.plain,
+          'text-red-500 dark:text-red-400': parent.props.text && parent.props.severity === 'danger' && !parent.props.plain,
         },
         // Danger Outlined Button
         {
@@ -219,8 +204,7 @@ export default {
         // --- Severity Button States ---
         'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-offset-current',
         {
-          'focus:ring-offset-2':
-            !parent.props.link && !parent.props.plain && !parent.props.outlined && !parent.props.text,
+          'focus:ring-offset-2': !parent.props.link && !parent.props.plain && !parent.props.outlined && !parent.props.text,
         },
 
         // Link
@@ -250,18 +234,13 @@ export default {
         // Secondary
         {
           'hover:bg-surface-600 dark:hover:bg-surface-300 hover:ring-surface-600 dark:hover:ring-surface-300':
-            parent.props.severity === 'secondary' &&
-            !parent.props.text &&
-            !parent.props.outlined &&
-            !parent.props.plain,
+            parent.props.severity === 'secondary' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
         },
         { 'focus:ring-surface-500 dark:focus:ring-surface-400': parent.props.severity === 'secondary' },
         // Text & Outlined Button
         {
           'hover:bg-surface-300/20':
-            (parent.props.text || parent.props.outlined) &&
-            parent.props.severity === 'secondary' &&
-            !parent.props.plain,
+            (parent.props.text || parent.props.outlined) && parent.props.severity === 'secondary' && !parent.props.plain,
         },
 
         // Success
@@ -368,8 +347,7 @@ export default {
 
         // Plain Button
         {
-          'text-white bg-gray-500 ring-1 ring-gray-500':
-            parent.props.plain && !parent.props.outlined && !parent.props.text,
+          'text-white bg-gray-500 ring-1 ring-gray-500': parent.props.plain && !parent.props.outlined && !parent.props.text,
         },
         // Plain Text Button
         { 'text-surface-500': parent.props.plain && parent.props.text },
@@ -407,8 +385,7 @@ export default {
         },
         // Primary Text Button
         {
-          'text-primary-500 dark:text-primary-400':
-            parent.props.text && parent.props.severity === null && !parent.props.plain,
+          'text-primary-500 dark:text-primary-400': parent.props.text && parent.props.severity === null && !parent.props.plain,
         },
         // Primary Outlined Button
         {
@@ -419,20 +396,11 @@ export default {
         // Secondary Button
         {
           'text-white dark:text-surface-900':
-            parent.props.severity === 'secondary' &&
-            !parent.props.text &&
-            !parent.props.outlined &&
-            !parent.props.plain,
+            parent.props.severity === 'secondary' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
           'bg-surface-500 dark:bg-surface-400':
-            parent.props.severity === 'secondary' &&
-            !parent.props.text &&
-            !parent.props.outlined &&
-            !parent.props.plain,
+            parent.props.severity === 'secondary' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
           'ring-1 ring-surface-500 dark:ring-surface-400':
-            parent.props.severity === 'secondary' &&
-            !parent.props.text &&
-            !parent.props.outlined &&
-            !parent.props.plain,
+            parent.props.severity === 'secondary' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
         },
         // Secondary Text Button
         {
@@ -476,8 +444,7 @@ export default {
         },
         // Info Text Button
         {
-          'text-blue-500 dark:text-blue-400':
-            parent.props.text && parent.props.severity === 'info' && !parent.props.plain,
+          'text-blue-500 dark:text-blue-400': parent.props.text && parent.props.severity === 'info' && !parent.props.plain,
         },
         // Info Outlined Button
         {
@@ -496,8 +463,7 @@ export default {
         },
         // Warning Text Button
         {
-          'text-orange-500 dark:text-orange-400':
-            parent.props.text && parent.props.severity === 'warning' && !parent.props.plain,
+          'text-orange-500 dark:text-orange-400': parent.props.text && parent.props.severity === 'warning' && !parent.props.plain,
         },
         // Warning Outlined Button
         {
@@ -516,8 +482,7 @@ export default {
         },
         // Help Text Button
         {
-          'text-purple-500 dark:text-purple-400':
-            parent.props.text && parent.props.severity === 'help' && !parent.props.plain,
+          'text-purple-500 dark:text-purple-400': parent.props.text && parent.props.severity === 'help' && !parent.props.plain,
         },
         // Help Outlined Button
         {
@@ -536,8 +501,7 @@ export default {
         },
         // Danger Text Button
         {
-          'text-red-500 dark:text-red-400':
-            parent.props.text && parent.props.severity === 'danger' && !parent.props.plain,
+          'text-red-500 dark:text-red-400': parent.props.text && parent.props.severity === 'danger' && !parent.props.plain,
         },
         // Danger Outlined Button
         {
@@ -548,8 +512,7 @@ export default {
         // --- Severity Button States ---
         'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-offset-current',
         {
-          'focus:ring-offset-2':
-            !parent.props.link && !parent.props.plain && !parent.props.outlined && !parent.props.text,
+          'focus:ring-offset-2': !parent.props.link && !parent.props.plain && !parent.props.outlined && !parent.props.text,
         },
 
         // Link
@@ -579,18 +542,13 @@ export default {
         // Secondary
         {
           'hover:bg-surface-600 dark:hover:bg-surface-300 hover:ring-surface-600 dark:hover:ring-surface-300':
-            parent.props.severity === 'secondary' &&
-            !parent.props.text &&
-            !parent.props.outlined &&
-            !parent.props.plain,
+            parent.props.severity === 'secondary' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
         },
         { 'focus:ring-surface-500 dark:focus:ring-surface-400': parent.props.severity === 'secondary' },
         // Text & Outlined Button
         {
           'hover:bg-surface-300/20':
-            (parent.props.text || parent.props.outlined) &&
-            parent.props.severity === 'secondary' &&
-            !parent.props.plain,
+            (parent.props.text || parent.props.outlined) && parent.props.severity === 'secondary' && !parent.props.plain,
         },
 
         // Success

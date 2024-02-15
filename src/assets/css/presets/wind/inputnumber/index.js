@@ -11,8 +11,7 @@ export default {
 
       // Shape
       {
-        'first:rounded-l-md rounded-none last:rounded-r-md':
-          parent.instance.$name == 'InputGroup' && !props.showButtons,
+        'first:rounded-l-md rounded-none last:rounded-r-md': parent.instance.$name == 'InputGroup' && !props.showButtons,
       },
       {
         'border-0 border-y border-l last:border-r border-surface-300 dark:border-surface-600':
@@ -104,8 +103,7 @@ export default {
         // Shape
         'rounded-md',
         {
-          'rounded-tl-none rounded-br-none rounded-bl-none':
-            parent.props.showButtons && parent.props.buttonLayout == 'stacked',
+          'rounded-tl-none rounded-br-none rounded-bl-none': parent.props.showButtons && parent.props.buttonLayout == 'stacked',
         },
         { 'rounded-bl-none rounded-tl-none': parent.props.showButtons && parent.props.buttonLayout == 'horizontal' },
         { 'rounded-bl-none rounded-br-none': parent.props.showButtons && parent.props.buttonLayout == 'vertical' },
@@ -151,8 +149,7 @@ export default {
         // Shape
         'rounded-md',
         {
-          'rounded-tr-none rounded-tl-none rounded-bl-none':
-            parent.props.showButtons && parent.props.buttonLayout == 'stacked',
+          'rounded-tr-none rounded-tl-none rounded-bl-none': parent.props.showButtons && parent.props.buttonLayout == 'stacked',
         },
         { 'rounded-tr-none rounded-br-none ': parent.props.showButtons && parent.props.buttonLayout == 'horizontal' },
         { 'rounded-tr-none rounded-tl-none ': parent.props.showButtons && parent.props.buttonLayout == 'vertical' },
