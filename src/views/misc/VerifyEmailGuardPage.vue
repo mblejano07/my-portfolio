@@ -40,7 +40,7 @@ const handleResendEmailVerification = async () => {
   if (!response.success) {
     return toast.add({
       severity: 'error',
-      summary: 'Verify Email',
+      summary: 'Email Verification',
       detail: 'Unable to resend the email verification',
       life: 5000,
     })
@@ -48,7 +48,7 @@ const handleResendEmailVerification = async () => {
 
   toast.add({
     severity: 'success',
-    summary: 'Forgot Password',
+    summary: 'Email Verification',
     detail: "We've sent you another email verification",
     life: 5000,
   })
