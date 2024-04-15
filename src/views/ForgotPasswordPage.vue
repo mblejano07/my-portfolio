@@ -10,6 +10,7 @@ import { useAuthStore } from '@/stores/auth.store.ts'
 import { useToast } from 'primevue/usetoast'
 import Message from 'primevue/message'
 import AnimatedFloaters from '@/components/misc/AnimatedFloaters.vue'
+import { ApiErrorCode } from '@/typings/http-resources.types.ts'
 
 const payload = reactive<{ email: string }>({
   email: '',
@@ -40,6 +41,7 @@ const resetRequestPasswordButtonLock = () => {
 const authStore = useAuthStore()
 const formIsLoading = ref(false)
 const showErrorAlert = ref(false)
+const errorMessage = ref<string | null>(null)
 const toast = useToast()
 const handleSubmitForm = async () => {
   const valid = await validator.value.$validate()
@@ -49,9 +51,13 @@ const handleSubmitForm = async () => {
   const response = await authStore.requestForgotPassword(payload.email)
   formIsLoading.value = false
 
-  // If it's a validation error, then the email is incorrect (or someone is trying to guess an email)
-  if (!response.success && response.error_code !== 'VALIDATION_ERROR') {
-    return (showErrorAlert.value = true)
+  if (!response.success) {
+    showErrorAlert.value = true
+    if (response.error_code === ApiErrorCode.FORBIDDEN_ERROR)
+      return (errorMessage.value = 'The account using this email address is deactivated. Please contact our support team.')
+    else
+      return (errorMessage.value =
+        "We were unable to send an email to the address you've provided. Please contact our support team.")
   }
 
   toast.add({
@@ -85,9 +91,7 @@ const handleSubmitForm = async () => {
     <!-- Start Alert Message -->
     <transition enter-active-class="transition duration-200" enter-from-class="scale-50 opacity-0" leave-to-class="opacity-0">
       <Message v-if="showErrorAlert" :closable="false" severity="error" class="mx-4 mb-6 md:mx-0">
-        <span
-          >We were unable to send you a password reset email, please try again in a few moments or contact our support team.</span
-        >
+        <span>{{ errorMessage }}</span>
       </Message>
     </transition>
     <!-- End Alert Message -->

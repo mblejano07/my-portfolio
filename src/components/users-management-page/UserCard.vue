@@ -53,5 +53,13 @@ const toggleUserDetailsDialog = () => (showUserDetailsDialog.value = !showUserDe
       <UserDetailsForm :user="props.user" :current-role-filter="props.roleFilter" @user-updated="toggleUserDetailsDialog" />
     </Dialog>
     <!-- End Update-User Dialog -->
+    <!-- Start Deactivated Flag -->
+    <footer
+      v-if="!props.user.active"
+      class="absolute bottom-0 flex w-full items-center justify-center rounded-b-lg bg-error-500 p-1 text-surface-0 shadow-md"
+    >
+      <span class="text-xs">Deactivated</span>
+    </footer>
+    <!-- End Deactivated Flag -->
   </button>
 </template>
