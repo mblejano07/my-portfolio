@@ -30,7 +30,7 @@ onBeforeMount(async () => {
             <template v-if="authStore.isAuthenticated">
               <WbAvatarFileInput />
             </template>
-            <div class="mt-3 flex flex-col text-center text-lg md:ml-8 md:mt-0 md:text-left lg:text-2xl">
+            <div class="mt-8 flex flex-col text-center text-lg md:ml-8 md:mt-0 md:text-left lg:text-2xl">
               <span class="font-bold">{{ authStore.authFullName }}</span>
               <span class="text-xs sm:text-sm">{{ authStore.authFullAddress }}</span>
             </div>

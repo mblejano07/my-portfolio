@@ -11,6 +11,7 @@ import { LoginPayload, useAuthStore } from '@/stores/auth.store.ts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AppLogo from '@/components/layout/AppLogo.vue'
 import { checkIfValidMobileNumber } from '@/utils/helpers.ts'
+import { ApiErrorCode } from '@/typings/http-resources.types.ts'
 
 /** Emits */
 const emit = defineEmits<{
@@ -58,7 +59,10 @@ const handleFormSubmit = async () => {
   if (!res.success) {
     formIsSubmitting.value = false
     showCredsErrorAlert.value = true
-    credsErrorMessage.value = "The credentials you've inputted are incorrect"
+    credsErrorMessage.value =
+      res.error_code === ApiErrorCode.INVALID_CREDENTIALS_ERROR
+        ? "The credentials you've inputted are incorrect"
+        : "We're sorry, but your account login is currently disabled. To reactivate your account, please contact support."
     emit('onCredentialsError', true)
     return
   }
@@ -160,7 +164,7 @@ const manageIfEmailIsPhoneNumber = (payload: LoginPayload) => {
         </template>
       </WbPassword>
       <div>
-        <Button @click="handleFormSubmit" label="Sign in" size="large" class="mt-3 w-full" :loading="formIsSubmitting"> </Button>
+        <Button @click="handleFormSubmit" label="Sign in" size="large" class="mt-3 w-full" :loading="formIsSubmitting"></Button>
       </div>
       <p class="flex justify-between pt-3 text-center">
         <Button

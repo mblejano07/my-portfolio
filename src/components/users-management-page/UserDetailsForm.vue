@@ -57,6 +57,7 @@ const payload = reactive<Partial<UserPayload>>({
   postal_code: props.user.user_profile?.address?.postal_code || null,
   barangay_id: props.user.user_profile?.address?.barangay?.id || null,
   roles: props.user.roles.map((r) => r.id),
+  active: props.user.active,
 })
 
 // We disabled editing and deletion for super users
@@ -71,6 +72,11 @@ const editingEnabled = ref(false)
 const genderOptions = [
   { label: 'Male', value: 'male' },
   { label: 'Female', value: 'female' },
+]
+
+const activationOptions = [
+  { label: 'Activated', value: true },
+  { label: 'Deactivated', value: false },
 ]
 
 /** Roles Options */
@@ -328,27 +334,43 @@ const requireConfirmation = (event: Event) => {
         </WbInputMask>
       </div>
       <!-- End Email and Mobile Number -->
-      <!-- Start Roles Select -->
-      <div class="flex w-full flex-col md:w-[49%] md:flex-row">
-        <WbMultiSelect
-          v-model="payload.roles"
-          :options="rolesOptions"
-          label="Roles"
-          placeholder="-- Select Roles --"
-          optionLabel="label"
-          optionValue="value"
-          optionDisabled="disabled"
-          :loading="rolesOptionsIsLoading"
-          :disabled="rolesOptionsIsLoading || !editingEnabled"
-          display="chip"
-          class="text-xs"
-          :invalid="validator.roles.$invalid"
-          :invalid-text="validator.roles.$errors[0]?.$message"
-          @blur="validator.roles.$touch"
-          @focusin="validator.roles.$dirty = false"
-        />
+      <!-- Start Roles & Activation Select -->
+      <div class="flex flex-col gap-4 md:flex-row">
+        <div class="flex md:w-[49%] md:flex-row">
+          <WbMultiSelect
+            v-model="payload.roles"
+            :options="rolesOptions"
+            label="Roles"
+            placeholder="-- Select Roles --"
+            optionLabel="label"
+            optionValue="value"
+            optionDisabled="disabled"
+            :loading="rolesOptionsIsLoading"
+            :disabled="rolesOptionsIsLoading || !editingEnabled"
+            display="chip"
+            class="text-xs"
+            :invalid="validator.roles.$invalid"
+            :invalid-text="validator.roles.$errors[0]?.$message"
+            @blur="validator.roles.$touch"
+            @focusin="validator.roles.$dirty = false"
+          />
+        </div>
+        <div class="flex md:w-[49%] md:flex-row">
+          <WbDropdown
+            v-model="payload.active"
+            :options="activationOptions"
+            optionLabel="label"
+            optionValue="value"
+            label="Activation Status"
+            :disabled="!editingEnabled"
+          >
+            <template #prepend-icon>
+              <i class="pi pi-lock" />
+            </template>
+          </WbDropdown>
+        </div>
       </div>
-      <!-- End Roles Selection -->
+      <!-- End Roles & Activation Select -->
       <!-- End Credentials -->
 
       <!-- Start Personal Information -->
