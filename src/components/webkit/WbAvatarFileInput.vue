@@ -13,6 +13,13 @@ const authStore = useAuthStore()
 const imageSource = ref<string | undefined | null>(authStore.authenticatedUser?.user_profile?.profile_picture_url)
 const { isLoading } = useImage({ src: imageSource.value || '' })
 
+watch(
+  () => authStore.authenticatedUser?.user_profile?.profile_picture_url,
+  (url) => {
+    imageSource.value = url
+  }
+)
+
 /** Image Selection */
 const file = ref<HTMLInputElement | null>(null)
 const handleBrowseImages = () => {
