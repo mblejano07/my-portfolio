@@ -56,13 +56,27 @@ const handleFormSubmit = async () => {
   const newPayload = manageIfEmailIsPhoneNumber(Object.assign({}, payload))
   const res = await authStore.login(newPayload)
 
+  // Handle unsuccessful login attempt
   if (!res.success) {
     formIsSubmitting.value = false
     showCredsErrorAlert.value = true
-    credsErrorMessage.value =
-      res.error_code === ApiErrorCode.INVALID_CREDENTIALS_ERROR
-        ? "The credentials you've inputted are incorrect"
-        : "We're sorry, but your account login is currently disabled. To reactivate your account, please contact support."
+
+    switch (res.error_code) {
+      case ApiErrorCode.INVALID_CREDENTIALS_ERROR:
+      case ApiErrorCode.VALIDATION_ERROR:
+        credsErrorMessage.value = "The credentials you've entered are incorrect"
+        break
+      case ApiErrorCode.FORBIDDEN_ERROR:
+        credsErrorMessage.value =
+          "We're sorry, but your account login is currently disabled. To reactivate your account, please contact support."
+        break
+      case ApiErrorCode.TOO_MANY_REQUESTS_ERROR:
+        credsErrorMessage.value = "We've received too many attempts from you. Please try again after a few minutes."
+        break
+      default:
+        credsErrorMessage.value = 'Unable to login to your account. Please contact our support team.'
+    }
+
     emit('onCredentialsError', true)
     return
   }
