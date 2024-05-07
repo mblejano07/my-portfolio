@@ -10,6 +10,7 @@ export default {
       'min-h-[4rem]',
 
       // Shape
+      'rounded-md',
       'shadow-md',
 
       // Color

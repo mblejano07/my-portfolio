@@ -41,13 +41,17 @@ export default {
       'text-surface-900 dark:text-surface-0',
       'bg-surface-0 dark:bg-surface-900',
       'placeholder:text-surface-400 dark:placeholder:text-surface-500',
+      'shadow-sm',
 
       // States
       'focus:outline-none focus:outline-offset-0',
-      {
-        'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0': !state.focused,
-        'ring-1 ring-primary-500 dark:ring-primary-400': state.focused,
-      },
+      // States
+      { 'ring-1 ring-inset': !state.focused, 'ring-2 ring-inset ring-primary-500 dark:ring-primary-400': state.focused },
+
+      { 'ring-surface-300 dark:ring-surface-600': !props.invalid && !state.focused },
+
+      // Invalid State
+      { 'ring-red-500 dark:ring-red-400': props.invalid && !state.focused },
 
       // Transition
       'transition duration-200 ease-in-out',
@@ -57,7 +61,7 @@ export default {
     ],
   }),
   inputtoken: ({ props }) => ({
-    class: [{ 'py-1.5 px-0': !props.multiple, 'p-0.5': props.multiple }, 'inline-flex flex-auto'],
+    class: [{ 'py-1.5 px-0': !props.multiple, 'p-0.5': props.multiple }, , 'inline-flex flex-auto'],
   }),
   input: ({ props }) => ({
     class: [
@@ -75,19 +79,22 @@ export default {
       // Spacing
       'm-0',
       { 'py-1.5 px-3': !props.multiple, 'p-0': props.multiple },
-      { 'pr-8': props.loading },
 
       // Colors
       'text-surface-700 dark:text-white/80',
+      'border',
       {
         'bg-surface-0 dark:bg-surface-900': !props.multiple,
-        'border border-surface-300 dark:border-surface-700': !props.multiple,
+        'border-surface-300 dark:border-surface-700': !props.multiple && !props.invalid,
         'border-0 bg-transparent': props.multiple,
       },
 
+      // Invalid State
+      { 'border-red-500 dark:border-red-400': props.invalid },
+
       // States
       {
-        'focus:outline-none focus:outline-offset-0 focus:ring-inset focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400':
+        'focus:outline-none focus:outline-offset-0 focus:ring-inset focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400':
           !props.multiple,
       },
 
@@ -145,7 +152,7 @@ export default {
 
         // Size
         'px-2.5 py-1.5',
-        '-ml-[1px]',
+        '-ml-px',
 
         // Colors
         'text-surface-600 dark:text-surface-100',
@@ -162,7 +169,7 @@ export default {
   loadingicon: {
     class: [
       'text-sm leading-none text-surface-500 dark:text-surface-0/70',
-      'absolute top-[50%] right-[0.9rem] -mt-2 animate-spin',
+      'absolute top-[50%] right-[0.5rem] -mt-2 animate-spin',
     ],
   },
   panel: {
@@ -176,7 +183,7 @@ export default {
       'rounded-md',
       'shadow-md',
       'max-h-[15rem]',
-      'overflow-hidden',
+      'overflow-auto',
 
       // Color
       'bg-surface-0 dark:bg-surface-800',

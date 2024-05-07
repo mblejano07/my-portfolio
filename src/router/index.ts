@@ -8,6 +8,13 @@ import AnnouncementsPage from '@/views/AnnouncementsPage.vue'
 import { AuthRole, AuthType } from '@/typings/auth.types.ts'
 import { useAuthStore } from '@/stores/auth.store.ts'
 
+const enum RouteGroup {
+  HOME = 'Home',
+  ADMIN_TOOLS = 'Admin Tools',
+  MISC = 'Misc',
+  AUTH = 'Auth',
+}
+
 const routes = [
   {
     path: '',
@@ -263,14 +270,6 @@ router.beforeEach(async (to, from) => {
   // Change the browser tab title
   document.title = `${appName} | ${to.meta.label}` || appName
 })
-
-/** Typings */
-const enum RouteGroup {
-  HOME = 'Home',
-  ADMIN_TOOLS = 'Admin Tools',
-  MISC = 'Misc',
-  AUTH = 'Auth',
-}
 
 /**
  * Extending vue-router type

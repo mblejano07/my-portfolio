@@ -1,23 +1,38 @@
 export default {
-  root: ({ props, state }) => ({
+  root: ({ props, state, parent }) => ({
     class: [
       // Display and Position
       'inline-flex',
       'relative',
 
+      // Flex
+      { 'flex-1 w-[1%]': parent.instance.$name == 'InputGroup' },
+
       // Shape
-      'w-full md:w-56',
-      'rounded-md',
       'shadow-sm',
+      { 'rounded-md': parent.instance.$name !== 'InputGroup' },
+      { 'first:rounded-l-md rounded-none last:rounded-r-md': parent.instance.$name == 'InputGroup' },
+      {
+        'border-0 border-y border-l last:border-r border-surface-300 dark:border-surface-600':
+          parent.instance.$name == 'InputGroup',
+      },
+      { 'first:ml-0 ml-[-1px]': parent.instance.$name == 'InputGroup' && !props.showButtons },
 
       // Color and Background
       'bg-surface-0 dark:bg-surface-900',
 
       // States
+
       {
-        'ring-1 ring-inset ring-surface-300 dark:ring-surface-700': !state.focused,
-        'ring-1 ring-inset ring-primary-500 dark:ring-primary-400': state.focused,
+        'ring-1 ring-inset ring-surface-300 dark:ring-surface-700': parent.instance.$name !== 'InputGroup' && !state.focused,
+        'ring-2 ring-inset ring-primary-500 dark:ring-primary-400': parent.instance.$name !== 'InputGroup' && state.focused,
       },
+      { 'ring-1 ring-inset': !state.focused, 'ring-2 ring-inset ring-primary-500 dark:ring-primary-400': state.focused },
+
+      { 'ring-surface-300 dark:ring-surface-600': !props.invalid && !state.focused },
+
+      // Invalid State
+      { 'ring-red-500 dark:ring-red-400': props.invalid && !state.focused },
 
       // Misc
       'cursor-default',
@@ -40,8 +55,8 @@ export default {
       'bg-transparent',
       'border-0',
       {
-        'text-surface-800 dark:text-white/80': props.modelValue,
-        'text-surface-400 dark:text-surface-500': !props.modelValue,
+        'text-surface-900 dark:text-surface-0': props.modelValue != undefined,
+        'text-surface-400 dark:text-surface-500': props.modelValue == undefined,
       },
       'placeholder:text-surface-400 dark:placeholder:text-surface-500',
 
@@ -137,19 +152,19 @@ export default {
       'py-2 px-4',
 
       // Color
-      { 'text-surface-700 dark:text-white/80': !context.focused && !context.selected },
-      {
-        'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80': context.focused && !context.selected,
-      },
+      { 'text-surface-700 dark:text-white/80': !context.focused && !context.selected && !context.disabled },
+      { 'text-surface-600 dark:text-white/70': !context.focused && !context.selected && context.disabled },
+      { 'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80': context.focused && !context.selected },
       { 'bg-primary-500 dark:bg-primary-400 text-white dark:text-surface-700': context.focused && context.selected },
       { 'bg-transparent text-surface-700 dark:text-white/80': !context.focused && context.selected },
 
       //States
       'hover:bg-primary-500 dark:hover:bg-primary-400 hover:text-white dark:hover:text-surface-700',
-      'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
+      'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
 
       // Misc
-      'cursor-pointer',
+      { 'pointer-events-none cursor-default': context.disabled },
+      { 'cursor-pointer': !context.disabled },
       'overflow-hidden',
       'whitespace-nowrap',
     ],
@@ -230,7 +245,7 @@ export default {
       'appearance-none',
 
       // States
-      'focus:ring-1 focus:ring-inset focus:outline-none focus:outline-offset-0',
+      'focus:ring-2 focus:ring-inset focus:outline-none focus:outline-offset-0',
       'focus:ring-primary-600 dark:focus:ring-primary-500',
 
       // Misc
@@ -243,7 +258,7 @@ export default {
   clearicon: {
     class: [
       // Color
-      'text-surface-500 hover:cursor-pointer',
+      'text-surface-500',
 
       // Position
       'absolute',

@@ -2,7 +2,7 @@ export default {
   root: ({ props }) => ({
     class: [
       //Size and Shape
-      'w-80 md:w-96 rounded-md',
+      'w-96 rounded-md',
 
       // Positioning
       { '-translate-x-2/4': props.position === 'top-center' || props.position === 'bottom-center' },
@@ -15,19 +15,24 @@ export default {
       'shadow-lg',
       'bg-surface-0 dark:bg-surface-800',
       'ring-1 ring-inset ring-surface-200 dark:ring-surface-700 ring-offset-0',
-
       // Colors
       {
-        'bg-info-500 dark:text-info-500': props.message.severity === 'info',
+        'text-info-500 dark:text-info-300': props.message.severity === 'info',
         'text-success-500 dark:text-success-300': props.message.severity === 'success',
         'text-warn-500 dark:text-warn-300': props.message.severity === 'warn',
         'text-error-500 dark:text-error-300': props.message.severity === 'error',
       },
     ],
   }),
-  content: {
-    class: 'flex items-start p-4',
-  },
+  content: ({ props }) => ({
+    class: [
+      'flex p-4',
+      {
+        'items-start': props.message.summary,
+        'items-center': !props.message.summary,
+      },
+    ],
+  }),
   icon: {
     class: [
       // Sizing and Spacing
@@ -38,7 +43,7 @@ export default {
   text: {
     class: [
       // Font and Text
-      'text-sm',
+      'text-sm leading-none',
       'ml-2',
       'flex-1',
     ],
@@ -46,9 +51,9 @@ export default {
   summary: {
     class: 'font-medium block',
   },
-  detail: {
-    class: 'mt-1.5 block text-surface-600 dark:text-surface-0/70',
-  },
+  detail: ({ props }) => ({
+    class: ['block', 'text-surface-600 dark:text-surface-0/70', { 'mt-1.5': props.message.summary }],
+  }),
   closebutton: {
     class: [
       // Flexbox
@@ -72,6 +77,8 @@ export default {
 
       // States
       'hover:bg-surface-100 dark:hover:bg-surface-700',
+      'outline-none focus:ring-1 focus:ring-inset',
+      'focus:ring-primary-500 dark:focus:ring-primary-400',
 
       // Misc
       'overflow-hidden',

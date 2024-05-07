@@ -6,7 +6,6 @@ export default {
       'relative',
 
       // Shape
-      'w-full md:w-56',
       'rounded-md',
       'shadow-sm',
 
@@ -14,10 +13,12 @@ export default {
       'bg-surface-0 dark:bg-surface-900',
 
       // States
-      {
-        'ring-1 ring-inset ring-surface-300 dark:ring-surface-700': !state.focused,
-        'ring-2 ring-inset ring-primary-500 dark:ring-primary-400': state.focused,
-      },
+      { 'ring-1 ring-inset': !state.focused, 'ring-2 ring-inset ring-primary-500 dark:ring-primary-400': state.focused },
+
+      { 'ring-surface-300 dark:ring-surface-600': !props.invalid && !state.focused },
+
+      // Invalid State
+      { 'ring-red-500 dark:ring-red-400': props.invalid && !state.focused },
 
       // Misc
       'cursor-default',
@@ -45,10 +46,7 @@ export default {
       // Color and Background
       'bg-transparent',
       'border-0',
-      {
-        'text-surface-800 dark:text-white/80': props.modelValue,
-        'text-surface-400 dark:text-surface-500': !props.modelValue,
-      },
+      { 'text-surface-800 dark:text-white/80': props.modelValue, 'text-surface-400 dark:text-surface-500': !props.modelValue },
       'placeholder:text-surface-400 dark:placeholder:text-surface-500',
 
       // Transitions

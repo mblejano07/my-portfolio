@@ -143,6 +143,8 @@ export const useAuthStore = defineStore('auth', () => {
     authenticatedUser.value = null
     authenticationToken.value = null
     authExpired.value = false
+    mfaToken.value = null
+    mfaSteps.value = null
   }
 
   const requestForgotPassword = async (email: string) => {
