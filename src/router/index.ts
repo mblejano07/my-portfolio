@@ -148,6 +148,16 @@ const routes = [
           authType: AuthType.OPEN,
         },
       },
+      {
+        path: 'mfa-guard',
+        name: 'mfa-guard-page',
+        component: () => import('@/views/misc/MfaGuardPage.vue'),
+        meta: <RouteMeta>{
+          label: 'Multi-Factor Authentication',
+          hideNavigation: true,
+          authType: AuthType.MFA,
+        },
+      },
     ],
   },
   {
@@ -243,6 +253,11 @@ router.beforeEach(async (to, from) => {
     if (to.meta.roles && !to.meta.roles.some((r: string) => roles.includes(r))) {
       return { name: 'home' }
     }
+  }
+
+  // Protect routes that need an MFA token to access
+  if (to.meta.authType === AuthType.MFA && !authStore.mfaToken) {
+    return { name: 'login' }
   }
 
   // Change the browser tab title

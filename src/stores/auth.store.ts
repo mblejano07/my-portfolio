@@ -22,6 +22,16 @@ export const useAuthStore = defineStore('auth', () => {
   })
   const authExpired = ref(false)
 
+  const mfaToken = useStorage<string>('mfa-token', null, sessionStorage, {
+    serializer: StorageSerializers.string,
+  })
+
+  const mfaSteps = useStorage<Array<{ name: string; completed: boolean }>>('mfa-steps', null, sessionStorage, {
+    serializer: StorageSerializers.object,
+    deep: true,
+    mergeDefaults: true,
+  })
+
   /** Computed / Getters */
   const isAuthenticated = computed(() => {
     return !!authenticatedUser.value && !!authenticationToken.value && !authExpired.value
@@ -85,7 +95,15 @@ export const useAuthStore = defineStore('auth', () => {
     const responseData: ApiResponseBody = data.value
 
     if (responseData.success) {
-      const authResponse = responseData.data as AuthResponse
+      const response = responseData.data
+      if (response && 'mfa_token' in response) {
+        const mfaResponse = response as MfaResponse
+        mfaToken.value = mfaResponse.mfa_token
+        mfaSteps.value = mfaResponse.mfa_steps
+        return responseData
+      }
+
+      const authResponse = response as AuthResponse
       authenticationToken.value = authResponse.token
       authenticatedUser.value = authResponse.user
       authExpired.value = false
@@ -179,6 +197,8 @@ export const useAuthStore = defineStore('auth', () => {
     resetPassword,
     resendEmailVerification,
     verifyEmail,
+    mfaToken,
+    mfaSteps,
   }
 })
 
@@ -196,6 +216,12 @@ export type AuthResponse = {
   token_name: string
   expires_at: string
   user: UserResponse
+}
+
+export type MfaResponse = {
+  mfa_token: string
+  mfa_token_expires_at: string
+  mfa_steps: Array<{ name: string; completed: boolean }>
 }
 
 export type ResetPasswordPayload = {
