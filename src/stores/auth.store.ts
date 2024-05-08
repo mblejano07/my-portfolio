@@ -176,6 +176,27 @@ export const useAuthStore = defineStore('auth', () => {
     return data.value as ApiResponseBody
   }
 
+  const resendMfaCode = async () => {
+    const { data } = await useApiCall('auth/mfa/send-code')
+      .post({
+        token: mfaToken.value,
+      })
+      .json()
+
+    return data.value as ApiResponseBody
+  }
+
+  const verifyMfaCode = async (code: string) => {
+    const { data } = await useApiCall('auth/mfa/verify-code')
+      .post({
+        token: mfaToken.value,
+        code: code,
+      })
+      .json()
+
+    return data.value as ApiResponseBody
+  }
+
   const authHasRequiredRole = (requiredRoles: string[]) => {
     const userRoles = authenticatedUser.value.roles.map((role) => role.name)
     return requiredRoles.some((r: string) => userRoles.includes(r))
@@ -201,6 +222,8 @@ export const useAuthStore = defineStore('auth', () => {
     verifyEmail,
     mfaToken,
     mfaSteps,
+    resendMfaCode,
+    verifyMfaCode,
   }
 })
 
