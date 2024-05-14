@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import AnimatedFloaters from '@/components/misc/AnimatedFloaters.vue'
 import AppLogo from '@/components/layout/AppLogo.vue'
@@ -55,13 +55,6 @@ const handleMfaCodeVerification = async (mfaCode: string) => {
 }
 
 /** Handle MFA Step Management **/
-watch(
-  () => authStore.mfaSteps,
-  (newStep) => {
-    console.log('step change', newStep)
-  }
-)
-
 const totalSteps = computed(() => {
   if (!authStore.mfaSteps) return null
 
@@ -79,7 +72,7 @@ const currentStepNumber = computed(() => {
 
 <template>
   <div class="flex h-full w-full justify-center bg-gradient-to-b from-warn-500 to-warn-900 lg:mx-0">
-    <div class="relative z-10 min-w-[96%] md:min-w-[65%] lg:min-w-[50%]">
+    <div class="relative z-10 mx-2 min-w-[96%] sm:mx-0 md:min-w-[65%] lg:min-w-[50%]">
       <!-- Start Header Icon -->
       <div
         class="absolute left-1/2 top-6 hidden h-28 w-28 -translate-x-1/2 transform items-center justify-center rounded-full bg-primary-500 lg:flex"

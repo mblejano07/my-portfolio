@@ -22,7 +22,7 @@ export type AuthResponse = {
   user: UserResponse
 }
 
-type MfaResponse = {
+type MfaResponseData = {
   mfa_token: string
   mfa_token_expires_at: string
   mfa_steps: Array<MfaStep>
@@ -33,6 +33,12 @@ type MfaStep = {
   completed: boolean
   type: 'app' | 'delivery'
   enrolled: boolean
+}
+
+type MfaQrCodeResponseData = {
+  qr_code: string
+  backup_codes: Array<string>
+  current_step: string
 }
 
 export type ResetPasswordPayload = {
@@ -153,8 +159,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (responseData.success) {
       const response = responseData.data
       if (response && 'mfa_token' in response) {
-        console.log('got here')
-        const mfaResponse = response as MfaResponse
+        const mfaResponse = response as MfaResponseData
         mfaToken.value = mfaResponse.mfa_token
         mfaSteps.value = mfaResponse.mfa_steps
         return responseData
@@ -264,6 +269,16 @@ export const useAuthStore = defineStore('auth', () => {
     return responseBody
   }
 
+  const fetchQrCode = async () => {
+    const { data } = await useApiCall('auth/mfa/generate-qrcode')
+      .post({
+        token: mfaToken.value,
+      })
+      .json()
+
+    return data.value.data as MfaQrCodeResponseData
+  }
+
   const authHasRequiredRole = (requiredRoles: string[]) => {
     const userRoles = authenticatedUser.value.roles.map((role) => role.name)
     return requiredRoles.some((r: string) => userRoles.includes(r))
@@ -292,5 +307,6 @@ export const useAuthStore = defineStore('auth', () => {
     resendMfaCode,
     verifyMfaCode,
     currentMfaStep,
+    fetchQrCode,
   }
 })
