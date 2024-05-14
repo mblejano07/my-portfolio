@@ -17,7 +17,7 @@ const timer = ref(10)
 let timerId: NodeJS.Timeout | undefined = undefined
 const authStore = useAuthStore()
 const route = useRoute()
-const broadcaster = useBroadcastChannel({ name: BroadcastChannelName.EMAIL_VERIFICATION_CHANNEL })
+const broadcaster = useBroadcastChannel({ name: BroadcastChannelName.EMAIL_VERIFIED_CHANNEL })
 onMounted(async () => {
   isLoading.value = true
 

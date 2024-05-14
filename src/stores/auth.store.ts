@@ -6,6 +6,49 @@ import { ApiResponseBody } from '@/typings/http-resources.types.ts'
 import { UserResponse } from '@/typings/models.types.ts'
 import { RegistrationPayload } from '@/stores/forms.store.ts'
 
+/** Typings */
+export type LoginPayload = {
+  email?: string
+  mobile_number?: string
+  password: string
+  with_user?: boolean
+  client_name?: string
+}
+
+export type AuthResponse = {
+  token: string
+  token_name: string
+  expires_at: string
+  user: UserResponse
+}
+
+type MfaResponse = {
+  mfa_token: string
+  mfa_token_expires_at: string
+  mfa_steps: Array<MfaStep>
+}
+
+type MfaStep = {
+  name: string
+  completed: boolean
+  type: 'app' | 'delivery'
+  enrolled: boolean
+}
+
+export type ResetPasswordPayload = {
+  email: string
+  token: string
+  password: string
+  password_confirmation: string
+}
+
+export type VerifyEmailPayload = {
+  id: string
+  hash: string
+  signature: string
+  expires: string
+}
+
 export const useAuthStore = defineStore('auth', () => {
   /**
    * States
@@ -26,7 +69,7 @@ export const useAuthStore = defineStore('auth', () => {
     serializer: StorageSerializers.string,
   })
 
-  const mfaSteps = useStorage<Array<{ name: string; completed: boolean }>>('mfa-steps', null, sessionStorage, {
+  const mfaSteps = useStorage<Array<MfaStep>>('mfa-steps', null, sessionStorage, {
     serializer: StorageSerializers.object,
     deep: true,
     mergeDefaults: true,
@@ -86,6 +129,19 @@ export const useAuthStore = defineStore('auth', () => {
     return address
   })
 
+  const currentMfaStep = computed(() => {
+    if (!mfaSteps.value) return null
+
+    // Get the first MFA step that has completed = false
+    for (const step of mfaSteps.value) {
+      if (!step.completed) {
+        return step
+      }
+    }
+
+    return null
+  })
+
   /** Actions */
   const login = async (payload: LoginPayload) => {
     payload.with_user = true
@@ -97,6 +153,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (responseData.success) {
       const response = responseData.data
       if (response && 'mfa_token' in response) {
+        console.log('got here')
         const mfaResponse = response as MfaResponse
         mfaToken.value = mfaResponse.mfa_token
         mfaSteps.value = mfaResponse.mfa_steps
@@ -194,7 +251,17 @@ export const useAuthStore = defineStore('auth', () => {
       })
       .json()
 
-    return data.value as ApiResponseBody
+    const responseBody = data.value as ApiResponseBody
+    if (responseBody.success) {
+      for (const step of mfaSteps.value) {
+        if (!step.completed && step.name === currentMfaStep.value?.name) {
+          step.completed = true
+          break
+        }
+      }
+    }
+
+    return responseBody
   }
 
   const authHasRequiredRole = (requiredRoles: string[]) => {
@@ -224,41 +291,6 @@ export const useAuthStore = defineStore('auth', () => {
     mfaSteps,
     resendMfaCode,
     verifyMfaCode,
+    currentMfaStep,
   }
 })
-
-/** Typings */
-export type LoginPayload = {
-  email?: string
-  mobile_number?: string
-  password: string
-  with_user?: boolean
-  client_name?: string
-}
-
-export type AuthResponse = {
-  token: string
-  token_name: string
-  expires_at: string
-  user: UserResponse
-}
-
-export type MfaResponse = {
-  mfa_token: string
-  mfa_token_expires_at: string
-  mfa_steps: Array<{ name: string; completed: boolean }>
-}
-
-export type ResetPasswordPayload = {
-  email: string
-  token: string
-  password: string
-  password_confirmation: string
-}
-
-export type VerifyEmailPayload = {
-  id: string
-  hash: string
-  signature: string
-  expires: string
-}

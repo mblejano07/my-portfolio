@@ -74,7 +74,7 @@ const handleLogout = async () => {
 }
 
 // Handle Broadcast even from the Process Email Verification Page
-const broadcaster = useBroadcastChannel({ name: BroadcastChannelName.EMAIL_VERIFICATION_CHANNEL })
+const broadcaster = useBroadcastChannel({ name: BroadcastChannelName.EMAIL_VERIFIED_CHANNEL })
 const profileStore = useProfileStore()
 watch(
   () => broadcaster.data.value,

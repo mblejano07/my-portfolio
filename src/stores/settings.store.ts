@@ -4,6 +4,17 @@ import { StorageSerializers, useStorage } from '@vueuse/core'
 import { ApiResponseBody } from '@/typings/http-resources.types.ts'
 import { useAuthStore } from '@/stores/auth.store.ts'
 import { SettingsResponse } from '@/typings/models.types.ts'
+import { computed } from 'vue'
+
+/** Typings */
+export type SettingsPayload = {
+  theme: 'light' | 'dark'
+}
+
+export type MfaConfig = {
+  enabled: boolean
+  steps: Array<{ name: string; completed: boolean }>
+}
 
 export const useSettingsStore = defineStore('settings', () => {
   const authStore = useAuthStore()
@@ -13,6 +24,19 @@ export const useSettingsStore = defineStore('settings', () => {
     serializer: StorageSerializers.object,
     deep: true,
     mergeDefaults: true,
+  })
+
+  /** Getters / Computed **/
+  const mfaIsEnabled = computed(() => {
+    let mfaConfig = null
+    for (const config of appSettings.value) {
+      if (config['name'] === 'mfa') {
+        mfaConfig = JSON.parse(config['value']) as MfaConfig
+        break
+      }
+    }
+
+    return !!mfaConfig?.enabled
   })
 
   /** Actions */
@@ -42,10 +66,6 @@ export const useSettingsStore = defineStore('settings', () => {
     appSettings,
     fetchSettings,
     storeSettings,
+    mfaIsEnabled,
   }
 })
-
-/** Types */
-export type SettingsPayload = {
-  theme: 'light' | 'dark'
-}
