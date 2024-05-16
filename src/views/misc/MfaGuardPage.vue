@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import AnimatedFloaters from '@/components/misc/AnimatedFloaters.vue'
 import AppLogo from '@/components/layout/AppLogo.vue'
 import Button from 'primevue/button'
@@ -68,6 +68,44 @@ const currentStepNumber = computed(() => {
     return count + (step.completed ? 1 : 0)
   }, 1)
 })
+
+const route = useRoute()
+watch(
+  () => authStore.allMfaStepsCompeted,
+  async (completed) => {
+    if (!completed) return
+
+    // Handle route redirection from account verification page with params and queries (to the OTP page)
+    if (route.query.from === 'verify-account') {
+      return await router.replace({
+        name: route.query.from,
+        params: {
+          id: route.query.id as string,
+          hash: route.query.hash as string,
+        },
+        query: {
+          expires: route.query.expires,
+          signature: route.query.signature,
+        },
+      })
+    }
+
+    // Handle a regular redirect if the `from` query exists (to the OTP page)
+    if (route.query.from) {
+      try {
+        return await router.replace({ name: route.query.from as string })
+      } catch (e) {
+        return await router.replace({ name: 'dashboard' })
+      }
+    }
+
+    await router.replace({ name: 'dashboard' })
+  }
+)
+
+const stepStatus = computed(() => {
+  return totalSteps.value && totalSteps.value > 1 ? '(' + currentStepNumber.value + '/' + totalSteps.value + ')' : ''
+})
 </script>
 
 <template>
@@ -101,13 +139,14 @@ const currentStepNumber = computed(() => {
             <DeliveryBasedForm
               v-if="authStore.currentMfaStep?.type === 'delivery'"
               :mfa-name="snakeCaseToTitleCase(authStore.currentMfaStep?.name ?? '')"
-              :steps-status="`(${currentStepNumber}/${totalSteps})`"
+              :steps-status="stepStatus"
               :verify-code="handleMfaCodeVerification"
+              :is-first-mfa-step="currentStepNumber === 1"
             />
             <AppBasedForm
               v-else
               :mfa-name="snakeCaseToTitleCase(authStore.currentMfaStep?.name ?? '')"
-              :steps-status="`(${currentStepNumber}/${totalSteps})`"
+              :steps-status="stepStatus"
               :verify-code="handleMfaCodeVerification"
             />
             <!-- End MFA Form -->

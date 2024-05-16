@@ -21,6 +21,9 @@ import {
   faCog,
   faKey,
   faDatabase,
+  faArrowCircleRight,
+  faArrowCircleLeft,
+  faCircleCheck,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -43,5 +46,8 @@ library.add(
   faBell,
   faCog,
   faKey,
-  faDatabase
+  faDatabase,
+  faArrowCircleRight,
+  faCircleCheck,
+  faArrowCircleLeft
 )

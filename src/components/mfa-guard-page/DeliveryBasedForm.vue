@@ -10,6 +10,7 @@ const props = defineProps({
   mfaName: String,
   stepsStatus: String,
   verifyCode: Function,
+  isFirstMfaStep: Boolean,
 })
 
 /** Handle MFA code verification **/
@@ -19,9 +20,11 @@ const mfaCodeIsBeingVerified = ref(false)
 const handleCodeVerification = async (code: string) => {
   mfaCodeIsBeingVerified.value = true
   let isVerified = false
+
   if (props.verifyCode) {
     isVerified = await props.verifyCode(code)
   }
+
   mfaCodeIsBeingVerified.value = false
 
   if (isVerified) mfaCode.value = ''
@@ -80,7 +83,7 @@ const handleResendMfaCode = async () => {
 <template>
   <div class="w-full">
     <!-- Start Form Title -->
-    <h1 class="self-start font-menu text-xl text-surface-800 dark:text-surface-100">
+    <h1 class="text-md self-start font-menu text-surface-800 dark:text-surface-100 sm:text-lg md:text-xl">
       <span>{{ props.stepsStatus }}</span>
       {{ props.mfaName }}: Multi-Factor Authentication
     </h1>
@@ -111,7 +114,7 @@ const handleResendMfaCode = async () => {
             :loading="mfaCodeIsBeingResent"
             @click="handleResendMfaCode"
             severity="secondary"
-            label="Re-send OTP"
+            :label="`${props.isFirstMfaStep ? 'Re-send OTP' : 'Send OTP'}`"
             class="w-full sm:w-fit"
           >
             <template #icon>
@@ -125,6 +128,7 @@ const handleResendMfaCode = async () => {
         <Button
           :loading="mfaCodeIsBeingVerified"
           @click="handleCodeVerification(mfaCode)"
+          :disabled="!mfaCode"
           label="Verify Code"
           class="w-full sm:w-40"
         >

@@ -24,6 +24,7 @@ const tailwindConfig = {
       fontFamily: {
         menu: ['Comfortaa', 'sans-serif'],
         content: ['Lato', 'sans-serif'],
+        code: ['DM Mono', 'monospace'],
       },
       colors: {
         'primary-50': withOpacity('primary-50'),

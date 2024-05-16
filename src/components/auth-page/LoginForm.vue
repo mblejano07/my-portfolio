@@ -23,9 +23,10 @@ const props = withDefaults(defineProps<{ showLoginExpiredAlert: boolean }>(), {
   showLoginExpiredAlert: false,
 })
 
+const route = useRoute()
 /** Payload */
 const payload = reactive<LoginPayload>({
-  email: '',
+  email: (route.query.email as string) || '',
   password: '',
 })
 
@@ -46,7 +47,6 @@ const formIsSubmitting = ref(false)
 const showCredsErrorAlert = ref(false)
 const credsErrorMessage = ref('')
 const router = useRouter()
-const route = useRoute()
 const authStore = useAuthStore()
 const handleLogin = async () => {
   formIsSubmitting.value = true
@@ -86,12 +86,11 @@ const handleLogin = async () => {
   // Handle route redirection from account verification page with params and queries
   if (route.query.from === 'verify-account') {
     return await router.replace({
-      name: route.query.from,
-      params: {
-        id: route.query.id as string,
-        hash: route.query.hash as string,
-      },
+      name: 'mfa-guard-page',
       query: {
+        from: route.query.from,
+        id: route.query.id,
+        hash: route.query.hash,
         expires: route.query.expires,
         signature: route.query.signature,
       },

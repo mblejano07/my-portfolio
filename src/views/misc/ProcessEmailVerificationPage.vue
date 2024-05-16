@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AnimatedFloaters from '@/components/misc/AnimatedFloaters.vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AppLogo from '@/components/layout/AppLogo.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { onUnmounted, ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth.store.ts'
 import { useRoute } from 'vue-router'

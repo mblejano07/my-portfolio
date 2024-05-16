@@ -238,7 +238,7 @@ router.beforeEach(async (to, from) => {
     to.meta.authType === AuthType.AUTHENTICATED &&
     authStore.isAuthenticated &&
     to.name !== 'verify-email-guard' &&
-    to.name !== 'verify-account-page' && // this page is omitted, uses can access even if their email is unverified
+    to.name !== 'verify-account' && // this page is omitted, uses can access even if their email is unverified
     !authStore.authEmailIsVerified
   ) {
     return { name: 'verify-email-guard' }
@@ -251,6 +251,7 @@ router.beforeEach(async (to, from) => {
 
   // Protect routes that need authentication
   if (to.meta.authType === AuthType.AUTHENTICATED && !authStore.isAuthenticated) {
+    if (authStore.mfaToken) return { name: 'mfa-guard-page' }
     return { name: 'login' }
   }
 

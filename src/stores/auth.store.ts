@@ -41,6 +41,12 @@ type MfaQrCodeResponseData = {
   current_step: string
 }
 
+export type MfaVerifyBackupCodeResponseData = {
+  message: string
+  current_step: string
+  qr_code: string
+}
+
 export type ResetPasswordPayload = {
   email: string
   token: string
@@ -146,6 +152,12 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     return null
+  })
+
+  const allMfaStepsCompeted = computed(() => {
+    if (!mfaSteps.value) return true
+
+    return mfaSteps.value.every((step) => step.completed)
   })
 
   /** Actions */
@@ -258,15 +270,35 @@ export const useAuthStore = defineStore('auth', () => {
 
     const responseBody = data.value as ApiResponseBody
     if (responseBody.success) {
+      // Mark the MFA step as complete
       for (const step of mfaSteps.value) {
         if (!step.completed && step.name === currentMfaStep.value?.name) {
           step.completed = true
           break
         }
       }
+
+      // If all steps are completed, an auth token is returned, and we log in the user
+      if (allMfaStepsCompeted.value && responseBody.data && 'token' in responseBody.data) {
+        const authResponse = responseBody.data as AuthResponse
+        authenticationToken.value = authResponse.token
+        authenticatedUser.value = authResponse.user
+        authExpired.value = false
+      }
     }
 
     return responseBody
+  }
+
+  const verifyMfaBackupCode = async (code: string) => {
+    const { data } = await useApiCall('auth/mfa/verify-backup-code')
+      .post({
+        token: mfaToken.value,
+        code: code,
+      })
+      .json()
+
+    return data.value as ApiResponseBody
   }
 
   const fetchQrCode = async () => {
@@ -308,5 +340,7 @@ export const useAuthStore = defineStore('auth', () => {
     verifyMfaCode,
     currentMfaStep,
     fetchQrCode,
+    allMfaStepsCompeted,
+    verifyMfaBackupCode,
   }
 })
