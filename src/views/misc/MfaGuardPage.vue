@@ -40,16 +40,32 @@ const handleMfaCodeVerification = async (mfaCode: string) => {
     return false
   }
 
-  if (!response.success && response.error_code === ApiErrorCode.TOO_MANY_REQUESTS_ERROR) {
+  // We go back to login page if we receive an invalid mfa attempt error
+  if (!response.success && response.error_code === ApiErrorCode.INVALID_MFA_ATTEMPT_TOKEN_ERROR) {
+    toast.add({
+      severity: 'error',
+      summary: 'Multi-Factor Authentication',
+      detail: 'Your MFA attempt session has expired',
+      life: 5000,
+    })
+
+    await router.replace({ name: 'login' })
+
     return false
   }
 
-  toast.add({
-    severity: 'success',
-    summary: 'Multi-Factor Authentication',
-    detail: 'OTP verification success',
-    life: 3000,
-  })
+  if (!response.success) {
+    return false
+  }
+
+  if (!authStore.allMfaStepsCompeted) {
+    toast.add({
+      severity: 'success',
+      summary: 'Multi-Factor Authentication',
+      detail: 'OTP verification success',
+      life: 3000,
+    })
+  }
 
   return true
 }
@@ -109,8 +125,10 @@ const stepStatus = computed(() => {
 </script>
 
 <template>
-  <div class="flex h-full w-full justify-center bg-gradient-to-b from-warn-500 to-warn-900 lg:mx-0">
-    <div class="relative z-10 mx-2 min-w-[96%] sm:mx-0 md:min-w-[65%] lg:min-w-[50%]">
+  <div
+    class="flex h-full w-full justify-center bg-gradient-to-b from-warn-500 to-warn-900 dark:from-warn-900 dark:to-warn-950 lg:mx-0"
+  >
+    <div class="relative z-10 w-[96%] min-w-[96%] sm:mx-0 sm:w-auto md:min-w-[65%] lg:min-w-[50%]">
       <!-- Start Header Icon -->
       <div
         class="absolute left-1/2 top-6 hidden h-28 w-28 -translate-x-1/2 transform items-center justify-center rounded-full bg-primary-500 lg:flex"

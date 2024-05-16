@@ -38,6 +38,7 @@ const showOtpInput = ref(authStore.currentMfaStep?.enrolled && !showBackupCodesI
 
 const qrCodeBase64 = ref<null | string>(null)
 const backupCodes = ref<Array<string>>([])
+const setupKey = ref<null | string>(null)
 const qrCodeIsLoading = ref(false)
 onBeforeMount(async () => {
   if (showQrCode.value) {
@@ -53,6 +54,7 @@ onBeforeMount(async () => {
 
     qrCodeBase64.value = responseData.qr_code
     backupCodes.value = responseData.backup_codes
+    setupKey.value = responseData.secret_key
   }
 })
 
@@ -86,7 +88,7 @@ const handleVerifyBackupCode = async () => {
   const response = await authStore.verifyMfaBackupCode(backupCode.value)
   backupCodeIsBeingVerified.value = false
 
-  if (!response.success && response.error_code !== ApiErrorCode.TOO_MANY_REQUESTS_ERROR) {
+  if (!response.success && response.error_code === ApiErrorCode.INVALID_MFA_BACKUP_CODE_ERROR) {
     toast.add({
       severity: 'error',
       summary: 'Multi-Factor Authentication',
@@ -110,6 +112,7 @@ const handleVerifyBackupCode = async () => {
 
   const responseData = response.data as MfaVerifyBackupCodeResponseData
   qrCodeBase64.value = responseData.qr_code
+  setupKey.value = responseData.secret_key
   handleShowQrCode()
 }
 
@@ -126,6 +129,8 @@ const handleShowOtpInput = () => {
   showQrCode.value = false
   showOtpInput.value = true
   showBackupCodesInput.value = false
+
+  backupCodes.value = []
 }
 </script>
 
@@ -146,7 +151,7 @@ const handleShowOtpInput = () => {
         </span>
         <span v-if="showQrCode">
           <span class="font-bold">Scan</span> the QR code with the
-          <span class="font-bold text-primary-500">{{ props.mfaName }}</span> app. Note that this QR code will only be displayed
+          <span class="font-bold text-primary-500">{{ props.mfaName }}</span> app. Note that the QR code will only be displayed
           <b>once</b>.
         </span>
         <span v-if="showBackupCodes">
@@ -164,12 +169,15 @@ const handleShowOtpInput = () => {
     <!-- End Form Caption -->
     <div class="mt-4 flex justify-center">
       <!-- Start show the QR code first if the user has not enrolled yet -->
-      <div v-if="showQrCode">
+      <div v-if="showQrCode" class="flex w-full flex-col items-center justify-center text-sm">
         <Image :src="qrCodeBase64 || undefined" alt="MFA QR Code" width="250"></Image>
+        <br />
+        <span class="mb-1">Or you may manually use the time-based set-up key</span>
+        <span class="text-md font-code sm:text-xl">{{ setupKey }}</span>
       </div>
       <!-- End show the QR code first if the user has not enrolled yet -->
       <!-- Start Code Input -->
-      <InputOtp v-if="showOtpInput" v-model="mfaCode" :length="6" style="gap: 0">
+      <InputOtp v-if="showOtpInput" v-model="mfaCode" :length="6" :integer-only="true" style="gap: 0">
         <template #default="{ attrs, events, index }">
           <input type="text" v-bind="attrs" v-on="events" class="otp-input" />
           <div v-if="index === 3" class="px-3">
@@ -183,7 +191,7 @@ const handleShowOtpInput = () => {
         <div
           v-for="code in backupCodes"
           :key="code"
-          class="text-md mb-1 rounded-lg bg-surface-200 px-3 py-1 font-code sm:text-xl"
+          class="text-md mb-1 rounded-lg bg-surface-200 px-3 py-1 font-code dark:bg-surface-800 sm:text-xl"
         >
           {{ code }}
         </div>

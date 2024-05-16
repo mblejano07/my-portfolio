@@ -88,7 +88,9 @@ watch(
 </script>
 
 <template>
-  <div class="flex h-full w-full justify-center bg-gradient-to-b from-warn-500 to-warn-900 lg:mx-0">
+  <div
+    class="flex h-full w-full justify-center bg-gradient-to-b from-warn-500 to-warn-900 dark:from-warn-900 dark:to-warn-950 lg:mx-0"
+  >
     <div class="relative z-10 w-[96%] md:w-[65%] lg:w-[50%]">
       <!-- Start Header Icon -->
       <div

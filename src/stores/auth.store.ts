@@ -39,12 +39,14 @@ type MfaQrCodeResponseData = {
   qr_code: string
   backup_codes: Array<string>
   current_step: string
+  secret_key: string
 }
 
 export type MfaVerifyBackupCodeResponseData = {
   message: string
   current_step: string
   qr_code: string
+  secret_key: string
 }
 
 export type ResetPasswordPayload = {
