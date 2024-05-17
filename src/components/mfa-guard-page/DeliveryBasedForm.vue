@@ -90,13 +90,16 @@ const handleResendMfaCode = async () => {
     <!-- End Form Title -->
     <div class="flex w-full flex-col text-surface-600">
       <!-- Start Form Caption -->
-      <p class="my-2 text-sm leading-relaxed dark:text-surface-100">
+      <p v-if="props.isFirstMfaStep" class="my-2 text-sm leading-relaxed dark:text-surface-100">
         We've sent a six-digit one-time-password sent to your inbox. Please enter the code to proceed.
+      </p>
+      <p v-else class="my-2 text-sm leading-relaxed dark:text-surface-100">
+        Use the <b>Send OTP</b> button to receive a six-digit one-time-password. Please enter the code to proceed.
       </p>
       <!-- End Form Caption -->
       <!-- Start Code Input -->
       <div class="mt-4 flex justify-center">
-        <InputOtp v-model="mfaCode" :length="6" :integer-only="true" style="gap: 0">
+        <InputOtp v-model="mfaCode" :length="6" style="gap: 0">
           <template #default="{ attrs, events, index }">
             <input type="text" v-bind="attrs" v-on="events" class="otp-input" />
             <div v-if="index === 3" class="px-3">

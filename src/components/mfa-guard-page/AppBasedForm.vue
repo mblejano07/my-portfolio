@@ -177,7 +177,7 @@ const handleShowOtpInput = () => {
       </div>
       <!-- End show the QR code first if the user has not enrolled yet -->
       <!-- Start Code Input -->
-      <InputOtp v-if="showOtpInput" v-model="mfaCode" :length="6" :integer-only="true" style="gap: 0">
+      <InputOtp v-if="showOtpInput" v-model="mfaCode" :length="6" style="gap: 0">
         <template #default="{ attrs, events, index }">
           <input type="text" v-bind="attrs" v-on="events" class="otp-input" />
           <div v-if="index === 3" class="px-3">

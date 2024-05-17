@@ -62,8 +62,8 @@ const handleMfaCodeVerification = async (mfaCode: string) => {
     toast.add({
       severity: 'success',
       summary: 'Multi-Factor Authentication',
-      detail: 'OTP verification success',
-      life: 3000,
+      detail: 'OTP verification success. Continue to the next step.',
+      life: 4000,
     })
   }
 

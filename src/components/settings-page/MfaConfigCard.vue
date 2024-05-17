@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Card from 'primevue/card'
 import SelectButton from 'primevue/selectbutton'
-import Divider from 'primevue/divider'
 import Button from 'primevue/button'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { onBeforeMount, onUnmounted, ref } from 'vue'
@@ -139,7 +138,7 @@ onUnmounted(() => {
         </div>
         <!-- Start List -->
         <div v-show="mfaEnabled && !mfaStepsListAreLoading" class="w-full">
-          <Divider class="my-6" />
+          <hr class="border-surface-250 my-4 dark:border-surface-700" />
           <p class="md:text-medium text-sm text-surface-700 dark:text-surface-400">
             Listed here are all the enabled and disabled MFA steps. You may <b>drag & drop</b> the individual verification methods
             to change their order. At least one item should be in this list if MFA is enabled.
@@ -171,7 +170,7 @@ onUnmounted(() => {
             <!-- End Enabled List -->
           </div>
           <!-- Start Disabled List -->
-          <div v-if="disabledStepsList.length > 0" class="mt-10 w-full">
+          <div v-if="disabledStepsList.length > 0" class="mt-8 w-full">
             <p class="mb-5 text-sm">You may add an MFA step from this list by clicking the <b>Enable</b> button.</p>
             <div
               v-for="step in disabledStepsList"
