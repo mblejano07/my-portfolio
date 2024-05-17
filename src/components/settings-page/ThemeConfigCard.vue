@@ -71,7 +71,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Card>
+  <Card class="max-h-80">
     <template #content>
       <div class="w-full">
         <h1 class="font-menu text-lg font-bold dark:text-surface-200 md:text-xl">Application Theme</h1>
@@ -91,7 +91,7 @@ onUnmounted(() => {
       </div>
     </template>
     <template #footer>
-      <div class="mx-6 flex justify-end">
+      <div class="flex justify-end">
         <Button label="Save" @click="saveSettings" :loading="formIsLoading" :disabled="formIsLoading">
           <template #icon>
             <i class="pi pi-save mr-1"></i>

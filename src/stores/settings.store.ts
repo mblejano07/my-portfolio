@@ -14,6 +14,7 @@ export type SettingsPayload = {
 
 export type MfaConfig = {
   enabled: boolean
+  allow_api_management: boolean
   steps: Array<{ name: string; completed: boolean }>
 }
 
@@ -38,6 +39,18 @@ export const useSettingsStore = defineStore('settings', () => {
     }
 
     return !!mfaConfig?.enabled
+  })
+
+  const mfaIsConfigurable = computed(() => {
+    let mfaConfig = null
+    for (const config of appSettings.value) {
+      if (config['name'] === 'mfa') {
+        mfaConfig = JSON.parse(config['value']) as MfaConfig
+        break
+      }
+    }
+
+    return !!mfaConfig?.allow_api_management
   })
 
   /** Actions */
@@ -68,5 +81,6 @@ export const useSettingsStore = defineStore('settings', () => {
     fetchSettings,
     storeSettings,
     mfaIsEnabled,
+    mfaIsConfigurable,
   }
 })

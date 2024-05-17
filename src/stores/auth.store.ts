@@ -42,6 +42,12 @@ type MfaQrCodeResponseData = {
   secret_key: string
 }
 
+export type MfaAllStepsResponseData = Array<{
+  name: string
+  enabled: boolean
+  type: 'app' | 'delivery'
+}>
+
 export type MfaVerifyBackupCodeResponseData = {
   message: string
   current_step: string
@@ -313,6 +319,12 @@ export const useAuthStore = defineStore('auth', () => {
     return data.value.data as MfaQrCodeResponseData
   }
 
+  const fetchAllAvailableMfaMethods = async () => {
+    const { data } = await useApiCall('auth/mfa/available-methods', authenticationToken.value).get().json()
+
+    return data.value.data as MfaAllStepsResponseData
+  }
+
   const authHasRequiredRole = (requiredRoles: string[]) => {
     const userRoles = authenticatedUser.value.roles.map((role) => role.name)
     return requiredRoles.some((r: string) => userRoles.includes(r))
@@ -344,5 +356,6 @@ export const useAuthStore = defineStore('auth', () => {
     fetchQrCode,
     allMfaStepsCompeted,
     verifyMfaBackupCode,
+    fetchAllAvailableMfaMethods,
   }
 })
