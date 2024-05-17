@@ -119,7 +119,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Card>
+  <Card class="min-h-72">
     <template #content>
       <div class="w-full">
         <h1 class="font-menu text-lg font-bold dark:text-surface-200 md:text-xl">Multi-Factor Authentication</h1>

@@ -71,7 +71,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Card class="max-h-80">
+  <Card class="max-h-72 min-h-72">
     <template #content>
       <div class="w-full">
         <h1 class="font-menu text-lg font-bold dark:text-surface-200 md:text-xl">Application Theme</h1>
