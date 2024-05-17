@@ -8,7 +8,8 @@ import { computed } from 'vue'
 
 /** Typings */
 export type SettingsPayload = {
-  theme: 'light' | 'dark'
+  theme?: 'light' | 'dark'
+  mfa?: { enabled?: boolean; steps?: Array<string> }
 }
 
 export type MfaConfig = {

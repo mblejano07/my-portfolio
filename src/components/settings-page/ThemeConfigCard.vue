@@ -28,6 +28,7 @@ watch(
       value: selectedOption.value,
       name: (selectedOption.value[0].toUpperCase() + selectedOption.value.slice(1)) as 'Light' | 'Dark',
     }
+
     themeConfigIsChanged.value = true
   }
 )

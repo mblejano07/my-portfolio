@@ -23,7 +23,7 @@ import {
   faDatabase,
   faArrowCircleRight,
   faArrowCircleLeft,
-  faCircleCheck,
+  faCheck,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -48,6 +48,6 @@ library.add(
   faKey,
   faDatabase,
   faArrowCircleRight,
-  faCircleCheck,
-  faArrowCircleLeft
+  faArrowCircleLeft,
+  faCheck
 )
