@@ -49,7 +49,14 @@ const toggleUserDetailsDialog = () => (showUserDetailsDialog.value = !showUserDe
     <!-- End Role Tags -->
 
     <!-- Start Update User Dialog -->
-    <Dialog v-model:visible="showUserDetailsDialog" header="User Details" modal :draggable="false" maximizable>
+    <Dialog
+      v-model:visible="showUserDetailsDialog"
+      header="User Details"
+      modal
+      :draggable="false"
+      maximizable
+      class="mx-2 w-full sm:mx-0"
+    >
       <UserDetailsForm :user="props.user" :current-role-filter="props.roleFilter" @user-updated="toggleUserDetailsDialog" />
     </Dialog>
     <!-- End Update-User Dialog -->

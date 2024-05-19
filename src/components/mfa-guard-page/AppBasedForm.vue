@@ -43,7 +43,7 @@ const qrCodeIsLoading = ref(false)
 onBeforeMount(async () => {
   if (showQrCode.value) {
     qrCodeIsLoading.value = true
-    const responseData = await authStore.fetchQrCode()
+    const responseData = await authStore.fetchMfaQrCode()
     qrCodeIsLoading.value = false
 
     if (!responseData) {

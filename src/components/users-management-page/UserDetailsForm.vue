@@ -24,6 +24,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import InputSwitch from 'primevue/inputswitch'
 import Message from 'primevue/message'
 import { useConfirm } from 'primevue/useconfirm'
+import Dialog from 'primevue/dialog'
+import ManageMfaForm from '@/components/users-management-page/ManageMfaForm.vue'
 
 /** Emits */
 const emit = defineEmits<{
@@ -274,6 +276,9 @@ const requireConfirmation = (event: Event) => {
     },
   })
 }
+
+/** Handle MFA Config */
+const showMfaConfigDialog = ref(false)
 </script>
 
 <template>
@@ -294,12 +299,25 @@ const requireConfirmation = (event: Event) => {
       <Message v-if="userIsSuperUser" :closable="false" severity="warn">
         <span>A Super User can neither be edited or deleted.</span>
       </Message>
-      <!-- Start Toggle Edit Switch -->
-      <div class="flex items-center justify-end">
-        <span class="mr-3 text-xs text-surface-500">{{ !editingEnabled ? 'Enable Editing' : 'Disabled Editing' }}</span>
-        <InputSwitch v-model="editingEnabled" :disabled="userIsSuperUser" class="mt-1"></InputSwitch>
+      <!-- Start Toggle Edit Switch & MFA Pop-up -->
+      <div class="mb-1 flex items-center justify-between">
+        <!-- Start MFA Dialog Button -->
+        <div class="flex items-center">
+          <button @click="showMfaConfigDialog = true" class="!px-0 text-xs transition-all hover:underline">
+            <i class="pi pi-lock mr-1" />
+            <span class="hidden sm:inline">Configure Multi-Factor Authentication</span>
+            <span class="inline font-medium text-surface-500 sm:hidden">MFA</span>
+          </button>
+        </div>
+        <!-- End MFA Dialog Button -->
+        <!-- Start Enable Editing Switch -->
+        <div class="flex items-center justify-between">
+          <span class="mr-3 text-xs text-surface-500">{{ !editingEnabled ? 'Enable Editing' : 'Disabled Editing' }}</span>
+          <InputSwitch v-model="editingEnabled" :disabled="userIsSuperUser"></InputSwitch>
+        </div>
+        <!-- End Enable Editing Switch -->
       </div>
-      <!-- End Toggle Edit Switch -->
+      <!-- End Toggle Edit Switch & MFA Pop-up -->
 
       <!-- Start Credentials -->
       <p class="create-user-creds-section text-xs font-medium uppercase">Credentials</p>
@@ -597,5 +615,15 @@ const requireConfirmation = (event: Event) => {
       <!-- End Update Button -->
       <!-- End Action Buttons -->
     </div>
+    <Dialog
+      v-model:visible="showMfaConfigDialog"
+      header="MFA Config"
+      modal
+      :draggable="false"
+      maximizable
+      class="mx-2 w-full sm:mx-0"
+    >
+      <ManageMfaForm :user-id="props.user.id" :user-full-name="props.user.user_profile?.full_name || ''" />
+    </Dialog>
   </form>
 </template>

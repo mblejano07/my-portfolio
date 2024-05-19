@@ -55,6 +55,11 @@ export type MfaVerifyBackupCodeResponseData = {
   secret_key: string
 }
 
+export type MfaUnEnrollUserPayload = {
+  user_id: string | number
+  mfa_step: string
+}
+
 export type ResetPasswordPayload = {
   email: string
   token: string
@@ -309,7 +314,7 @@ export const useAuthStore = defineStore('auth', () => {
     return data.value as ApiResponseBody
   }
 
-  const fetchQrCode = async () => {
+  const fetchMfaQrCode = async () => {
     const { data } = await useApiCall('auth/mfa/generate-qrcode')
       .post({
         token: mfaToken.value,
@@ -323,6 +328,16 @@ export const useAuthStore = defineStore('auth', () => {
     const { data } = await useApiCall('auth/mfa/available-methods', authenticationToken.value).get().json()
 
     return data.value.data as MfaAllStepsResponseData
+  }
+
+  const unEnrollUserFromMfaMethod = async (payload: MfaUnEnrollUserPayload) => {
+    const { data } = await useApiCall(`auth/mfa/un-enroll-user/${payload.user_id}`, authenticationToken.value)
+      .post({
+        mfa_step: payload.mfa_step,
+      })
+      .json()
+
+    return data.value as ApiResponseBody
   }
 
   const authHasRequiredRole = (requiredRoles: string[]) => {
@@ -353,9 +368,10 @@ export const useAuthStore = defineStore('auth', () => {
     resendMfaCode,
     verifyMfaCode,
     currentMfaStep,
-    fetchQrCode,
+    fetchMfaQrCode,
     allMfaStepsCompeted,
     verifyMfaBackupCode,
     fetchAllAvailableMfaMethods,
+    unEnrollUserFromMfaMethod,
   }
 })
