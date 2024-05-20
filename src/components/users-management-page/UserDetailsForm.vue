@@ -499,6 +499,7 @@ const settingsStore = useSettingsStore()
           "
           :loading="publicStore.regionOptionsIsLoading"
           :disabled="publicStore.regionOptionsIsLoading || !editingEnabled"
+          :virtualScrollerOptions="{ itemSize: 38 }"
         >
           <template #prepend-icon>
             <i class="pi pi-map" />
@@ -515,6 +516,7 @@ const settingsStore = useSettingsStore()
           "
           :loading="publicStore.provinceOptionsIsLoading"
           :disabled="publicStore.provinceOptionsIsLoading || !editingEnabled"
+          :virtualScrollerOptions="{ itemSize: 38 }"
         >
           <template #prepend-icon>
             <i class="pi pi-map" />
