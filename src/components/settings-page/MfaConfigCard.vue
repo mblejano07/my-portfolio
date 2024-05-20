@@ -139,12 +139,12 @@ onUnmounted(() => {
         <!-- Start List -->
         <div v-show="mfaEnabled && !mfaStepsListAreLoading" class="w-full">
           <hr class="border-surface-250 my-4 dark:border-surface-700" />
-          <p class="md:text-medium text-sm text-surface-700 dark:text-surface-400">
+          <p v-if="enabledStepsList.length > 0" class="md:text-medium text-sm text-surface-700 dark:text-surface-400">
             Listed here are all the enabled and disabled MFA steps. You may <b>drag & drop</b> the individual verification methods
             to change their order. At least one item should be in this list if MFA is enabled.
           </p>
           <!-- Start Enabled List -->
-          <div ref="stepsContainer" class="mt-5 w-full">
+          <div ref="stepsContainer" :class="`mt-5 w-full ${enabledStepsList.length > 0 ? 'mb-8' : ''}`">
             <div
               v-for="(step, index) in enabledStepsList"
               :key="step.name"
@@ -170,7 +170,7 @@ onUnmounted(() => {
             <!-- End Enabled List -->
           </div>
           <!-- Start Disabled List -->
-          <div v-if="disabledStepsList.length > 0" class="mt-8 w-full">
+          <div v-if="disabledStepsList.length > 0" class="w-full">
             <p class="mb-5 text-sm">You may add an MFA step from this list by clicking the <b>Enable</b> button.</p>
             <div
               v-for="step in disabledStepsList"

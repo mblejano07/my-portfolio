@@ -52,7 +52,6 @@ const toggleUserDetailsDialog = () => (showUserDetailsDialog.value = !showUserDe
     <Dialog
       v-model:visible="showUserDetailsDialog"
       header="User Details"
-      modal
       :draggable="false"
       maximizable
       class="mx-2 w-full sm:mx-0"
