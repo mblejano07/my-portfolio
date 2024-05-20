@@ -26,6 +26,7 @@ import Message from 'primevue/message'
 import { useConfirm } from 'primevue/useconfirm'
 import Dialog from 'primevue/dialog'
 import ManageMfaForm from '@/components/users-management-page/ManageMfaForm.vue'
+import { useSettingsStore } from '@/stores/settings.store.ts'
 
 /** Emits */
 const emit = defineEmits<{
@@ -279,6 +280,7 @@ const requireConfirmation = (event: Event) => {
 
 /** Handle MFA Config */
 const showMfaConfigDialog = ref(false)
+const settingsStore = useSettingsStore()
 </script>
 
 <template>
@@ -303,7 +305,11 @@ const showMfaConfigDialog = ref(false)
       <div class="mb-1 flex items-center justify-between">
         <!-- Start MFA Dialog Button -->
         <div class="flex items-center">
-          <button @click="showMfaConfigDialog = true" class="!px-0 text-xs transition-all hover:underline">
+          <button
+            v-if="settingsStore.mfaIsEnabled && settingsStore.mfaIsConfigurable"
+            @click="showMfaConfigDialog = true"
+            class="!px-0 text-xs transition-all hover:underline"
+          >
             <i class="pi pi-lock mr-1" />
             <span class="hidden sm:inline">Configure Multi-Factor Authentication</span>
             <span class="inline font-medium text-surface-500 sm:hidden">MFA</span>
@@ -616,14 +622,18 @@ const showMfaConfigDialog = ref(false)
       <!-- End Action Buttons -->
     </div>
     <Dialog
+      v-if="settingsStore.mfaIsEnabled && settingsStore.mfaIsConfigurable"
       v-model:visible="showMfaConfigDialog"
       header="MFA Config"
       modal
       :draggable="false"
-      maximizable
       class="mx-2 w-full sm:mx-0"
     >
-      <ManageMfaForm :user-id="props.user.id" :user-full-name="props.user.user_profile?.full_name || ''" />
+      <ManageMfaForm
+        :user-id="props.user.id"
+        :user-full-name="props.user.user_profile?.full_name || ''"
+        @mfa-config-updated="showMfaConfigDialog = false"
+      />
     </Dialog>
   </form>
 </template>

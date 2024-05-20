@@ -152,10 +152,10 @@ onUnmounted(() => {
             >
               <div class="flex items-center">
                 <button @click="handleMoveStepUp(index)">
-                  <i v-if="index > 0" class="pi pi-arrow-up mr-3 text-sm"></i>
-                  <i v-else class="pi pi-minus mr-3 text-sm"></i>
+                  <i v-if="index > 0" class="pi pi-arrow-up mr-3 text-xs sm:text-sm"></i>
+                  <i v-else class="pi pi-minus mr-3 text-xs sm:text-sm"></i>
                 </button>
-                <span class="text-sm font-bold">{{ snakeCaseToTitleCase(step.name) }}</span>
+                <span class="text-xs font-bold sm:text-sm">{{ snakeCaseToTitleCase(step.name) }}</span>
               </div>
               <Button
                 @click="handleToggleActivationStatus(step.name, false)"
@@ -178,8 +178,8 @@ onUnmounted(() => {
               class="mb-1 flex items-center justify-between rounded-md bg-surface-200 px-4 py-2 dark:bg-surface-700"
             >
               <div class="flex items-center">
-                <i class="pi pi-ban mr-3 text-sm"></i>
-                <span class="text-sm font-bold">{{ snakeCaseToTitleCase(step.name) }}</span>
+                <i class="pi pi-ban mr-3 text-xs sm:text-sm"></i>
+                <span class="text-xs font-bold sm:text-sm">{{ snakeCaseToTitleCase(step.name) }}</span>
               </div>
               <Button
                 @click="handleToggleActivationStatus(step.name, true)"
