@@ -128,7 +128,7 @@ const handleLogout = async () => {
           <template #item="{ item, props }">
             <a class="flex items-center text-sm" v-bind="props.action">
               <span :class="item.icon" />
-              <span class="ml-2">{{ item.label }}</span>
+              <span class="ml-2 font-normal">{{ item.label }}</span>
               <Badge v-if="item.badge" class="ml-auto" :value="item.badge" />
               <i v-if="!item.noArrow" class="pi pi-angle-right ml-auto text-xs"></i>
             </a>

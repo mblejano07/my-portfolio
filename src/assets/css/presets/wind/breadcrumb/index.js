@@ -11,7 +11,7 @@ export default {
   action: {
     class: [
       // Font
-      'md:font-semibold text-decoration-none text-xs',
+      'text-decoration-none text-xs',
 
       // Flex & Alignment
       'flex items-center gap-x-1.5 ',
@@ -20,7 +20,7 @@ export default {
       'rounded-md',
 
       // Color
-      'text-surface-500 dark:text-surface-400',
+      'text-surface-500 dark:text-white/70',
 
       // States
       'focus-visible:outline-none focus-visible:outline-offset-0',
@@ -31,7 +31,7 @@ export default {
     ],
   },
   icon: {
-    class: 'text-surface-500 dark:text-surface-400',
+    class: 'text-surface-500 dark:text-white/70',
   },
   separator: {
     class: [
@@ -39,7 +39,7 @@ export default {
       'flex items-center shrink-0',
 
       // Color
-      'text-surface-500 dark:text-surface-400',
+      'text-surface-500 dark:text-white/70',
     ],
   },
 }

@@ -2,6 +2,7 @@ export const enum AuthType {
   AUTHENTICATED = 'authenticated',
   UNAUTHENTICATED = 'unauthenticated',
   OPEN = 'open',
+  MFA = 'mfa',
 }
 
 export enum AuthRole {

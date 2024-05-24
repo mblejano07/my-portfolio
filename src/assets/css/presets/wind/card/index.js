@@ -10,6 +10,9 @@ export default {
       'text-surface-700 dark:text-surface-0/80',
     ],
   },
+  header: {
+    class: ['border-b border-surface-200 dark:border-surface-700'],
+  },
   body: {
     class: 'py-5',
   },
@@ -27,5 +30,8 @@ export default {
   },
   content: {
     class: 'py-6 px-5 md:px-6',
+  },
+  footer: {
+    class: ['px-5 md:px-6 pt-5 pb-0'],
   },
 }

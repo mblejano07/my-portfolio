@@ -2,7 +2,7 @@ export default {
   root: ({ props }) => ({
     class: ['shadow-sm', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }],
   }),
-  button: ({ context }) => ({
+  button: ({ context, props }) => ({
     class: [
       'relative',
       // Font
@@ -16,23 +16,27 @@ export default {
       'px-2.5 py-1.5',
 
       // Shape
-      'ring-1 ring-surface-200 dark:ring-surface-700',
+      'ring-1',
+      { 'ring-surface-200 dark:ring-surface-700': !props.invalid },
       'first:rounded-l-md first:rounded-tr-none first:rounded-br-none',
       'last:rounded-tl-none last:rounded-bl-none last:rounded-r-md ',
 
       // Color
       {
         'bg-surface-0 dark:bg-surface-900': !context.active,
-        'text-surface-700': !context.active,
+        'text-surface-700 dark:text-surface/80': !context.active,
         'bg-primary-500 text-surface-0': context.active,
       },
 
+      // Invalid State
+      { 'ring-error-500 dark:ring-error-400': props.invalid },
+
       // States
-      'focus:outline-none focus:outline-offset-0 focus:ring-primary-500 dark:focus:ring-primary-400',
+      'focus:outline-none focus:outline-offset-0 focus:ring-primary-500 dark:focus:ring-primary-400 focus:z-10',
       { 'opacity-60 select-none pointer-events-none cursor-default': context.disabled },
 
       // Transition
-      'transition duration-100',
+      'transition duration-200',
 
       // Misc
       'cursor-pointer select-none overflow-hidden',

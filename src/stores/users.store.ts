@@ -6,6 +6,30 @@ import { ApiResponseBody } from '@/typings/http-resources.types.ts'
 import { ref } from 'vue'
 import { useDateFormat } from '@vueuse/core'
 
+/** Typings */
+export type UserPayload = {
+  email: string
+  password: string
+  password_confirmation: string
+  active?: boolean
+  email_verified_at?: boolean
+  roles: Array<number | string>
+  first_name: string
+  last_name: string
+  middle_name?: string | null
+  ext_name?: string | null
+  sex?: 'male' | 'female' | null
+  birthday?: string | null
+  mobile_number?: string | null
+  telephone_number?: string | null
+  barangay_id?: string | number | null
+  city_id?: string | number | null
+  province_id?: string | number | null
+  region_id?: string | number | null
+  postal_code?: string | null
+  home_address?: string | null
+}
+
 export const useUsersStore = defineStore('users', () => {
   const authStore = useAuthStore()
 
@@ -106,27 +130,3 @@ export const useUsersStore = defineStore('users', () => {
     deleteUser,
   }
 })
-
-/** Typings */
-export type UserPayload = {
-  email: string
-  password: string
-  password_confirmation: string
-  active?: boolean
-  email_verified_at?: boolean
-  roles: Array<number | string>
-  first_name: string
-  last_name: string
-  middle_name?: string | null
-  ext_name?: string | null
-  sex?: 'male' | 'female' | null
-  birthday?: string | null
-  mobile_number?: string | null
-  telephone_number?: string | null
-  barangay_id?: string | number | null
-  city_id?: string | number | null
-  province_id?: string | number | null
-  region_id?: string | number | null
-  postal_code?: string | null
-  home_address?: string | null
-}

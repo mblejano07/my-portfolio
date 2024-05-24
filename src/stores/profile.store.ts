@@ -5,6 +5,30 @@ import { UserResponse } from '@/typings/models.types.ts'
 import { ApiResponseBody } from '@/typings/http-resources.types.ts'
 import { useDateFormat } from '@vueuse/core'
 
+/** Typings */
+export type ChangePasswordPayload = { old_password: string; password: string; password_confirmation: string }
+
+export type UploadProfilePictureResponse = { owner_id: string | number; path: string; url: string }
+
+export type UserProfilePayload = {
+  email: string
+  first_name: string
+  last_name: string
+  middle_name: string | null
+  ext_name: string | null
+  mobile_number: string | null
+  sex: 'male' | 'female' | null
+  birthday: string | null
+  home_address: string | null
+  barangay_id: string | number | null
+  city_id: string | number | null
+  province_id: string | number | null
+  region_id: string | number | null
+  postal_code: string | null
+  telephone_number?: string | null
+  profile_picture_path?: string | number | null
+}
+
 export const useProfileStore = defineStore('profile', () => {
   /**
    * VueUse's useStorage() loses reactivity after serialization,
@@ -60,27 +84,3 @@ export const useProfileStore = defineStore('profile', () => {
 
   return { fetchProfile, updateProfile, uploadProfilePicture, changePassword }
 })
-
-/** Typings */
-export type ChangePasswordPayload = { old_password: string; password: string; password_confirmation: string }
-
-export type UploadProfilePictureResponse = { owner_id: string | number; path: string; url: string }
-
-export type UserProfilePayload = {
-  email: string
-  first_name: string
-  last_name: string
-  middle_name: string | null
-  ext_name: string | null
-  mobile_number: string | null
-  sex: 'male' | 'female' | null
-  birthday: string | null
-  home_address: string | null
-  barangay_id: string | number | null
-  city_id: string | number | null
-  province_id: string | number | null
-  region_id: string | number | null
-  postal_code: string | null
-  telephone_number?: string | null
-  profile_picture_path?: string | number | null
-}
