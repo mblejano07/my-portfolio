@@ -217,7 +217,7 @@ const handleFormSubmission = async () => {
 
 <template>
   <form autocomplete="off" @submit.prevent>
-    <div class="flex w-full flex-col gap-4">
+    <div class="flex w-full flex-col gap-4 pb-4">
       <!-- Start Alert Message -->
       <transition enter-active-class="transition duration-200" enter-from-class="scale-50 opacity-0" leave-to-class="opacity-0">
         <Message v-if="showErrorAlert" :closable="false" severity="error" class="mb-2">

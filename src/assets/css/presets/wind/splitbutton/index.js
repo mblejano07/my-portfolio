@@ -20,12 +20,12 @@ export default {
         // Sizes & Spacing
         'text-sm',
         {
-          'px-2.5 py-1.5 min-w-[2rem]': parent.props.size === null && parent.props.label !== null,
+          'px-2.5 py-1.5 min-w-[2rem]': parent.props.size === null,
           'px-2 py-1': parent.props.size === 'small',
           'px-3 py-2': parent.props.size === 'large',
         },
         {
-          'h-8 w-8 p-0': parent.props.label == null,
+          'min-w-8 p-0 py-1.5': parent.props.label == null && parent.props.icon !== null,
         },
 
         // Shape
@@ -38,9 +38,7 @@ export default {
         { 'text-primary-600 bg-transparent ring-transparent': parent.props.link },
 
         // Plain Button
-        {
-          'text-white bg-gray-500 ring-1 ring-gray-500': parent.props.plain && !parent.props.outlined && !parent.props.text,
-        },
+        { 'text-white bg-gray-500 ring-1 ring-gray-500': parent.props.plain && !parent.props.outlined && !parent.props.text },
         // Plain Text Button
         { 'text-surface-500': parent.props.plain && parent.props.text },
         // Plain Outlined Button
@@ -76,9 +74,7 @@ export default {
             !parent.props.plain,
         },
         // Primary Text Button
-        {
-          'text-primary-500 dark:text-primary-400': parent.props.text && parent.props.severity === null && !parent.props.plain,
-        },
+        { 'text-primary-500 dark:text-primary-400': parent.props.text && parent.props.severity === null && !parent.props.plain },
         // Primary Outlined Button
         {
           'text-primary-500 ring-1 ring-primary-500 hover:bg-primary-300/20':
@@ -117,7 +113,7 @@ export default {
         // Success Text Button
         {
           'text-surface-500 dark:text-surface-400':
-            parent.props.text && parent.props.severity === 'secondary' && !parent.props.plain,
+            parent.props.text && parent.props.severity === 'success' && !parent.props.plain,
         },
         // Success Outlined Button
         {
@@ -135,9 +131,7 @@ export default {
             parent.props.severity === 'info' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
         },
         // Info Text Button
-        {
-          'text-blue-500 dark:text-blue-400': parent.props.text && parent.props.severity === 'info' && !parent.props.plain,
-        },
+        { 'text-blue-500 dark:text-blue-400': parent.props.text && parent.props.severity === 'info' && !parent.props.plain },
         // Info Outlined Button
         {
           'text-blue-500 ring-1 ring-blue-500 hover:bg-blue-300/20 ':
@@ -173,9 +167,7 @@ export default {
             parent.props.severity === 'help' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
         },
         // Help Text Button
-        {
-          'text-purple-500 dark:text-purple-400': parent.props.text && parent.props.severity === 'help' && !parent.props.plain,
-        },
+        { 'text-purple-500 dark:text-purple-400': parent.props.text && parent.props.severity === 'help' && !parent.props.plain },
         // Help Outlined Button
         {
           'text-purple-500 ring-1 ring-purple-500 hover:bg-purple-300/20':
@@ -192,9 +184,7 @@ export default {
             parent.props.severity === 'danger' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
         },
         // Danger Text Button
-        {
-          'text-red-500 dark:text-red-400': parent.props.text && parent.props.severity === 'danger' && !parent.props.plain,
-        },
+        { 'text-red-500 dark:text-red-400': parent.props.text && parent.props.severity === 'danger' && !parent.props.plain },
         // Danger Outlined Button
         {
           'text-red-500 ring-1 ring-red-500 hover:bg-red-300/20':
@@ -203,9 +193,7 @@ export default {
 
         // --- Severity Button States ---
         'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-offset-current',
-        {
-          'focus:ring-offset-2': !parent.props.link && !parent.props.plain && !parent.props.outlined && !parent.props.text,
-        },
+        { 'focus:ring-offset-2': !parent.props.link && !parent.props.plain && !parent.props.outlined && !parent.props.text },
 
         // Link
         { 'focus:ring-primary-500 dark:focus:ring-primary-400': parent.props.link },
@@ -328,14 +316,14 @@ export default {
         // Sizes & Spacing
         'text-sm',
         {
-          'px-2.5 py-1.5 min-w-[2rem]': parent.props.size === null && parent.props.label !== null,
+          'px-2.5 py-1.5 min-w-[2rem]': parent.props.size === null,
           'px-2 py-1': parent.props.size === 'small',
           'px-3 py-2': parent.props.size === 'large',
         },
         {
-          'h-8 w-8 p-0': parent.props.label == null,
+          'min-w-8 p-0 py-1.5': parent.props.label == null && parent.props.icon !== null,
         },
-        'ml-[1px]',
+        'ml-px',
 
         // Shape
         'rounded-l-none',
@@ -346,9 +334,7 @@ export default {
         { 'text-primary-600 bg-transparent ring-transparent': parent.props.link },
 
         // Plain Button
-        {
-          'text-white bg-gray-500 ring-1 ring-gray-500': parent.props.plain && !parent.props.outlined && !parent.props.text,
-        },
+        { 'text-white bg-gray-500 ring-1 ring-gray-500': parent.props.plain && !parent.props.outlined && !parent.props.text },
         // Plain Text Button
         { 'text-surface-500': parent.props.plain && parent.props.text },
         // Plain Outlined Button
@@ -384,9 +370,7 @@ export default {
             !parent.props.plain,
         },
         // Primary Text Button
-        {
-          'text-primary-500 dark:text-primary-400': parent.props.text && parent.props.severity === null && !parent.props.plain,
-        },
+        { 'text-primary-500 dark:text-primary-400': parent.props.text && parent.props.severity === null && !parent.props.plain },
         // Primary Outlined Button
         {
           'text-primary-500 ring-1 ring-primary-500 hover:bg-primary-300/20':
@@ -425,7 +409,7 @@ export default {
         // Success Text Button
         {
           'text-surface-500 dark:text-surface-400':
-            parent.props.text && parent.props.severity === 'secondary' && !parent.props.plain,
+            parent.props.text && parent.props.severity === 'success' && !parent.props.plain,
         },
         // Success Outlined Button
         {
@@ -443,9 +427,7 @@ export default {
             parent.props.severity === 'info' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
         },
         // Info Text Button
-        {
-          'text-blue-500 dark:text-blue-400': parent.props.text && parent.props.severity === 'info' && !parent.props.plain,
-        },
+        { 'text-blue-500 dark:text-blue-400': parent.props.text && parent.props.severity === 'info' && !parent.props.plain },
         // Info Outlined Button
         {
           'text-blue-500 ring-1 ring-blue-500 hover:bg-blue-300/20 ':
@@ -481,9 +463,7 @@ export default {
             parent.props.severity === 'help' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
         },
         // Help Text Button
-        {
-          'text-purple-500 dark:text-purple-400': parent.props.text && parent.props.severity === 'help' && !parent.props.plain,
-        },
+        { 'text-purple-500 dark:text-purple-400': parent.props.text && parent.props.severity === 'help' && !parent.props.plain },
         // Help Outlined Button
         {
           'text-purple-500 ring-1 ring-purple-500 hover:bg-purple-300/20':
@@ -500,9 +480,7 @@ export default {
             parent.props.severity === 'danger' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
         },
         // Danger Text Button
-        {
-          'text-red-500 dark:text-red-400': parent.props.text && parent.props.severity === 'danger' && !parent.props.plain,
-        },
+        { 'text-red-500 dark:text-red-400': parent.props.text && parent.props.severity === 'danger' && !parent.props.plain },
         // Danger Outlined Button
         {
           'text-red-500 ring-1 ring-red-500 hover:bg-red-300/20':
@@ -511,9 +489,7 @@ export default {
 
         // --- Severity Button States ---
         'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-offset-current',
-        {
-          'focus:ring-offset-2': !parent.props.link && !parent.props.plain && !parent.props.outlined && !parent.props.text,
-        },
+        { 'focus:ring-offset-2': !parent.props.link && !parent.props.plain && !parent.props.outlined && !parent.props.text },
 
         // Link
         { 'focus:ring-primary-500 dark:focus:ring-primary-400': parent.props.link },
@@ -620,6 +596,122 @@ export default {
     }),
     label: {
       class: ['hidden'],
+    },
+  },
+  menu: {
+    root: {
+      class: [
+        // Shape
+        'rounded-md',
+
+        // Size
+        'min-w-[12rem]',
+        'p-1.5',
+
+        // Colors
+        'bg-surface-0 dark:bg-surface-700',
+        'ring-1 ring-surface-200 dark:ring-surface-700',
+      ],
+    },
+    menu: {
+      class: [
+        // Spacings and Shape
+        'list-none',
+        'm-0',
+        'p-0',
+        'outline-none',
+      ],
+    },
+    menuitem: {
+      class: ['relative first:mt-0 mt-1'],
+    },
+    content: ({ context }) => ({
+      class: [
+        //Shape
+        'rounded-md',
+
+        //  Colors
+        {
+          'text-surface-500 dark:text-white/70': !context.focused && !context.active,
+          'text-surface-500 dark:text-white/70 bg-surface-200 dark:bg-black/70': context.focused && !context.active,
+          'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70': context.focused && context.active,
+          'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70': !context.focused && context.active,
+        },
+
+        // Hover States
+        {
+          'hover:bg-surface-50 dark:hover:bg-surface-800': !context.active,
+          'hover:bg-surface-100 dark:hover:bg-black/40 text-surface-900 dark:text-surface-0/80': context.active,
+        },
+
+        // Transitions
+        'transition-shadow',
+        'duration-200',
+      ],
+    }),
+    action: {
+      class: [
+        'relative',
+
+        // Font
+        'font-semibold',
+
+        // Flexbox
+        'flex',
+        'items-center',
+
+        // Spacing
+        'py-2',
+        'px-3',
+
+        // Misc
+        'no-underline',
+        'overflow-hidden',
+        'cursor-pointer',
+        'select-none',
+      ],
+    },
+    icon: {
+      class: [
+        // Spacing
+        'mr-2',
+        'leading-6',
+        'text-sm',
+      ],
+    },
+    label: {
+      class: ['leading-none', 'text-sm'],
+    },
+    submenuicon: {
+      class: [
+        // Position
+        'ml-auto',
+      ],
+    },
+    submenu: {
+      class: [
+        // Size
+        'w-full sm:w-48',
+
+        // Spacing
+        'p-1.5',
+        'm-0 mx-1.5',
+        'list-none',
+
+        // Shape
+        'shadow-none sm:shadow-md',
+        'border-0',
+
+        // Position
+        'static sm:absolute',
+        'z-10',
+
+        // Color
+        'bg-surface-0 dark:bg-surface-700',
+      ],
+    },
+    separator: {
+      class: 'border-t border-surface-200 dark:border-surface-600 my-1',
     },
   },
 }

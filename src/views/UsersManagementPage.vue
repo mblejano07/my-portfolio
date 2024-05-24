@@ -116,7 +116,14 @@ const handleSearchUser = async () => {
           </template>
         </Button>
       </div>
-      <Dialog v-model:visible="showCreateUserDialog" header="User Creation" modal :draggable="false" class="py-4" maximizable>
+      <Dialog
+        v-model:visible="showCreateUserDialog"
+        header="User Creation"
+        modal
+        :draggable="false"
+        maximizable
+        class="mx-2 w-full sm:mx-0"
+      >
         <CreateUserForm :current-role-filter="roleFilter" @user-created="toggleCreateUserDialog" />
       </Dialog>
       <!-- End Create User Button -->

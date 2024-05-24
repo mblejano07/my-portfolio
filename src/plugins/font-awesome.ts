@@ -19,6 +19,14 @@ import {
   faMoon,
   faBell,
   faCog,
+  faKey,
+  faDatabase,
+  faArrowCircleRight,
+  faArrowCircleLeft,
+  faCheck,
+  faUpDown,
+  faDeleteLeft,
+  faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -39,5 +47,13 @@ library.add(
   faSun,
   faMoon,
   faBell,
-  faCog
+  faCog,
+  faKey,
+  faDatabase,
+  faArrowCircleRight,
+  faArrowCircleLeft,
+  faCheck,
+  faUpDown,
+  faDeleteLeft,
+  faCheckCircle
 )

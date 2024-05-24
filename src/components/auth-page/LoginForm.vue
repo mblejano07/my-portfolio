@@ -23,9 +23,10 @@ const props = withDefaults(defineProps<{ showLoginExpiredAlert: boolean }>(), {
   showLoginExpiredAlert: false,
 })
 
+const route = useRoute()
 /** Payload */
 const payload = reactive<LoginPayload>({
-  email: '',
+  email: (route.query.email as string) || '',
   password: '',
 })
 
@@ -46,9 +47,8 @@ const formIsSubmitting = ref(false)
 const showCredsErrorAlert = ref(false)
 const credsErrorMessage = ref('')
 const router = useRouter()
-const route = useRoute()
 const authStore = useAuthStore()
-const handleFormSubmit = async () => {
+const handleLogin = async () => {
   formIsSubmitting.value = true
   const valid = await validator.value.$validate()
   if (!valid) return (formIsSubmitting.value = false)
@@ -86,14 +86,24 @@ const handleFormSubmit = async () => {
   // Handle route redirection from account verification page with params and queries
   if (route.query.from === 'verify-account') {
     return await router.replace({
-      name: route.query.from,
-      params: {
-        id: route.query.id as string,
-        hash: route.query.hash as string,
-      },
+      name: 'mfa-guard-page',
       query: {
+        from: route.query.from,
+        id: route.query.id,
+        hash: route.query.hash,
         expires: route.query.expires,
         signature: route.query.signature,
+      },
+    })
+  }
+
+  // If MFA is enabled, the mfa_token and mfa_steps will be populated
+  // and the user is not authenticated
+  if (authStore.mfaToken && !authStore.isAuthenticated) {
+    return await router.replace({
+      name: 'mfa-guard-page',
+      query: {
+        from: route.query.from,
       },
     })
   }
@@ -169,7 +179,7 @@ const manageIfEmailIsPhoneNumber = (payload: LoginPayload) => {
         toggleMask
         :invalid="validator.password.$invalid"
         :invalid-text="validator.password.$errors[0]?.$message"
-        @keyup.enter="handleFormSubmit"
+        @keyup.enter="handleLogin"
         label-class="text-xs text-surface-0 lg:text-surface-800 dark:lg:text-surface-200"
         validation-error-message-class="text-xs text-error-300 font-bold lg:font-normal lg:text-error-500 dark:lg:text-error-300"
       >
@@ -178,7 +188,7 @@ const manageIfEmailIsPhoneNumber = (payload: LoginPayload) => {
         </template>
       </WbPassword>
       <div>
-        <Button @click="handleFormSubmit" label="Sign in" size="large" class="mt-3 w-full" :loading="formIsSubmitting"></Button>
+        <Button @click="handleLogin" label="Sign in" size="large" class="mt-3 w-full" :loading="formIsSubmitting"></Button>
       </div>
       <p class="flex justify-between pt-3 text-center">
         <Button

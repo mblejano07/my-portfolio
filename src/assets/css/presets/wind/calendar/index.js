@@ -8,11 +8,14 @@ export default {
       'shadow-sm',
       'rounded-md',
       // Misc
-      { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled },
+      { 'opacity-40 select-none pointer-events-none cursor-default': props.disabled },
     ],
   }),
   input: ({ props }) => ({
     class: [
+      // Display
+      'flex flex-auto',
+
       // Font
       'font-sans leading-none  sm:text-sm',
 
@@ -20,15 +23,19 @@ export default {
       'text-surface-900 dark:text-surface-0',
       'placeholder:text-surface-400 dark:placeholder:text-surface-500',
       'bg-surface-0 dark:bg-surface-900',
-      'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0',
+      'ring-1 ring-inset ring-offset-0',
+      { 'ring-surface-300 dark:ring-surface-700': !props.invalid },
+
+      // Invalid State
+      { 'ring-red-500 dark:ring-red-400': props.invalid },
 
       // Spacing
       'm-0 py-1.5 px-3',
-      '-ml-[1px]',
+      '-ml-px',
 
       // Shape
       'appearance-none',
-      { 'rounded-md': !props.showIcon || props.iconDisplay === 'input' },
+      { 'rounded-md': !props.showIcon || props.iconDisplay == 'input' },
       { 'rounded-l-md  flex-1 pr-9 ': props.showIcon && props.iconDisplay !== 'input' },
       { 'rounded-md flex-1 pr-9': props.showIcon && props.iconDisplay === 'input' },
 
@@ -266,7 +273,7 @@ export default {
 
       // Colors
       {
-        'text-surface-600 dark:text-surface-0/70 bg-transparent': !context.selected && !context.disabled,
+        'text-surface-600 dark:text-white/70 bg-transparent': !context.selected && !context.disabled,
         'text-primary-500  dark:text-primary-400': context.selected && !context.disabled,
       },
 
@@ -295,7 +302,7 @@ export default {
       {
         'text-surface-0 bg-surface-900 dark:text-surface-900 dark:bg-surface-0':
           context.date.today && !context.selected && !context.disabled,
-        'text-surface-600 dark:text-surface-0/70 bg-transparent': !context.selected && !context.disabled && !context.date.today,
+        'text-surface-600 dark:text-white/70 bg-transparent': !context.selected && !context.disabled && !context.date.today,
         'text-primary-500 dark:text-primary-400': context.selected && !context.disabled && !context.date.today,
         'text-primary-200 dark:text-primary-600 bg-surface-900 dark:bg-surface-0':
           context.selected && !context.disabled && context.date.today,
@@ -336,7 +343,7 @@ export default {
 
       // Colors
       {
-        'text-surface-600 dark:text-surface-0/70 bg-transparent': !context.selected && !context.disabled,
+        'text-surface-600 dark:text-white/70 bg-transparent': !context.selected && !context.disabled,
         'text-primary-500 dark:text-primary-400': context.selected && !context.disabled,
       },
 
@@ -370,7 +377,7 @@ export default {
 
       // Colors
       {
-        'text-surface-600 dark:text-surface-0/70 bg-transparent': !context.selected && !context.disabled,
+        'text-surface-600 dark:text-white/70 bg-transparent': !context.selected && !context.disabled,
         'text-primary-500 dark:text-primary-400': context.selected && !context.disabled,
       },
 
@@ -421,6 +428,17 @@ export default {
     ],
   },
   minutepicker: {
+    class: [
+      // Flexbox and Alignment
+      'flex',
+      'items-center',
+      'flex-col',
+
+      // Spacing
+      'px-2',
+    ],
+  },
+  secondPicker: {
     class: [
       // Flexbox and Alignment
       'flex',

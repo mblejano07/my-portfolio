@@ -9,12 +9,12 @@ export default {
       // Sizes & Spacing
       'text-sm',
       {
-        'px-2.5 py-1.5 min-w-[2rem]': props.size === null && props.label !== null,
+        'px-2.5 py-1.5 min-w-[2rem]': props.size === null,
         'px-2 py-1': props.size === 'small',
         'px-3 py-2': props.size === 'large',
       },
       {
-        'h-8 w-8 p-0': props.label == null,
+        'h-8 w-8 p-0': props.label == null && props.icon !== null,
       },
 
       // Shapes
@@ -74,9 +74,9 @@ export default {
 
       // Success Button
       {
-        'text-surface-0 dark:text-success-900': props.severity === 'success' && !props.text && !props.outlined && !props.plain,
-        'bg-success-500 dark:bg-success-400': props.severity === 'success' && !props.text && !props.outlined && !props.plain,
-        'ring-1 ring-success-500 dark:ring-success-400':
+        'text-surface-0 dark:text-green-900': props.severity === 'success' && !props.text && !props.outlined && !props.plain,
+        'bg-green-500 dark:bg-green-400': props.severity === 'success' && !props.text && !props.outlined && !props.plain,
+        'ring-1 ring-green-500 dark:ring-green-400':
           props.severity === 'success' && !props.text && !props.outlined && !props.plain,
       },
       // Success Text Button
@@ -96,9 +96,7 @@ export default {
       // Info Text Button
       { 'text-info-500 dark:text-info-400': props.text && props.severity === 'info' && !props.plain },
       // Info Outlined Button
-      {
-        'text-info-500 ring-1 ring-info-500 hover:bg-info-300/20 ': props.outlined && props.severity === 'info' && !props.plain,
-      },
+      { 'text-info-500 ring-1 ring-info-500 hover:bg-info-300/20 ': props.outlined && props.severity === 'info' && !props.plain },
 
       // Warning Button
       {
@@ -115,7 +113,7 @@ export default {
 
       // Help Button
       {
-        'text-surface-0 dark:text-surface-900': props.severity === 'help' && !props.text && !props.outlined && !props.plain,
+        'text-white dark:text-surface-900': props.severity === 'help' && !props.text && !props.outlined && !props.plain,
         'bg-purple-500 dark:bg-purple-400': props.severity === 'help' && !props.text && !props.outlined && !props.plain,
         'ring-1 ring-purple-500 dark:ring-purple-400':
           props.severity === 'help' && !props.text && !props.outlined && !props.plain,
@@ -130,7 +128,7 @@ export default {
 
       // Danger Button
       {
-        'text-surface-0 dark:text-error-900': props.severity === 'danger' && !props.text && !props.outlined && !props.plain,
+        'text-surface-0 dark:text-surface-900': props.severity === 'danger' && !props.text && !props.outlined && !props.plain,
         'bg-error-500 dark:bg-error-400': props.severity === 'danger' && !props.text && !props.outlined && !props.plain,
         'ring-1 ring-error-500 dark:ring-error-400':
           props.severity === 'danger' && !props.text && !props.outlined && !props.plain,
@@ -151,7 +149,7 @@ export default {
       { 'focus:ring-primary-500 dark:focus:ring-primary-400': props.link },
 
       // Plain
-      { 'hover:bg-surface-600 hover:ring-surface-600': props.plain && !props.outlined && !props.text },
+      { 'hover:bg-gray-600 hover:ring-gray-600': props.plain && !props.outlined && !props.text },
       // Text & Outlined Button
       { 'hover:bg-surface-300/20': props.plain && (props.text || props.outlined) },
 
@@ -193,7 +191,7 @@ export default {
 
       // Warning
       {
-        'hover:bg-warn-600 dark:hover:bg-warn-300 hover:ring-warn-600 dark:hover:ring-warn-300':
+        'hover:bg-warn-600 dark:hover:bg-warn-300 hover:ring-orange-600 dark:hover:ring-warn-300':
           props.severity === 'warning' && !props.text && !props.outlined && !props.plain,
       },
       { 'focus:ring-warn-500 dark:focus:ring-warn-400': props.severity === 'warning' },

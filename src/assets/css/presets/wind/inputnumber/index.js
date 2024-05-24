@@ -1,18 +1,16 @@
 export default {
   root: ({ props, parent }) => ({
     class: [
-      // Display
+      // Flex
       'inline-flex',
-
       { 'flex-col': props.showButtons && props.buttonLayout == 'vertical' },
+      { 'flex-1 w-[1%]': parent.instance.$name == 'InputGroup' },
 
       //Sizing
       { '!w-16': props.showButtons && props.buttonLayout == 'vertical' },
 
       // Shape
-      {
-        'first:rounded-l-md rounded-none last:rounded-r-md': parent.instance.$name == 'InputGroup' && !props.showButtons,
-      },
+      { 'first:rounded-l-md rounded-none last:rounded-r-md': parent.instance.$name == 'InputGroup' && !props.showButtons },
       {
         'border-0 border-y border-l last:border-r border-surface-300 dark:border-surface-600':
           parent.instance.$name == 'InputGroup' && !props.showButtons,
@@ -24,7 +22,7 @@ export default {
     ],
   }),
   input: {
-    root: ({ parent }) => ({
+    root: ({ parent, context }) => ({
       class: [
         // Display
         'flex flex-auto',
@@ -47,22 +45,21 @@ export default {
         'text-surface-900 dark:text-surface-0',
         'placeholder:text-surface-400 dark:placeholder:text-surface-500',
         'bg-surface-0 dark:bg-surface-900',
-        {
-          'border-r border-surface-300 dark:border-surface-700':
-            parent.props.showButtons && parent.props.buttonLayout == 'stacked',
-        },
-        {
-          'border-x border-surface-300 dark:border-surface-700':
-            parent.props.showButtons && parent.props.buttonLayout == 'horizontal',
-        },
-        {
-          'border-y border-surface-300 dark:border-surface-700':
-            parent.props.showButtons && parent.props.buttonLayout == 'vertical',
-        },
+        { 'border-r': parent.props.showButtons && parent.props.buttonLayout == 'stacked' },
+        { 'border-x': parent.props.showButtons && parent.props.buttonLayout == 'horizontal' },
+        { 'border-y': parent.props.showButtons && parent.props.buttonLayout == 'vertical' },
+
+        { 'border-surface-300 dark:border-surface-700': !parent.props.invalid },
+
+        // Invalid State
+        { 'border border-red-500 dark:border-red-400': parent.props.invalid },
 
         // States
         'outline-none focus:ring-primary-600 dark:focus:ring-primary-500',
         'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-inset focus:ring-primary-600 dark:focus:ring-primary-500',
+
+        // Filled State *for FloatLabel
+        { filled: parent.instance?.$parentInstance?.$name == 'FloatLabel' && parent.state.d_modelValue !== null },
 
         //Position
         { 'order-2': parent.props.buttonLayout == 'horizontal' || parent.props.buttonLayout == 'vertical' },
@@ -102,9 +99,7 @@ export default {
 
         // Shape
         'rounded-md',
-        {
-          'rounded-tl-none rounded-br-none rounded-bl-none': parent.props.showButtons && parent.props.buttonLayout == 'stacked',
-        },
+        { 'rounded-tl-none rounded-br-none rounded-bl-none': parent.props.showButtons && parent.props.buttonLayout == 'stacked' },
         { 'rounded-bl-none rounded-tl-none': parent.props.showButtons && parent.props.buttonLayout == 'horizontal' },
         { 'rounded-bl-none rounded-br-none': parent.props.showButtons && parent.props.buttonLayout == 'vertical' },
 
@@ -148,9 +143,7 @@ export default {
 
         // Shape
         'rounded-md',
-        {
-          'rounded-tr-none rounded-tl-none rounded-bl-none': parent.props.showButtons && parent.props.buttonLayout == 'stacked',
-        },
+        { 'rounded-tr-none rounded-tl-none rounded-bl-none': parent.props.showButtons && parent.props.buttonLayout == 'stacked' },
         { 'rounded-tr-none rounded-br-none ': parent.props.showButtons && parent.props.buttonLayout == 'horizontal' },
         { 'rounded-tr-none rounded-tl-none ': parent.props.showButtons && parent.props.buttonLayout == 'vertical' },
 

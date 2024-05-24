@@ -1,17 +1,20 @@
 export default {
-  root: {
+  root: ({ props }) => ({
     class: [
       // Sizing and Shape
       'min-w-[12rem]',
       'rounded-md',
-      // Spacing
 
       // Colors
       'bg-surface-0 dark:bg-surface-700',
       'text-surface-700 dark:text-white/80',
-      'ring-1 ring-surface-200 dark:ring-surface-700',
+      'ring-1',
+      { 'ring-surface-200 dark:ring-surface-700': !props.invalid },
+
+      // Invalid State
+      { 'ring-red-500 dark:ring-red-400': props.invalid },
     ],
-  },
+  }),
   wrapper: {
     class: [
       // Overflow
@@ -41,13 +44,9 @@ export default {
 
       // Color
       { 'text-surface-700 dark:text-white/80': !context.focused && !context.selected },
-      {
-        'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80': context.focused && !context.selected,
-      },
+      { 'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80': context.focused && !context.selected },
       { 'bg-primary-500 dark:bg-primary-400 text-white dark:text-surface-700': context.focused && context.selected },
-      {
-        'bg-surface-100 dark:bg-surface-300/10 text-primary-500 dark:text-primary-400': !context.focused && context.selected,
-      },
+      { 'bg-surface-100 dark:bg-surface-300/10 text-primary-500 dark:text-primary-400': !context.focused && context.selected },
 
       //States
       'hover:bg-primary-500 dark:hover:bg-primary-400 hover:text-white dark:hover:text-surface-700',

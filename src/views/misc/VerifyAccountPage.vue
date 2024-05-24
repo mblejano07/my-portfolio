@@ -58,7 +58,9 @@ const handleCompleteVerification = async () => {
 </script>
 
 <template>
-  <div class="flex h-full justify-center bg-gradient-to-b from-primary-500 to-primary-900 ring-2 ring-red-100 lg:mx-0">
+  <div
+    class="flex h-full justify-center bg-gradient-to-b from-primary-500 to-primary-900 ring-2 ring-red-100 dark:from-primary-900 dark:to-primary-950 lg:mx-0"
+  >
     <div class="relative z-10 flex h-fit w-full justify-center pb-4">
       <!-- Start Header Icon -->
       <div

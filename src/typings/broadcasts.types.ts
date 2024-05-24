@@ -1,3 +1,3 @@
 export enum BroadcastChannelName {
-  EMAIL_VERIFICATION_CHANNEL = 'email-verification-channel',
+  EMAIL_VERIFIED_CHANNEL = 'email-verified-channel',
 }
