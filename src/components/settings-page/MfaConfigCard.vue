@@ -197,7 +197,12 @@ onUnmounted(() => {
     </template>
     <template #footer>
       <div class="flex justify-end">
-        <Button label="Save" @click="handleSaveSettings" :loading="formIsLoading" :disabled="formIsLoading">
+        <Button
+          label="Save"
+          @click="handleSaveSettings"
+          :loading="formIsLoading"
+          :disabled="formIsLoading || enabledStepsList.length === 0"
+        >
           <template #icon>
             <i class="pi pi-save mr-1"></i>
           </template>
