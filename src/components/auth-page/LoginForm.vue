@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AppLogo from '@/components/layout/AppLogo.vue'
 import { checkIfValidMobileNumber } from '@/utils/helpers.ts'
 import { ApiErrorCode } from '@/typings/http-resources.types.ts'
+import { useSettingsStore } from '@/stores/settings.store.ts'
 
 /** Emits */
 const emit = defineEmits<{
@@ -48,6 +49,7 @@ const showCredsErrorAlert = ref(false)
 const credsErrorMessage = ref('')
 const router = useRouter()
 const authStore = useAuthStore()
+const settingsStore = useSettingsStore()
 const handleLogin = async () => {
   formIsSubmitting.value = true
   const valid = await validator.value.$validate()
@@ -83,14 +85,29 @@ const handleLogin = async () => {
 
   formIsSubmitting.value = false
 
-  // Handle route redirection from account verification page with params and queries
-  if (route.query.from === 'verify-account') {
+  // Handle Login -> MFA Guard -> Verify Account flow if MFA is enabled
+  if (route.query.from === 'verify-account' && settingsStore.mfaIsEnabled) {
     return await router.replace({
       name: 'mfa-guard-page',
       query: {
         from: route.query.from,
         id: route.query.id,
         hash: route.query.hash,
+        expires: route.query.expires,
+        signature: route.query.signature,
+      },
+    })
+  }
+
+  // Handle Login -> Verify Account flow if MFA is disabled
+  if (route.query.from === 'verify-account' && !settingsStore.mfaIsEnabled) {
+    return await router.replace({
+      name: route.query.from,
+      params: {
+        id: route.query.id as string,
+        hash: route.query.hash as string,
+      },
+      query: {
         expires: route.query.expires,
         signature: route.query.signature,
       },
