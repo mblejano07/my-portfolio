@@ -135,7 +135,7 @@ const uiStore = useGlobalUiStore()
 
 <template>
   <div
-    :class="`flex w-full overflow-hidden rounded-lg bg-surface-0 shadow-md dark:bg-surface-700 ${
+    :class="`bg-surface-0 dark:bg-surface-700 flex w-full overflow-hidden rounded-lg shadow-md ${
       uiStore.sidebarMinimized ? 'min-h-56 lg:min-h-72' : 'min-h-56'
     }`"
   >

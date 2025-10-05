@@ -148,7 +148,7 @@ setInterval(() => {
 <template>
   <div v-if="mountCharts" class="mx-auto h-[100%] w-[100%] px-2 md:px-0">
     <!-- Start General Report Cards -->
-    <p class="mb-4 mt-2 text-xs font-semibold uppercase text-surface-600 dark:text-surface-400 md:mt-1">General Reports</p>
+    <p class="text-surface-600 dark:text-surface-400 mt-2 mb-4 text-xs font-semibold uppercase md:mt-1">General Reports</p>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
       <GeneralReportCard
         :id="$.uid + '-people-reached'"
@@ -183,7 +183,7 @@ setInterval(() => {
     </div>
     <!-- End General Report Cards -->
     <!-- Start Heatmap -->
-    <p class="mb-4 mt-8 text-xs font-semibold uppercase text-surface-600 dark:text-surface-400">Regional Breakdown</p>
+    <p class="text-surface-600 dark:text-surface-400 mt-8 mb-4 text-xs font-semibold uppercase">Regional Breakdown</p>
     <div class="flex max-h-96 w-full">
       <TreeMap :series="nationalBreakdownSeries" :colors="['#524ebb', '#2d724f', '#0a4177']" :dark-mode="chartsInDarkMode" />
     </div>
@@ -191,7 +191,7 @@ setInterval(() => {
     <!-- Start Programs & Timeline -->
     <div class="grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
       <div class="flex h-full w-full flex-col">
-        <p class="mb-4 mt-8 text-xs font-semibold uppercase text-surface-600 dark:text-surface-400">Beneficiaries Per Program</p>
+        <p class="text-surface-600 dark:text-surface-400 mt-8 mb-4 text-xs font-semibold uppercase">Beneficiaries Per Program</p>
         <DonutChart
           :dark-mode="chartsInDarkMode"
           :series="programsDonutChartSeries"
@@ -200,7 +200,7 @@ setInterval(() => {
         />
       </div>
       <div class="flex w-full flex-col">
-        <p class="mb-4 mt-8 text-xs font-semibold uppercase text-surface-600 dark:text-surface-400">Deployment Timeline</p>
+        <p class="text-surface-600 dark:text-surface-400 mt-8 mb-4 text-xs font-semibold uppercase">Deployment Timeline</p>
         <TimelineChart :dark-mode="chartsInDarkMode" :series="deploymentTimelineSeries" />
       </div>
     </div>

@@ -108,19 +108,19 @@ const handleImageUpload = async () => {
           v-if="imageSource"
           :src="imageSource"
           alt="Profile Picture"
-          class="h-full w-full rounded-lg bg-primary-500 object-cover shadow-md"
+          class="bg-primary-500 h-full w-full rounded-lg object-cover shadow-md"
         />
         <div
           v-if="!imageSource"
-          class="flex h-full w-full items-center justify-center rounded-lg bg-primary-500 text-3xl text-surface-0"
+          class="bg-primary-500 text-surface-0 flex h-full w-full items-center justify-center rounded-lg text-3xl"
         >
           {{ authStore.avatarDisplayNamePlaceholder }}
         </div>
         <button
           @click="handleBrowseImages"
-          class="absolute inset-0 hidden h-full w-full items-center justify-center rounded-lg bg-surface-900 opacity-80 group-hover:flex group-hover:cursor-pointer"
+          class="bg-surface-900 absolute inset-0 hidden h-full w-full items-center justify-center rounded-lg opacity-80 group-hover:flex group-hover:cursor-pointer"
         >
-          <i class="pi pi-camera text-xl text-surface-0"></i>
+          <i class="pi pi-camera text-surface-0 text-xl"></i>
         </button>
       </div>
       <!-- End Avatar Input -->

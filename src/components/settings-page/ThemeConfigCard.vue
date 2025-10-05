@@ -74,8 +74,8 @@ onUnmounted(() => {
   <Card class="max-h-72 min-h-72">
     <template #content>
       <div class="w-full">
-        <h1 class="font-menu text-lg font-bold dark:text-surface-200 md:text-xl">Application Theme</h1>
-        <p class="md:text-medium mt-1 text-sm text-surface-700 dark:text-surface-400">
+        <h1 class="font-menu dark:text-surface-200 text-lg font-bold md:text-xl">Application Theme</h1>
+        <p class="md:text-medium text-surface-700 dark:text-surface-400 mt-1 text-sm">
           You can select a theme below to change the look and feel of the website for all users.
         </p>
         <div class="justify-left mt-6 flex">

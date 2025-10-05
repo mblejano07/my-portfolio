@@ -42,7 +42,7 @@ const options = {
 </script>
 
 <template>
-  <div class="flex h-full w-full items-center rounded-lg bg-surface-0 shadow-md dark:bg-surface-700">
+  <div class="bg-surface-0 dark:bg-surface-700 flex h-full w-full items-center rounded-lg shadow-md">
     <!-- toRaw(): @see https://stackoverflow.com/questions/77458993/vue-warn-maximum-recursive-updates-exceeded -->
     <VueApexCharts class="w-full" type="rangeBar" :series="toRaw(props.series)" :options="options" />
   </div>

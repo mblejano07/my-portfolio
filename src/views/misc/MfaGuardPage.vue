@@ -126,17 +126,17 @@ const stepStatus = computed(() => {
 
 <template>
   <div
-    class="flex h-full w-full justify-center bg-gradient-to-b from-warn-500 to-warn-900 dark:from-warn-900 dark:to-warn-950 lg:mx-0"
+    class="from-warn-500 to-warn-900 dark:from-warn-900 dark:to-warn-950 flex h-full w-full justify-center bg-gradient-to-b lg:mx-0"
   >
     <div class="relative z-10 w-[96%] min-w-[96%] sm:mx-0 sm:w-auto md:min-w-[65%] lg:min-w-[50%]">
       <!-- Start Header Icon -->
       <div
-        class="absolute left-1/2 top-6 hidden h-28 w-28 -translate-x-1/2 transform items-center justify-center rounded-full bg-primary-500 lg:flex"
+        class="bg-primary-500 absolute top-6 left-1/2 hidden h-28 w-28 -translate-x-1/2 transform items-center justify-center rounded-full lg:flex"
       >
-        <FontAwesomeIcon icon="fa-solid fa-lock" class="h-16 text-surface-0"></FontAwesomeIcon>
+        <FontAwesomeIcon icon="fa-solid fa-lock" class="text-surface-0 h-16"></FontAwesomeIcon>
       </div>
       <!-- End Header Icon -->
-      <Card class="mt-4 ring-2 ring-primary-500 md:mt-8 lg:mt-16">
+      <Card class="ring-primary-500 mt-4 ring-2 md:mt-8 lg:mt-16">
         <template #content>
           <div class="mx-2 flex flex-col items-center">
             <div class="mb-8 flex w-full items-center justify-between">

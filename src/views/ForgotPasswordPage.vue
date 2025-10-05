@@ -106,8 +106,8 @@ const handleSubmitForm = async () => {
               </Button>
             </div>
             <div class="mb-8">
-              <h1 class="mb-1 font-menu text-lg text-surface-800 dark:text-surface-100 sm:text-xl">Forgot Your Password?</h1>
-              <p class="text-sm leading-relaxed text-surface-600 dark:text-surface-300">
+              <h1 class="font-menu text-surface-800 dark:text-surface-100 mb-1 text-lg sm:text-xl">Forgot Your Password?</h1>
+              <p class="text-surface-600 dark:text-surface-300 text-sm leading-relaxed">
                 Please enter the email you've used to sign-in to the application. If you've entered a valid email address, you
                 will receive the reset link in your inbox.
               </p>
@@ -134,7 +134,7 @@ const handleSubmitForm = async () => {
               </Button>
               <small
                 v-if="requestPasswordButtonIsLocked"
-                class="mt-4 w-full text-center text-xs italic text-surface-500 md:text-right"
+                class="text-surface-500 mt-4 w-full text-center text-xs italic md:text-right"
               >
                 You can request again after <span class="font-bold">{{ requestPasswordButtonTimer }}</span> seconds
               </small>
