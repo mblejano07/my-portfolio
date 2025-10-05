@@ -34,7 +34,7 @@ const options = {
 </script>
 
 <template>
-  <div class="flex w-full rounded-lg bg-surface-0 shadow-md dark:bg-surface-700">
+  <div class="bg-surface-0 dark:bg-surface-700 flex w-full rounded-lg shadow-md">
     <VueApexCharts class="w-full" height="300px" type="treemap" :series="props.series" :options="options" />
   </div>
 </template>

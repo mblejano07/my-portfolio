@@ -137,32 +137,32 @@ const handleShowOtpInput = () => {
 <template>
   <div class="w-full">
     <!-- Start Form Title -->
-    <h1 class="text-md self-start font-menu text-surface-800 dark:text-surface-100 sm:text-lg md:text-xl">
+    <h1 class="text-md font-menu text-surface-800 dark:text-surface-100 self-start sm:text-lg md:text-xl">
       <span>{{ props.stepsStatus }}</span>
       {{ props.mfaName }}: Multi-Factor Authentication
     </h1>
     <!-- End Form Title -->
     <!-- Start Form Caption -->
-    <div class="flex w-full flex-col text-surface-600">
-      <p class="my-2 text-sm leading-relaxed dark:text-surface-100">
+    <div class="text-surface-600 flex w-full flex-col">
+      <p class="dark:text-surface-100 my-2 text-sm leading-relaxed">
         <span v-if="showOtpInput">
-          Enter the six-digit code shown in your <span class="font-bold text-primary-500">{{ props.mfaName }}</span> app to
+          Enter the six-digit code shown in your <span class="text-primary-500 font-bold">{{ props.mfaName }}</span> app to
           proceed.
         </span>
         <span v-if="showQrCode">
           <span class="font-bold">Scan</span> the QR code with the
-          <span class="font-bold text-primary-500">{{ props.mfaName }}</span> app. Note that the QR code will only be displayed
+          <span class="text-primary-500 font-bold">{{ props.mfaName }}</span> app. Note that the QR code will only be displayed
           <b>once</b>.
         </span>
         <span v-if="showBackupCodes">
-          <span class="font-bold text-primary-500">Store your backup codes securely: </span>
+          <span class="text-primary-500 font-bold">Store your backup codes securely: </span>
           <br />
           These ({{ backupCodes?.length }}) one-time codes are like spare keys to your account.
           <span class="font-bold">Keep them private and in a safe place</span>, separate from your phone.
         </span>
         <span v-if="showBackupCodesInput">
           Enter an <span class="font-bold">unused backup code</span> to regenerate a new QR code. Scan it with
-          <span class="font-bold text-primary-500">{{ props.mfaName }}</span> app when prompted.
+          <span class="text-primary-500 font-bold">{{ props.mfaName }}</span> app when prompted.
         </span>
       </p>
     </div>
@@ -191,14 +191,14 @@ const handleShowOtpInput = () => {
         <div
           v-for="code in backupCodes"
           :key="code"
-          class="text-md mb-1 rounded-lg bg-surface-200 px-3 py-1 font-code dark:bg-surface-800 sm:text-xl"
+          class="text-md bg-surface-200 font-code dark:bg-surface-800 mb-1 rounded-lg px-3 py-1 sm:text-xl"
         >
           {{ code }}
         </div>
       </div>
       <!-- End Display Backup Codes -->
       <!-- Start Backup Codes Input -->
-      <WbInputText v-if="showBackupCodesInput" v-model="backupCode" label="Backup Code" class="mb-2 !font-code !text-lg" />
+      <WbInputText v-if="showBackupCodesInput" v-model="backupCode" label="Backup Code" class="!font-code mb-2 !text-lg" />
       <!-- End Backup Codes Input -->
     </div>
     <!-- Start Action Buttons -->

@@ -32,13 +32,13 @@ const handlePreviousButtonClicked = () => {
 <template>
   <section class="flex w-full flex-col">
     <div class="text-center">
-      <div class="mb-2 mt-6 flex justify-center lg:hidden">
+      <div class="mt-6 mb-2 flex justify-center lg:hidden">
         <AppLogo color="light"></AppLogo>
       </div>
-      <h2 class="font-menu text-2xl font-bold text-surface-0 md:text-3xl lg:mt-6 lg:text-surface-800 dark:lg:text-surface-0">
+      <h2 class="font-menu text-surface-0 lg:text-surface-800 dark:lg:text-surface-0 text-2xl font-bold md:text-3xl lg:mt-6">
         Account Registration
       </h2>
-      <p class="mb-4 mt-2 text-sm text-surface-0 lg:text-surface-500 dark:lg:text-surface-200">
+      <p class="text-surface-0 lg:text-surface-500 dark:lg:text-surface-200 mt-2 mb-4 text-sm">
         Complete the form to create your account
       </p>
     </div>

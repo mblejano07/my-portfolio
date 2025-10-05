@@ -73,7 +73,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="app-container" class="flex min-h-screen bg-surface-200 font-content dark:bg-surface-950">
+  <div id="app-container" class="bg-surface-200 font-content dark:bg-surface-950 flex min-h-screen">
     <AppFullScreenLoader :is-open="showFullScreenLoader" />
     <!-- Start Sidebar -->
     <AppDesktopSidebar

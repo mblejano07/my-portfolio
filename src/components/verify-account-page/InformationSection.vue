@@ -35,7 +35,7 @@ const handleEmailVerification = async () => {
 </script>
 
 <template>
-  <div class="flex w-full flex-col text-surface-600 dark:text-surface-300">
+  <div class="text-surface-600 dark:text-surface-300 flex w-full flex-col">
     <!-- Start Alert Message -->
     <transition enter-active-class="transition duration-200" enter-from-class="scale-50 opacity-0" leave-to-class="opacity-0">
       <Message v-if="showErrorAlert" :closable="false" severity="error" class="mx-4 my-2 md:mx-0">

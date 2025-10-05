@@ -99,14 +99,13 @@ const handleFormSubmission = async () => {
         <b>re-scan the QR code</b> and <b>re-generate back-up codes</b>, select an option below.
       </span>
       <!-- Start MFA Options -->
-      <Skeleton v-if="mfaOptionsAreLoading" height="4rem" class="mb-2 mt-3" />
+      <Skeleton v-if="mfaOptionsAreLoading" height="4rem" class="mt-3 mb-2" />
       <template v-if="!mfaOptionsAreLoading">
         <button
           v-for="option in mfaOptions"
           :key="option.name"
           @click="handleMfaOptionSelect(option.name)"
-          :class="`mb-1 mt-3 flex items-center justify-between rounded-lg px-2 py-2 font-bold ring-2 transition-all hover:scale-[101%]
-            sm:px-6 sm:py-4 ${payload.mfa_step === option.name ? 'ring-primary-500' : 'ring-surface-500'}`"
+          :class="`mt-3 mb-1 flex items-center justify-between rounded-lg px-2 py-2 font-bold ring-2 transition-all hover:scale-[101%] sm:px-6 sm:py-4 ${payload.mfa_step === option.name ? 'ring-primary-500' : 'ring-surface-500'}`"
         >
           <div class="flex flex-col items-start justify-center text-left">
             <span
@@ -114,7 +113,7 @@ const handleFormSubmission = async () => {
               <FontAwesomeIcon
                 v-if="payload.mfa_step === option.name"
                 icon="fa-solid fa-check-circle"
-                class="ml-1 inline text-primary-500 sm:hidden"
+                class="text-primary-500 ml-1 inline sm:hidden"
               />
             </span>
             <span class="text-xs font-medium"
@@ -122,7 +121,7 @@ const handleFormSubmission = async () => {
             >
           </div>
           <div v-if="payload.mfa_step === option.name" class="hidden sm:flex">
-            <FontAwesomeIcon icon="fa-solid fa-check-circle" class="text-lg text-primary-500 sm:text-2xl" />
+            <FontAwesomeIcon icon="fa-solid fa-check-circle" class="text-primary-500 text-lg sm:text-2xl" />
           </div>
         </button>
       </template>

@@ -312,13 +312,13 @@ const settingsStore = useSettingsStore()
           >
             <i class="pi pi-lock mr-1" />
             <span class="hidden sm:inline">Configure Multi-Factor Authentication</span>
-            <span class="inline font-medium text-surface-500 sm:hidden">MFA</span>
+            <span class="text-surface-500 inline font-medium sm:hidden">MFA</span>
           </button>
         </div>
         <!-- End MFA Dialog Button -->
         <!-- Start Enable Editing Switch -->
         <div class="flex items-center justify-between">
-          <span class="mr-3 text-xs text-surface-500">{{ !editingEnabled ? 'Enable Editing' : 'Disabled Editing' }}</span>
+          <span class="text-surface-500 mr-3 text-xs">{{ !editingEnabled ? 'Enable Editing' : 'Disabled Editing' }}</span>
           <InputSwitch v-model="editingEnabled" :disabled="userIsSuperUser"></InputSwitch>
         </div>
         <!-- End Enable Editing Switch -->
