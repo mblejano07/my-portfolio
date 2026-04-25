@@ -57,7 +57,7 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <Toolbar class="bg-surface-200 dark:bg-surface-950 min-h-[4rem] px-6 py-6 shadow-none !ring-0">
+  <Toolbar class="min-h-[4rem] bg-surface-200 px-6 py-6 shadow-none !ring-0 dark:bg-surface-950">
     <template #start>
       <AppLogo v-if="uiStore.sidebarMinimized" icon-only class="mr-4"></AppLogo>
       <Button
@@ -67,7 +67,7 @@ const handleLogout = async () => {
         rounded
         aria-label="Menu"
         v-tooltip.bottom="`${uiStore.sidebarMinimized ? 'Show Sidebar' : 'Hide Sidebar'}`"
-        class="hover:text-primary-500 dark:!text-surface-200 mr-4"
+        class="mr-4 hover:text-primary-500 dark:!text-surface-200"
         @click="uiStore.toggleSidebar()"
       />
       <WbBreadcrumbs />
@@ -75,7 +75,7 @@ const handleLogout = async () => {
 
     <template #end>
       <span class="relative mr-4">
-        <i class="pi pi-search text-surface-400 dark:text-surface-600 absolute top-2/4 left-3 -mt-2" />
+        <i class="pi pi-search absolute left-3 top-2/4 -mt-2 text-surface-400 dark:text-surface-600" />
         <InputText placeholder="Search" class="pl-10" />
       </span>
 
@@ -84,7 +84,7 @@ const handleLogout = async () => {
         <Avatar
           :image="authStore.authenticatedUser.user_profile?.profile_picture_url ?? undefined"
           shape="circle"
-          class="hover:ring-primary-500 dark:!bg-primary-500 cursor-pointer overflow-hidden transition-transform hover:scale-105 hover:ring-1"
+          class="cursor-pointer overflow-hidden transition-transform hover:scale-105 hover:ring-1 hover:ring-primary-500 dark:!bg-primary-500"
           :label="`${
             !authStore.authenticatedUser.user_profile?.profile_picture_url ? authStore.avatarDisplayNamePlaceholder : ''
           }`"
@@ -105,7 +105,7 @@ const handleLogout = async () => {
         >
           <template #start>
             <button
-              class="p-link hover:bg-surface-100 dark:hover:bg-surface-400/10 relative mb-2 flex w-full items-center overflow-hidden rounded-md p-2 pl-3"
+              class="p-link relative mb-2 flex w-full items-center overflow-hidden rounded-md p-2 pl-3 hover:bg-surface-100 dark:hover:bg-surface-400/10"
               @click="router.push({ name: 'profile' })"
             >
               <Avatar
@@ -113,7 +113,7 @@ const handleLogout = async () => {
                 :label="`${
                   !authStore.authenticatedUser.user_profile?.profile_picture_url ? authStore.avatarDisplayNamePlaceholder : ''
                 }`"
-                class="dark:!bg-primary-500 mr-2.5 overflow-hidden"
+                class="mr-2.5 overflow-hidden dark:!bg-primary-500"
                 shape="square"
                 size="large"
               />

@@ -22,7 +22,7 @@ onBeforeMount(async () => {
   <div class="mx-auto flex h-[100%] w-full flex-col">
     <Card>
       <template #header>
-        <div class="bg-primary-500 h-2 w-full rounded-t-lg"></div>
+        <div class="h-2 w-full rounded-t-lg bg-primary-500"></div>
       </template>
       <template #content>
         <div class="flex flex-col px-4">
@@ -30,7 +30,7 @@ onBeforeMount(async () => {
             <template v-if="authStore.isAuthenticated">
               <WbAvatarFileInput />
             </template>
-            <div class="mt-8 flex flex-col text-center text-lg md:mt-0 md:ml-8 md:text-left lg:text-2xl">
+            <div class="mt-8 flex flex-col text-center text-lg md:ml-8 md:mt-0 md:text-left lg:text-2xl">
               <span class="font-bold">{{ authStore.authFullName }}</span>
               <span class="text-xs sm:text-sm">{{ authStore.authFullAddress }}</span>
             </div>
@@ -41,7 +41,7 @@ onBeforeMount(async () => {
         <!-- Start Tab Buttons -->
         <div class="flex justify-center gap-x-1 text-sm md:justify-end">
           <button
-            :class="`hover:bg-surface-200 dark:hover:bg-primary-500 dark:hover:text-surface-950 rounded-lg px-2 py-1 transition hover:scale-105 md:mr-6 ${
+            :class="`rounded-lg px-2 py-1 transition hover:scale-105 hover:bg-surface-200 dark:hover:bg-primary-500 dark:hover:text-surface-950 md:mr-6 ${
               profileInfoShown ? 'bg-surface-200 dark:bg-primary-500 dark:text-surface-950' : ''
             }`"
             @click="profileInfoShown = true"
@@ -49,7 +49,7 @@ onBeforeMount(async () => {
             Profile Details
           </button>
           <button
-            :class="`hover:bg-surface-200 dark:hover:bg-primary-500 dark:hover:text-surface-950 rounded-lg px-2 py-1 transition hover:scale-105 md:mr-6 ${
+            :class="`rounded-lg px-2 py-1 transition hover:scale-105 hover:bg-surface-200 dark:hover:bg-primary-500 dark:hover:text-surface-950 md:mr-6 ${
               !profileInfoShown ? 'bg-surface-200 dark:bg-primary-500 dark:text-surface-950' : ''
             }`"
             @click="profileInfoShown = false"

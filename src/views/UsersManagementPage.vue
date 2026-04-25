@@ -100,7 +100,7 @@ const handleSearchUser = async () => {
   <div class="mx-auto flex h-[100%] w-full flex-col">
     <!-- Start Filters & Controls -->
     <div
-      class="bg-surface-0 dark:bg-surface-800 my-6 flex w-full flex-col items-center justify-between gap-4 rounded-lg px-6 py-6 shadow-sm md:my-4 md:flex-row md:px-4 md:py-4"
+      class="my-6 flex w-full flex-col items-center justify-between gap-4 rounded-lg bg-surface-0 px-6 py-6 shadow-sm dark:bg-surface-800 md:my-4 md:flex-row md:px-4 md:py-4"
     >
       <!-- Start Create User Button -->
       <div class="flex w-full">
@@ -108,7 +108,7 @@ const handleSearchUser = async () => {
           label="Create User"
           severity="secondary"
           outlined
-          class="!ring-surface-400 dark:text-surface-400 h-8 w-full md:mx-0 md:h-fit md:w-fit md:text-xs"
+          class="h-8 w-full !ring-surface-400 dark:text-surface-400 md:mx-0 md:h-fit md:w-fit md:text-xs"
           @click="toggleCreateUserDialog"
         >
           <template #icon>
@@ -178,9 +178,9 @@ const handleSearchUser = async () => {
       <div
         v-for="i in 4"
         :key="i"
-        class="bg-surface-100 dark:bg-surface-800 flex min-h-56 animate-pulse flex-col items-center justify-center rounded-lg p-1 shadow-md"
+        class="flex min-h-56 animate-pulse flex-col items-center justify-center rounded-lg bg-surface-100 p-1 shadow-md dark:bg-surface-800"
       >
-        <i class="pi pi-spinner text-surface-400 animate-spin text-lg" />
+        <i class="pi pi-spinner animate-spin text-lg text-surface-400" />
       </div>
     </div>
     <!-- End User Cards -->
@@ -200,7 +200,7 @@ const handleSearchUser = async () => {
     <!-- Start No Users Message -->
     <div
       v-if="!usersListIsLoading && !pagination?.total"
-      class="font-menu dark:text-surface-300 flex w-fit flex-col items-center self-center text-lg"
+      class="flex w-fit flex-col items-center self-center font-menu text-lg dark:text-surface-300"
     >
       <i class="pi pi-exclamation-triangle text-2xl"></i>
       <p class="mt-2">No users found</p>

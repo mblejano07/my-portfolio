@@ -103,8 +103,8 @@ const handleSubmitForm = async () => {
               </Button>
             </div>
             <div class="mb-8">
-              <h1 class="font-menu text-surface-800 dark:text-surface-100 mb-1 text-lg sm:text-xl">Reset Your Password?</h1>
-              <p class="text-surface-600 dark:text-surface-300 text-sm leading-relaxed">
+              <h1 class="mb-1 font-menu text-lg text-surface-800 dark:text-surface-100 sm:text-xl">Reset Your Password?</h1>
+              <p class="text-sm leading-relaxed text-surface-600 dark:text-surface-300">
                 Enter the email you've used to request this link and input your new password.
               </p>
             </div>

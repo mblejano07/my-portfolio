@@ -4,7 +4,7 @@
   <div class="mx-auto flex h-[100%] items-center justify-center">
     <div class="flex flex-col items-center">
       <div class="loader"></div>
-      <h1 class="font-menu dark:text-surface-100 mt-2">Nothing to see here. Just a placeholder.</h1>
+      <h1 class="mt-2 font-menu dark:text-surface-100">Nothing to see here. Just a placeholder.</h1>
     </div>
   </div>
 </template>

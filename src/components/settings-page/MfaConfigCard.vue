@@ -122,8 +122,8 @@ onUnmounted(() => {
   <Card class="min-h-72">
     <template #content>
       <div class="w-full">
-        <h1 class="font-menu dark:text-surface-200 text-lg font-bold md:text-xl">Multi-Factor Authentication</h1>
-        <p class="md:text-medium text-surface-700 dark:text-surface-400 mt-1 text-sm">
+        <h1 class="font-menu text-lg font-bold dark:text-surface-200 md:text-xl">Multi-Factor Authentication</h1>
+        <p class="md:text-medium mt-1 text-sm text-surface-700 dark:text-surface-400">
           You can enable or disable MFA for all users. You may also select multiple MFA factors and order them.
         </p>
         <div class="justify-left mt-6 flex">
@@ -138,8 +138,8 @@ onUnmounted(() => {
         </div>
         <!-- Start List -->
         <div v-show="mfaEnabled && !mfaStepsListAreLoading" class="w-full">
-          <hr class="border-surface-250 dark:border-surface-700 my-4" />
-          <p v-if="enabledStepsList.length > 0" class="md:text-medium text-surface-700 dark:text-surface-400 text-sm">
+          <hr class="border-surface-250 my-4 dark:border-surface-700" />
+          <p v-if="enabledStepsList.length > 0" class="md:text-medium text-sm text-surface-700 dark:text-surface-400">
             Listed here are all the enabled and disabled MFA steps. You may <b>drag & drop</b> the individual verification methods
             to change their order. At least one item should be in this list if MFA is enabled.
           </p>
@@ -148,7 +148,7 @@ onUnmounted(() => {
             <div
               v-for="(step, index) in enabledStepsList"
               :key="step.name"
-              class="bg-surface-200 dark:bg-surface-700 mb-1 flex items-center justify-between rounded-md px-4 py-2 hover:cursor-pointer"
+              class="mb-1 flex items-center justify-between rounded-md bg-surface-200 px-4 py-2 hover:cursor-pointer dark:bg-surface-700"
             >
               <div class="flex items-center">
                 <button @click="handleMoveStepUp(index)">
@@ -175,7 +175,7 @@ onUnmounted(() => {
             <div
               v-for="step in disabledStepsList"
               :key="step.name"
-              class="bg-surface-200 dark:bg-surface-700 mb-1 flex items-center justify-between rounded-md px-4 py-2"
+              class="mb-1 flex items-center justify-between rounded-md bg-surface-200 px-4 py-2 dark:bg-surface-700"
             >
               <div class="flex items-center">
                 <i class="pi pi-ban mr-3 text-xs sm:text-sm"></i>

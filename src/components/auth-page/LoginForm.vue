@@ -150,14 +150,14 @@ const manageIfEmailIsPhoneNumber = (payload: LoginPayload) => {
 
 <template>
   <section class="bg-transparent">
-    <div class="text-surface-0 lg:text-surface-800 text-center">
-      <div class="mt-6 mb-2 flex justify-center lg:hidden">
+    <div class="text-center text-surface-0 lg:text-surface-800">
+      <div class="mb-2 mt-6 flex justify-center lg:hidden">
         <AppLogo color="light"></AppLogo>
       </div>
-      <h2 class="font-menu text-surface-0 lg:text-surface-800 dark:lg:text-surface-0 text-2xl font-bold md:text-3xl lg:mt-6">
+      <h2 class="font-menu text-2xl font-bold text-surface-0 md:text-3xl lg:mt-6 lg:text-surface-800 dark:lg:text-surface-0">
         Account Login
       </h2>
-      <p class="text-surface-0 lg:text-surface-500 dark:lg:text-surface-200 mt-2 mb-4 text-sm">
+      <p class="mb-4 mt-2 text-sm text-surface-0 lg:text-surface-500 dark:lg:text-surface-200">
         Sign in to your existing account
       </p>
     </div>
@@ -211,7 +211,7 @@ const manageIfEmailIsPhoneNumber = (payload: LoginPayload) => {
         <Button
           label="Forgot Password"
           size="small"
-          class="text-surface-0 hover:bg-surface-100 dark:text-primary-100 dark:hover:bg-primary-300/20 lg:text-surface-500 dark:lg:text-primary-400 text-xs"
+          class="text-xs text-surface-0 hover:bg-surface-100 dark:text-primary-100 dark:hover:bg-primary-300/20 lg:text-surface-500 dark:lg:text-primary-400"
           text
           @click="$router.push({ name: 'forgot-password' })"
         >
@@ -222,7 +222,7 @@ const manageIfEmailIsPhoneNumber = (payload: LoginPayload) => {
         <Button
           label="Create an account"
           size="small"
-          class="text-surface-0 dark:text-primary-100 lg:text-primary-400 dark:lg:text-primary-400 text-xs"
+          class="text-xs text-surface-0 dark:text-primary-100 lg:text-primary-400 dark:lg:text-primary-400"
           text
           @click="$router.push({ name: 'sign-up' })"
         >

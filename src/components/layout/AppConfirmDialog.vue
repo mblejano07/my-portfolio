@@ -6,9 +6,9 @@ import ConfirmDialog from 'primevue/confirmdialog'
 <template>
   <ConfirmDialog group="global" :draggable="false" modal>
     <template #container="{ message, acceptCallback, rejectCallback }">
-      <div class="bg-surface-0 dark:bg-surface-800 flex flex-col items-center rounded-lg p-5">
-        <span class="text-surface-700 dark:text-surface-100 mt-4 mb-2 text-2xl font-bold">{{ message?.header }}</span>
-        <p class="dark:text-surface-100 my-4">{{ message?.message }}</p>
+      <div class="flex flex-col items-center rounded-lg bg-surface-0 p-5 dark:bg-surface-800">
+        <span class="mb-2 mt-4 text-2xl font-bold text-surface-700 dark:text-surface-100">{{ message?.header }}</span>
+        <p class="my-4 dark:text-surface-100">{{ message?.message }}</p>
         <div class="mt-4 flex items-center gap-6">
           <Button label="Cancel" severity="secondary" outlined @click="rejectCallback" class="flex w-[8rem] gap-1">
             <template #icon>

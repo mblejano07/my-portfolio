@@ -83,17 +83,17 @@ const handleResendMfaCode = async () => {
 <template>
   <div class="w-full">
     <!-- Start Form Title -->
-    <h1 class="text-md font-menu text-surface-800 dark:text-surface-100 self-start sm:text-lg md:text-xl">
+    <h1 class="text-md self-start font-menu text-surface-800 dark:text-surface-100 sm:text-lg md:text-xl">
       <span>{{ props.stepsStatus }}</span>
       {{ props.mfaName }}: Multi-Factor Authentication
     </h1>
     <!-- End Form Title -->
-    <div class="text-surface-600 flex w-full flex-col">
+    <div class="flex w-full flex-col text-surface-600">
       <!-- Start Form Caption -->
-      <p v-if="props.isFirstMfaStep" class="dark:text-surface-100 my-2 text-sm leading-relaxed">
+      <p v-if="props.isFirstMfaStep" class="my-2 text-sm leading-relaxed dark:text-surface-100">
         We've sent a six-digit one-time-password sent to your inbox. Please enter the code to proceed.
       </p>
-      <p v-else class="dark:text-surface-100 my-2 text-sm leading-relaxed">
+      <p v-else class="my-2 text-sm leading-relaxed dark:text-surface-100">
         Use the <b>Send OTP</b> button to receive a six-digit one-time-password. Please enter the code to proceed.
       </p>
       <!-- End Form Caption -->
@@ -124,7 +124,7 @@ const handleResendMfaCode = async () => {
               <FontAwesomeIcon icon="fa-solid fa-paper-plane" class="mr-2" />
             </template>
           </Button>
-          <p v-if="resendMfaCodeButtonIsLocked" class="text-surface-600 mt-1 text-center text-xs italic sm:mt-3 lg:text-sm">
+          <p v-if="resendMfaCodeButtonIsLocked" class="mt-1 text-center text-xs italic text-surface-600 sm:mt-3 lg:text-sm">
             You can send again after <span class="font-bold">{{ resendMfaCodeButtonTimer }}</span> seconds
           </p>
         </div>

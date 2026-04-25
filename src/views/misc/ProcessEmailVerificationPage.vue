@@ -63,10 +63,10 @@ onUnmounted(() => clearInterval(timerId))
         : 'from-primary-500 to-primary-900 dark:from-primary-800 dark:to-primary-950'
     }`"
   >
-    <div class="text-surface-0 z-10 mx-4 mt-12 flex h-fit w-full flex-col md:mx-0 md:mt-16 md:w-fit lg:mt-28">
+    <div class="z-10 mx-4 mt-12 flex h-fit w-full flex-col text-surface-0 md:mx-0 md:mt-16 md:w-fit lg:mt-28">
       <AppLogo color="light" class="mb-1.5 self-center" />
       <div class="mx-2 flex justify-center lg:mx-0">
-        <h1 class="font-menu text-surface-0 text-xl lg:text-3xl">
+        <h1 class="font-menu text-xl text-surface-0 lg:text-3xl">
           <span v-if="isLoading">Verifying Your Email</span>
           <span v-if="!isLoading && verificationSuccess">Verification Successful</span>
           <span v-if="!isLoading && !verificationSuccess">Verification Failed</span>

@@ -146,7 +146,7 @@ const handleNextSection = async () => {
         label="Back to Login"
         size="small"
         text
-        class="text-surface-0 hover:bg-surface-100 dark:text-primary-100 dark:hover:bg-primary-300/20 lg:text-surface-500 dark:lg:text-primary-400 text-xs"
+        class="text-xs text-surface-0 hover:bg-surface-100 dark:text-primary-100 dark:hover:bg-primary-300/20 lg:text-surface-500 dark:lg:text-primary-400"
       >
         <template #icon>
           <FontAwesomeIcon icon="fa-solid fa-sign-in" class="mr-1.5"></FontAwesomeIcon>

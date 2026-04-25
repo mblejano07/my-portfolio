@@ -89,17 +89,17 @@ watch(
 
 <template>
   <div
-    class="from-warn-500 to-warn-900 dark:from-warn-900 dark:to-warn-950 flex h-full w-full justify-center bg-gradient-to-b lg:mx-0"
+    class="flex h-full w-full justify-center bg-gradient-to-b from-warn-500 to-warn-900 dark:from-warn-900 dark:to-warn-950 lg:mx-0"
   >
     <div class="relative z-10 w-[96%] md:w-[65%] lg:w-[50%]">
       <!-- Start Header Icon -->
       <div
-        class="bg-primary-500 absolute top-6 left-1/2 hidden h-28 w-28 -translate-x-1/2 transform items-center justify-center rounded-full lg:flex"
+        class="absolute left-1/2 top-6 hidden h-28 w-28 -translate-x-1/2 transform items-center justify-center rounded-full bg-primary-500 lg:flex"
       >
-        <FontAwesomeIcon icon="fa-solid fa-envelope-open-text" class="text-surface-0 h-16"></FontAwesomeIcon>
+        <FontAwesomeIcon icon="fa-solid fa-envelope-open-text" class="h-16 text-surface-0"></FontAwesomeIcon>
       </div>
       <!-- End Header Icon -->
-      <Card class="ring-primary-500 mt-4 ring-2 md:mx-4 md:mt-8 lg:mt-16">
+      <Card class="mt-4 ring-2 ring-primary-500 md:mx-4 md:mt-8 lg:mt-16">
         <template #content>
           <div class="mx-2 flex flex-col items-center">
             <div class="mb-8 flex w-full items-center justify-between">
@@ -116,14 +116,14 @@ watch(
                 <template #icon><i class="pi pi-arrow-left mr-2 hidden md:block" /></template>
               </Button>
             </div>
-            <h1 class="font-menu text-surface-800 dark:text-surface-100 self-start text-xl">Verify Your Email</h1>
-            <div class="text-surface-600 flex w-full flex-col">
-              <p class="dark:text-surface-100 mt-2 text-sm leading-relaxed">
+            <h1 class="self-start font-menu text-xl text-surface-800 dark:text-surface-100">Verify Your Email</h1>
+            <div class="flex w-full flex-col text-surface-600">
+              <p class="mt-2 text-sm leading-relaxed dark:text-surface-100">
                 We've sent a verification link to
-                <span class="text-warn-400 mx-1 font-medium underline underline-offset-4">{{ authEmail }}</span>
+                <span class="mx-1 font-medium text-warn-400 underline underline-offset-4">{{ authEmail }}</span>
                 to verify your email address and activate your account.
               </p>
-              <p class="dark:text-surface-100 mt-3 text-sm leading-relaxed md:mt-2">
+              <p class="mt-3 text-sm leading-relaxed dark:text-surface-100 md:mt-2">
                 The link in the email will expire in 1 hour. You may need to check your spam folder if you can't find the email in
                 your inbox.
               </p>
@@ -141,7 +141,7 @@ watch(
                       <FontAwesomeIcon icon="fa-solid fa-paper-plane" class="mr-2" />
                     </template>
                   </Button>
-                  <p v-if="resendEmailButtonIsLocked" class="text-surface-600 mt-3 text-center text-xs italic lg:text-sm">
+                  <p v-if="resendEmailButtonIsLocked" class="mt-3 text-center text-xs italic text-surface-600 lg:text-sm">
                     You can send again after <span class="font-bold">{{ resendEmailButtonTimer }}</span> seconds
                   </p>
                 </div>

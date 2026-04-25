@@ -28,7 +28,7 @@ const colorClasses = computed(() => {
   <div :class="`flex ${colorClasses.text}`">
     <i
       :class="`pi pi-prime mr-2 h-6 w-6 rounded-full p-1 ${colorClasses.ring} ${
-        props.iconOnly ? 'mr-0 mb-1.5 h-12 w-12 p-0 text-[1.5em]' : 'ring-2'
+        props.iconOnly ? 'mb-1.5 mr-0 h-12 w-12 p-0 text-[1.5em]' : 'ring-2'
       }`"
     ></i>
     <h1 v-if="!props.iconOnly" class="font-menu text-xl font-bold">WebkitPrime</h1>

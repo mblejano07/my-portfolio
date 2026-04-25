@@ -59,17 +59,17 @@ const handleCompleteVerification = async () => {
 
 <template>
   <div
-    class="from-primary-500 to-primary-900 dark:from-primary-900 dark:to-primary-950 flex h-full justify-center bg-gradient-to-b ring-2 ring-red-100 lg:mx-0"
+    class="flex h-full justify-center bg-gradient-to-b from-primary-500 to-primary-900 ring-2 ring-red-100 dark:from-primary-900 dark:to-primary-950 lg:mx-0"
   >
     <div class="relative z-10 flex h-fit w-full justify-center pb-4">
       <!-- Start Header Icon -->
       <div
-        class="bg-surface-0 ring-primary-500 absolute top-6 left-1/2 hidden h-28 w-28 -translate-x-1/2 transform items-center justify-center rounded-full ring-2 lg:flex"
+        class="absolute left-1/2 top-6 hidden h-28 w-28 -translate-x-1/2 transform items-center justify-center rounded-full bg-surface-0 ring-2 ring-primary-500 lg:flex"
       >
-        <FontAwesomeIcon icon="fa-solid fa-user-astronaut" class="text-primary-500 h-16"></FontAwesomeIcon>
+        <FontAwesomeIcon icon="fa-solid fa-user-astronaut" class="h-16 text-primary-500"></FontAwesomeIcon>
       </div>
       <!-- End Header Icon -->
-      <Card class="ring-primary-500 mx-4 mt-4 w-[100%] ring-2 md:mx-4 md:mt-8 md:w-[80%] lg:mt-16 lg:w-[60%]">
+      <Card class="mx-4 mt-4 w-[100%] ring-2 ring-primary-500 md:mx-4 md:mt-8 md:w-[80%] lg:mt-16 lg:w-[60%]">
         <template #content>
           <div class="mx-2 flex flex-col items-center transition-transform">
             <div class="mb-8 flex w-full items-center justify-between">
@@ -86,7 +86,7 @@ const handleCompleteVerification = async () => {
                 <template #icon><i class="pi pi-arrow-left mr-2 hidden md:block" /></template>
               </Button>
             </div>
-            <div class="font-menu text-surface-800 dark:text-surface-200 flex items-center self-start text-xl">
+            <div class="flex items-center self-start font-menu text-xl text-surface-800 dark:text-surface-200">
               Verify Your Account
               <Tag class="ml-3 h-fit">{{ activeStep + 1 + '/3' }}</Tag>
             </div>

@@ -1,0 +1,153 @@
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useThemeConfig } from '@/composables/theme.ts'
+
+// Content from requirements
+const name = 'Michael Barroga Lejano'
+const title = 'Senior Software Engineer / Developer'
+const credentials = '(ISC)² Certified in Cybersecurity | MS IT (in-progress)'
+const professionalSummary = `Experienced Software Developer at the Department of Social Welfare and Development with 13+ years of total experience. Specializes in Business Process Analysis, Data Analysis, System Analysis, PHP development (Code Igniter Framework), MySQL Database, Web Development, and SCRUM methodology. Civil Service Professional eligible.`
+const contact = {
+  email: 'mblejano07@gmail.com',
+  phone: '(+63) 927 940 8413',
+  address: 'Blk 3 Lot 21 Pionner St. Villa Isabel Village Dasmarinas City, Philippines',
+  linkedin: 'https://www.linkedin.com/in/michael-lejano'
+}
+const resumeFileName = 'Michael-Lejano-Resume.pdf'
+
+// Animation state
+const animateHero = ref(false)
+
+// Theme config
+const { applyTheme } = useThemeConfig()
+
+onMounted(() => {
+  animateHero.value = true
+  applyTheme()
+})
+</script>
+
+<template>
+  <section 
+    id="hero" 
+    class="hero-section min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-900/50 to-slate-900"
+    aria-label="Introduction and hero section"
+    role="banner"
+  >
+    <!-- Gradient Background Elements -->
+    <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-transparent to-cyan-500/20"></div>
+    <div class="absolute top-20 left-10 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse animation-delay-1000"></div>
+    
+    <!-- Content -->
+    <div class="relative z-10 container mx-auto px-4 max-w-4xl" role="presentation">
+      <!-- Professional Photo Placeholder -->
+      <div class="w-32 h-32 md:w-48 md:h-48 mx-auto mb-8 rounded-full bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center overflow-hidden shadow-2xl">
+        <div class="text-6xl">👨‍💻</div>
+      </div>
+      
+      <!-- Name -->
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 text-center">
+        {{ name }}
+      </h1>
+      
+      <!-- Title -->
+      <p class="text-xl md:text-2xl text-indigo-300 mb-2 text-center font-semibold">
+        {{ title }}
+      </p>
+      
+      <!-- Credentials -->
+      <p class="text-sm md:text-base text-cyan-400 mb-8 text-center">
+        {{ credentials }}
+      </p>
+      
+      <!-- Professional Summary (truncated for hero) -->
+      <p class="text-lg md:text-xl text-gray-300 mb-8 text-center max-w-2xl mx-auto leading-relaxed">
+        {{ professionalSummary }}
+      </p>
+      
+      <!-- Contact Info -->
+      <div class="flex flex-wrap justify-center gap-4 mb-8" role="navigation" aria-label="Contact information">
+        <a 
+          :href="`mailto:${contact.email}`" 
+          class="flex items-center gap-2 text-gray-300 hover:text-indigo-400 transition-colors px-4 py-2 rounded-lg hover:bg-indigo-500/20"
+          aria-label="Send email"
+        >
+          <span class="text-xl">📧</span>
+          <span class="hidden sm:inline">{{ contact.email }}</span>
+        </a>
+        <a 
+          :href="`tel:${contact.phone.replace(/[^\d+]/g, '')}`" 
+          class="flex items-center gap-2 text-gray-300 hover:text-indigo-400 transition-colors px-4 py-2 rounded-lg hover:bg-indigo-500/20"
+          aria-label="Call phone"
+        >
+          <span class="text-xl">📞</span>
+          <span class="hidden sm:inline">{{ contact.phone }}</span>
+        </a>
+        <a 
+          :href="contact.linkedin" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 text-gray-300 hover:text-indigo-400 transition-colors px-4 py-2 rounded-lg hover:bg-indigo-500/20"
+          aria-label="LinkedIn profile"
+        >
+          <span class="text-xl">💼</span>
+          <span class="hidden sm:inline">LinkedIn</span>
+        </a>
+      </div>
+      
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center" role="navigation" aria-label="Primary actions">
+        <a 
+          href="#contact" 
+          class="px-8 py-4 bg-gradient-to-r from-indigo-500 to-cyan-500 text-white rounded-lg font-semibold text-lg hover:scale-105 transition-transform duration-300 shadow-lg shadow-indigo-500/30"
+          aria-label="Navigate to contact section"
+        >
+          Get in Touch
+        </a>
+        <a 
+          href="/assets/Michael-Lejano-Resume.pdf" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="px-8 py-4 border-2 border-indigo-500 text-indigo-400 rounded-lg font-semibold text-lg hover:bg-indigo-500/20 transition-all duration-300"
+          aria-label="Download resume"
+        >
+          Download Resume
+        </a>
+      </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce" aria-hidden="true">
+      <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+  </section>
+</template>
+
+<style scoped>
+.hero-section {
+  position: relative;
+  scroll-behavior: smooth;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+</style>

@@ -36,13 +36,13 @@ const props = withDefaults(defineProps<WbMultiSelectProps>(), {
 
 <template>
   <div :class="`flex w-full flex-col gap-2 ${wrapperClass}`">
-    <label :for="$.uid.toString()" :class="`${props.labelClass || 'text-surface-800 dark:text-surface-200 text-xs'}`">{{
+    <label :for="$.uid.toString()" :class="`${props.labelClass || 'text-xs text-surface-800 dark:text-surface-200'}`">{{
       props.label
     }}</label>
 
     <div :class="`relative !w-full ${$attrs.disabled ? 'hover:cursor-not-allowed' : ''}`">
       <!-- Start Prepend Icon -->
-      <div :class="`absolute top-2/4 left-3 z-10 -mt-2.5 ${$attrs.disabled ? 'text-surface-300' : 'text-surface-500'}`">
+      <div :class="`absolute left-3 top-2/4 z-10 -mt-2.5 ${$attrs.disabled ? 'text-surface-300' : 'text-surface-500'}`">
         <slot name="prepend-icon"></slot>
       </div>
       <!-- End Prepend Icon -->
@@ -60,14 +60,14 @@ const props = withDefaults(defineProps<WbMultiSelectProps>(), {
     <!-- Start validation messages -->
     <small
       v-if="props.invalid && props.invalidText"
-      :class="`ml-0.5 ${props.validationErrorMessageClass || 'text-error-500 dark:text-error-300 text-xs'}`"
+      :class="`ml-0.5 ${props.validationErrorMessageClass || 'text-xs text-error-500 dark:text-error-300'}`"
     >
       <i class="pi pi-exclamation-triangle mr-0.5"></i>
       {{ props.invalidText }}
     </small>
     <small
       v-if="props.success && props.successText"
-      :class="`ml-0.5 ${props.validationSuccessMessageClass || 'text-success-500 dark:text-success-300 text-xs'}`"
+      :class="`ml-0.5 ${props.validationSuccessMessageClass || 'text-xs text-success-500 dark:text-success-300'}`"
     >
       <i class="pi pi-check-circle mr-0.5"></i>
       {{ props.successText }}
