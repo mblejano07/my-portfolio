@@ -478,6 +478,137 @@ Mike ← Bantay (direct line, independent audits)
 
 ---
 
+## Appendix: Tooling Deep-Dive
+
+### QMD (Query Markup Documents)
+
+**What It Is:** Structured prompt/query format for agent communication.
+
+**Why We Use It:**
+- Consistent query structure across all agents
+- Enables automated parsing and routing
+- Reduces ambiguity in task delegation
+- Supports complex queries with context, constraints, and expected output format
+
+**QMD Structure Example:**
+```markdown
+## Query: [Task Name]
+
+**Context:**
+[Background information, prior decisions, relevant files]
+
+**Task:**
+[Clear, actionable instruction]
+
+**Constraints:**
+- [Constraint 1]
+- [Constraint 2]
+
+**Expected Output:**
+[Format, location, any specific requirements]
+
+**References:**
+- [Link to specs, code, docs]
+```
+
+**How We Used It:**
+- Buddy uses QMD for requirements discovery prompts
+- Orchestrator uses QMD for sprint breakdown tasks
+- All handoff contracts follow QMD-inspired structure
+- Scribe uses QMD for documentation generation requests
+
+---
+
+### Lossless-Claw (Conversation Compaction & Recall)
+
+**What It Is:** OpenClaw's memory management system for long-running conversations.
+
+**Core Components:**
+
+| Component | Purpose | When We Use It |
+|-----------|---------|----------------|
+| **lcm_grep** | Search messages/summaries by regex or full-text | Finding past decisions, locating specific discussions |
+| **lcm_describe** | Inspect a specific summary (cheap, no sub-agent) | Quick lookup of what a summary contains |
+| **lcm_expand_query** | Deep recall with bounded sub-agent expansion | Getting exact details from compacted history |
+| **MEMORY.md** | Long-term curated memories | Decisions, lessons, permanent context |
+| **memory/YYYY-MM-DD.md** | Daily raw logs | Chronological record of what happened |
+
+**Lossless-Claw Workflow:**
+
+1. **Start with `lcm_grep`** — Find relevant summaries/messages
+   ```bash
+   lcm_grep(query: "template selection", mode: "full_text")
+   ```
+
+2. **Inspect with `lcm_describe`** — Check if summary has what you need
+   ```bash
+   lcm_describe(summaryId: "sum_abc123")
+   ```
+
+3. **Expand with `lcm_expand_query`** — Get exact details before answering
+   ```bash
+   lcm_expand_query(
+     summaryIds: ["sum_abc123"],
+     prompt: "What template was selected and why?"
+   )
+   ```
+
+4. **Answer from evidence** — Never guess from compacted summaries
+
+**Key Principles:**
+- ✅ Prefer newer evidence over older summaries (conflict resolution)
+- ✅ Expand before asserting specifics (commands, SHAs, timestamps, config values)
+- ✅ State uncertainty instead of guessing from compaction
+- ✅ Use 1-3 distinctive terms for `lcm_grep` queries (FTS5 AND matching)
+- ✅ Wrap exact phrases in quotes: `"error handling"`
+
+**How We Used It:**
+- Debugged delegation violations by expanding old session summaries
+- Traced decision chains for post-mortems (e.g., template selection mistake)
+- Recovered lost context after session restarts
+- Verified exact commands/config before making changes
+- Built MEMORY.md entries from expanded historical evidence
+
+**Lesson Learned:**
+> Lossless-Claw isn't just a convenience — it's essential for maintaining continuity across sessions. Without it, agents would constantly re-litigate settled decisions or make changes based on stale summaries.
+
+---
+
+### Integration: QMD + Lossless-Claw
+
+**Combined Workflow Example:**
+
+When Chief delegates a research task to Scribe:
+
+```markdown
+## Query: Research Vue 3 Dark Theme Options
+
+**Context:**
+Portfolio v2 needs dark theme (green/cyan accent). 
+See MEMORY.md "Portfolio v2 Decision Log" for color preferences.
+Use lossless-claw to verify exact hex codes from designer discussions.
+
+**Task:**
+1. Search conversation history for dark theme discussions
+2. Extract color palette decisions
+3. Document in `memory/sprint-0-design-specs.md`
+
+**Constraints:**
+- Use lcm_expand_query for exact color values
+- Verify against Designer's approved mockups
+- Cite summary IDs in documentation
+
+**Expected Output:**
+Markdown file with color palette table, sources, and implementation notes.
+```
+
+**Why This Works:**
+- QMD provides clear structure for the task
+- Lossless-Claw ensures accurate recall of past decisions
+- Combined: Precise, evidence-based execution
+
+---
+
 ## Appendix: Command Reference
 
 ### Session Management
