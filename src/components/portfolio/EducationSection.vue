@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import Carousel from 'primevue/carousel'
-
 const education = [
   {
     degree: 'Master of Science in Information Technology',
@@ -82,12 +79,6 @@ const certifications = [
     icon: '💻',
   },
 ]
-
-const responsiveOptions = ref([
-  { breakpoint: '1024px', numVisible: 3, numScroll: 1 },
-  { breakpoint: '768px', numVisible: 2, numScroll: 1 },
-  { breakpoint: '480px', numVisible: 1, numScroll: 1 },
-])
 </script>
 
 <template>
@@ -135,7 +126,7 @@ const responsiveOptions = ref([
             </div>
           </div>
 
-          <!-- Certifications Carousel -->
+          <!-- Certifications Grid -->
           <div>
             <div class="mb-6 flex items-center gap-3">
               <div
@@ -146,37 +137,28 @@ const responsiveOptions = ref([
               <h3 class="text-2xl font-bold text-white">Certifications</h3>
             </div>
 
-            <Carousel
-              :value="certifications"
-              :numVisible="3"
-              :numScroll="1"
-              :responsiveOptions="responsiveOptions"
-              :autoplayInterval="0"
-              class="certifications-carousel"
-            >
-              <template #item="slotProps">
-                <div class="cyber-card flex items-start gap-4 rounded-lg hover:border-[#00d9ff]">
-                  <div class="flex-shrink-0 text-3xl">
-                    {{ slotProps.data.icon }}
-                  </div>
-                  <div class="min-w-0 flex-1">
-                    <h4 class="mb-1 truncate text-sm font-semibold text-white">
-                      {{ slotProps.data.name }}
-                    </h4>
-                    <div class="flex items-center gap-2 text-xs text-[#64748b]">
-                      <span>{{ slotProps.data.issuer }}</span>
-                      <span>•</span>
-                      <span>{{ slotProps.data.date }}</span>
-                    </div>
-                    <div class="mt-1">
-                      <span class="skill-tag">
-                        {{ slotProps.data.credential }}
-                      </span>
-                    </div>
+            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-2">
+              <div
+                v-for="(cert, index) in certifications"
+                :key="index"
+                class="cyber-card flex flex-col items-start gap-3 rounded-lg hover:border-[#00d9ff]"
+              >
+                <div class="flex w-full items-center justify-between">
+                  <span class="text-2xl">{{ cert.icon }}</span>
+                  <span class="text-xs font-semibold text-[#10b981]">{{ cert.credential }}</span>
+                </div>
+                <div class="min-w-0">
+                  <h4 class="mb-1 truncate text-sm font-semibold text-white">
+                    {{ cert.name }}
+                  </h4>
+                  <div class="flex items-center gap-2 text-xs text-[#64748b]">
+                    <span>{{ cert.issuer }}</span>
+                    <span>•</span>
+                    <span>{{ cert.date }}</span>
                   </div>
                 </div>
-              </template>
-            </Carousel>
+              </div>
+            </div>
 
             <!-- Certification Summary -->
             <div class="cyber-card mt-6 text-center">
@@ -200,13 +182,5 @@ const responsiveOptions = ref([
 .cert-card:hover {
   border-color: #00d9ff;
   box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
-}
-
-.carousel-container {
-  overflow: hidden;
-}
-
-.certifications-carousel {
-  overflow: hidden;
 }
 </style>

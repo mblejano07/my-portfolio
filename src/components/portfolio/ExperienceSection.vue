@@ -1,15 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import Carousel from 'primevue/carousel'
-
-const expandedPosition = ref<number | null>(0)
-
-const responsiveOptions = ref([
-  { breakpoint: '1400px', numVisible: 3, numScroll: 1 },
-  { breakpoint: '1024px', numVisible: 2, numScroll: 1 },
-  { breakpoint: '768px', numVisible: 1, numScroll: 1 },
-])
-
 const experience = [
   {
     position: 'Information Technology Officer II',
@@ -70,7 +59,7 @@ const experience = [
     <div class="circuit-divider"></div>
 
     <div class="container mx-auto px-4">
-      <div class="mx-auto max-w-5xl">
+      <div class="mx-auto max-w-6xl">
         <!-- Section Header -->
         <div class="mb-12 text-center">
           <h2 class="mb-4 text-3xl font-bold text-white md:text-4xl">Work Experience</h2>
@@ -78,80 +67,52 @@ const experience = [
           <p class="mt-4 text-[#94a3b8]">13+ years of progressive experience at DSWD</p>
         </div>
 
-        <!-- Timeline Carousel -->
-        <Carousel
-          :value="experience"
-          :numVisible="3"
-          :numScroll="1"
-          :responsiveOptions="responsiveOptions"
-          :autoplayInterval="0"
-          class="carousel-container"
-        >
-          <template #item="slotProps">
-            <div class="experience-card-container">
+        <!-- Experience Grid -->
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div v-for="(job, index) in experience" :key="index" class="cyber-card experience-card flex h-full flex-col">
+            <!-- Header -->
+            <div class="mb-4 flex items-start gap-4">
               <div
-                class="cyber-card experience-card cursor-pointer"
-                @click="expandedPosition = expandedPosition === slotProps.index ? null : slotProps.index"
+                class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#6366F1] to-[#00d9ff] text-white shadow-neon"
               >
-                <!-- Header -->
-                <div class="mb-4 flex items-start gap-4">
-                  <div
-                    class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#6366F1] to-[#00d9ff] text-white shadow-neon"
-                  >
-                    <i class="pi pi-briefcase h-6 w-6"></i>
-                  </div>
-                  <div class="flex-1">
-                    <h3 class="mb-1 text-xl font-bold text-white">
-                      {{ slotProps.data.position }}
-                    </h3>
-                    <div class="mb-1 flex items-center gap-2 text-sm text-[#94a3b8]">
-                      <i class="pi pi-building h-4 w-4"></i>
-                      {{ slotProps.data.company }}
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-[#64748b]">
-                      <i class="pi pi-calendar h-4 w-4"></i>
-                      {{ slotProps.data.period }} • {{ slotProps.data.duration }}
-                    </div>
-                  </div>
+                <i class="pi pi-briefcase h-6 w-6"></i>
+              </div>
+              <div class="flex-1">
+                <h3 class="mb-1 text-xl font-bold text-white">
+                  {{ job.position }}
+                </h3>
+                <div class="mb-1 flex items-center gap-2 text-sm text-[#94a3b8]">
+                  <i class="pi pi-building h-4 w-4"></i>
+                  {{ job.company }}
                 </div>
-
-                <!-- Description -->
-                <p class="mb-4 text-[#f1f5f9]">
-                  {{ slotProps.data.description }}
-                </p>
-
-                <!-- Expand Indicator -->
-                <div class="flex items-center gap-2 text-sm font-medium text-[#00d9ff]">
-                  <span>{{ expandedPosition === slotProps.index ? 'Show Less' : 'Show Responsibilities' }}</span>
-                  <span :class="['transform transition-transform', expandedPosition === slotProps.index ? 'rotate-180' : '']"
-                    >▼</span
-                  >
+                <div class="flex items-center gap-2 text-xs text-[#64748b]">
+                  <i class="pi pi-calendar h-4 w-4"></i>
+                  {{ job.period }} • {{ job.duration }}
                 </div>
-
-                <!-- Expanded Responsibilities -->
-                <transition
-                  enter-active-class="transition duration-200 ease-out"
-                  enter-from-class="transform -translate-y-2 opacity-0"
-                  enter-to-class="transform translate-y-0 opacity-100"
-                  leave-active-class="transition duration-150 ease-in"
-                  leave-from-class="transform translate-y-0 opacity-100"
-                  leave-to-class="transform -translate-y-2 opacity-0"
-                >
-                  <ul v-if="expandedPosition === slotProps.index" class="mt-4 space-y-2">
-                    <li
-                      v-for="(responsibility, rIndex) in slotProps.data.responsibilities"
-                      :key="rIndex"
-                      class="flex items-start gap-2 text-sm text-[#f1f5f9]"
-                    >
-                      <span class="mt-1 text-[#00d9ff]">•</span>
-                      {{ responsibility }}
-                    </li>
-                  </ul>
-                </transition>
               </div>
             </div>
-          </template>
-        </Carousel>
+
+            <!-- Description -->
+            <p class="mb-4 flex-1 text-[#f1f5f9]">
+              {{ job.description }}
+            </p>
+
+            <!-- Responsibilities -->
+            <div class="mb-4">
+              <h4 class="mb-2 text-sm font-semibold text-[#00d9ff]">Key Responsibilities:</h4>
+              <ul class="space-y-2">
+                <li
+                  v-for="(responsibility, rIndex) in job.responsibilities"
+                  :key="rIndex"
+                  class="flex items-start gap-2 text-sm text-[#f1f5f9]"
+                >
+                  <span class="mt-1 text-[#00d9ff]">•</span>
+                  {{ responsibility }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -161,20 +122,6 @@ const experience = [
 .experience-card:hover {
   border-color: #6366f1;
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-}
-
-.marker-glow {
-  animation: markerPulse 2s ease-in-out infinite;
-}
-
-@keyframes markerPulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.7);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(0, 217, 255, 0);
-  }
 }
 
 /* Fade In Animation */
