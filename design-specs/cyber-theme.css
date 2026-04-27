@@ -1,0 +1,552 @@
+/* ============================================
+   PORTFOLIO V2 - CYBER THEME
+   Dark Cyber + Network/Security Aesthetic
+   ============================================ */
+
+:root {
+  /* ============================================
+     BASE COLORS (Dark Cyber Foundation)
+     ============================================ */
+
+  --cyber-black: #0a0e1a;
+  --dark-slate: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-600: #475569;
+
+  /* ============================================
+     PRIMARY COLORS (Brand - Indigo)
+     ============================================ */
+
+  --indigo: #6366f1;
+  --indigo-dark: #4f46e5;
+  --indigo-light: #818cf8;
+  --indigo-50: #eef2ff;
+  --indigo-100: #e0e7ff;
+  --indigo-200: #c7d2fe;
+  --indigo-300: #a5b4fc;
+  --indigo-400: #818cf8;
+  --indigo-500: #6366f1;
+  --indigo-600: #4f46e5;
+  --indigo-700: #4338ca;
+  --indigo-800: #3730a3;
+  --indigo-900: #312e81;
+
+  /* ============================================
+     ACCENT COLORS (Cyber Security)
+     ============================================ */
+
+  /* Matrix Green - Success states */
+  --matrix-green: #00ff41;
+  --cyber-green: #10b981;
+  --cyber-green-dark: #059669;
+
+  /* Cyan - Primary accent */
+  --cyan: #00d9ff;
+  --cyan-dark: #0891b2;
+  --cyan-light: #67e8f9;
+
+  /* Electric Purple - Tertiary accent */
+  --electric-purple: #7c3aed;
+  --purple-dark: #6d28d9;
+  --purple-light: #a78bfa;
+
+  /* ============================================
+     TEXT COLORS
+     ============================================ */
+
+  --text-primary: #ffffff;
+  --text-secondary: #f1f5f9;
+  --text-tertiary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* ============================================
+     GRADIENTS
+     ============================================ */
+
+  /* Background gradient */
+  --gradient-cyber-bg: linear-gradient(135deg, #0a0e1a 0%, #0f172a 50%, #1e293b 100%);
+
+  /* CTA gradient */
+  --gradient-cta: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%);
+
+  /* Network graph gradient */
+  --gradient-network: linear-gradient(180deg, rgba(0, 217, 255, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%);
+
+  /* Card gradient */
+  --gradient-card: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+
+  /* ============================================
+     GLOW EFFECTS (Neon-style)
+     ============================================ */
+
+  --glow-indigo: 0 0 20px rgba(99, 102, 241, 0.5);
+  --glow-indigo-strong: 0 0 30px rgba(99, 102, 241, 0.8);
+  --glow-cyan: 0 0 15px rgba(0, 217, 255, 0.4);
+  --glow-cyan-strong: 0 0 25px rgba(0, 217, 255, 0.7);
+  --glow-green: 0 0 15px rgba(16, 185, 129, 0.4);
+  --glow-purple: 0 0 15px rgba(124, 58, 237, 0.4);
+
+  /* ============================================
+     TYPOGRAPHY
+     ============================================ */
+
+  /* Font families */
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Font sizes - Desktop */
+  --text-h1: 3rem; /* 48px */
+  --text-h2: 2.25rem; /* 36px */
+  --text-h3: 1.5rem; /* 24px */
+  --text-body-lg: 1.125rem; /* 18px */
+  --text-body: 1rem; /* 16px */
+  --text-body-sm: 0.875rem; /* 14px */
+  --text-caption: 0.75rem; /* 12px */
+  --text-code: 0.875rem; /* 14px */
+
+  /* Font weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line heights */
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.6;
+
+  /* Letter spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+
+  /* ============================================
+     SPACING SYSTEM
+     ============================================ */
+
+  --space-xs: 0.5rem; /* 8px */
+  --space-sm: 1rem; /* 16px */
+  --space-md: 2rem; /* 32px */
+  --space-lg: 3rem; /* 48px */
+  --space-xl: 4rem; /* 64px */
+  --space-2xl: 6rem; /* 96px */
+
+  /* ============================================
+     CONTAINER WIDTHS
+     ============================================ */
+
+  --container-desktop: 1200px;
+  --container-tablet: 100%;
+  --container-mobile: 100%;
+
+  /* ============================================
+     BORDER RADIUS
+     ============================================ */
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* ============================================
+     SHADOWS
+     ============================================ */
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5);
+  --shadow-neon: var(--glow-indigo);
+  --shadow-neon-cyan: var(--glow-cyan);
+
+  /* ============================================
+     TRANSITIONS
+     ============================================ */
+
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
+
+  /* ============================================
+     Z-INDEX SCALE
+     ============================================ */
+
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 500;
+  --z-fixed: 1000;
+  --z-modal-backdrop: 2000;
+  --z-modal: 2100;
+  --z-tooltip: 3000;
+
+  /* ============================================
+     BREAKPOINTS
+     ============================================ */
+
+  --breakpoint-mobile: 767px;
+  --breakpoint-tablet: 1023px;
+  --breakpoint-desktop: 1279px;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--gradient-cyber-bg);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  min-height: 100vh;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+h1 {
+  font-size: var(--text-h1);
+  font-weight: var(--font-bold);
+}
+h2 {
+  font-size: var(--text-h2);
+  font-weight: var(--font-semibold);
+}
+h3 {
+  font-size: var(--text-h3);
+  font-weight: var(--font-semibold);
+}
+
+p {
+  font-size: var(--text-body);
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--cyan);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+a:hover {
+  color: var(--cyan-light);
+  text-shadow: var(--glow-cyan);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: var(--text-code);
+  color: var(--cyan);
+  background: rgba(30, 41, 59, 0.5);
+  padding: 0.2em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================
+   FOCUS STATES (Accessibility)
+   ============================================ */
+
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+  box-shadow: var(--glow-cyan);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.btn-primary {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: var(--gradient-cta);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-weight: var(--font-semibold);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: var(--glow-indigo);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-indigo-strong);
+}
+
+.btn-secondary {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: transparent;
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-weight: var(--font-semibold);
+  border: 2px solid var(--cyan);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 217, 255, 0.1);
+  box-shadow: var(--glow-cyan);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+
+.cyber-card {
+  background: var(--gradient-card);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  transition: all var(--transition-normal);
+}
+
+.cyber-card:hover {
+  border-color: var(--indigo);
+  box-shadow: var(--glow-indigo);
+  transform: translateY(-4px);
+}
+
+/* ============================================
+   GLASSMORPHISM
+   ============================================ */
+
+.glass {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+/* Fade In Up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Glow Pulse */
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.8);
+  }
+}
+
+.glow-pulse {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+/* Marker Pulse (Timeline) */
+@keyframes markerPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(0, 217, 255, 0);
+  }
+}
+
+.marker-pulse {
+  animation: markerPulse 2s ease-in-out infinite;
+}
+
+/* Float (Network Nodes) */
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(10px, -10px);
+  }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .glow-pulse,
+  .marker-pulse,
+  .float {
+    animation: none;
+  }
+}
+
+/* ============================================
+   RESPONSIVE TYPOGRAPHY
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 1023px) {
+  :root {
+    --text-h1: 2.5rem; /* 40px */
+    --text-h2: 2rem; /* 32px */
+    --text-h3: 1.25rem; /* 20px */
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  :root {
+    --text-h1: 2rem; /* 32px */
+    --text-h2: 1.75rem; /* 28px */
+    --text-h3: 1.125rem; /* 18px */
+    --text-body: 0.9375rem; /* 15px */
+
+    --space-lg: 2rem; /* 32px */
+    --space-xl: 3rem; /* 48px */
+    --space-2xl: 4rem; /* 64px */
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--indigo);
+  color: var(--text-primary);
+  padding: var(--space-xs) var(--space-sm);
+  z-index: var(--z-tooltip);
+  font-family: var(--font-mono);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Text glow effect */
+.text-glow-cyan {
+  text-shadow: var(--glow-cyan);
+}
+
+.text-glow-indigo {
+  text-shadow: var(--glow-indigo);
+}
+
+.text-glow-green {
+  text-shadow: var(--glow-green);
+}
+
+/* ============================================
+   SECTION STYLES
+   ============================================ */
+
+section {
+  padding: var(--space-2xl) var(--space-lg);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.section-header h2 {
+  margin-bottom: var(--space-md);
+}
+
+/* ============================================
+   NETWORK GRAPH CONTAINER
+   ============================================ */
+
+.network-graph-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: var(--z-base);
+  opacity: 0.3;
+}
+
+/* ============================================
+   CIRCUIT DIVIDER
+   ============================================ */
+
+.circuit-divider {
+  width: 100%;
+  height: 60px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 60' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,30 L200,30 L200,10 L250,30 L200,50 L200,30 L400,30 L400,15 L450,30 L400,45 L400,30 L1200,30' stroke='%236366F1' stroke-width='2' fill='none' opacity='0.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
