@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import Carousel from 'primevue/carousel'
 
 const expandedPosition = ref<number | null>(0)
+
+const responsiveOptions = ref([
+  { breakpoint: '1400px', numVisible: 3, numScroll: 1 },
+  { breakpoint: '1024px', numVisible: 2, numScroll: 1 },
+  { breakpoint: '768px', numVisible: 1, numScroll: 1 },
+])
 
 const experience = [
   {
@@ -71,94 +78,80 @@ const experience = [
           <p class="mt-4 text-[#94a3b8]">13+ years of progressive experience at DSWD</p>
         </div>
 
-        <!-- Timeline -->
-        <div class="relative">
-          <!-- Timeline Line -->
-          <div
-            class="absolute left-0 h-full w-1 transform rounded-full bg-gradient-to-b from-[#00d9ff] to-[#6366F1] md:left-1/2 md:-translate-x-1/2"
-          ></div>
-
-          <!-- Experience Items -->
-          <div v-for="(job, index) in experience" :key="index" class="relative mb-12 last:mb-0">
-            <div :class="['flex flex-col gap-8 md:flex-row', index % 2 === 0 ? 'md:flex-row-reverse' : '']">
-              <!-- Timeline Marker -->
+        <!-- Timeline Carousel -->
+        <Carousel
+          :value="experience"
+          :numVisible="3"
+          :numScroll="1"
+          :responsiveOptions="responsiveOptions"
+          :autoplayInterval="0"
+          class="carousel-container"
+        >
+          <template #item="slotProps">
+            <div class="experience-card-container">
               <div
-                class="absolute left-0 z-20 mt-6 h-4 w-4 -translate-x-1/2 transform rounded-full border-4 border-[#00d9ff] bg-[#0f172a] md:left-1/2"
-                :class="{ 'glow-cyan': expandedPosition === index }"
+                class="cyber-card experience-card cursor-pointer"
+                @click="expandedPosition = expandedPosition === slotProps.index ? null : slotProps.index"
               >
-                <div
-                  class="absolute -inset-1 rounded-full opacity-75"
-                  :class="{ 'marker-glow': expandedPosition === index }"
-                ></div>
-              </div>
-
-              <!-- Content -->
-              <div :class="['md:w-1/2', index % 2 === 0 ? 'md:pr-12' : 'md:pl-12']">
-                <div
-                  class="cyber-card experience-card cursor-pointer"
-                  @click="expandedPosition = expandedPosition === index ? null : index"
-                >
-                  <!-- Header -->
-                  <div class="mb-4 flex items-start gap-4">
-                    <div
-                      class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#6366F1] to-[#00d9ff] text-white shadow-neon"
-                    >
-                      <i class="pi pi-briefcase h-6 w-6"></i>
-                    </div>
-                    <div class="flex-1">
-                      <h3 class="mb-1 text-xl font-bold text-white">
-                        {{ job.position }}
-                      </h3>
-                      <div class="mb-1 flex items-center gap-2 text-sm text-[#94a3b8]">
-                        <i class="pi pi-building h-4 w-4"></i>
-                        {{ job.company }}
-                      </div>
-                      <div class="flex items-center gap-2 text-xs text-[#64748b]">
-                        <i class="pi pi-calendar h-4 w-4"></i>
-                        {{ job.period }} • {{ job.duration }}
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Description -->
-                  <p class="mb-4 text-[#f1f5f9]">
-                    {{ job.description }}
-                  </p>
-
-                  <!-- Expand Indicator -->
-                  <div class="flex items-center gap-2 text-sm font-medium text-[#00d9ff]">
-                    <span>{{ expandedPosition === index ? 'Show Less' : 'Show Responsibilities' }}</span>
-                    <span :class="['transform transition-transform', expandedPosition === index ? 'rotate-180' : '']">▼</span>
-                  </div>
-
-                  <!-- Expanded Responsibilities -->
-                  <transition
-                    enter-active-class="transition duration-200 ease-out"
-                    enter-from-class="transform -translate-y-2 opacity-0"
-                    enter-to-class="transform translate-y-0 opacity-100"
-                    leave-active-class="transition duration-150 ease-in"
-                    leave-from-class="transform translate-y-0 opacity-100"
-                    leave-to-class="transform -translate-y-2 opacity-0"
+                <!-- Header -->
+                <div class="mb-4 flex items-start gap-4">
+                  <div
+                    class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#6366F1] to-[#00d9ff] text-white shadow-neon"
                   >
-                    <ul v-if="expandedPosition === index" class="mt-4 space-y-2">
-                      <li
-                        v-for="(responsibility, rIndex) in job.responsibilities"
-                        :key="rIndex"
-                        class="flex items-start gap-2 text-sm text-[#f1f5f9]"
-                      >
-                        <span class="mt-1 text-[#00d9ff]">•</span>
-                        {{ responsibility }}
-                      </li>
-                    </ul>
-                  </transition>
+                    <i class="pi pi-briefcase h-6 w-6"></i>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="mb-1 text-xl font-bold text-white">
+                      {{ slotProps.data.position }}
+                    </h3>
+                    <div class="mb-1 flex items-center gap-2 text-sm text-[#94a3b8]">
+                      <i class="pi pi-building h-4 w-4"></i>
+                      {{ slotProps.data.company }}
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-[#64748b]">
+                      <i class="pi pi-calendar h-4 w-4"></i>
+                      {{ slotProps.data.period }} • {{ slotProps.data.duration }}
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              <!-- Empty Space for Alternating Layout -->
-              <div class="hidden md:block md:w-1/2"></div>
+                <!-- Description -->
+                <p class="mb-4 text-[#f1f5f9]">
+                  {{ slotProps.data.description }}
+                </p>
+
+                <!-- Expand Indicator -->
+                <div class="flex items-center gap-2 text-sm font-medium text-[#00d9ff]">
+                  <span>{{ expandedPosition === slotProps.index ? 'Show Less' : 'Show Responsibilities' }}</span>
+                  <span :class="['transform transition-transform', expandedPosition === slotProps.index ? 'rotate-180' : '']"
+                    >▼</span
+                  >
+                </div>
+
+                <!-- Expanded Responsibilities -->
+                <transition
+                  enter-active-class="transition duration-200 ease-out"
+                  enter-from-class="transform -translate-y-2 opacity-0"
+                  enter-to-class="transform translate-y-0 opacity-100"
+                  leave-active-class="transition duration-150 ease-in"
+                  leave-from-class="transform translate-y-0 opacity-100"
+                  leave-to-class="transform -translate-y-2 opacity-0"
+                >
+                  <ul v-if="expandedPosition === slotProps.index" class="mt-4 space-y-2">
+                    <li
+                      v-for="(responsibility, rIndex) in slotProps.data.responsibilities"
+                      :key="rIndex"
+                      class="flex items-start gap-2 text-sm text-[#f1f5f9]"
+                    >
+                      <span class="mt-1 text-[#00d9ff]">•</span>
+                      {{ responsibility }}
+                    </li>
+                  </ul>
+                </transition>
+              </div>
             </div>
-          </div>
-        </div>
+          </template>
+        </Carousel>
       </div>
     </div>
   </section>
