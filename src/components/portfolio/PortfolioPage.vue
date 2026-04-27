@@ -6,6 +6,7 @@ import ExperienceSection from './ExperienceSection.vue'
 import SkillsSection from './SkillsSection.vue'
 import EducationSection from './EducationSection.vue'
 import ContactSection from './ContactSection.vue'
+import ProjectsSection from './ProjectsSection.vue'
 
 const activeSection = ref('hero')
 const isMenuOpen = ref(false)
@@ -15,6 +16,7 @@ const sections = [
   { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
   { id: 'skills', label: 'Skills' },
+  { id: 'projects', label: 'Projects' },
   { id: 'education', label: 'Education' },
   { id: 'contact', label: 'Contact' },
 ]
@@ -131,6 +133,7 @@ onUnmounted(() => {
       <AboutSection />
       <ExperienceSection />
       <SkillsSection />
+      <ProjectsSection />
       <EducationSection />
       <ContactSection />
     </main>

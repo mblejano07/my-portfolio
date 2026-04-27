@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hero Section Refresh - Portfolio v2.0 Mockup</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          'Inter',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        min-height: 100vh;
+        color: #e2e8f0;
+        overflow-x: hidden;
+      }
+
+      .hero-section {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 2rem;
+        overflow: hidden;
+      }
+
+      /* Network Graph Background Animation Hint */
+      .network-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.1;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .network-node {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: #00d9ff;
+        border-radius: 50%;
+        animation: pulse 3s ease-in-out infinite;
+      }
+
+      .network-node:nth-child(1) {
+        top: 10%;
+        left: 15%;
+        animation-delay: 0s;
+      }
+      .network-node:nth-child(2) {
+        top: 20%;
+        right: 20%;
+        animation-delay: 0.5s;
+      }
+      .network-node:nth-child(3) {
+        bottom: 30%;
+        left: 25%;
+        animation-delay: 1s;
+      }
+      .network-node:nth-child(4) {
+        bottom: 15%;
+        right: 15%;
+        animation-delay: 1.5s;
+      }
+      .network-node:nth-child(5) {
+        top: 50%;
+        left: 50%;
+        animation-delay: 2s;
+      }
+      .network-node:nth-child(6) {
+        top: 35%;
+        right: 35%;
+        animation-delay: 2.5s;
+      }
+
+      .network-line {
+        position: absolute;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #00d9ff, transparent);
+        opacity: 0.3;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: scale(1.5);
+          opacity: 1;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .network-node {
+          animation: none;
+        }
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        text-align: center;
+      }
+
+      .greeting {
+        font-size: 1.5rem;
+        color: #94a3b8;
+        margin-bottom: 1rem;
+        font-weight: 400;
+      }
+
+      .name-wrapper {
+        display: inline-block;
+        margin-bottom: 1.5rem;
+      }
+
+      .name {
+        font-family: 'JetBrains Mono', 'Courier New', monospace;
+        font-size: 4rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 0.05em;
+        text-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
+        position: relative;
+      }
+
+      .name::before {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -10px;
+        right: -10px;
+        bottom: -5px;
+        border: 2px solid rgba(0, 217, 255, 0.3);
+        border-radius: 8px;
+        pointer-events: none;
+      }
+
+      .title {
+        font-size: 1.5rem;
+        color: #e2e8f0;
+        margin-bottom: 1rem;
+        font-weight: 500;
+      }
+
+      .credentials {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .credential-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(0, 217, 255, 0.1);
+        border: 1px solid rgba(0, 217, 255, 0.3);
+        border-radius: 9999px;
+        color: #00d9ff;
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+
+      .cta-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
+      }
+
+      .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 2.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .cta-button.primary {
+        background: linear-gradient(135deg, #6366f1 0%, #00d9ff 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 20px rgba(0, 217, 255, 0.3);
+        border: none;
+      }
+
+      .cta-button.primary:hover {
+        box-shadow: 0 6px 30px rgba(0, 217, 255, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .cta-button.secondary {
+        background: transparent;
+        color: #00d9ff;
+        border: 2px solid rgba(0, 217, 255, 0.5);
+      }
+
+      .cta-button.secondary:hover {
+        background: rgba(0, 217, 255, 0.1);
+        border-color: rgba(0, 217, 255, 0.8);
+        box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+
+      .contact-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #94a3b8;
+        font-size: 0.875rem;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .contact-item:hover {
+        color: #00d9ff;
+      }
+
+      .contact-item i {
+        color: #00d9ff;
+      }
+
+      .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        color: #64748b;
+        font-size: 0.75rem;
+        animation: bounce 2s ease-in-out infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(-10px);
+        }
+      }
+
+      .annotation {
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        border-radius: 8px;
+        padding: 1rem;
+        max-width: 300px;
+        z-index: 10;
+      }
+
+      .annotation h4 {
+        color: #22c55e;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .annotation p {
+        color: #94a3b8;
+        font-size: 0.75rem;
+        line-height: 1.6;
+      }
+
+      .back-nav {
+        position: fixed;
+        top: 2rem;
+        left: 2rem;
+        z-index: 10;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #00d9ff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        background: rgba(30, 41, 59, 0.8);
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+      }
+
+      .back-link:hover {
+        color: #67e8f9;
+        gap: 0.75rem;
+        border-color: rgba(0, 217, 255, 0.5);
+      }
+
+      @media (max-width: 768px) {
+        .name {
+          font-size: 2.5rem;
+        }
+
+        .title {
+          font-size: 1.25rem;
+        }
+
+        .credentials {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .contact-info {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .annotation {
+          position: relative;
+          top: auto;
+          right: auto;
+          margin-bottom: 2rem;
+          max-width: 100%;
+        }
+
+        .back-nav {
+          position: relative;
+          top: auto;
+          left: auto;
+          margin-bottom: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="back-nav">
+      <a href="index.html" class="back-link"> ← Back </a>
+    </nav>
+
+    <div class="annotation">
+      <h4>🎨 Design Spec</h4>
+      <p>
+        <strong>Changes:</strong> Network graph animation (subtle), improved name typography (mono + glow), better CTA buttons
+        with gradients, inline social/contact links | <strong>Animation:</strong> Respects prefers-reduced-motion
+      </p>
+    </div>
+
+    <section class="hero-section">
+      <!-- Network Background Animation Hint -->
+      <div class="network-bg">
+        <div class="network-node"></div>
+        <div class="network-node"></div>
+        <div class="network-node"></div>
+        <div class="network-node"></div>
+        <div class="network-node"></div>
+        <div class="network-node"></div>
+        <!-- Network lines would connect nodes in actual implementation -->
+      </div>
+
+      <div class="hero-content">
+        <p class="greeting">👋 Hi, I'm</p>
+
+        <div class="name-wrapper">
+          <h1 class="name">MICHAEL LEJANO</h1>
+        </div>
+
+        <p class="title">Senior Software Engineer / Cybersecurity Specialist</p>
+
+        <div class="credentials">
+          <span class="credential-badge">(ISC)² Certified in Cybersecurity</span>
+          <span class="credential-badge">MS IT (in-progress)</span>
+        </div>
+
+        <div class="cta-buttons">
+          <a href="#contact" class="cta-button primary">
+            <span>Get in Touch</span>
+            <span>→</span>
+          </a>
+          <a href="#resume" class="cta-button secondary">
+            <span>↓ Download Resume</span>
+          </a>
+        </div>
+
+        <div class="contact-info">
+          <a href="mailto:mblejano07@gmail.com" class="contact-item">
+            <span>📧</span>
+            <span>mblejano07@gmail.com</span>
+          </a>
+          <a href="tel:+63XXXXXXXXXX" class="contact-item">
+            <span>📱</span>
+            <span>+63 XXX XXX XXXX</span>
+          </a>
+          <span class="contact-item">
+            <span>📍</span>
+            <span>Metro Manila, PH</span>
+          </span>
+          <a href="https://linkedin.com/in/mblejano" class="contact-item">
+            <span>💼</span>
+            <span>LinkedIn</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <span>↓</span>
+        <span>Scroll</span>
+      </div>
+    </section>
+  </body>
+</html>

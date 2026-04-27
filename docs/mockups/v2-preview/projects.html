@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects Showcase - Portfolio v2.0 Mockup</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          'Inter',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        min-height: 100vh;
+        color: #e2e8f0;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .section-header h2 {
+        font-family: 'JetBrains Mono', 'Courier New', monospace;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 1rem;
+      }
+
+      .section-header h2 span {
+        color: #00d9ff;
+      }
+
+      .circuit-divider {
+        height: 2px;
+        background: linear-gradient(90deg, transparent 0%, #00d9ff 50%, transparent 100%);
+        max-width: 400px;
+        margin: 0 auto;
+        border-radius: 2px;
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .project-card {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .project-card:hover {
+        border-color: rgba(0, 217, 255, 0.6);
+        box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+        transform: translateY(-6px);
+      }
+
+      .project-thumbnail {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .project-thumbnail::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+      }
+
+      .project-thumbnail.alt-1 {
+        background: linear-gradient(135deg, #00d9ff 0%, #06b6d4 100%);
+      }
+
+      .project-thumbnail.alt-2 {
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      }
+
+      .project-thumbnail.alt-3 {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      }
+
+      .project-thumbnail.alt-4 {
+        background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+      }
+
+      .project-thumbnail.alt-5 {
+        background: linear-gradient(135deg, #6366f1 0%, #00d9ff 100%);
+      }
+
+      .project-content {
+        padding: 1.5rem;
+      }
+
+      .project-title {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+      }
+
+      .project-description {
+        color: #94a3b8;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+        min-height: 2.8rem;
+      }
+
+      .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .tech-tag {
+        padding: 0.25rem 0.75rem;
+        background: rgba(0, 217, 255, 0.1);
+        border: 1px solid rgba(0, 217, 255, 0.3);
+        border-radius: 9999px;
+        color: #00d9ff;
+        font-size: 0.75rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .tech-tag:hover {
+        background: rgba(0, 217, 255, 0.2);
+        border-color: rgba(0, 217, 255, 0.6);
+        box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+      }
+
+      .project-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .project-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: 6px;
+        color: #a5b4fc;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .project-link:hover {
+        background: rgba(99, 102, 241, 0.2);
+        border-color: rgba(99, 102, 241, 0.6);
+        box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+      }
+
+      .project-link.external::after {
+        content: '↗';
+        font-size: 0.75rem;
+      }
+
+      .back-nav {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(99, 102, 241, 0.2);
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #00d9ff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .back-link:hover {
+        color: #67e8f9;
+        gap: 0.75rem;
+      }
+
+      .annotation {
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .annotation h4 {
+        color: #22c55e;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .annotation p {
+        color: #94a3b8;
+        font-size: 0.875rem;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 1024px) {
+        .projects-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .section-header h2 {
+          font-size: 2rem;
+        }
+
+        body {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="annotation">
+        <h4>🎨 Design Spec</h4>
+        <p>
+          <strong>Layout:</strong> 3-column grid (desktop), 2-col (tablet), 1-col (mobile) | <strong>Hover:</strong> Card lifts +
+          cyan border glow | <strong>Thumbnail:</strong> 16:9 aspect ratio with gradient placeholders
+        </p>
+      </div>
+
+      <header class="section-header">
+        <h2><span>//</span> PROJECTS</h2>
+        <div class="circuit-divider"></div>
+      </header>
+
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <div class="project-card">
+          <div class="project-thumbnail">💼</div>
+          <div class="project-content">
+            <h3 class="project-title">Laravel CRM System</h3>
+            <p class="project-description">Enterprise resource management platform with advanced reporting and automation</p>
+            <div class="tech-stack">
+              <span class="tech-tag">PHP</span>
+              <span class="tech-tag">Laravel</span>
+              <span class="tech-tag">Vue.js</span>
+              <span class="tech-tag">MySQL</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">GitHub</a>
+              <a href="#" class="project-link external">Live Demo</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+          <div class="project-thumbnail alt-1">📊</div>
+          <div class="project-content">
+            <h3 class="project-title">Vue Analytics Dashboard</h3>
+            <p class="project-description">Real-time data visualization with interactive charts and customizable widgets</p>
+            <div class="tech-stack">
+              <span class="tech-tag">Vue 3</span>
+              <span class="tech-tag">TypeScript</span>
+              <span class="tech-tag">Node.js</span>
+              <span class="tech-tag">Chart.js</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">GitHub</a>
+              <a href="#" class="project-link external">Live Demo</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card">
+          <div class="project-thumbnail alt-2">🔒</div>
+          <div class="project-content">
+            <h3 class="project-title">Security Audit Tool</h3>
+            <p class="project-description">Automated vulnerability scanning and compliance reporting for web applications</p>
+            <div class="tech-stack">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">OWASP</span>
+              <span class="tech-tag">FastAPI</span>
+              <span class="tech-tag">PostgreSQL</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">GitHub</a>
+              <a href="#" class="project-link external">Live Demo</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="project-card">
+          <div class="project-thumbnail alt-3">🛒</div>
+          <div class="project-content">
+            <h3 class="project-title">E-Commerce Platform</h3>
+            <p class="project-description">Full-featured online store with payment integration and inventory management</p>
+            <div class="tech-stack">
+              <span class="tech-tag">Laravel</span>
+              <span class="tech-tag">Vue.js</span>
+              <span class="tech-tag">Stripe</span>
+              <span class="tech-tag">Redis</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">GitHub</a>
+              <a href="#" class="project-link external">Live Demo</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="project-card">
+          <div class="project-thumbnail alt-4">📱</div>
+          <div class="project-content">
+            <h3 class="project-title">Mobile App Backend</h3>
+            <p class="project-description">RESTful API service with authentication, real-time sync, and push notifications</p>
+            <div class="tech-stack">
+              <span class="tech-tag">Node.js</span>
+              <span class="tech-tag">Express</span>
+              <span class="tech-tag">MongoDB</span>
+              <span class="tech-tag">Socket.io</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">GitHub</a>
+              <a href="#" class="project-link external">Live Demo</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="project-card">
+          <div class="project-thumbnail alt-5">☁️</div>
+          <div class="project-content">
+            <h3 class="project-title">Cloud Migration Tool</h3>
+            <p class="project-description">Automated infrastructure migration with validation and rollback capabilities</p>
+            <div class="tech-stack">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">AWS</span>
+              <span class="tech-tag">Terraform</span>
+              <span class="tech-tag">Docker</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">GitHub</a>
+              <a href="#" class="project-link external">Live Demo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="back-nav">
+        <a href="index.html" class="back-link"> ← Back to Navigation </a>
+      </nav>
+    </div>
+  </body>
+</html>
