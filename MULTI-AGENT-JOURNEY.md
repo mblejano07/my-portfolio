@@ -1,7 +1,7 @@
 # Multi-Agent Development Journey
 
 **From Zero to First Deployed Project**  
-*Documenting the evolution of Mike's multi-agent development system*
+_Documenting the evolution of Mike's multi-agent development system_
 
 ---
 
@@ -27,14 +27,14 @@
 
 ### What We Built
 
-| Component | Status | Description |
-|-----------|--------|-------------|
-| **Agent Team** | ✅ Complete | 10 specialists (Buddy, Orchestrator, Backend, Frontend, Designer, Sentinel, Arbiter, Scribe, Bantay, Comms) |
-| **Event Logging** | ✅ Complete | Structured logs for all agent actions |
-| **Observability** | ✅ Complete | Real-time monitoring, session tracking |
-| **Handoff Contracts** | ✅ Complete | Standardized inter-agent communication |
-| **Security & Compliance** | ✅ Complete | Bantay (compliance), Sentinel (QA), Arbiter (review) |
-| **First Project** | ✅ Live | Portfolio v1 deployed to GitHub Pages |
+| Component                 | Status      | Description                                                                                                 |
+| ------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------- |
+| **Agent Team**            | ✅ Complete | 10 specialists (Buddy, Orchestrator, Backend, Frontend, Designer, Sentinel, Arbiter, Scribe, Bantay, Comms) |
+| **Event Logging**         | ✅ Complete | Structured logs for all agent actions                                                                       |
+| **Observability**         | ✅ Complete | Real-time monitoring, session tracking                                                                      |
+| **Handoff Contracts**     | ✅ Complete | Standardized inter-agent communication                                                                      |
+| **Security & Compliance** | ✅ Complete | Bantay (compliance), Sentinel (QA), Arbiter (review)                                                        |
+| **First Project**         | ✅ Live     | Portfolio v1 deployed to GitHub Pages                                                                       |
 
 ---
 
@@ -46,11 +46,13 @@
 ### What We Did
 
 1. **Defined Event Schema**
+
    - Structured log format for all agent actions
    - Timestamps, agent IDs, action types, outcomes
    - Machine-parseable for future automation
 
 2. **Implemented Logging Layer**
+
    - Integrated with OpenClaw runtime
    - Logs written to `~/.openclaw/logs/`
    - Rotation and retention policies
@@ -68,11 +70,11 @@
 
 ### Key Decisions
 
-| Decision | Rationale |
-|----------|-----------|
-| **Separate workspaces per agent** | Prevents context pollution, enables parallel work |
-| **SOUL.md + SKILL.md pattern** | Separates "who they are" from "how they work" |
-| **Structured logging over freeform** | Enables automated analysis, compliance audits |
+| Decision                             | Rationale                                         |
+| ------------------------------------ | ------------------------------------------------- |
+| **Separate workspaces per agent**    | Prevents context pollution, enables parallel work |
+| **SOUL.md + SKILL.md pattern**       | Separates "who they are" from "how they work"     |
+| **Structured logging over freeform** | Enables automated analysis, compliance audits     |
 
 ---
 
@@ -84,11 +86,13 @@
 ### What We Did
 
 1. **Session Tracking**
+
    - Each agent run creates a session file (`*.jsonl`)
    - Tracks message history, tool calls, decisions
    - Enables replay and debugging
 
 2. **Health Monitoring**
+
    - Heartbeat system for long-running agents
    - Stuck session detection (warns after 3+ minutes idle)
    - Resource usage tracking
@@ -118,6 +122,7 @@
 ### The Problem We Solved
 
 Early tests showed agents:
+
 - ❌ Spawning clones instead of delegating
 - ❌ Losing context between handoffs
 - ❌ Duplicating work
@@ -135,20 +140,25 @@ Each agent now follows a **standardized handoff format**:
 **Status:** Ready for [Next Phase]
 
 ### Context
+
 [What was done, why, key decisions]
 
 ### Deliverables
+
 - [ ] Item 1
 - [ ] Item 2
 
 ### Requirements for Next Phase
+
 - [ ] Requirement 1
 - [ ] Requirement 2
 
 ### Known Issues / Blockers
+
 [Any unresolved problems]
 
 ### References
+
 - Link to specs
 - Link to code
 - Link to tests
@@ -181,13 +191,13 @@ All 10 agents received **SKILL.md** files with:
 
 ### Timeline
 
-| Date | Milestone | Status |
-|------|-----------|--------|
-| Apr 24 | Scaffold from webkit-spa-standalone | ✅ Done |
+| Date   | Milestone                                                                 | Status  |
+| ------ | ------------------------------------------------------------------------- | ------- |
+| Apr 24 | Scaffold from webkit-spa-standalone                                       | ✅ Done |
 | Apr 24 | Populate 6 sections (Hero, About, Experience, Skills, Education, Contact) | ✅ Done |
-| Apr 25 | Arbiter review (95/100 score) | ✅ Done |
-| Apr 25 | Sentinel QA pass | ✅ Done |
-| Apr 25 | Build + deploy to GitHub Pages | ✅ Done |
+| Apr 25 | Arbiter review (95/100 score)                                             | ✅ Done |
+| Apr 25 | Sentinel QA pass                                                          | ✅ Done |
+| Apr 25 | Build + deploy to GitHub Pages                                            | ✅ Done |
 
 ### Team Workflow
 
@@ -217,13 +227,13 @@ Mike (Approval → Live)
 
 ### Results
 
-| Metric | Target | Actual |
-|--------|--------|--------|
-| **Lighthouse Performance** | >90 | ✅ Pending optimization |
-| **Accessibility (WCAG AA)** | Pass | ✅ Pending audit |
-| **Build Size** | <500KB | ⚠️ 489KB JS + 1.36MB CSS |
-| **Deploy Time** | <5 min | ✅ 2 min |
-| **Arbiter Score** | >90/100 | ✅ 95/100 |
+| Metric                      | Target  | Actual                   |
+| --------------------------- | ------- | ------------------------ |
+| **Lighthouse Performance**  | >90     | ✅ Pending optimization  |
+| **Accessibility (WCAG AA)** | Pass    | ✅ Pending audit         |
+| **Build Size**              | <500KB  | ⚠️ 489KB JS + 1.36MB CSS |
+| **Deploy Time**             | <5 min  | ✅ 2 min                 |
+| **Arbiter Score**           | >90/100 | ✅ 95/100                |
 
 ---
 
@@ -234,18 +244,21 @@ Mike (Approval → Live)
 **Problem:** Early workflow had agents spawning disposable sub-agents instead of delegating to existing specialists.
 
 **Example Mistake:**
+
 ```
 Chief of Staff → spawns "frontend-phase2-work" sub-agent
                  instead of → sessions_send to agent:frontend:main
 ```
 
 **Why It Was Wrong:**
+
 - Sub-agents don't have the specialist's SKILL.md expertise
 - No workspace context or domain knowledge
 - Breaks the workflow chain
 - Wastes resources
 
 **Fix Applied:**
+
 - Updated SOUL.md for ALL agents with explicit delegation rules
 - Added MEMORY.md entry: "Team Delegation Rule (Permanent)"
 - Created enforcement scripts (`pre_spawn_check.sh`)
@@ -258,12 +271,14 @@ Chief of Staff → spawns "frontend-phase2-work" sub-agent
 **Problem:** Initial design had security checks as part of the development flow (optional, skippable).
 
 **Fix Applied:**
+
 - **Bantay** (compliance monitor) reports DIRECTLY to Mike, not through Chief of Staff
 - Bantay can audit ANY agent without permission
 - Critical violations stop the sprint immediately
 - Independence prevents "shipping pressure" from overriding security
 
 **Organizational Structure:**
+
 ```
 Mike ← Bantay (direct line, independent audits)
          ↓
@@ -275,17 +290,20 @@ Mike ← Bantay (direct line, independent audits)
 ### 📝 3. Write It Down - No "Mental Notes"
 
 **Problem:** Agents were making decisions but not documenting them, leading to:
+
 - Repeated discussions
 - Lost context between sessions
 - Inconsistent implementations
 
 **Fix Applied:**
+
 - **MEMORY.md** for long-term decisions
 - **memory/YYYY-MM-DD.md** for daily logs
 - **Handoff Contracts** require written context
-- Rule: *"If you want to remember something, WRITE IT TO A FILE"*
+- Rule: _"If you want to remember something, WRITE IT TO A FILE"_
 
 **Quote from AGENTS.md:**
+
 > "Mental notes don't survive session restarts. Files do."
 
 ---
@@ -295,24 +313,26 @@ Mike ← Bantay (direct line, independent audits)
 **Problem:** Portfolio v1 scaffold used wrong template initially (`spa` instead of `spa-standalone`).
 
 **Root Cause:**
+
 - `spa` template = API-connected (has backend integration)
 - `spa-standalone` template = No backend (uses Formspree/EmailJS)
 - Portfolio is standalone → should use `spa-standalone`
 
 **Fix Applied:**
+
 - Updated AGENTS.md with explicit template selection rules
 - Buddy's Pre-Project Checklist now includes: "Standalone mode?" confirmation
 - Sentinel verifies no broken API calls before deployment
 
 **Template Matrix:**
 
-| Project Type | Backend? | Frontend? | Template(s) |
-|--------------|----------|-----------|-------------|
-| Full-stack web app | ✅ | ✅ | api + spa |
-| API-only service | ✅ | ❌ | api only |
-| Standalone SPA | ❌ | ✅ | spa-standalone |
-| Static website | ❌ | ❌ | static |
-| Mobile app | ⚠️ Optional | ✅ | mobile-flutter |
+| Project Type       | Backend?    | Frontend? | Template(s)    |
+| ------------------ | ----------- | --------- | -------------- |
+| Full-stack web app | ✅          | ✅        | api + spa      |
+| API-only service   | ✅          | ❌        | api only       |
+| Standalone SPA     | ❌          | ✅        | spa-standalone |
+| Static website     | ❌          | ❌        | static         |
+| Mobile app         | ⚠️ Optional | ✅        | mobile-flutter |
 
 ---
 
@@ -321,6 +341,7 @@ Mike ← Bantay (direct line, independent audits)
 **Problem:** Tried to define perfect handoff contracts upfront.
 
 **Reality:**
+
 - First draft was too rigid
 - Second draft was too vague
 - Third draft (after real project) was just right
@@ -328,6 +349,7 @@ Mike ← Bantay (direct line, independent audits)
 **Lesson:** Define minimum viable process, then refine based on actual usage.
 
 **Evolution:**
+
 1. **V1:** 20-step checklist (too heavy, skipped steps)
 2. **V2:** 3-step checklist (too light, missed critical items)
 3. **V3:** 7-step with escalation triggers (just right)
@@ -339,6 +361,7 @@ Mike ← Bantay (direct line, independent audits)
 **Problem:** Traditional workflow: Build first → Design review later → Rework.
 
 **Better Approach:**
+
 - Designer involved in requirements phase (Buddy's discovery)
 - Design specs BEFORE implementation starts
 - Frontend implements from approved mockups
@@ -352,11 +375,13 @@ Mike ← Bantay (direct line, independent audits)
 **Investment:** Spent Day 2 on logging, monitoring, debugging tools.
 
 **Payoff:**
+
 - Caught stuck orchestrator session in real-time
 - Debugged delegation violations from logs
 - Traced decision chains for post-mortems
 
 **Quote:**
+
 > "Observability isn't overhead — it's insurance against chaos."
 
 ---
@@ -366,30 +391,31 @@ Mike ← Bantay (direct line, independent audits)
 **Problem:** Agents proceeding without explicit approval on critical decisions.
 
 **Fix Applied:**
+
 - **P0 approvals** (before development): Charter, requirements, architecture
 - **P1 approvals** (before implementation): Sprint plan, test plan, mockups
 - **P2 approvals** (before deployment): QA report, security audit, release notes
 - **P3 approvals** (critical changes): Scope/timeline changes, architecture shifts
 
-**Rule:** *"DO NOT PROCEED without explicit approval. Violation = Stop work immediately."*
+**Rule:** _"DO NOT PROCEED without explicit approval. Violation = Stop work immediately."_
 
 ---
 
 ## Current Team Roster
 
-| Agent | Workspace | Role | Model |
-|-------|-----------|------|-------|
-| **Chief of Staff** | `~/.openclaw/workspace` | Execution & coordination | qwen3.5:cloud |
-| **Buddy** | `~/.openclaw/workspace-buddy` | Business Analyst | qwen3.5:cloud |
-| **Orchestrator** | `~/.openclaw/workspace-orchestrator` | Technical coordinator | qwen3.5:cloud |
-| **Backend** | `~/.openclaw/workspace-backend` | Laravel API dev | qwen3-coder-next:cloud |
-| **Frontend** | `~/.openclaw/workspace-frontend` | Vue 3 / PrimeVue dev | qwen3-coder-next:cloud |
-| **Designer** | `~/.openclaw/workspace-designer` | UI/UX design | qwen3.5:cloud |
-| **Sentinel** | `~/.openclaw/workspace-sentinel` | QA, security audit | qwen3.5:cloud |
-| **Arbiter** | `~/.openclaw/workspace-arbiter` | Code review, architecture | qwen3-coder-next:cloud |
-| **Scribe** | `~/.openclaw/workspace-scribe` | Documentation | qwen3.5:cloud |
-| **Bantay** | `~/.openclaw/workspace-bantay` | Compliance monitoring | qwen3.5:cloud |
-| **Comms** | `~/.openclaw/workspace-comms` | Notifications | qwen3.5:cloud |
+| Agent              | Workspace                            | Role                      | Model                  |
+| ------------------ | ------------------------------------ | ------------------------- | ---------------------- |
+| **Chief of Staff** | `~/.openclaw/workspace`              | Execution & coordination  | qwen3.5:cloud          |
+| **Buddy**          | `~/.openclaw/workspace-buddy`        | Business Analyst          | qwen3.5:cloud          |
+| **Orchestrator**   | `~/.openclaw/workspace-orchestrator` | Technical coordinator     | qwen3.5:cloud          |
+| **Backend**        | `~/.openclaw/workspace-backend`      | Laravel API dev           | qwen3-coder-next:cloud |
+| **Frontend**       | `~/.openclaw/workspace-frontend`     | Vue 3 / PrimeVue dev      | qwen3-coder-next:cloud |
+| **Designer**       | `~/.openclaw/workspace-designer`     | UI/UX design              | qwen3.5:cloud          |
+| **Sentinel**       | `~/.openclaw/workspace-sentinel`     | QA, security audit        | qwen3.5:cloud          |
+| **Arbiter**        | `~/.openclaw/workspace-arbiter`      | Code review, architecture | qwen3-coder-next:cloud |
+| **Scribe**         | `~/.openclaw/workspace-scribe`       | Documentation             | qwen3.5:cloud          |
+| **Bantay**         | `~/.openclaw/workspace-bantay`       | Compliance monitoring     | qwen3.5:cloud          |
+| **Comms**          | `~/.openclaw/workspace-comms`        | Notifications             | qwen3.5:cloud          |
 
 ---
 
@@ -398,21 +424,25 @@ Mike ← Bantay (direct line, independent audits)
 ### Daily Workflow
 
 1. **Morning Check-in**
+
    - Review overnight activity in `memory/YYYY-MM-DD.md`
    - Check Bantay violation reports
    - Review sprint progress
 
 2. **Task Intake**
+
    - Mike provides requirement/vision
    - Buddy conducts discovery (if needed)
    - Orchestrator breaks into tasks
 
 3. **Execution**
+
    - Chief delegates to specialists via `sessions_send`
    - Specialists execute within their SKILL.md scope
    - Handoffs follow contract format
 
 4. **Quality Gates**
+
    - Arbiter reviews architecture/code
    - Sentinel runs QA (accessibility, performance, security)
    - Bantay audits compliance
@@ -424,22 +454,22 @@ Mike ← Bantay (direct line, independent audits)
 
 ### Communication Channels
 
-| Channel | Purpose | Participants |
-|---------|---------|--------------|
-| `sessions_send` | Task delegation | Chief ↔ Specialists |
-| `memory/*.md` | Daily logs | All agents (read/write) |
-| `MEMORY.md` | Long-term decisions | Chief (primary) |
-| Bantay reports | Security/compliance alerts | Bantay → Mike (direct) |
-| Comms notifications | Deployment updates | Comms → Mike/Stakeholders |
+| Channel             | Purpose                    | Participants              |
+| ------------------- | -------------------------- | ------------------------- |
+| `sessions_send`     | Task delegation            | Chief ↔ Specialists      |
+| `memory/*.md`       | Daily logs                 | All agents (read/write)   |
+| `MEMORY.md`         | Long-term decisions        | Chief (primary)           |
+| Bantay reports      | Security/compliance alerts | Bantay → Mike (direct)    |
+| Comms notifications | Deployment updates         | Comms → Mike/Stakeholders |
 
 ### Escalation Matrix
 
-| Severity | Trigger | Action | Recipients |
-|----------|---------|--------|------------|
-| 🔴 Critical | Security violation, data breach | Stop sprint, immediate fix | Mike + Bantay + Chief |
-| 🟠 High | QA failure, accessibility block | Block task, fix before sign-off | Chief + Sentinel + Responsible Agent |
-| 🟡 Medium | Process deviation, minor bug | Document, fix in current sprint | Chief + Orchestrator |
-| 🟢 Low | Style issue, nice-to-have | Log, address in next sprint | Orchestrator |
+| Severity    | Trigger                         | Action                          | Recipients                           |
+| ----------- | ------------------------------- | ------------------------------- | ------------------------------------ |
+| 🔴 Critical | Security violation, data breach | Stop sprint, immediate fix      | Mike + Bantay + Chief                |
+| 🟠 High     | QA failure, accessibility block | Block task, fix before sign-off | Chief + Sentinel + Responsible Agent |
+| 🟡 Medium   | Process deviation, minor bug    | Document, fix in current sprint | Chief + Orchestrator                 |
+| 🟢 Low      | Style issue, nice-to-have       | Log, address in next sprint     | Orchestrator                         |
 
 ---
 
@@ -467,20 +497,21 @@ Mike ← Bantay (direct line, independent audits)
 
 ## Appendix: Key Files
 
-| File | Purpose | Location |
-|------|---------|----------|
-| **AGENTS.md** | Team structure, workflows, templates | `~/.openclaw/workspace/AGENTS.md` |
-| **SOUL.md** | Agent personalities, values, boundaries | `~/.openclaw/workspace/SOUL.md` |
-| **MEMORY.md** | Long-term decisions, lessons learned | `~/.openclaw/workspace/MEMORY.md` |
-| **SKILL.md** | Agent-specific processes (10 files) | `~/.openclaw/workspace-*/SKILL.md` |
-| **APPROVAL-WORKFLOW.md** | Approval process, templates | `~/.openclaw/workspace/APPROVAL-WORKFLOW.md` |
-| **HEARTBEAT.md** | Periodic check configuration | `~/.openclaw/workspace/HEARTBEAT.md` |
+| File                     | Purpose                                 | Location                                     |
+| ------------------------ | --------------------------------------- | -------------------------------------------- |
+| **AGENTS.md**            | Team structure, workflows, templates    | `~/.openclaw/workspace/AGENTS.md`            |
+| **SOUL.md**              | Agent personalities, values, boundaries | `~/.openclaw/workspace/SOUL.md`              |
+| **MEMORY.md**            | Long-term decisions, lessons learned    | `~/.openclaw/workspace/MEMORY.md`            |
+| **SKILL.md**             | Agent-specific processes (10 files)     | `~/.openclaw/workspace-*/SKILL.md`           |
+| **APPROVAL-WORKFLOW.md** | Approval process, templates             | `~/.openclaw/workspace/APPROVAL-WORKFLOW.md` |
+| **HEARTBEAT.md**         | Periodic check configuration            | `~/.openclaw/workspace/HEARTBEAT.md`         |
 
 ---
 
 ## Appendix: Command Reference
 
 ### Session Management
+
 ```bash
 # List active sessions
 sessions_list --includeLastMessage true
@@ -493,6 +524,7 @@ sessions_send --label agent:frontend:main --message "Implement dark theme"
 ```
 
 ### Logs & Debugging
+
 ```bash
 # View recent logs
 tail -100 ~/.openclaw/logs/openclaw.log
@@ -505,6 +537,7 @@ cat ~/.openclaw/agents/orchestrator/sessions/*.jsonl | tail -50
 ```
 
 ### Deployment
+
 ```bash
 # Build production bundle
 npm run build:production
@@ -525,4 +558,4 @@ curl -I https://mblejano07.github.io/my-portfolio/
 
 ---
 
-*"The journey of a thousand agents begins with a single handoff."*
+_"The journey of a thousand agents begins with a single handoff."_

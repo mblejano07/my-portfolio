@@ -1,5 +1,8 @@
 <script setup lang="ts">
-const skillsCategories = [
+import { ref } from 'vue'
+import Carousel from 'primevue/carousel'
+
+const skillsCategories = ref([
   {
     title: 'Programming & Development',
     icon: '💻',
@@ -62,7 +65,12 @@ const skillsCategories = [
       { name: 'PrimeVue', level: 75 },
     ],
   },
-]
+])
+
+const responsiveOptions = ref([
+  { breakpoint: '1024px', numVisible: 2, numScroll: 1 },
+  { breakpoint: '768px', numVisible: 1, numScroll: 1 },
+])
 </script>
 
 <template>
@@ -79,40 +87,49 @@ const skillsCategories = [
           <p class="mt-4 text-[#94a3b8]">Comprehensive expertise across development, cloud, and security domains</p>
         </div>
 
-        <!-- Skills Categories -->
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <div v-for="(category, index) in skillsCategories" :key="index" class="cyber-card skill-category">
-            <!-- Category Header -->
-            <div class="mb-6 flex items-center gap-4">
-              <div
-                :class="`h-12 w-12 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center text-white shadow-neon`"
-              >
-                <span class="text-2xl">{{ category.icon }}</span>
+        <!-- Skills Categories Carousel -->
+        <Carousel
+          :value="skillsCategories"
+          :numVisible="2"
+          :numScroll="1"
+          :responsiveOptions="responsiveOptions"
+          :autoplayInterval="0"
+          class="carousel-container"
+        >
+          <template #item="slotProps">
+            <div class="cyber-card skill-category">
+              <!-- Category Header -->
+              <div class="mb-6 flex items-center gap-4">
+                <div
+                  :class="`h-12 w-12 rounded-lg bg-gradient-to-br ${slotProps.data.color} flex items-center justify-center text-white shadow-neon`"
+                >
+                  <span class="text-2xl">{{ slotProps.data.icon }}</span>
+                </div>
+                <h3 class="text-xl font-bold text-white">
+                  {{ slotProps.data.title }}
+                </h3>
               </div>
-              <h3 class="text-xl font-bold text-white">
-                {{ category.title }}
-              </h3>
-            </div>
 
-            <!-- Skills List -->
-            <div class="space-y-4">
-              <div v-for="(skill, skillIndex) in category.skills" :key="skillIndex">
-                <div class="mb-2 flex items-center justify-between">
-                  <span class="text-sm font-medium text-[#f1f5f9]">
-                    {{ skill.name }}
-                  </span>
-                  <span class="text-xs text-[#64748b]"> {{ skill.level }}% </span>
-                </div>
-                <div class="h-2 w-full overflow-hidden rounded-full bg-[#1e293b]">
-                  <div
-                    :class="`h-full bg-gradient-to-r ${category.color} rounded-full transition-all duration-1000 ease-out`"
-                    :style="{ width: `${skill.level}%` }"
-                  ></div>
+              <!-- Skills List -->
+              <div class="space-y-4">
+                <div v-for="(skill, skillIndex) in slotProps.data.skills" :key="skillIndex">
+                  <div class="mb-2 flex items-center justify-between">
+                    <span class="text-sm font-medium text-[#f1f5f9]">
+                      {{ skill.name }}
+                    </span>
+                    <span class="text-xs text-[#64748b]"> {{ skill.level }}% </span>
+                  </div>
+                  <div class="h-2 w-full overflow-hidden rounded-full bg-[#1e293b]">
+                    <div
+                      :class="`h-full bg-gradient-to-r ${slotProps.data.color} rounded-full transition-all duration-1000 ease-out`"
+                      :style="{ width: `${skill.level}%` }"
+                    ></div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </template>
+        </Carousel>
 
         <!-- Additional Competencies -->
         <div class="cyber-card mt-12 rounded-2xl">
