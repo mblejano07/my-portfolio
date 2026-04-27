@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faGraduationCap, faCertificate } from '@fortawesome/free-solid-svg-icons'
-
 const education = [
   {
     degree: 'Master of Science in Information Technology',
@@ -85,14 +82,17 @@ const certifications = [
 </script>
 
 <template>
-  <section id="education" class="bg-slate-50 py-16 dark:bg-slate-800 lg:py-24">
+  <section id="education" class="education-section relative py-16 lg:py-24" aria-labelledby="education-heading">
+    <!-- Circuit Divider -->
+    <div class="circuit-divider"></div>
+
     <div class="container mx-auto px-4">
       <div class="mx-auto max-w-6xl">
         <!-- Section Header -->
         <div class="mb-12 text-center">
-          <h2 class="mb-4 text-3xl font-bold text-slate-900 dark:text-white md:text-4xl">Education & Certifications</h2>
-          <div class="mx-auto h-1 w-20 bg-gradient-to-r from-indigo-600 to-cyan-500"></div>
-          <p class="mt-4 text-slate-600 dark:text-slate-400">Continuous learning and professional development</p>
+          <h2 class="mb-4 text-3xl font-bold text-white md:text-4xl">Education & Certifications</h2>
+          <div class="mx-auto h-1 w-20 bg-gradient-to-r from-[#6366F1] to-[#00d9ff]"></div>
+          <p class="mt-4 text-[#94a3b8]">Continuous learning and professional development</p>
         </div>
 
         <div class="grid gap-12 lg:grid-cols-2">
@@ -100,30 +100,26 @@ const certifications = [
           <div>
             <div class="mb-6 flex items-center gap-3">
               <div
-                class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-indigo-700 text-white"
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-[#6366F1] to-[#4f46e5] text-white shadow-neon"
               >
-                <FontAwesomeIcon :icon="faGraduationCap" class="h-5 w-5" />
+                <i class="pi pi-graduation-cap h-5 w-5"></i>
               </div>
-              <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Education</h3>
+              <h3 class="text-2xl font-bold text-white">Education</h3>
             </div>
 
             <div class="space-y-6">
-              <div
-                v-for="(edu, index) in education"
-                :key="index"
-                class="rounded-xl bg-white p-6 shadow-md transition-shadow hover:shadow-lg dark:bg-slate-900"
-              >
-                <h4 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+              <div v-for="(edu, index) in education" :key="index" class="cyber-card education-card">
+                <h4 class="mb-2 text-lg font-bold text-white">
                   {{ edu.degree }}
                 </h4>
-                <div class="mb-2 flex items-center gap-2 text-sm text-indigo-600 dark:text-indigo-400">
-                  <FontAwesomeIcon :icon="faGraduationCap" class="h-4 w-4" />
+                <div class="mb-2 flex items-center gap-2 text-sm text-[#00d9ff]">
+                  <i class="pi pi-graduation-cap h-4 w-4"></i>
                   {{ edu.school }}
                 </div>
-                <div class="mb-3 text-xs text-slate-500 dark:text-slate-500">
+                <div class="mb-3 text-xs text-[#64748b]">
                   {{ edu.period }}
                 </div>
-                <p class="text-sm text-slate-600 dark:text-slate-400">
+                <p class="text-sm text-[#f1f5f9]">
                   {{ edu.description }}
                 </p>
               </div>
@@ -134,35 +130,33 @@ const certifications = [
           <div>
             <div class="mb-6 flex items-center gap-3">
               <div
-                class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-600 to-cyan-700 text-white"
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-[#00d9ff] to-[#0ea5e9] text-white shadow-neon"
               >
-                <FontAwesomeIcon :icon="faCertificate" class="h-5 w-5" />
+                <i class="pi pi-certificate h-5 w-5"></i>
               </div>
-              <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Certifications</h3>
+              <h3 class="text-2xl font-bold text-white">Certifications</h3>
             </div>
 
             <div class="space-y-3">
               <div
                 v-for="(cert, index) in certifications"
                 :key="index"
-                class="flex items-start gap-4 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg dark:bg-slate-900"
+                class="cyber-card flex items-start gap-4 rounded-lg hover:border-[#00d9ff]"
               >
                 <div class="flex-shrink-0 text-3xl">
                   {{ cert.icon }}
                 </div>
                 <div class="min-w-0 flex-1">
-                  <h4 class="mb-1 truncate text-sm font-semibold text-slate-900 dark:text-white">
+                  <h4 class="mb-1 truncate text-sm font-semibold text-white">
                     {{ cert.name }}
                   </h4>
-                  <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                  <div class="flex items-center gap-2 text-xs text-[#64748b]">
                     <span>{{ cert.issuer }}</span>
                     <span>•</span>
                     <span>{{ cert.date }}</span>
                   </div>
                   <div class="mt-1">
-                    <span
-                      class="inline-block rounded-full bg-green-100 px-2 py-0.5 text-xs text-green-700 dark:bg-green-900/30 dark:text-green-300"
-                    >
+                    <span class="skill-tag">
                       {{ cert.credential }}
                     </span>
                   </div>
@@ -171,10 +165,10 @@ const certifications = [
             </div>
 
             <!-- Certification Summary -->
-            <div class="mt-6 rounded-xl bg-gradient-to-br from-indigo-600 to-cyan-600 p-6 text-center text-white">
+            <div class="cyber-card mt-6 text-center">
               <div class="mb-2 text-4xl">🏆</div>
-              <div class="text-3xl font-bold">9+</div>
-              <div class="text-sm opacity-90">Professional Certifications</div>
+              <div class="text-3xl font-bold text-[#00d9ff]">9+</div>
+              <div class="text-sm text-[#94a3b8]">Professional Certifications</div>
             </div>
           </div>
         </div>
@@ -184,5 +178,13 @@ const certifications = [
 </template>
 
 <style scoped>
-/* Hover effects handled by Tailwind classes */
+.education-card:hover {
+  border-color: #6366f1;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+.cert-card:hover {
+  border-color: #00d9ff;
+  box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+}
 </style>

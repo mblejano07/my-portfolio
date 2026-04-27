@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCode, faCloud, faShieldHalved, faUsers, faGear } from '@fortawesome/free-solid-svg-icons'
-
 const skillsCategories = [
   {
-    icon: faCode,
     title: 'Programming & Development',
-    color: 'from-indigo-500 to-purple-600',
+    icon: '💻',
+    color: 'from-[#6366F1] to-[#7c3aed]',
     skills: [
       { name: 'PHP', level: 95 },
       { name: 'Vue.js', level: 85 },
@@ -17,9 +14,9 @@ const skillsCategories = [
     ],
   },
   {
-    icon: faCloud,
     title: 'Cloud & DevOps',
-    color: 'from-cyan-500 to-blue-600',
+    icon: '☁️',
+    color: 'from-[#00d9ff] to-[#3b82f6]',
     skills: [
       { name: 'AWS Cloud', level: 85 },
       { name: 'Cloud Security', level: 80 },
@@ -29,9 +26,9 @@ const skillsCategories = [
     ],
   },
   {
-    icon: faShieldHalved,
     title: 'Cybersecurity',
-    color: 'from-emerald-500 to-teal-600',
+    icon: '🛡️',
+    color: 'from-[#10b981] to-[#059669]',
     skills: [
       { name: '(ISC)² CC', level: 90 },
       { name: 'Network Security', level: 75 },
@@ -41,9 +38,9 @@ const skillsCategories = [
     ],
   },
   {
-    icon: faUsers,
     title: 'Project Management',
-    color: 'from-orange-500 to-red-600',
+    icon: '🎯',
+    color: 'from-[#f59e0b] to-[#dc2626]',
     skills: [
       { name: 'SCRUM Master', level: 90 },
       { name: 'Agile Methodology', level: 85 },
@@ -53,9 +50,9 @@ const skillsCategories = [
     ],
   },
   {
-    icon: faGear,
     title: 'Tools & Technologies',
-    color: 'from-pink-500 to-rose-600',
+    icon: '🔧',
+    color: 'from-[#ec4899] to-[#be123c]',
     skills: [
       { name: 'MySQL', level: 90 },
       { name: 'PostgreSQL', level: 75 },
@@ -69,33 +66,30 @@ const skillsCategories = [
 </script>
 
 <template>
-  <section id="skills" class="bg-white py-16 dark:bg-slate-900 lg:py-24">
+  <section id="skills" class="skills-section relative py-16 lg:py-24" aria-labelledby="skills-heading">
+    <!-- Circuit Divider -->
+    <div class="circuit-divider"></div>
+
     <div class="container mx-auto px-4">
       <div class="mx-auto max-w-6xl">
         <!-- Section Header -->
         <div class="mb-12 text-center">
-          <h2 class="mb-4 text-3xl font-bold text-slate-900 dark:text-white md:text-4xl">Technical Skills</h2>
-          <div class="mx-auto h-1 w-20 bg-gradient-to-r from-indigo-600 to-cyan-500"></div>
-          <p class="mt-4 text-slate-600 dark:text-slate-400">
-            Comprehensive expertise across development, cloud, and security domains
-          </p>
+          <h2 class="mb-4 text-3xl font-bold text-white md:text-4xl">Technical Skills</h2>
+          <div class="mx-auto h-1 w-20 bg-gradient-to-r from-[#6366F1] to-[#00d9ff]"></div>
+          <p class="mt-4 text-[#94a3b8]">Comprehensive expertise across development, cloud, and security domains</p>
         </div>
 
         <!-- Skills Categories -->
-        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <div
-            v-for="(category, index) in skillsCategories"
-            :key="index"
-            class="rounded-xl bg-slate-50 p-6 transition-shadow duration-300 hover:shadow-xl dark:bg-slate-800"
-          >
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div v-for="(category, index) in skillsCategories" :key="index" class="cyber-card skill-category">
             <!-- Category Header -->
             <div class="mb-6 flex items-center gap-4">
               <div
-                :class="`h-12 w-12 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center text-white`"
+                :class="`h-12 w-12 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center text-white shadow-neon`"
               >
-                <FontAwesomeIcon :icon="category.icon" class="h-6 w-6" />
+                <span class="text-2xl">{{ category.icon }}</span>
               </div>
-              <h3 class="text-xl font-bold text-slate-900 dark:text-white">
+              <h3 class="text-xl font-bold text-white">
                 {{ category.title }}
               </h3>
             </div>
@@ -104,12 +98,12 @@ const skillsCategories = [
             <div class="space-y-4">
               <div v-for="(skill, skillIndex) in category.skills" :key="skillIndex">
                 <div class="mb-2 flex items-center justify-between">
-                  <span class="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  <span class="text-sm font-medium text-[#f1f5f9]">
                     {{ skill.name }}
                   </span>
-                  <span class="text-xs text-slate-500 dark:text-slate-400"> {{ skill.level }}% </span>
+                  <span class="text-xs text-[#64748b]"> {{ skill.level }}% </span>
                 </div>
-                <div class="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+                <div class="h-2 w-full overflow-hidden rounded-full bg-[#1e293b]">
                   <div
                     :class="`h-full bg-gradient-to-r ${category.color} rounded-full transition-all duration-1000 ease-out`"
                     :style="{ width: `${skill.level}%` }"
@@ -121,24 +115,24 @@ const skillsCategories = [
         </div>
 
         <!-- Additional Competencies -->
-        <div class="mt-12 rounded-2xl bg-gradient-to-br from-indigo-600 to-cyan-600 p-8 text-white">
-          <h3 class="mb-6 text-center text-2xl font-bold">Core Competencies</h3>
+        <div class="cyber-card mt-12 rounded-2xl">
+          <h3 class="mb-6 text-center text-2xl font-bold text-white">Core Competencies</h3>
           <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <div class="text-center">
+            <div class="cyber-card flex flex-col items-center justify-center py-4">
               <div class="mb-2 text-3xl">📊</div>
-              <div class="font-semibold">Business Process Analysis</div>
+              <div class="text-sm font-semibold text-[#f1f5f9]">Business Process Analysis</div>
             </div>
-            <div class="text-center">
+            <div class="cyber-card flex flex-col items-center justify-center py-4">
               <div class="mb-2 text-3xl">🔍</div>
-              <div class="font-semibold">Data Analysis</div>
+              <div class="text-sm font-semibold text-[#f1f5f9]">Data Analysis</div>
             </div>
-            <div class="text-center">
+            <div class="cyber-card flex flex-col items-center justify-center py-4">
               <div class="mb-2 text-3xl">⚙️</div>
-              <div class="font-semibold">System Analysis</div>
+              <div class="text-sm font-semibold text-[#f1f5f9]">System Analysis</div>
             </div>
-            <div class="text-center">
+            <div class="cyber-card flex flex-col items-center justify-center py-4">
               <div class="mb-2 text-3xl">📚</div>
-              <div class="font-semibold">Technical Training</div>
+              <div class="text-sm font-semibold text-[#f1f5f9]">Technical Training</div>
             </div>
           </div>
         </div>
@@ -148,5 +142,13 @@ const skillsCategories = [
 </template>
 
 <style scoped>
-/* Progress bar animations handled by CSS transitions */
+.skill-category:hover {
+  border-color: #6366f1;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+}
+
+.skill-category:hover .skill-tag {
+  border-color: #6366f1;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+}
 </style>
