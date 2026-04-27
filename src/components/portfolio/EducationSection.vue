@@ -14,71 +14,9 @@ const education = [
   },
 ]
 
-const certifications = [
-  {
-    name: 'Certified in Cybersecurity (CC)',
-    issuer: '(ISC)²',
-    date: 'October 2025',
-    credential: 'Active',
-    icon: '🔒',
-  },
-  {
-    name: 'AWS Partner: Accredited Technical',
-    issuer: 'Amazon Web Services',
-    date: '2024',
-    credential: 'Active',
-    icon: '☁️',
-  },
-  {
-    name: 'SCRUM Foundation Professional Certificate',
-    issuer: 'SCRUMstudy',
-    date: '2024',
-    credential: 'Active',
-    icon: '🎯',
-  },
-  {
-    name: 'Professional Scrum Master I (PSM I)',
-    issuer: 'Scrum.org',
-    date: '2024',
-    credential: 'Active',
-    icon: '📋',
-  },
-  {
-    name: 'ITIL Foundation Certificate',
-    issuer: 'AXELOS',
-    date: '2023',
-    credential: 'Active',
-    icon: '📚',
-  },
-  {
-    name: 'Oracle Cloud Infrastructure Foundations',
-    issuer: 'Oracle',
-    date: '2023',
-    credential: 'Active',
-    icon: '🏗️',
-  },
-  {
-    name: 'Cisco Certified Network Associate (CCNA)',
-    issuer: 'Cisco',
-    date: '2019',
-    credential: 'Active',
-    icon: '🌐',
-  },
-  {
-    name: 'CompTIA Network+',
-    issuer: 'CompTIA',
-    date: '2018',
-    credential: 'Active',
-    icon: '🔗',
-  },
-  {
-    name: 'Microsoft Technology Associate (MTA)',
-    issuer: 'Microsoft',
-    date: '2017',
-    credential: 'Active',
-    icon: '💻',
-  },
-]
+// Certifications removed - awaiting user-provided verified list
+// See: DATA-AUDIT-REQUIRED.md for verification process
+const certifications = []
 </script>
 
 <template>
@@ -127,7 +65,7 @@ const certifications = [
           </div>
 
           <!-- Certifications Grid -->
-          <div>
+          <div v-if="certifications.length > 0">
             <div class="mb-6 flex items-center gap-3">
               <div
                 class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-[#00d9ff] to-[#0ea5e9] text-white shadow-neon"
@@ -163,9 +101,16 @@ const certifications = [
             <!-- Certification Summary -->
             <div class="cyber-card mt-6 text-center">
               <div class="mb-2 text-4xl">🏆</div>
-              <div class="text-3xl font-bold text-[#00d9ff]">9+</div>
+              <div class="text-3xl font-bold text-[#00d9ff]">{{ certifications.length }}+</div>
               <div class="text-sm text-[#94a3b8]">Professional Certifications</div>
             </div>
+          </div>
+
+          <!-- Certifications Placeholder (when empty) -->
+          <div v-else class="cyber-card flex h-full flex-col items-center justify-center p-8 text-center">
+            <div class="mb-4 text-6xl">📜</div>
+            <h3 class="mb-2 text-xl font-bold text-white">Certifications</h3>
+            <p class="text-sm text-[#94a3b8]">Professional certifications will be listed here upon verification.</p>
           </div>
         </div>
       </div>
