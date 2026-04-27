@@ -25,8 +25,28 @@ const tailwindConfig = {
         menu: ['Comfortaa', 'sans-serif'],
         content: ['Lato', 'sans-serif'],
         code: ['DM Mono', 'monospace'],
+        // Cyber Theme Fonts
+        mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
       },
       colors: {
+        // Cyber Theme Colors
+        cyber: {
+          black: '#0a0e1a',
+          slate: '#0f172a',
+          slate800: '#1e293b',
+          slate700: '#334155',
+          slate600: '#475569',
+          indigo: '#6366F1',
+          indigoDark: '#4f46e5',
+          indigoLight: '#818cf8',
+          green: '#00ff41',
+          cyberGreen: '#10b981',
+          cyan: '#00d9ff',
+          cyanDark: '#0891b2',
+          purple: '#7c3aed',
+        },
+        // Original PrimeVue colors with opacity support
         'primary-50': withOpacity('primary-50'),
         'primary-100': withOpacity('--primary-100'),
         'primary-200': withOpacity('--primary-200'),
@@ -95,6 +115,12 @@ const tailwindConfig = {
         'success-900': withOpacity('--success-900'),
         'success-950': withOpacity('--success-950'),
       },
+      boxShadow: {
+        neon: '0 0 20px rgba(99, 102, 241, 0.5)',
+        'neon-cyan': '0 0 15px rgba(0, 217, 255, 0.4)',
+        'neon-green': '0 0 15px rgba(16, 185, 129, 0.4)',
+        'neon-purple': '0 0 15px rgba(124, 58, 237, 0.4)',
+      },
       keyframes: {
         'spin-up': {
           '0%': { transform: 'translateY(0) rotate(0deg)', opacity: '1', borderRadius: '0' },
@@ -106,10 +132,25 @@ const tailwindConfig = {
           '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
           '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
         },
+        'glow-pulse': {
+          '0%': { 'box-shadow': '0 0 10px rgba(99, 102, 241, 0.5)' },
+          '50%': { 'box-shadow': '0 0 25px rgba(99, 102, 241, 0.8)' },
+        },
+        'marker-pulse': {
+          '0%, 100%': { 'box-shadow': '0 0 0 0 rgba(0, 217, 255, 0.7)' },
+          '50%': { 'box-shadow': '0 0 0 10px rgba(0, 217, 255, 0)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '50%': { transform: 'translate(10px, -10px)' },
+        },
       },
       animation: {
         'float-up': 'spin-up 25s linear infinite',
         shake: 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both',
+        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+        'marker-pulse': 'markerPulse 2s ease-in-out infinite',
+        float: 'float 6s ease-in-out infinite',
       },
     },
   },

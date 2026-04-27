@@ -1,0 +1,463 @@
+/* Portfolio v2 - Dark Cyber Theme */
+/* Document ID: AR-PORTFOLIO-V2-001 */
+/* Created: 2026-04-27 */
+
+/* ============================================
+   CSS Custom Properties - Cyber Color Palette
+   ============================================ */
+
+:root {
+  /* Base Colors (Dark Cyber Foundation) */
+  --cyber-black: #0a0e1a;
+  --dark-slate: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-600: #475569;
+
+  /* Primary Colors (Brand) */
+  --indigo: #6366f1;
+  --indigo-dark: #4f46e5;
+  --indigo-light: #818cf8;
+
+  /* Accent Colors (Cyber Security) */
+  --matrix-green: #00ff41;
+  --cyber-green: #10b981;
+  --cyan: #00d9ff;
+  --cyan-dark: #0891b2;
+  --electric-purple: #7c3aed;
+
+  /* Text Colors */
+  --pure-white: #ffffff;
+  --light-gray: #f1f5f9;
+  --medium-gray: #94a3b8;
+  --muted-gray: #64748b;
+
+  /* Semantic Colors */
+  --bg-primary: var(--dark-slate);
+  --bg-secondary: var(--slate-800);
+  --bg-tertiary: var(--cyber-black);
+  --text-primary: var(--pure-white);
+  --text-secondary: var(--light-gray);
+  --text-tertiary: var(--medium-gray);
+  --text-muted: var(--muted-gray);
+  --border-primary: var(--slate-700);
+  --border-accent: var(--cyan);
+  --accent-primary: var(--indigo);
+  --accent-secondary: var(--cyan);
+  --accent-success: var(--matrix-green);
+  --accent-info: var(--cyber-green);
+}
+
+/* ============================================
+   Gradient Definitions
+   ============================================ */
+
+:root {
+  /* Cyber Background Gradient */
+  --gradient-cyber: linear-gradient(135deg, #0a0e1a 0%, #0f172a 50%, #1e293b 100%);
+
+  /* Neon Glow Gradient (CTAs) */
+  --gradient-neon: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%);
+
+  /* Network Graph Gradient */
+  --gradient-network: linear-gradient(180deg, rgba(0, 217, 255, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%);
+}
+
+/* ============================================
+   Typography - Font Families
+   ============================================ */
+
+:root {
+  --font-headings: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+}
+
+/* Apply fonts globally */
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-headings);
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+code,
+.terminal-text,
+.skill-tag {
+  font-family: var(--font-code);
+}
+
+/* ============================================
+   Box Shadows - Neon Glow Effects
+   ============================================ */
+
+:root {
+  --shadow-neon: 0 0 20px rgba(99, 102, 241, 0.5);
+  --shadow-neon-cyan: 0 0 15px rgba(0, 217, 255, 0.4);
+  --shadow-neon-green: 0 0 15px rgba(16, 185, 129, 0.4);
+  --shadow-neon-purple: 0 0 15px rgba(124, 58, 237, 0.4);
+}
+
+/* ============================================
+   Animation Keyframes
+   ============================================ */
+
+/* Fade In Up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glow Pulse */
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.8);
+  }
+}
+
+/* Marker Pulse (Timeline) */
+@keyframes markerPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(0, 217, 255, 0);
+  }
+}
+
+/* Float Animation */
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(10px, -10px);
+  }
+}
+
+/* Typing Effect */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Blink Cursor */
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+.fade-in-section {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.glow-neon {
+  box-shadow: var(--shadow-neon);
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+.glow-cyan {
+  box-shadow: var(--shadow-neon-cyan);
+}
+
+.glow-green {
+  box-shadow: var(--shadow-neon-green);
+}
+
+/* Terminal Text Effect */
+.terminal-text {
+  overflow: hidden;
+  border-right: 2px solid var(--cyan);
+  white-space: nowrap;
+  animation:
+    typing 3s steps(40) 1s,
+    blink 0.75s step-end infinite;
+}
+
+/* ============================================
+   Focus States - Accessibility
+   ============================================ */
+
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+}
+
+/* ============================================
+   Reduced Motion Support
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .network-graph-bg {
+    display: none;
+  }
+
+  .terminal-text {
+    border-right: none;
+  }
+}
+
+/* ============================================
+   Cyber Theme Component Classes
+   ============================================ */
+
+/* Cyber Card */
+.cyber-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.cyber-card:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-neon-cyan);
+  transform: translateY(-2px);
+}
+
+/* Cyber Button - Primary */
+.cyber-btn-primary {
+  background: var(--gradient-neon);
+  color: var(--pure-white);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-neon);
+}
+
+.cyber-btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.7);
+}
+
+/* Cyber Button - Secondary */
+.cyber-btn-secondary {
+  background: transparent;
+  color: var(--cyan);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: 2px solid var(--cyan);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cyber-btn-secondary:hover {
+  background: rgba(0, 217, 255, 0.1);
+  box-shadow: var(--shadow-neon-cyan);
+  transform: scale(1.05);
+}
+
+/* Cyber Input */
+.cyber-input {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-family: var(--font-code);
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.cyber-input:focus {
+  border-color: var(--cyan);
+  box-shadow: var(--shadow-neon-cyan);
+  outline: none;
+}
+
+/* Skill Tag */
+.skill-tag {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  color: var(--cyan);
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-family: var(--font-code);
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.skill-tag:hover {
+  border-color: var(--cyan);
+  box-shadow: var(--shadow-neon-cyan);
+  transform: translateY(-2px);
+}
+
+/* Section Divider - Circuit */
+.circuit-divider {
+  width: 100%;
+  height: 60px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 60' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,30 L200,30 L200,10 L250,30 L200,50 L200,30 L400,30 L400,15 L450,30 L400,45 L400,30 L1200,30' stroke='%236366F1' stroke-width='2' fill='none' opacity='0.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  margin: 2rem 0;
+}
+
+/* Network Graph Background Container */
+.network-graph-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* ============================================
+   Responsive Typography
+   ============================================ */
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+  }
+  h3 {
+    font-size: 1.125rem;
+  }
+  body {
+    font-size: 0.9375rem;
+  }
+}
+
+/* Tablet (768px-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
+  body {
+    font-size: 1rem;
+  }
+}
+
+/* Desktop (≥1024px) */
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 3rem;
+  }
+  h2 {
+    font-size: 2.25rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  body {
+    font-size: 1rem;
+  }
+}
+
+/* ============================================
+   Glassmorphism Navigation
+   ============================================ */
+
+.cyber-nav {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 80px;
+  transition: all 0.3s ease;
+}
+
+.cyber-nav.scrolled {
+  box-shadow: 0 2px 20px rgba(99, 102, 241, 0.2);
+}
+
+.cyber-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cyber-nav a:hover,
+.cyber-nav a.active {
+  color: var(--cyan);
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+}
+
+/* ============================================
+   Scroll Behavior
+   ============================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ============================================
+   Selection Colors
+   ============================================ */
+
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+  color: var(--pure-white);
+}
+
+::-moz-selection {
+  background: rgba(99, 102, 241, 0.3);
+  color: var(--pure-white);
+}
