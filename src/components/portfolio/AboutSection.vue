@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import CardSenate from '../senate/Card-Senate.vue'
+import BadgeSenate from '../senate/Badge-Senate.vue'
+
 const about = {
   summary:
     'Experienced Software Developer with 13+ years of expertise at the Department of Social Welfare and Development. Specialized in business process analysis, data analysis, system analysis, PHP development using CodeIgniter Framework, MySQL database management, and web development using SCRUM methodology. Civil Service Professional eligible.',
@@ -29,6 +32,13 @@ const about = {
     },
   ],
 }
+
+const stats = [
+  { icon: '🚀', value: '13+', label: 'Years Experience', color: 'green' },
+  { icon: '💼', value: '3', label: 'Positions at DSWD', color: 'blue' },
+  { icon: '🛡️', value: '9', label: 'Certifications', color: 'red' },
+  { icon: '🎓', value: 'MS IT', label: 'In Progress', color: 'gold' },
+]
 </script>
 
 <template>
@@ -40,62 +50,51 @@ const about = {
       <div class="mx-auto max-w-6xl">
         <!-- Section Header -->
         <div class="mb-12 text-center">
-          <h2 class="mb-4 text-3xl font-bold text-white md:text-4xl">About Me</h2>
-          <div class="mx-auto h-1 w-20 bg-gradient-to-r from-[#6366F1] to-[#00d9ff]"></div>
-          <p class="mt-4 text-[#94a3b8]">Professional Summary</p>
+          <h2 class="mb-4 text-3xl font-bold text-[#1a1a1a] md:text-4xl">About Me</h2>
+          <div class="mx-auto h-1 w-20 bg-gradient-to-r from-[#0038A8] to-[#CE1126]"></div>
+          <p class="mt-4 text-[#6c757d]">Professional Summary</p>
         </div>
 
         <!-- Professional Summary -->
         <div class="mb-16 grid items-center gap-12 lg:grid-cols-2">
           <div>
-            <p class="mb-6 text-lg leading-relaxed text-[#f1f5f9]">
+            <p class="mb-6 text-lg leading-relaxed text-[#1a1a1a]">
               {{ about.summary }}
             </p>
             <div class="flex flex-wrap gap-3">
-              <span class="skill-tag"> 13+ Years Experience </span>
-              <span class="skill-tag"> Civil Service Eligible </span>
-              <span class="skill-tag"> SCRUM Master </span>
+              <BadgeSenate variant="outline" color="blue">13+ Years Experience</BadgeSenate>
+              <BadgeSenate variant="outline" color="blue">Civil Service Eligible</BadgeSenate>
+              <BadgeSenate variant="outline" color="blue">SCRUM Master</BadgeSenate>
             </div>
           </div>
 
           <!-- Stats Cards (About Stats) -->
-          <div class="grid grid-cols-2 gap-4">
-            <div class="cyber-card stat-card">
-              <div class="mb-2 text-3xl text-[#10b981]">🚀</div>
-              <div class="mb-1 text-2xl font-bold text-white">13+</div>
-              <div class="text-sm text-[#94a3b8]">Years Experience</div>
-            </div>
-            <div class="cyber-card stat-card">
-              <div class="mb-2 text-3xl text-[#00d9ff]">💼</div>
-              <div class="mb-1 text-2xl font-bold text-white">3</div>
-              <div class="text-sm text-[#94a3b8]">Positions at DSWD</div>
-            </div>
-            <div class="cyber-card stat-card">
-              <div class="mb-2 text-3xl text-[#7c3aed]">🛡️</div>
-              <div class="mb-1 text-2xl font-bold text-white">9</div>
-              <div class="text-sm text-[#94a3b8]">Certifications</div>
-            </div>
-            <div class="cyber-card stat-card">
-              <div class="mb-2 text-3xl text-[#818cf8]">🎓</div>
-              <div class="mb-1 text-2xl font-bold text-white">MS IT</div>
-              <div class="text-sm text-[#94a3b8]">In Progress</div>
-            </div>
+          <div class="grid grid-cols-2 gap-6">
+            <CardSenate v-for="(stat, index) in stats" :key="index" variant="stat" :elevated="true" class="mb-2">
+              <div class="mb-2 text-3xl">{{ stat.icon }}</div>
+              <div class="mb-1 text-2xl font-bold text-[#0038A8]">{{ stat.value }}</div>
+              <div class="text-sm text-[#6c757d]">{{ stat.label }}</div>
+            </CardSenate>
           </div>
         </div>
 
         <!-- Key Highlights -->
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <div v-for="(highlight, index) in about.highlights" :key="index" class="cyber-card highlight-card">
-            <div class="mb-4 text-4xl transition-transform duration-300 group-hover:scale-110">
-              {{ highlight.icon }}
-            </div>
-            <h3 class="mb-2 text-lg font-semibold text-white">
+          <CardSenate
+            v-for="(highlight, index) in about.highlights"
+            :key="index"
+            variant="interactive"
+            :hoverable="true"
+            class="h-full"
+          >
+            <div class="mb-4 text-4xl transition-transform duration-300">{{ highlight.icon }}</div>
+            <h3 class="mb-2 text-lg font-semibold text-[#1a1a1a]">
               {{ highlight.title }}
             </h3>
-            <p class="text-sm text-[#94a3b8]">
+            <p class="text-sm text-[#6c757d]">
               {{ highlight.description }}
             </p>
-          </div>
+          </CardSenate>
         </div>
       </div>
     </div>
@@ -103,12 +102,6 @@ const about = {
 </template>
 
 <style scoped>
-.highlight-card:hover {
-  border-color: #6366f1;
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-  transform: translateY(-2px);
-}
-
 /* Fade In Animation */
 .fade-in-section {
   opacity: 0;
@@ -126,8 +119,5 @@ const about = {
   }
 }
 
-.stat-card:hover {
-  border-color: #10b981;
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-}
+/* Card hover effect (subtle, professional) */
 </style>

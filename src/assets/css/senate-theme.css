@@ -1,0 +1,452 @@
+/**
+ * =============================================================================
+ * DESIGN TOKENS - Senate of the Philippines Design System
+ * =============================================================================
+ * 
+ * OFFICIAL GOVERNMENT DESIGN SYSTEM
+ * Authoritative reference for all Senate of the Philippines digital properties.
+ * 
+ * Themes:
+ * 1. 🚀 Cyber - For tech portfolios, hackathons, innovation labs (Dark, futuristic)
+ * 2. 🏛️ Senate Corporate - Official government brand (Professional, patriotic)
+ * 
+ * Usage:
+ * 1. Import this file in your main CSS or index.html
+ * 2. Apply theme class to <body>: <body class="theme-senate">
+ * 3. Use CSS variables: var(--senate-primary-blue)
+ * 
+ * Brand Authority:
+ * - Colors: Based on official Senate seal and Philippine flag
+ * - Typography: Source Sans Pro (official Senate website font)
+ * - Accessibility: WCAG 2.1 AA compliant (mandatory for government)
+ * 
+ * Author: Designer Specialist (WebAppKit)
+ * Created: April 28, 2026
+ * Version: 2.0 (Senate Edition)
+ * =============================================================================
+ */
+
+/* =============================================================================
+   BASE RESET & THEME SETUP
+   ============================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  /* Default to Cyber theme if no class specified */
+}
+
+/* =============================================================================
+   🚀 CYBER THEME - Dark Futuristic Aesthetic
+   =============================================================================
+   Vibe: Professional cybersecurity, network graphics, neon glows
+   Use Cases: Portfolio, tech products, security tools, developer tools
+   */
+
+.theme-cyber {
+  /* --------------------------------------------------------------------------
+     COLORS - Backgrounds
+     ------------------------------------------------------------------------- */
+
+  --cyber-bg-primary: #0f172a; /* Dark slate - main background */
+  --cyber-bg-secondary: #1e293b; /* Slate 800 - cards, sections */
+  --cyber-bg-tertiary: #334155; /* Slate 700 - borders, dividers */
+  --cyber-bg-elevated: rgba(30, 41, 59, 0.95); /* Semi-transparent overlays */
+
+  /* --------------------------------------------------------------------------
+     COLORS - Primary Accents
+     ------------------------------------------------------------------------- */
+
+  --cyber-primary-indigo: #6366f1; /* Primary brand color */
+  --cyber-primary-indigo-hover: #4f46e5; /* Hover state */
+  --cyber-primary-indigo-light: #818cf8; /* Highlights */
+
+  /* --------------------------------------------------------------------------
+     COLORS - Secondary Accents
+     ------------------------------------------------------------------------- */
+
+  --cyber-accent-cyan: #00d9ff; /* Main accent, links, highlights */
+  --cyber-accent-cyan-dark: #0891b2; /* Hover states */
+  --cyber-accent-purple: #7c3aed; /* Tertiary accent, glows */
+
+  /* --------------------------------------------------------------------------
+     COLORS - Functional
+     ------------------------------------------------------------------------- */
+
+  --cyber-success: #10b981; /* Success states */
+  --cyber-success-dark: #059669; /* Success hover */
+  --cyber-error: #ef4444; /* Error states */
+  --cyber-error-dark: #dc2626; /* Error hover */
+  --cyber-warning: #f59e0b; /* Warning states */
+  --cyber-info: #06b6d4; /* Info states */
+
+  /* --------------------------------------------------------------------------
+     COLORS - Text
+     ------------------------------------------------------------------------- */
+
+  --cyber-text-primary: #ffffff; /* Headings, important text */
+  --cyber-text-secondary: #e2e8f0; /* Body text */
+  --cyber-text-tertiary: #94a3b8; /* Secondary text, captions */
+  --cyber-text-muted: #64748b; /* Tertiary text, disabled */
+
+  /* --------------------------------------------------------------------------
+     COLORS - Gradients
+     ------------------------------------------------------------------------- */
+
+  --cyber-gradient-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --cyber-gradient-card: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+  --cyber-gradient-primary: linear-gradient(135deg, #6366f1 0%, #00d9ff 100%);
+  --cyber-gradient-accent: linear-gradient(135deg, #00d9ff 0%, #06b6d4 100%);
+  --cyber-gradient-glow: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%);
+
+  /* --------------------------------------------------------------------------
+     TYPOGRAPHY
+     ------------------------------------------------------------------------- */
+
+  --cyber-font-heading: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --cyber-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --cyber-font-size-xs: 0.75rem; /* 12px */
+  --cyber-font-size-sm: 0.875rem; /* 14px */
+  --cyber-font-size-base: 1rem; /* 16px */
+  --cyber-font-size-lg: 1.125rem; /* 18px */
+  --cyber-font-size-xl: 1.25rem; /* 20px */
+  --cyber-font-size-2xl: 1.5rem; /* 24px */
+  --cyber-font-size-3xl: 1.875rem; /* 30px */
+  --cyber-font-size-4xl: 2.5rem; /* 40px */
+
+  --cyber-font-weight-normal: 400;
+  --cyber-font-weight-medium: 500;
+  --cyber-font-weight-semibold: 600;
+  --cyber-font-weight-bold: 700;
+
+  /* --------------------------------------------------------------------------
+     SPACING
+     ------------------------------------------------------------------------- */
+
+  --cyber-spacing-xs: 0.25rem; /* 4px */
+  --cyber-spacing-sm: 0.5rem; /* 8px */
+  --cyber-spacing-md: 1rem; /* 16px */
+  --cyber-spacing-lg: 1.5rem; /* 24px */
+  --cyber-spacing-xl: 2rem; /* 32px */
+  --cyber-spacing-2xl: 3rem; /* 48px */
+  --cyber-spacing-3xl: 4rem; /* 64px */
+
+  /* --------------------------------------------------------------------------
+     BORDER RADIUS
+     ------------------------------------------------------------------------- */
+
+  --cyber-radius-sm: 4px;
+  --cyber-radius-md: 8px;
+  --cyber-radius-lg: 12px;
+  --cyber-radius-xl: 16px;
+  --cyber-radius-2xl: 20px;
+  --cyber-radius-full: 9999px;
+
+  /* --------------------------------------------------------------------------
+     SHADOWS & GLOW EFFECTS
+     ------------------------------------------------------------------------- */
+
+  --cyber-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --cyber-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --cyber-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --cyber-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.6);
+
+  /* Glow Effects (Signature Cyber Theme) */
+  --cyber-glow-cyan: 0 0 15px rgba(0, 217, 255, 0.5);
+  --cyber-glow-indigo: 0 0 15px rgba(99, 102, 241, 0.5);
+  --cyber-glow-purple: 0 0 15px rgba(124, 58, 237, 0.5);
+  --cyber-glow-strong: 0 0 25px rgba(0, 217, 255, 0.7);
+  --cyber-glow-button: 0 4px 20px rgba(0, 217, 255, 0.3);
+
+  /* Card Hover Effects */
+  --cyber-card-hover-transform: translateY(-6px);
+  --cyber-card-hover-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+  --cyber-card-hover-border: rgba(0, 217, 255, 0.6);
+
+  /* --------------------------------------------------------------------------
+     TRANSITIONS
+     ------------------------------------------------------------------------- */
+
+  --cyber-transition-fast: 0.15s ease;
+  --cyber-transition-base: 0.2s ease;
+  --cyber-transition-slow: 0.3s ease;
+
+  /* --------------------------------------------------------------------------
+     BORDERS
+     ------------------------------------------------------------------------- */
+
+  --cyber-border-subtle: 1px solid rgba(99, 102, 241, 0.2);
+  --cyber-border-default: 1px solid rgba(99, 102, 241, 0.3);
+  --cyber-border-hover: 1px solid rgba(0, 217, 255, 0.6);
+  --cyber-border-focus: 1px solid rgba(0, 217, 255, 0.8);
+
+  /* --------------------------------------------------------------------------
+     OPACITY
+     ------------------------------------------------------------------------- */
+
+  --cyber-opacity-disabled: 0.5;
+  --cyber-opacity-hover: 0.9;
+  --cyber-opacity-overlay: 0.95;
+}
+
+/* =============================================================================
+   🏛️ SENATE CORPORATE THEME - Official Government Brand
+   =============================================================================
+   Vibe: Authority, transparency, patriotism, public service
+   Use Cases: Senate websites, government portals, official documents,
+              public-facing applications, legislative systems
+   
+   Brand Reference:
+   - Seal of the Senate of the Philippines
+   - Philippine National Flag
+   - Official Senate Website (senate.gov.ph)
+   */
+
+.theme-senate {
+  /* --------------------------------------------------------------------------
+     COLORS - Primary Brand (From Senate Seal & Flag)
+     ------------------------------------------------------------------------- */
+
+  --senate-primary-blue: #0038a8; /* Royal Blue - primary brand, headers */
+  --senate-primary-blue-hover: #002878; /* Hover state */
+  --senate-primary-blue-light: #0056d6; /* Light variant, highlights */
+
+  /* --------------------------------------------------------------------------
+     COLORS - Secondary Brand (From Senate Seal & Flag)
+     ------------------------------------------------------------------------- */
+
+  --senate-secondary-red: #ce1126; /* Red - accents, CTAs, important elements */
+  --senate-secondary-red-hover: #a00e1e; /* Hover state */
+  --senate-accent-gold: #fcd116; /* Sun Yellow/Gold - highlights, badges */
+  --senate-accent-gold-hover: #e5b910; /* Gold hover */
+
+  /* --------------------------------------------------------------------------
+     COLORS - Backgrounds
+     ------------------------------------------------------------------------- */
+
+  --senate-bg-primary: #ffffff; /* White - main background */
+  --senate-bg-secondary: #f8f9fa; /* Light gray - sections */
+  --senate-bg-tertiary: #e9ecef; /* Lighter gray - cards, dividers */
+  --senate-bg-dark: #0038a8; /* Navy blue - footer, dark sections */
+  --senate-bg-elevated: rgba(255, 255, 255, 0.98); /* Overlays */
+
+  /* --------------------------------------------------------------------------
+     COLORS - Neutral Grays
+     ------------------------------------------------------------------------- */
+
+  --senate-gray-50: #f8f9fa; /* Lightest */
+  --senate-gray-100: #e9ecef;
+  --senate-gray-200: #dee2e6;
+  --senate-gray-300: #ced4da;
+  --senate-gray-400: #adb5bd;
+  --senate-gray-500: #6c757d; /* Medium gray */
+  --senate-gray-600: #495057;
+  --senate-gray-700: #343a40;
+  --senate-gray-800: #212529;
+  --senate-gray-900: #1a1a1a; /* Darkest */
+
+  /* --------------------------------------------------------------------------
+     COLORS - Functional (Government Standard)
+     ------------------------------------------------------------------------- */
+
+  --senate-success: #28a745; /* Success states */
+  --senate-success-dark: #1e7e34; /* Success hover */
+  --senate-error: #dc3545; /* Error states */
+  --senate-error-dark: #c82333; /* Error hover */
+  --senate-warning: #ffc107; /* Warning states */
+  --senate-info: #17a2b8; /* Info states */
+
+  /* --------------------------------------------------------------------------
+     COLORS - Text
+     ------------------------------------------------------------------------- */
+
+  --senate-text-primary: #1a1a1a; /* Headings, primary content */
+  --senate-text-secondary: #495057; /* Body text */
+  --senate-text-tertiary: #6c757d; /* Secondary text, captions */
+  --senate-text-muted: #adb5bd; /* Tertiary text, disabled */
+  --senate-text-inverse: #ffffff; /* Text on dark backgrounds */
+
+  /* --------------------------------------------------------------------------
+     COLORS - Gradients (Patriotic)
+     ------------------------------------------------------------------------- */
+
+  --senate-gradient-bg: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+  --senate-gradient-card: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  --senate-gradient-primary: linear-gradient(135deg, #0038a8 0%, #0056d6 100%);
+  --senate-gradient-flag: linear-gradient(90deg, #0038a8 50%, #ce1126 50%);
+  --senate-gradient-gold: linear-gradient(135deg, #fcd116 0%, #ffdb58 100%);
+  --senate-gradient-header: linear-gradient(135deg, #0038a8 0%, #002878 100%);
+
+  /* --------------------------------------------------------------------------
+     TYPOGRAPHY - Official Senate Fonts
+     ------------------------------------------------------------------------- */
+
+  --senate-font-heading: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --senate-font-body: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --senate-font-mono: 'JetBrains Mono', 'Consolas', monospace; /* Code only */
+
+  --senate-font-size-xs: 0.75rem; /* 12px */
+  --senate-font-size-sm: 0.875rem; /* 14px */
+  --senate-font-size-base: 1rem; /* 16px */
+  --senate-font-size-lg: 1.125rem; /* 18px */
+  --senate-font-size-xl: 1.25rem; /* 20px */
+  --senate-font-size-2xl: 1.5rem; /* 24px */
+  --senate-font-size-3xl: 1.875rem; /* 30px */
+  --senate-font-size-4xl: 2.5rem; /* 40px */
+  --senate-font-size-5xl: 3rem; /* 48px - Hero headings */
+
+  --senate-font-weight-light: 300;
+  --senate-font-weight-normal: 400;
+  --senate-font-weight-semibold: 600;
+  --senate-font-weight-bold: 700;
+  --senate-font-weight-extrabold: 900;
+
+  /* --------------------------------------------------------------------------
+     SPACING - 4px Grid System
+     ------------------------------------------------------------------------- */
+
+  --senate-spacing-xs: 0.25rem; /* 4px */
+  --senate-spacing-sm: 0.5rem; /* 8px */
+  --senate-spacing-md: 1rem; /* 16px */
+  --senate-spacing-lg: 1.5rem; /* 24px */
+  --senate-spacing-xl: 2rem; /* 32px */
+  --senate-spacing-2xl: 3rem; /* 48px */
+  --senate-spacing-3xl: 4rem; /* 64px */
+  --senate-spacing-4xl: 6rem; /* 96px */
+
+  /* --------------------------------------------------------------------------
+     BORDER RADIUS - Conservative & Professional
+     ------------------------------------------------------------------------- */
+
+  --senate-radius-sm: 2px;
+  --senate-radius-md: 4px;
+  --senate-radius-lg: 6px;
+  --senate-radius-xl: 8px;
+  --senate-radius-2xl: 12px;
+  --senate-radius-full: 9999px;
+
+  /* --------------------------------------------------------------------------
+     SHADOWS - Subtle, Professional Elevation
+     ------------------------------------------------------------------------- */
+
+  --senate-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --senate-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --senate-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --senate-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.12);
+  --senate-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+
+  /* Card Hover Effects (Subtle, dignified) */
+  --senate-card-hover-transform: translateY(-2px);
+  --senate-card-hover-shadow: 0 10px 20px rgba(0, 56, 168, 0.15);
+  --senate-card-hover-border: rgba(0, 56, 168, 0.3);
+
+  /* --------------------------------------------------------------------------
+     TRANSITIONS - Smooth, Professional
+     ------------------------------------------------------------------------- */
+
+  --senate-transition-fast: 0.15s ease;
+  --senate-transition-base: 0.2s ease;
+  --senate-transition-slow: 0.3s ease;
+
+  /* --------------------------------------------------------------------------
+     BORDERS - Clean, Defined
+     ------------------------------------------------------------------------- */
+
+  --senate-border-subtle: 1px solid #e9ecef;
+  --senate-border-default: 1px solid #ced4da;
+  --senate-border-hover: 1px solid #adb5bd;
+  --senate-border-focus: 2px solid #0038a8;
+  --senate-border-primary: 1px solid #0038a8;
+  --senate-border-inverse: 1px solid rgba(255, 255, 255, 0.2);
+
+  /* --------------------------------------------------------------------------
+     OPACITY
+     ------------------------------------------------------------------------- */
+
+  --senate-opacity-disabled: 0.5;
+  --senate-opacity-hover: 0.95;
+  --senate-opacity-overlay: 0.98;
+
+  /* --------------------------------------------------------------------------
+     BREAKPOINTS - Responsive Government Standards
+     ------------------------------------------------------------------------- */
+
+  --senate-breakpoint-sm: 640px; /* Mobile landscape */
+  --senate-breakpoint-md: 768px; /* Tablet */
+  --senate-breakpoint-lg: 1024px; /* Desktop */
+  --senate-breakpoint-xl: 1280px; /* Large desktop */
+  --senate-breakpoint-2xl: 1536px; /* Extra large */
+}
+
+/* =============================================================================
+   UTILITY CLASSES (Both Themes)
+   ============================================================================= */
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-primary, #6366f1);
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Focus Visible */
+.focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .theme-cyber {
+    --cyber-glow-cyan: none;
+    --cyber-glow-indigo: none;
+    --cyber-border-default: 2px solid rgba(0, 217, 255, 0.8);
+  }
+
+  .theme-corporate {
+    --corporate-border-default: 2px solid #1e3a5f;
+  }
+}
+
+/* =============================================================================
+   END OF DESIGN TOKENS
+   ============================================================================= */

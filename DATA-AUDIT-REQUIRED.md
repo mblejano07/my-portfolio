@@ -38,7 +38,7 @@
 
 - [ ] ✅ Both are real
 - [ ] ❌ One or both are fake
-- [ ] ⚠️ Needs editing: ******\_\_\_******
+- [ ] ⚠️ Needs editing: **\*\***\_\_\_**\*\***
 
 ---
 
@@ -70,9 +70,9 @@
 
 - [ ] ✅ All positions are real and accurate
 - [ ] ❌ One or more positions are fake/inaccurate
-- [ ] ⚠️ Needs editing: ******\_\_\_******
+- [ ] ⚠️ Needs editing: **\*\***\_\_\_**\*\***
 
-**Specific changes needed:** ******\_\_\_******
+**Specific changes needed:** **\*\***\_\_\_**\*\***
 
 ---
 
@@ -106,11 +106,11 @@
 | 8   | Network+         | [ ] ✅ [ ] ❌ [ ] ⚠️ |       |
 | 9   | MTA              | [ ] ✅ [ ] ❌ [ ] ⚠️ |       |
 
-**Additional certifications to ADD:** ******\_\_\_******
+**Additional certifications to ADD:** **\*\***\_\_\_**\*\***
 
-**Certifications to REMOVE:** ******\_\_\_******
+**Certifications to REMOVE:** **\*\***\_\_\_**\*\***
 
-**Date/correction notes:** ******\_\_\_******
+**Date/correction notes:** **\*\***\_\_\_**\*\***
 
 ---
 
@@ -128,9 +128,9 @@
 **Your Verification:**
 
 - [ ] ✅ GitHub is correct
-- [ ] Add real email: ******\_\_\_******
-- [ ] Add real LinkedIn: ******\_\_\_******
-- [ ] Location correct: ******\_\_\_******
+- [ ] Add real email: **\*\***\_\_\_**\*\***
+- [ ] Add real LinkedIn: **\*\***\_\_\_**\*\***
+- [ ] Location correct: **\*\***\_\_\_**\*\***
 
 ---
 
@@ -146,7 +146,7 @@
 
 - [ ] ✅ Keep Dark Cyber theme
 - [ ] ❌ Want different theme
-- [ ] ⚠️ Adjustments: ******\_\_\_******
+- [ ] ⚠️ Adjustments: **\*\***\_\_\_**\*\***
 
 ---
 

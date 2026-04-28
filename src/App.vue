@@ -3,7 +3,7 @@ import PortfolioPage from '@/components/portfolio/PortfolioPage.vue'
 </script>
 
 <template>
-  <div id="app" class="min-h-screen">
+  <div id="app" class="theme-senate min-h-screen" lang="en">
     <PortfolioPage />
   </div>
 </template>
@@ -18,7 +18,7 @@ body {
   margin: 0;
   padding: 0;
   font-family:
-    'Inter',
+    'Source Sans Pro',
     system-ui,
     -apple-system,
     sans-serif;
