@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import AlertSenate from '../senate/Alert-Senate.vue'
+import InputSenate from '../senate/Input-Senate.vue'
+import ButtonSenate from '../senate/Button-Senate.vue'
 
 const contactInfo = {
   email: 'mblejano07@gmail.com',
@@ -72,16 +75,16 @@ const submitForm = async () => {
       <div class="mx-auto max-w-6xl">
         <!-- Section Header -->
         <div class="mb-12 text-center">
-          <h2 class="mb-4 text-3xl font-bold text-white md:text-4xl">Get In Touch</h2>
-          <div class="mx-auto h-1 w-20 bg-gradient-to-r from-[#6366F1] to-[#00d9ff]"></div>
-          <p class="mt-4 text-[#94a3b8]">Available for opportunities and collaborations</p>
+          <h2 class="mb-4 text-3xl font-bold text-[#1a1a1a] md:text-4xl">Get In Touch</h2>
+          <div class="mx-auto h-1 w-20 bg-gradient-to-r from-[#0038A8] to-[#CE1126]"></div>
+          <p class="mt-4 text-[#6c757d]">Available for opportunities and collaborations</p>
         </div>
 
         <div class="grid gap-12 lg:grid-cols-2">
           <!-- Contact Info -->
           <div>
-            <h3 class="mb-6 text-2xl font-bold text-white">Let's Connect</h3>
-            <p class="mb-8 text-[#f1f5f9]">
+            <h3 class="mb-6 text-2xl font-bold text-[#1a1a1a]">Let's Connect</h3>
+            <p class="mb-8 text-[#1a1a1a]">
               I'm always open to discussing new opportunities, interesting projects, or just having a conversation about
               technology and innovation.
             </p>
@@ -90,13 +93,13 @@ const submitForm = async () => {
             <div class="mb-8 space-y-6">
               <a :href="`mailto:${contactInfo.email}`" class="group flex items-center gap-4">
                 <div
-                  class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-[#6366F1] to-[#4f46e5] text-white shadow-neon transition-transform group-hover:scale-110"
+                  class="flex h-12 w-12 items-center justify-center rounded-md bg-[#0038A8]/10 text-[#0038A8] transition-transform group-hover:scale-110"
                 >
                   <i class="pi pi-envelope h-5 w-5"></i>
                 </div>
                 <div>
-                  <div class="text-sm text-[#64748b]">Email</div>
-                  <div class="font-medium text-white transition-colors group-hover:text-[#00d9ff]">
+                  <div class="text-sm text-[#6c757d]">Email</div>
+                  <div class="font-medium text-[#1a1a1a] transition-colors group-hover:text-[#0038A8]">
                     {{ contactInfo.email }}
                   </div>
                 </div>
@@ -104,27 +107,25 @@ const submitForm = async () => {
 
               <a :href="`tel:${contactInfo.phone}`" class="group flex items-center gap-4">
                 <div
-                  class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-[#00d9ff] to-[#0ea5e9] text-white shadow-neon transition-transform group-hover:scale-110"
+                  class="flex h-12 w-12 items-center justify-center rounded-md bg-[#CE1126]/10 text-[#CE1126] transition-transform group-hover:scale-110"
                 >
                   <i class="pi pi-phone h-5 w-5"></i>
                 </div>
                 <div>
-                  <div class="text-sm text-[#64748b]">Phone</div>
-                  <div class="font-medium text-white transition-colors group-hover:text-[#00d9ff]">
+                  <div class="text-sm text-[#6c757d]">Phone</div>
+                  <div class="font-medium text-[#1a1a1a] transition-colors group-hover:text-[#CE1126]">
                     {{ contactInfo.phone }}
                   </div>
                 </div>
               </a>
 
               <div class="flex items-center gap-4">
-                <div
-                  class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6b21a8] text-white shadow-neon"
-                >
+                <div class="flex h-12 w-12 items-center justify-center rounded-md bg-[#FCD116]/10 text-[#B8860B]">
                   <i class="pi pi-map h-5 w-5"></i>
                 </div>
                 <div>
-                  <div class="text-sm text-[#64748b]">Location</div>
-                  <div class="font-medium text-white">
+                  <div class="text-sm text-[#6c757d]">Location</div>
+                  <div class="font-medium text-[#1a1a1a]">
                     {{ contactInfo.location }}
                   </div>
                 </div>
@@ -137,7 +138,7 @@ const submitForm = async () => {
                 :href="contactInfo.linkedin"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-[#00a8ff] to-[#0077b5] text-white shadow-neon transition-transform hover:scale-110"
+                class="flex h-12 w-12 items-center justify-center rounded-md bg-[#0038A8]/10 text-[#0038A8] transition-transform hover:scale-110"
               >
                 <i class="pi pi-linkedin h-6 w-6"></i>
               </a>
@@ -145,7 +146,7 @@ const submitForm = async () => {
                 :href="contactInfo.github"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-[#333] to-[#24292e] text-white shadow-neon transition-transform hover:scale-110"
+                class="flex h-12 w-12 items-center justify-center rounded-md bg-[#CE1126]/10 text-[#CE1126] transition-transform hover:scale-110"
               >
                 <i class="pi pi-github h-6 w-6"></i>
               </a>
@@ -153,74 +154,66 @@ const submitForm = async () => {
           </div>
 
           <!-- Contact Form -->
-          <div class="cyber-card rounded-2xl p-8 shadow-xl">
-            <h3 class="mb-6 text-xl font-bold text-white">Send a Message</h3>
+          <div class="CardSenate rounded-2xl p-8 shadow-md">
+            <h3 class="mb-6 text-xl font-bold text-[#1a1a1a]">Send a Message</h3>
 
             <!-- Success Message -->
-            <div
-              v-if="formState === 'success'"
-              class="mb-6 flex items-center gap-3 rounded-lg border border-[#10b981] bg-[rgba(16,185,129,0.1)] p-4"
-            >
-              <i class="pi pi-check-circle h-5 w-5 text-[#10b981]"></i>
-              <span class="text-[#10b981]">Message sent successfully! I'll get back to you soon.</span>
-            </div>
+            <AlertSenate v-if="formState === 'success'" variant="success" title="Success!">
+              Message sent successfully! I'll get back to you soon.
+            </AlertSenate>
 
             <!-- Error Message -->
-            <div
-              v-if="formState === 'error'"
-              class="mb-6 flex items-center gap-3 rounded-lg border border-[#dc2626] bg-[rgba(220,38,38,0.1)] p-4"
-            >
-              <i class="pi pi-exclamation-triangle h-5 w-5 text-[#dc2626]"></i>
-              <span class="text-[#dc2626]">Something went wrong. Please try again or email me directly.</span>
-            </div>
+            <AlertSenate v-if="formState === 'error'" variant="error" title="Error">
+              Something went wrong. Please try again or email me directly.
+            </AlertSenate>
 
             <form @submit.prevent="submitForm" class="space-y-6">
               <!-- Honeypot (hidden spam protection) -->
               <input v-model="formData.honeypot" type="text" class="hidden" tabindex="-1" autocomplete="off" />
 
               <!-- Name -->
-              <div>
-                <label for="name" class="mb-2 block text-sm font-medium text-[#f1f5f9]"> Name * </label>
-                <input id="name" v-model="formData.name" type="text" required class="cyber-input" placeholder="Your name" />
-              </div>
+              <InputSenate
+                v-model="formData.name"
+                label="Full Name"
+                placeholder="Your name"
+                required
+                floating-label
+                type="text"
+              />
 
               <!-- Email -->
-              <div>
-                <label for="email" class="mb-2 block text-sm font-medium text-[#f1f5f9]"> Email * </label>
-                <input
-                  id="email"
-                  v-model="formData.email"
-                  type="email"
-                  required
-                  class="cyber-input"
-                  placeholder="your.email@example.com"
-                />
-              </div>
+              <InputSenate
+                v-model="formData.email"
+                label="Email Address"
+                placeholder="your.email@example.com"
+                required
+                floating-label
+                type="email"
+              />
 
               <!-- Message -->
-              <div>
-                <label for="message" class="mb-2 block text-sm font-medium text-[#f1f5f9]"> Message * </label>
+              <div class="mt-4">
+                <label for="message" class="mb-2 block text-sm font-medium text-[#1a1a1a]">Message</label>
                 <textarea
                   id="message"
                   v-model="formData.message"
                   required
                   rows="5"
-                  class="cyber-input"
+                  class="w-full rounded-md border border-[#ced4da] px-3 py-2.5 text-[#1a1a1a] placeholder-gray-400 focus:border-[#0038A8] focus:ring-2 focus:ring-[#0038A8]/20"
                   placeholder="Your message..."
                 ></textarea>
               </div>
 
               <!-- Submit Button -->
-              <button
-                type="submit"
-                :disabled="formState === 'submitting'"
-                class="cyber-btn-primary"
-                :class="{ 'cursor-not-allowed opacity-70': formState === 'submitting' }"
-              >
-                <i v-if="formState === 'submitting'" class="pi pi-spin pi-loader h-5 w-5 animate-pulse"></i>
-                <i v-else class="pi pi-send h-5 w-5"></i>
+              <ButtonSenate type="submit" variant="primary" size="md" :disabled="formState === 'submitting'" class="w-full">
+                <template #icon v-if="formState === 'submitting'">
+                  <i class="pi pi-spin pi-loader h-5 w-5 animate-pulse"></i>
+                </template>
+                <template #icon v-else>
+                  <i class="pi pi-send h-5 w-5"></i>
+                </template>
                 {{ formState === 'submitting' ? 'Sending...' : 'Send Message' }}
-              </button>
+              </ButtonSenate>
             </form>
           </div>
         </div>
@@ -230,5 +223,5 @@ const submitForm = async () => {
 </template>
 
 <style scoped>
-/* Form styling handled by Tailwind classes */
+/* Form styling handled by Senate Input component and Tailwind classes */
 </style>
